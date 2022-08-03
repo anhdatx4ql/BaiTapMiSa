@@ -28,6 +28,22 @@
       <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
     </ul>
   </div>
+
+  <!-- <Header></Header>
+
+  <img alt="Vue logo" src="./assets/logo.png">
+  <input v-model="customInfo.name" type="text" />
+  <p> a{{customInfo.name}}</p>
+  <input v-model="username" type="text"/>
+  <p v-if="username != ''"> {{username}} </p>
+ <p>{{info.age}}</p>
+  <button @click="clickButton">Click me</button>
+  <hr>
+  <div v-for="student in customStudents"  :key="student.name">
+    <span v-if="student.name != null">name: {{student.name}}</span>
+    <span v-if="student.age != null">| age: {{student.age}}</span>
+    <span v-if="student.address != null">| address: {{student.address}}</span>
+  </div> -->
 </template>
 
 <script>
