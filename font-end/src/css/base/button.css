@@ -33,6 +33,7 @@
 
 .button-background__primary:hover{
     background-color: #2B4EEE;
+    transition: 0.5s;
 }
 
 .button-background__primary:active{
@@ -46,6 +47,7 @@
 
 .button-background-white:hover{
     background-color: #E2E4E9;
+    transition: 0.5s;
 }
  
 .button-background-white:active{
@@ -99,6 +101,7 @@
 
 .button__toolbar-left:hover {
     color: #2B4EEE;
+    transition: 0.5s;
 }
 .button__toolbar-refesh {
     margin: 0;
@@ -122,4 +125,5 @@ button.button-icon__refesh {
 
 .button.button-icon__refesh:hover>.icon-refesh{
     background: url(../../assets/img/icon_collection.svg) no-repeat -207px -144px;
+    transition: 0.5s;
 }

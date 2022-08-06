@@ -244,6 +244,14 @@
     display: inline-block;
 }
 
+.background-icon-arrow-left{
+    background: url('../../assets/img/icon_collection.svg') no-repeat -290px -32px;
+}
+
+.background-icon-arrow-right{
+    background: url('../../assets/img/icon_collection.svg') no-repeat -303px -32px;
+}
+
 .icon-font-16{
     width:16px;
     height:16px;

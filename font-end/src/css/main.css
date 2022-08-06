@@ -8,6 +8,7 @@
 @import "./base/combobox.css";
 @import "./base/table.css";
 @import "./base/notifiContent.css";
+@import "./base/formdata.css";
 
 @font-face {
     font-family: Latin Bold;
@@ -65,3 +66,13 @@ body,button,textarea,input{
     width: 12px;
     background-color: #7C869C;
 } 
+
+@keyframes hoverbutton {
+    from {
+      opacity: 0.5;
+    }
+  
+    to {
+      opacity: 1;
+    }
+}

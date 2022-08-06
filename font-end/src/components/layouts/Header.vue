@@ -63,7 +63,7 @@
           </div>
         </div>
         <div class="header-nav-item">
-          <div class="header-nav-item__content background-icon__tiemnang-hover">
+          <div class="header-nav-item__content background-icon__tiemnang-hover header-nav-item__content-select">
             <span
               class="header-nav-item__background background-icon__tiemnang"
             ></span>

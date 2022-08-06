@@ -49,10 +49,10 @@
     justify-content: space-between;
     padding-left: 16px;
     border-radius: 4px;
-    padding-right: 16px;
     background-color: #ffffff;
     box-sizing: border-box;
-    height: 30px;
+    height: 32px;
+    border-bottom: 1px solid #D3D7DE;
 }
 
 .combobox-data {
@@ -133,11 +133,19 @@ body {
     background-color: #E7EBFD !important;
     color: #4262F0 !important;
 }
-
+/* 
 .combobox-filter-top label.label-input.combobox-data__search-label {
     padding-right: 16px;
-}
+} */
 
 .form-container__content-child--item__input .combobox-child.combobox-content {
     padding-right: 0;
+}
+
+.combobox.filter-save.combobox-filter-top:hover>.combobox-child.combobox-content {
+    border-color:#7C869C;
+}
+
+.combobox.filter-save.combobox-filter-top>.combobox-child.combobox-content {
+    border-radius: 0;
 }

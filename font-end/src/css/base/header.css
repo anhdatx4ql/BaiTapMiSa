@@ -113,7 +113,7 @@
     /* font-family: Latin Bold; */
 }
 
-.header-nav-item__content:hover {
+.header-nav-item__content-select,.header-nav-item__content:hover {
     border-bottom: 2px solid #0F2FBD;
     color: #0F2FBD;
     cursor: pointer;

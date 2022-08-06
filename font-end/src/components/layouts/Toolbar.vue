@@ -19,7 +19,7 @@
       <div class="toolbar-right toolbar-child">
         <div class="toolbar-right__child">
           <div class="combo-button">
-            <button
+            <button  @click="ClickShowForm()"
               class="
                 button button-icon
                 button-background__primary
@@ -54,10 +54,19 @@
 <script>
 
 export default {
-   name: "ToolbarComponent"
+   name: "ToolbarComponent",
+   props: {
+    checkShowFormData: Boolean 
+  },
+   methods:{
+    ClickShowForm: function(){
+        this.$emit('ShowFormData',!this.checkShowFormData);
+    }
+   }
 }
 </script>
 
 <style>
 
 </style>
+
