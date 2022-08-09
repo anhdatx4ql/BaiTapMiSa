@@ -104,6 +104,8 @@
     <Compile Include="Entities\Potential.cs" />
     <Compile Include="Entities\Professions.cs" />
     <Compile Include="Entities\Revenues.cs" />
+    <Compile Include="Entities\TypeOfBank.cs" />
+    <Compile Include="Entities\UserDetail.cs" />
     <Compile Include="Entities\Users.cs" />
     <Compile Include="Entities\User_Field.cs" />
     <Compile Include="Entities\User_Potential.cs" />

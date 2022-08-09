@@ -51,6 +51,8 @@
     <Compile Include="Interfaces\IPotentialService.cs" />
     <Compile Include="Interfaces\IProfessionsService.cs" />
     <Compile Include="Interfaces\IRevenuesService.cs" />
+    <Compile Include="Interfaces\ITypeOfBankService.cs" />
+    <Compile Include="Interfaces\IUserDetailService.cs" />
     <Compile Include="Interfaces\IUserFieldService.cs" />
     <Compile Include="Interfaces\IUserPotentialService.cs" />
     <Compile Include="Interfaces\IUserProfessionService.cs" />
@@ -59,6 +61,7 @@
     <Compile Include="Models\ReponsitoryModel.cs" />
     <Compile Include="Models\UserModel\CreateUsersModel.cs" />
     <Compile Include="Models\UserModel\UpdateUserModel.cs" />
+    <Compile Include="Models\UserModel\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\DepartmentService.cs" />
     <Compile Include="Services\FieldService.cs" />
@@ -67,6 +70,8 @@
     <Compile Include="Services\PotentialService.cs" />
     <Compile Include="Services\ProfessionsService.cs" />
     <Compile Include="Services\RevenuesService.cs" />
+    <Compile Include="Services\TypeOfBankService.cs" />
+    <Compile Include="Services\UserDetailService.cs" />
     <Compile Include="Services\UserFieldService.cs" />
     <Compile Include="Services\UserPotentialService.cs" />
     <Compile Include="Services\UserProfessionService.cs" />

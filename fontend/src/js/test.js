@@ -42,14 +42,16 @@ export async function ClickShowHideComboboxData(e, _element = null) {
 export async function selectValueComboboxData(e) {
   try {
     let value = e.target.getAttribute("value");
+    let innerHTML = e.target.innerHTML;
+    console.log('value html',value);
     const containerElement = e.target.parentNode.parentNode.parentNode;
     let containerContent = containerElement.getElementsByClassName(
       "combobox-content__select"
     )[0];
     let comboboxContent =
       containerElement.getElementsByClassName("combobox-content")[0];
-    containerContent.innerHTML = value;
-    containerElement.setAttribute("value", value);
+    containerContent.innerHTML = innerHTML;
+    containerContent.setAttribute("value", value);
     await HandlerShowHideComboboxData(comboboxContent);
   } catch (error) {
     console.log(error);

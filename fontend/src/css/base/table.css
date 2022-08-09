@@ -13,13 +13,11 @@
     height: 32px;
     line-height: 32px;
     text-align: start;
-    border-bottom: 1px solid #D3D7DE;
     box-sizing: border-box;
-    grid-gap: 5px 16px;
 }
 
 
-.tbody>.tr:hover {
+.tbody>.tr:hover>.td {
     background-color: #E7EBFC;
     cursor: pointer;
 }
@@ -70,4 +68,5 @@
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    border-bottom: 1px solid #D3D7DE;
 }

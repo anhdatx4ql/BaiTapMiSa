@@ -106,11 +106,12 @@ body {
 
 /* combobox sider left */
 .combobox-child.combobox-data.filter-content-child__data {
-    width: calc(240px - 32px - 9px);
+    width: calc(240px - 32px - 10px);
+    left: 0px;
 }
 
 .combobox-data__search.filter-content-child__data__child>label {
-    width: calc(240px - 32px - 9px);
+    width: calc(240px - 32px - 10px);
 }
 
 .border-color-c {

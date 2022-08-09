@@ -19,6 +19,7 @@ namespace WebApplication
 {
     public class Startup
     {
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -29,6 +30,18 @@ namespace WebApplication
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy(MyAllowSpecificOrigins,
+                builder =>
+                {
+                    builder.WithOrigins(Configuration["AllowOrigins"])
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
+            });
 
             services.AddControllers();
             //services.RegisterServices();
@@ -45,6 +58,7 @@ namespace WebApplication
             services.AddScoped<IUserPotentialService, UserPotentialService>();
             services.AddScoped<IUserProfessionService, UserProfessionService>();
             services.AddScoped<IVocativeService, VocativeService>();
+            services.AddScoped<ITypeOfBankService, TypeOfBankService>();
 
             services.AddSwaggerGen(c =>
             {
@@ -65,6 +79,9 @@ namespace WebApplication
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            // add cor
+            app.UseCors(MyAllowSpecificOrigins);
 
             app.UseAuthorization();
 

@@ -82,19 +82,13 @@
             <div
               class="combobox filter-save filter-content-child__box--combobox"
             >
-              <div
-                class="combobox-child combobox-content border-color-c"
+              <div class="combobox-child combobox-content border-color-c"
                 @click="handlerClickCombobox"
-                check="false"
-              >
+                check="false">
                 <div class="combobox-content__select">Là</div>
-                <div
-                  class="
-                    combobox-content__icon
+                <div class="combobox-content__icon
                     button-icon__up-black
-                    icon-font-16
-                  "
-                ></div>
+                    icon-font-16"></div>
               </div>
 
               <div
@@ -120,24 +114,12 @@
                 >
                   <div
                     class="combobox-data__child-content"
+                    v-for="vocative in customVocative"
+                    :key="vocative.vocativeId"
                     @click="handlerClickComboboxData"
-                    value="Bố cục"
+                    :value="vocative.vocativeId"
                   >
-                    Bố cục
-                  </div>
-                  <div
-                    class="combobox-data__child-content"
-                    @click="handlerClickComboboxData"
-                    value="Chức danh"
-                  >
-                    Chức danh
-                  </div>
-                  <div
-                    class="combobox-data__child-content"
-                    @click="handlerClickComboboxData"
-                    value="Doanh thu"
-                  >
-                    Doanh thu
+                    {{ vocative.vocativeName }}
                   </div>
                 </div>
               </div>
@@ -167,7 +149,8 @@
         </div>
 
         <!-- Chức danh -->
-        <div class="filter-content-child">
+        
+        <div class="filter-content-child filter-content-active">
           <div class="filter-content-child__checkbox">
             <div class="filter-content-child__checkbox-input">
               <input type="checkbox" />
@@ -175,7 +158,59 @@
             <div class="filter-content-child__checkbox-text">Chức danh</div>
           </div>
           <div class="filter-content-child__box">
-            <!-- content thẻ -->
+            <div
+              class="combobox filter-save filter-content-child__box--combobox"
+            >
+              <div class="combobox-child combobox-content border-color-c"
+                @click="handlerClickCombobox"
+                check="false">
+                <div class="combobox-content__select">Là</div>
+                <div class="combobox-content__icon
+                    button-icon__up-black
+                    icon-font-16"></div>
+              </div>
+
+              <div
+                class="combobox-child combobox-data filter-content-child__data"
+              >
+                <div
+                  class="
+                    combobox-data__search
+                    filter-content-child__data__child
+                  "
+                >
+                  <label class="label-input combobox-data__search-label">
+                    <input
+                      type="text"
+                      class="input input-icon"
+                      placeholder="Tìm kiếm"
+                    />
+                    <span class="background-icon-search-input"></span>
+                  </label>
+                </div>
+                <div
+                  class="combobox-data__child filter-content-child__data__child"
+                >
+                  <div
+                    class="combobox-data__child-content"
+                    v-for="jobTitle in customjobTitle"
+                    :key="jobTitle.jobTitleId"
+                    @click="handlerClickComboboxData"
+                    :value="jobTitle.jobTitleId"
+                  >
+                    {{ jobTitle.jobTitleName }}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="filter-content-child__box--textarea">
+              <div
+                class="
+                  filter-content-child__box--textarea__content
+                  border-color-c
+                "
+              ></div>
+            </div>
           </div>
         </div>
 
@@ -420,9 +455,19 @@
 </template>
 
 <script>
-import { ClickShowHideComboboxData, selectValueComboboxData } from "../../js/test";
+import {
+  ClickShowHideComboboxData,
+  selectValueComboboxData,
+} from "../../js/test";
+
+
 export default {
   name: "ContentPageLeft",
+  props: {
+    customVocative: Object,
+    customjobTitle:Object
+  },
+  created() {},
   methods: {
     handlerClickCombobox: function (event) {
       ClickShowHideComboboxData(event);

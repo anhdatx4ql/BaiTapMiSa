@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web.Http.Cors;
 using WebDomain.Interfaces;
 using WebDomain.Models;
 using WebDomain.Models.UserModel;

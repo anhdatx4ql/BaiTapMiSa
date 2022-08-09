@@ -49,3 +49,9 @@ D:\hoctap\BTMiSa\project-push\backend\WebApplication\WebApplication\bin\Debug\ne
 D:\hoctap\BTMiSa\project-push\backend\WebApplication\WebApplication\bin\Debug\net5.0\Microsoft.Extensions.Primitives.dll
 D:\hoctap\BTMiSa\project-push\backend\WebApplication\WebApplication\bin\Debug\net5.0\System.Runtime.CompilerServices.Unsafe.dll
 D:\hoctap\BTMiSa\project-push\backend\WebApplication\WebApplication\bin\Debug\net5.0\WebDomain.dll.config
+D:\hoctap\BTMiSa\project-push\backend\WebApplication\WebApplication\bin\Debug\net5.0\System.Web.Cors.dll
+D:\hoctap\BTMiSa\project-push\backend\WebApplication\WebApplication\bin\Debug\net5.0\System.Net.Http.Formatting.dll
+D:\hoctap\BTMiSa\project-push\backend\WebApplication\WebApplication\bin\Debug\net5.0\System.Web.Http.dll
+D:\hoctap\BTMiSa\project-push\backend\WebApplication\WebApplication\bin\Debug\net5.0\System.Web.Http.Cors.dll
+D:\hoctap\BTMiSa\project-push\backend\WebApplication\WebApplication\bin\Debug\net5.0\Newtonsoft.Json.dll
+D:\hoctap\BTMiSa\project-push\backend\WebApplication\WebApplication\bin\Debug\net5.0\Newtonsoft.Json.Bson.dll

@@ -20,12 +20,6 @@
             <div class="th">Email cá nhân</div>
             <div class="th">Tổ chức</div>
             <div class="th">Mã số thuế</div>
-            <div class="th">Tài khoản ngân hàng</div>
-            <div class="th">Mở tại ngân hàng</div>
-            <div class="th">Ngày thành lập</div>
-            <div class="th">Loại hình</div>
-            <div class="th">Lĩnh vực</div>
-            <div class="th">Ngành nghề</div>
             <div class="th">Doanh thu</div>
             <div class="th">Địa chỉ</div>
           </div>
@@ -33,526 +27,26 @@
       </div>
       <div class="table-content">
         <div class="tbody">
-          <div class="tr" v-for="user in userList" :key="user.UserId">
+          
+          <div class="tr" v-for="user in this.users" :key="user.userId" @dblclick="ClickDetailUser(user)">
             <div class="td"></div>
             <div class="td">
-              <input type="checkbox" :value="user.UserId" />
+              <input type="checkbox" :value="user.userId"/>
             </div>
             <div class="td"></div> <!-- thẻ -->
-            <div class="td">Anh</div>
-            <div class="td">{{user.FirstName}}{{user.LastName}}</div>
-            <div class="td">Thực tập sinh</div>
-            <div class="td">0123457894</div>
-            <div class="td">0123564657</div>
-            <div class="td">phamphamaahaashsnfbhdndhh@gmail.com</div>
-            <div class="td">phamphamaahaashsnfbhdndhh@gmail.com</div>
-            <div class="td">Tổ chức A</div>
-            <div class="td">0668845123</div>
-            <div class="td">Helo pay</div>
-            <div class="td">Hà Nội</div>
-            <div class="td">10/10/2019</div>
-            <div class="td">Banking</div>
-            <div class="td">Công Nghệ Thông tin</div>
-            <div class="td">Lập trình viên</div>
-            <div class="td">000.000.000 VNĐ</div>
-            <div class="td">
-              Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội
-            </div>
+            <div class="td">{{(user.vocativeName)?user.vocativeName:"-" }}</div>            
+            <div class="td">{{(user.fullName)?user.fullName:"-"}}</div>
+            <div class="td">{{(user.jobTitleName)?user.jobTitleName:"-"}}</div>
+            <div class="td">{{(user.userNummberPhone)?user.userNummberPhone:"-"}}</div>
+            <div class="td">{{(user.companyNumberPhone)?user.companyNumberPhone:"-"}}</div>
+            <div class="td">{{(user.companyEmail)?user.companyEmail:"-"}}</div>
+            <div class="td">{{(user.userEmail)?user.userEmail:"-"}}</div>
+            <div class="td">{{(user.organize)?user.organize:"-"}}</div>
+            <div class="td">{{(user.taxCode)?user.taxCode:"-"}}</div>
+            <div class="td">{{(user.revenueName)?user.revenueName:"-"}}</div>
+            <div class="td">{{(user.address)?user.address:"-"}}</div>
           </div>
-          <div class="tr">
-            <div class="td"></div>
-            <div class="td">
-              <input type="checkbox" />
-            </div>
-            <div class="td"></div>
-            <div class="td">Anh</div>
-            <div class="td">Phạm Văn Đạt</div>
-            <div class="td">Thực tập sinh</div>
-            <div class="td">0123457894</div>
-            <div class="td">0123564657</div>
-            <div class="td">phamphamaahaashsnfbhdndhh@gmail.com</div>
-            <div class="td">phamphamaahaashsnfbhdndhh@gmail.com</div>
-            <div class="td">Tổ chức A</div>
-            <div class="td">0668845123</div>
-            <div class="td">Helo pay</div>
-            <div class="td">Hà Nội</div>
-            <div class="td">10/10/2019</div>
-            <div class="td">Banking</div>
-            <div class="td">Công Nghệ Thông tin</div>
-            <div class="td">Lập trình viên</div>
-            <div class="td">000.000.000 VNĐ</div>
-            <div class="td">
-              Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội
-            </div>
-          </div>
-          <div class="tr">
-            <div class="td"></div>
-            <div class="td">
-              <input type="checkbox" />
-            </div>
-            <div class="td"></div>
-            <div class="td">Anh</div>
-            <div class="td">Phạm Văn Đạt</div>
-            <div class="td">Thực tập sinh</div>
-            <div class="td">0123457894</div>
-            <div class="td">0123564657</div>
-            <div class="td">phamphamaahaashsnfbhdndhh@gmail.com</div>
-            <div class="td">phamphamaahaashsnfbhdndhh@gmail.com</div>
-            <div class="td">Tổ chức A</div>
-            <div class="td">0668845123</div>
-            <div class="td">Helo pay</div>
-            <div class="td">Hà Nội</div>
-            <div class="td">10/10/2019</div>
-            <div class="td">Banking</div>
-            <div class="td">Công Nghệ Thông tin</div>
-            <div class="td">Lập trình viên</div>
-            <div class="td">000.000.000 VNĐ</div>
-            <div class="td">
-              Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội
-            </div>
-          </div>
-          <div class="tr">
-            <div class="td"></div>
-            <div class="td">
-              <input type="checkbox" />
-            </div>
-            <div class="td"></div>
-            <div class="td">Anh</div>
-            <div class="td">Phạm Văn Đạt</div>
-            <div class="td">Thực tập sinh</div>
-            <div class="td">0123457894</div>
-            <div class="td">0123564657</div>
-            <div class="td">phamphamaahaashsnfbhdndhh@gmail.com</div>
-            <div class="td">phamphamaahaashsnfbhdndhh@gmail.com</div>
-            <div class="td">Tổ chức A</div>
-            <div class="td">0668845123</div>
-            <div class="td">Helo pay</div>
-            <div class="td">Hà Nội</div>
-            <div class="td">10/10/2019</div>
-            <div class="td">Banking</div>
-            <div class="td">Công Nghệ Thông tin</div>
-            <div class="td">Lập trình viên</div>
-            <div class="td">000.000.000 VNĐ</div>
-            <div class="td">
-              Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội
-            </div>
-          </div>
-          <div class="tr">
-            <div class="td"></div>
-            <div class="td">
-              <input type="checkbox" />
-            </div>
-            <div class="td"></div>
-            <div class="td">Anh</div>
-            <div class="td">Phạm Văn Đạt</div>
-            <div class="td">Thực tập sinh</div>
-            <div class="td">0123457894</div>
-            <div class="td">0123564657</div>
-            <div class="td">phamphamaahaashsnfbhdndhh@gmail.com</div>
-            <div class="td">phamphamaahaashsnfbhdndhh@gmail.com</div>
-            <div class="td">Tổ chức A</div>
-            <div class="td">0668845123</div>
-            <div class="td">Helo pay</div>
-            <div class="td">Hà Nội</div>
-            <div class="td">10/10/2019</div>
-            <div class="td">Banking</div>
-            <div class="td">Công Nghệ Thông tin</div>
-            <div class="td">Lập trình viên</div>
-            <div class="td">000.000.000 VNĐ</div>
-            <div class="td">
-              Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội
-            </div>
-          </div>
-          <div class="tr">
-            <div class="td"></div>
-            <div class="td">
-              <input type="checkbox" />
-            </div>
-            <div class="td"></div>
-            <div class="td">Anh</div>
-            <div class="td">Phạm Văn Đạt</div>
-            <div class="td">Thực tập sinh</div>
-            <div class="td">0123457894</div>
-            <div class="td">0123564657</div>
-            <div class="td">phamphamaahaashsnfbhdndhh@gmail.com</div>
-            <div class="td">phamphamaahaashsnfbhdndhh@gmail.com</div>
-            <div class="td">Tổ chức A</div>
-            <div class="td">0668845123</div>
-            <div class="td">Helo pay</div>
-            <div class="td">Hà Nội</div>
-            <div class="td">10/10/2019</div>
-            <div class="td">Banking</div>
-            <div class="td">Công Nghệ Thông tin</div>
-            <div class="td">Lập trình viên</div>
-            <div class="td">000.000.000 VNĐ</div>
-            <div class="td">
-              Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội
-            </div>
-          </div>
-          <div class="tr">
-            <div class="td"></div>
-            <div class="td">
-              <input type="checkbox" />
-            </div>
-            <div class="td"></div>
-            <div class="td">Anh</div>
-            <div class="td">Phạm Văn Đạt</div>
-            <div class="td">Thực tập sinh</div>
-            <div class="td">0123457894</div>
-            <div class="td">0123564657</div>
-            <div class="td">phamphamaahaashsnfbhdndhh@gmail.com</div>
-            <div class="td">phamphamaahaashsnfbhdndhh@gmail.com</div>
-            <div class="td">Tổ chức A</div>
-            <div class="td">0668845123</div>
-            <div class="td">Helo pay</div>
-            <div class="td">Hà Nội</div>
-            <div class="td">10/10/2019</div>
-            <div class="td">Banking</div>
-            <div class="td">Công Nghệ Thông tin</div>
-            <div class="td">Lập trình viên</div>
-            <div class="td">000.000.000 VNĐ</div>
-            <div class="td">
-              Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội
-            </div>
-          </div>
-          <div class="tr">
-            <div class="td"></div>
-            <div class="td">
-              <input type="checkbox" />
-            </div>
-            <div class="td"></div>
-            <div class="td">Anh</div>
-            <div class="td">Phạm Văn Đạt</div>
-            <div class="td">Thực tập sinh</div>
-            <div class="td">0123457894</div>
-            <div class="td">0123564657</div>
-            <div class="td">phamphamaahaashsnfbhdndhh@gmail.com</div>
-            <div class="td">phamphamaahaashsnfbhdndhh@gmail.com</div>
-            <div class="td">Tổ chức A</div>
-            <div class="td">0668845123</div>
-            <div class="td">Helo pay</div>
-            <div class="td">Hà Nội</div>
-            <div class="td">10/10/2019</div>
-            <div class="td">Banking</div>
-            <div class="td">Công Nghệ Thông tin</div>
-            <div class="td">Lập trình viên</div>
-            <div class="td">000.000.000 VNĐ</div>
-            <div class="td">
-              Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội
-            </div>
-          </div>
-          <div class="tr">
-            <div class="td"></div>
-            <div class="td">
-              <input type="checkbox" />
-            </div>
-            <div class="td"></div>
-            <div class="td">Anh</div>
-            <div class="td">Phạm Văn Đạt</div>
-            <div class="td">Thực tập sinh</div>
-            <div class="td">0123457894</div>
-            <div class="td">0123564657</div>
-            <div class="td">phamphamaahaashsnfbhdndhh@gmail.com</div>
-            <div class="td">phamphamaahaashsnfbhdndhh@gmail.com</div>
-            <div class="td">Tổ chức A</div>
-            <div class="td">0668845123</div>
-            <div class="td">Helo pay</div>
-            <div class="td">Hà Nội</div>
-            <div class="td">10/10/2019</div>
-            <div class="td">Banking</div>
-            <div class="td">Công Nghệ Thông tin</div>
-            <div class="td">Lập trình viên</div>
-            <div class="td">000.000.000 VNĐ</div>
-            <div class="td">
-              Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội
-            </div>
-          </div>
-          <div class="tr">
-            <div class="td"></div>
-            <div class="td">
-              <input type="checkbox" />
-            </div>
-            <div class="td"></div>
-            <div class="td">Anh</div>
-            <div class="td">Phạm Văn Đạt</div>
-            <div class="td">Thực tập sinh</div>
-            <div class="td">0123457894</div>
-            <div class="td">0123564657</div>
-            <div class="td">phamphamaahaashsnfbhdndhh@gmail.com</div>
-            <div class="td">phamphamaahaashsnfbhdndhh@gmail.com</div>
-            <div class="td">Tổ chức A</div>
-            <div class="td">0668845123</div>
-            <div class="td">Helo pay</div>
-            <div class="td">Hà Nội</div>
-            <div class="td">10/10/2019</div>
-            <div class="td">Banking</div>
-            <div class="td">Công Nghệ Thông tin</div>
-            <div class="td">Lập trình viên</div>
-            <div class="td">000.000.000 VNĐ</div>
-            <div class="td">
-              Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội
-            </div>
-          </div>
-          <div class="tr">
-            <div class="td"></div>
-            <div class="td">
-              <input type="checkbox" />
-            </div>
-            <div class="td"></div>
-            <div class="td">Anh</div>
-            <div class="td">Phạm Văn Đạt</div>
-            <div class="td">Thực tập sinh</div>
-            <div class="td">0123457894</div>
-            <div class="td">0123564657</div>
-            <div class="td">phamphamaahaashsnfbhdndhh@gmail.com</div>
-            <div class="td">phamphamaahaashsnfbhdndhh@gmail.com</div>
-            <div class="td">Tổ chức A</div>
-            <div class="td">0668845123</div>
-            <div class="td">Helo pay</div>
-            <div class="td">Hà Nội</div>
-            <div class="td">10/10/2019</div>
-            <div class="td">Banking</div>
-            <div class="td">Công Nghệ Thông tin</div>
-            <div class="td">Lập trình viên</div>
-            <div class="td">000.000.000 VNĐ</div>
-            <div class="td">
-              Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội
-            </div>
-          </div>
-          <div class="tr">
-            <div class="td"></div>
-            <div class="td">
-              <input type="checkbox" />
-            </div>
-            <div class="td"></div>
-            <div class="td">Anh</div>
-            <div class="td">Phạm Văn Đạt</div>
-            <div class="td">Thực tập sinh</div>
-            <div class="td">0123457894</div>
-            <div class="td">0123564657</div>
-            <div class="td">phamphamaahaashsnfbhdndhh@gmail.com</div>
-            <div class="td">phamphamaahaashsnfbhdndhh@gmail.com</div>
-            <div class="td">Tổ chức A</div>
-            <div class="td">0668845123</div>
-            <div class="td">Helo pay</div>
-            <div class="td">Hà Nội</div>
-            <div class="td">10/10/2019</div>
-            <div class="td">Banking</div>
-            <div class="td">Công Nghệ Thông tin</div>
-            <div class="td">Lập trình viên</div>
-            <div class="td">000.000.000 VNĐ</div>
-            <div class="td">
-              Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội
-            </div>
-          </div>
-          <div class="tr">
-            <div class="td"></div>
-            <div class="td">
-              <input type="checkbox" />
-            </div>
-            <div class="td"></div>
-            <div class="td">Anh</div>
-            <div class="td">Phạm Văn Đạt</div>
-            <div class="td">Thực tập sinh</div>
-            <div class="td">0123457894</div>
-            <div class="td">0123564657</div>
-            <div class="td">phamphamaahaashsnfbhdndhh@gmail.com</div>
-            <div class="td">phamphamaahaashsnfbhdndhh@gmail.com</div>
-            <div class="td">Tổ chức A</div>
-            <div class="td">0668845123</div>
-            <div class="td">Helo pay</div>
-            <div class="td">Hà Nội</div>
-            <div class="td">10/10/2019</div>
-            <div class="td">Banking</div>
-            <div class="td">Công Nghệ Thông tin</div>
-            <div class="td">Lập trình viên</div>
-            <div class="td">000.000.000 VNĐ</div>
-            <div class="td">
-              Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội
-            </div>
-          </div>
-          <div class="tr">
-            <div class="td"></div>
-            <div class="td">
-              <input type="checkbox" />
-            </div>
-            <div class="td"></div>
-            <div class="td">Anh</div>
-            <div class="td">Phạm Văn Đạt</div>
-            <div class="td">Thực tập sinh</div>
-            <div class="td">0123457894</div>
-            <div class="td">0123564657</div>
-            <div class="td">phamphamaahaashsnfbhdndhh@gmail.com</div>
-            <div class="td">phamphamaahaashsnfbhdndhh@gmail.com</div>
-            <div class="td">Tổ chức A</div>
-            <div class="td">0668845123</div>
-            <div class="td">Helo pay</div>
-            <div class="td">Hà Nội</div>
-            <div class="td">10/10/2019</div>
-            <div class="td">Banking</div>
-            <div class="td">Công Nghệ Thông tin</div>
-            <div class="td">Lập trình viên</div>
-            <div class="td">000.000.000 VNĐ</div>
-            <div class="td">
-              Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội
-            </div>
-          </div>
-          <div class="tr">
-            <div class="td"></div>
-            <div class="td">
-              <input type="checkbox" />
-            </div>
-            <div class="td"></div>
-            <div class="td">Anh</div>
-            <div class="td">Phạm Văn Đạt</div>
-            <div class="td">Thực tập sinh</div>
-            <div class="td">0123457894</div>
-            <div class="td">0123564657</div>
-            <div class="td">phamphamaahaashsnfbhdndhh@gmail.com</div>
-            <div class="td">phamphamaahaashsnfbhdndhh@gmail.com</div>
-            <div class="td">Tổ chức A</div>
-            <div class="td">0668845123</div>
-            <div class="td">Helo pay</div>
-            <div class="td">Hà Nội</div>
-            <div class="td">10/10/2019</div>
-            <div class="td">Banking</div>
-            <div class="td">Công Nghệ Thông tin</div>
-            <div class="td">Lập trình viên</div>
-            <div class="td">000.000.000 VNĐ</div>
-            <div class="td">
-              Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội
-            </div>
-          </div>
-          <div class="tr">
-            <div class="td"></div>
-            <div class="td">
-              <input type="checkbox" />
-            </div>
-            <div class="td"></div>
-            <div class="td">Anh</div>
-            <div class="td">Phạm Văn Đạt</div>
-            <div class="td">Thực tập sinh</div>
-            <div class="td">0123457894</div>
-            <div class="td">0123564657</div>
-            <div class="td">phamphamaahaashsnfbhdndhh@gmail.com</div>
-            <div class="td">phamphamaahaashsnfbhdndhh@gmail.com</div>
-            <div class="td">Tổ chức A</div>
-            <div class="td">0668845123</div>
-            <div class="td">Helo pay</div>
-            <div class="td">Hà Nội</div>
-            <div class="td">10/10/2019</div>
-            <div class="td">Banking</div>
-            <div class="td">Công Nghệ Thông tin</div>
-            <div class="td">Lập trình viên</div>
-            <div class="td">000.000.000 VNĐ</div>
-            <div class="td">
-              Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội
-            </div>
-          </div>
-          <div class="tr">
-            <div class="td"></div>
-            <div class="td">
-              <input type="checkbox" />
-            </div>
-            <div class="td"></div>
-            <div class="td">Anh</div>
-            <div class="td">Phạm Văn Đạt</div>
-            <div class="td">Thực tập sinh</div>
-            <div class="td">0123457894</div>
-            <div class="td">0123564657</div>
-            <div class="td">phamphamaahaashsnfbhdndhh@gmail.com</div>
-            <div class="td">phamphamaahaashsnfbhdndhh@gmail.com</div>
-            <div class="td">Tổ chức A</div>
-            <div class="td">0668845123</div>
-            <div class="td">Helo pay</div>
-            <div class="td">Hà Nội</div>
-            <div class="td">10/10/2019</div>
-            <div class="td">Banking</div>
-            <div class="td">Công Nghệ Thông tin</div>
-            <div class="td">Lập trình viên</div>
-            <div class="td">000.000.000 VNĐ</div>
-            <div class="td">
-              Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội
-            </div>
-          </div>
-          <div class="tr">
-            <div class="td"></div>
-            <div class="td">
-              <input type="checkbox" />
-            </div>
-            <div class="td"></div>
-            <div class="td">Anh</div>
-            <div class="td">Phạm Văn Đạt</div>
-            <div class="td">Thực tập sinh</div>
-            <div class="td">0123457894</div>
-            <div class="td">0123564657</div>
-            <div class="td">phamphamaahaashsnfbhdndhh@gmail.com</div>
-            <div class="td">phamphamaahaashsnfbhdndhh@gmail.com</div>
-            <div class="td">Tổ chức A</div>
-            <div class="td">0668845123</div>
-            <div class="td">Helo pay</div>
-            <div class="td">Hà Nội</div>
-            <div class="td">10/10/2019</div>
-            <div class="td">Banking</div>
-            <div class="td">Công Nghệ Thông tin</div>
-            <div class="td">Lập trình viên</div>
-            <div class="td">000.000.000 VNĐ</div>
-            <div class="td">
-              Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội
-            </div>
-          </div>
-          <div class="tr">
-            <div class="td"></div>
-            <div class="td">
-              <input type="checkbox" />
-            </div>
-            <div class="td"></div>
-            <div class="td">Anh</div>
-            <div class="td">Phạm Văn Đạt</div>
-            <div class="td">Thực tập sinh</div>
-            <div class="td">0123457894</div>
-            <div class="td">0123564657</div>
-            <div class="td">phamphamaahaashsnfbhdndhh@gmail.com</div>
-            <div class="td">phamphamaahaashsnfbhdndhh@gmail.com</div>
-            <div class="td">Tổ chức A</div>
-            <div class="td">0668845123</div>
-            <div class="td">Helo pay</div>
-            <div class="td">Hà Nội</div>
-            <div class="td">10/10/2019</div>
-            <div class="td">Banking</div>
-            <div class="td">Công Nghệ Thông tin</div>
-            <div class="td">Lập trình viên</div>
-            <div class="td">000.000.000 VNĐ</div>
-            <div class="td">
-              Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội
-            </div>
-          </div>
-          <div class="tr">
-            <div class="td"></div>
-            <div class="td">
-              <input type="checkbox" />
-            </div>
-            <div class="td"></div>
-            <div class="td">Anh</div>
-            <div class="td">Phạm Văn Đạt</div>
-            <div class="td">Thực tập sinh</div>
-            <div class="td">0123457894</div>
-            <div class="td">0123564657</div>
-            <div class="td">phamphamaahaashsnfbhdndhh@gmail.com</div>
-            <div class="td">phamphamaahaashsnfbhdndhh@gmail.com</div>
-            <div class="td">Tổ chức A</div>
-            <div class="td">0668845123</div>
-            <div class="td">Helo pay</div>
-            <div class="td">Hà Nội</div>
-            <div class="td">10/10/2019</div>
-            <div class="td">Banking</div>
-            <div class="td">Công Nghệ Thông tin</div>
-            <div class="td">Lập trình viên</div>
-            <div class="td">000.000.000 VNĐ</div>
-            <div class="td">
-              Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội Hà Nội
-            </div>
-          </div>
+          
         </div>
       </div>
     </div>
@@ -591,82 +85,32 @@
 
 <script>
 import { handlerScroll, handlerClickButtonArrow } from "../../js/test";
+// import axios from 'axios';
+import {getJSONAsync} from '../Services/BaseService.js'
 export default {
+
   name: "ContentPageCenter",
   data() {
     return {
       checkLeft: false,
       checkRight: false,
-      userList: [{
-        UserId: "123as123aa",
-        FirstName:'Phạm Văn',
-        LastName: 'Đạt',
-        UserNummberPhone: '0349459937', //số đt cá nhân
-        CompanyNumberPhone:"0220203500",//số đt công ty
-        UserEmail:'phamvandatx4ql@gmail.com', // email cá nhân
-        CompanyEmail: 'phamvandatx4ql@gmail.com', // email công ty
-        Zalo: '0379459937', //  -- zalo
-        TaxCode: '00025as5das5d28', //-- mã số thuế
-        Organize: 'Đạt và những người bạn', //-- tổ chức
-        Gender: '1', //-- 1 là Nam, 0 là Nữ
-        BirthDay: '10/02/2001', //-- ngày sinh
-        UserDescription: "Đây là thông tin mô tả của anh đạt",// -- mô tả
-        Address: 'Quỳnh Lương, Quỳnh Lưu, Nghệ An',// -- địa chỉ
-        Country: 'Việt Nam', // -- quốc gia
-        City:'Vinh', //-- tỉnh
-        District: 'Quỳnh Lưu', //-- Huyện
-        Commune: 'Quỳnh Lương',// -- Xã
-        ApartmentNumber: 'Thôn 4',// -- số nhà
-        AreaCode: '001100', // -- mã vùng
-        IsUserPhoneActive: true,// -- cho phép gọi điện
-        IsUserEmailActive: true, // -- cho phép gửi email
-        VocativeId: '1', //-- xưng hô Id, 1 user có 1 xưng hô
-        DepartmentID: '1',// -- một người - 1 phòng ban
-        OriginId: '1',// -- 1 người - 1 nguồn gốc tiềm năng
-        JobTitleId:'1',// -- 1 người - 1 chức danh
-        CompanyTypeId: '1',// -- loại hình công ty của user /  -- 1 người thuộc 1 tổ chức - ghi thông tin tổ chức ra các bảng
-        RevenueID: '1',// -- doanh thu của tổ chức
-        CreatedAt: '2016-12-24T07:34:06.388Z',
-        UpdatedAt: '2016-12-24T07:34:06.388Z',
-        CreateaBy: '81238asjdasjdg123',
-        UpdatedBy: '81238asjdasjdg123',
-      },{
-        UserId: "123as123aa",
-        FirstName:'Phạm Văn',
-        LastName: 'Đạt',
-        UserNummberPhone: '0349459937', //số đt cá nhân
-        CompanyNumberPhone:"0220203500",//số đt công ty
-        UserEmail:'phamvandatx4ql@gmail.com', // email cá nhân
-        CompanyEmail: 'phamvandatx4ql@gmail.com', // email công ty
-        Zalo: '0379459937', //  -- zalo
-        TaxCode: '00025as5das5d28', //-- mã số thuế
-        Organize: 'Đạt và những người bạn', //-- tổ chức
-        Gender: '1', //-- 1 là Nam, 0 là Nữ
-        BirthDay: '10/02/2001', //-- ngày sinh
-        UserDescription: "Đây là thông tin mô tả của anh đạt",// -- mô tả
-        Address: 'Quỳnh Lương, Quỳnh Lưu, Nghệ An',// -- địa chỉ
-        Country: 'Việt Nam', // -- quốc gia
-        City:'Vinh', //-- tỉnh
-        District: 'Quỳnh Lưu', //-- Huyện
-        Commune: 'Quỳnh Lương',// -- Xã
-        ApartmentNumber: 'Thôn 4',// -- số nhà
-        AreaCode: '001100', // -- mã vùng
-        IsUserPhoneActive: true,// -- cho phép gọi điện
-        IsUserEmailActive: true, // -- cho phép gửi email
-        VocativeId: '1', //-- xưng hô Id, 1 user có 1 xưng hô
-        DepartmentID: '1',// -- một người - 1 phòng ban
-        OriginId: '1',// -- 1 người - 1 nguồn gốc tiềm năng
-        JobTitleId:'1',// -- 1 người - 1 chức danh
-        CompanyTypeId: '1',// -- loại hình công ty của user /  -- 1 người thuộc 1 tổ chức - ghi thông tin tổ chức ra các bảng
-        RevenueID: '1',// -- doanh thu của tổ chức
-        CreatedAt: '2016-12-24T07:34:06.388Z',
-        UpdatedAt: '2016-12-24T07:34:06.388Z',
-        CreateaBy: '81238asjdasjdg123',
-        UpdatedBy: '81238asjdasjdg123',
-      }]
+      users: []
     };
   },
-  methods: {},
+   created() {
+
+    // lay thong tin user
+    getJSONAsync('https://localhost:44355/api/Users/GetUsers').then(res=>{
+      this.users = res.data.data;
+    })
+
+  },
+  methods: {
+    ClickDetailUser:function (user){
+      console.log('a');
+      console.log(user);
+    }
+  },
   // theo dõi các biến thay đổi và thực hiện hàm nếu có
   watch: {
     checkLeft() {

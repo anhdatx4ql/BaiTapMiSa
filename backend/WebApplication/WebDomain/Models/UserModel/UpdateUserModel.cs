@@ -11,7 +11,7 @@ namespace WebDomain.Models.UserModel
         public string FirstName { set; get; } // họ và đệm
         public string LastName { set; get; } // tên
         public string FullName { set; get; } // họ và tên
-        public string UserNummberPhone { set; get; } // số điện thoại cá nhân
+        public string UserNumberPhone { set; get; } // số điện thoại cá nhân
         public string CompanyNumberPhone { set; get; }// số điện thoại công ty
         public string UserEmail { set; get; } // email cá nhân
         public string CompanyEmail { set; get; } // email công ty
@@ -28,6 +28,7 @@ namespace WebDomain.Models.UserModel
         public string OriginId { set; get; } //-- 1 người - 1 nguồn gốc tiềm năng
         public string JobTitleId { set; get; } //-- 1 người - 1 chức danh
         public string RevenueID { set; get; } //-- doanh thu của tổ chức
+        public string TypeOfBankId { set; get; } //-- Loai hinhf
         public string CreateaBy { set; get; }
         public string UpdatedBy { set; get; }
     }

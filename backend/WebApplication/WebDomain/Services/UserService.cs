@@ -27,8 +27,19 @@ namespace WebDomain.Services
         {
             try
             {
-                string sql = @"select * from Users;";
-                var result = await _dapper.GetAllAsync<Users>(sql);
+                string sql = @" SELECT UserId, FirstName, LastName, FullName, UserNumberPhone, CompanyNumberPhone, UserEmail, "
+                    + "CompanyEmail, Zalo, TaxCode, Organize, Gender, BirthDay, UserDescription, Address, Country, City, "
+                    + "District, Commune, ApartmentNumber, AreaCode, BankAccount, OpenAtBank,DateBank, FaceBook, IsUserPhoneActive, "
+                    + "ISUserEmailActive, Users.VocativeId, Users.DepartMentID, Users.OriginId, Users.JobTitleId, "
+                    + "Users.RevenueId, Users.TypeOfBankId, users.CreatedAt, "
+                    + "users.UpdatedAt, VocativeName, DepartmentName, OriginName, JobTitleName, RevenueName, TypeOfBankName FROM users "
+                    + "LEFT JOIN vocative ON users.VocativeId = vocative.VocativeId "
+                    + "LEFT JOIN Department ON users.DepartmentID = Department.DepartmentID "
+                    + "LEFT JOIN Origin ON users.OriginId = Origin.OriginId "
+                    + "LEFT JOIN JobTitle ON users.JobTitleId = JobTitle.JobTitleId "
+                    + "LEFT JOIN Revenues ON users.RevenueID = Revenues.RevenueID "
+                    + "LEFT JOIN TypeOfBank ON users.TypeOfBankId = TypeOfBank.TypeOfBanklId";
+                var result = await _dapper.GetAllAsync<UserModel>(sql);
                 if(result == null)
                     return new ReponsitoryModel { Data = result, StatusCode = 200, Message ="Không có bản ghi nào!" };
                 return new ReponsitoryModel {Data= result, StatusCode = 200, Message="Lấy thông tin người dùng thành công!" };
@@ -46,8 +57,20 @@ namespace WebDomain.Services
         {
             try
             {
-                string sql = @"select * from users where FullName like '%" + name + "%'";
-                var result = await _dapper.GetTByNameAsync<Users>(sql);
+                string sql = @" SELECT UserId, FirstName, LastName, FullName, UserNumberPhone, CompanyNumberPhone, UserEmail, "
+                      + "CompanyEmail, Zalo, TaxCode, Organize, Gender, BirthDay, UserDescription, Address, Country, City, "
+                      + "District, Commune, ApartmentNumber, AreaCode, BankAccount, OpenAtBank,DateBank, FaceBook, IsUserPhoneActive, "
+                      + "ISUserEmailActive, Users.VocativeId, Users.DepartMentID, Users.OriginId, Users.JobTitleId, "
+                      + "Users.RevenueId, Users.TypeOfBankId, users.CreatedAt, "
+                      + "users.UpdatedAt, VocativeName, DepartmentName, OriginName, JobTitleName, RevenueName, TypeOfBankName FROM users "
+                      + "LEFT JOIN vocative ON users.VocativeId = vocative.VocativeId "
+                      + "LEFT JOIN Department ON users.DepartmentID = Department.DepartmentID "
+                      + "LEFT JOIN Origin ON users.OriginId = Origin.OriginId "
+                      + "LEFT JOIN JobTitle ON users.JobTitleId = JobTitle.JobTitleId "
+                      + "LEFT JOIN Revenues ON users.RevenueID = Revenues.RevenueID "
+                      + "LEFT JOIN TypeOfBank ON users.TypeOfBankId = TypeOfBank.TypeOfBanklId  where FullName like '%" + name + "%'";
+               
+                var result = await _dapper.GetTByNameAsync<UserModel>(sql);
                 if(result == null)
                     return new ReponsitoryModel { Data = null, StatusCode = 200, Message = "Không tồn tại người dùng có tên "+name+"!" };
                 return new ReponsitoryModel { Data = result, StatusCode = 200, Message = "Lấy người dùng thành công!" };
@@ -65,8 +88,19 @@ namespace WebDomain.Services
         {
             try
             {
-                string sql = @"select * from Users WHERE UserId = @Id";
-                var result = await _dapper.GetByIdAsync<Users>(sql, new { Id = id });
+                string sql = @" SELECT UserId, FirstName, LastName, FullName, UserNumberPhone, CompanyNumberPhone, UserEmail, "
+                     + "CompanyEmail, Zalo, TaxCode, Organize, Gender, BirthDay, UserDescription, Address, Country, City, "
+                     + "District, Commune, ApartmentNumber, AreaCode, BankAccount, OpenAtBank,DateBank, FaceBook, IsUserPhoneActive, "
+                     + "ISUserEmailActive, Users.VocativeId, Users.DepartMentID, Users.OriginId, Users.JobTitleId, "
+                     + "Users.RevenueId, Users.TypeOfBankId, users.CreatedAt, "
+                     + "users.UpdatedAt, VocativeName, DepartmentName, OriginName, JobTitleName, RevenueName, TypeOfBankName FROM users "
+                     + "LEFT JOIN vocative ON users.VocativeId = vocative.VocativeId "
+                     + "LEFT JOIN Department ON users.DepartmentID = Department.DepartmentID "
+                     + "LEFT JOIN Origin ON users.OriginId = Origin.OriginId "
+                     + "LEFT JOIN JobTitle ON users.JobTitleId = JobTitle.JobTitleId "
+                     + "LEFT JOIN Revenues ON users.RevenueID = Revenues.RevenueID "
+                     + "LEFT JOIN TypeOfBank ON users.TypeOfBankId = TypeOfBank.TypeOfBanklId  WHERE UserId = @Id";
+                var result = await _dapper.GetByIdAsync<UserModel>(sql, new { Id = id });
                 if(result == null)
                     return new ReponsitoryModel { Data = null, StatusCode = 200, Message = "Không tồn tại người dùng có id = "+id+" này!" };
                 return new ReponsitoryModel { Data = result, StatusCode = 200, Message = "Lấy thông tin thành công!" };
@@ -78,7 +112,7 @@ namespace WebDomain.Services
 
         }
 
-        // tạo bảng mới
+        // tạo bảng mới / dang sai
         public async Task<ReponsitoryModel> CreateUserAsync(CreateUsersModel model)
         {
             try
@@ -86,9 +120,15 @@ namespace WebDomain.Services
                 if(model.UserId == null)
                     return new ReponsitoryModel { Data = null, StatusCode = 400, Message = "Mã tiềm năng không được bỏ trống!" };
 
+                //string sql = @"select MAX(users.UserId) from users";
+                //var result = await _dapper.GetByIdAsync<Department>(sql, new { Id = id });
+                //if (result == null)
+                //    return new ReponsitoryModel { Data = null, StatusCode = 200, Message = "Không tồn tại phòng ban có id = " + id + " này!" };
+                //return new ReponsitoryModel { Data = result, StatusCode = 200, Message = "Lấy thông tin thành công!" };
+
                 // Xử lý trùng Id
 
-                   var ExistsUserID = await _dapper.FindCloumnTAsync<Users>("Users", "UserId", model.UserId);
+                var ExistsUserID = await _dapper.FindCloumnTAsync<Users>("Users", "UserId", model.UserId);
                    if (ExistsUserID != null)
                        return new ReponsitoryModel { Data = null, StatusCode = 400, Message = "Mã tiềm năng này đã có người sử dụng" };
 
@@ -97,9 +137,9 @@ namespace WebDomain.Services
                     return new ReponsitoryModel { Data = null, StatusCode = 400, Message = "Tên không được bỏ trống!" };
 
                 // Xử lý trùng UserNummberPhone
-                if (model.UserNummberPhone != null)
+                if (model.UserNumberPhone != null)
                 {
-                    var ExistsUserPhone = await _dapper.FindCloumnTAsync<Users>("Users", "UserNummberPhone", model.UserNummberPhone);
+                    var ExistsUserPhone = await _dapper.FindCloumnTAsync<Users>("Users", "UserNumberPhone", model.UserNumberPhone);
                     if (ExistsUserPhone != null)
                         return new ReponsitoryModel { Data = null, StatusCode = 400, Message = "Số điện thoại này đã có người sử dụng" };
                 }
@@ -114,11 +154,11 @@ namespace WebDomain.Services
                 }
 
                 string sql = @"Insert into Users(UserId, FirstName, LastName, FullName,
-                            UserNummberPhone, CompanyNumberPhone, UserEmail, CompanyEmail, Zalo,
+                            UserNumberPhone, CompanyNumberPhone, UserEmail, CompanyEmail, Zalo,
                             TaxCode, Organize, UserDescription, Address, Country, City, District,
                             Commune, ApartmentNumber, AreaCode, BankAccount, OpenAtBank, DateBank,
                             VocativeId, DepartmentID, OriginId, JobTitleId, RevenueID)
-                             VALUES(@UserId, @FirstName, @LastName, @FullName, @UserNummberPhone,
+                             VALUES(@UserId, @FirstName, @LastName, @FullName, @UserNumberPhone,
                             @CompanyNumberPhone, @UserEmail, @CompanyEmail, @Zalo,
                             @TaxCode, @Organize, @UserDescription,@Address,@Country, @City,@District,
                             @Commune, @ApartmentNumber, @AreaCode, @BankAccount, 
@@ -129,7 +169,7 @@ namespace WebDomain.Services
                     FirstName = model.FirstName,
                     LastName = model.LastName,
                     FullName = model.FullName,
-                    UserNummberPhone = model.UserNummberPhone,
+                    UserNumberPhone = model.UserNumberPhone,
                     CompanyNumberPhone = model.CompanyNumberPhone,
                     UserEmail = model.UserEmail,
                     CompanyEmail = model.CompanyEmail,
@@ -165,12 +205,23 @@ namespace WebDomain.Services
             }
         }
 
-        // hàm xử lý cập nhật user
+        // hàm xử lý cập nhật user -- lamf lai
         public async Task<ReponsitoryModel> UpdateUser(UpdateUserModel model, string id)
         {
             try
             {
-                string sql = @"select * from Users WHERE UserId = @Id";
+                string sql = @" SELECT UserId, FirstName, LastName, FullName, UserNumberPhone, CompanyNumberPhone, UserEmail, "
+                    + "CompanyEmail, Zalo, TaxCode, Organize, Gender, BirthDay, UserDescription, Address, Country, City, "
+                    + "District, Commune, ApartmentNumber, AreaCode, BankAccount, OpenAtBank,DateBank, FaceBook, IsUserPhoneActive, "
+                    + "ISUserEmailActive, Users.VocativeId, Users.DepartMentID, Users.OriginId, Users.JobTitleId, "
+                    + "Users.RevenueId, Users.TypeOfBankId, users.CreatedAt, "
+                    + "users.UpdatedAt, VocativeName, DepartmentName, OriginName, JobTitleName, RevenueName, TypeOfBankName FROM users "
+                    + "LEFT JOIN vocative ON users.VocativeId = vocative.VocativeId "
+                    + "LEFT JOIN Department ON users.DepartmentID = Department.DepartmentID "
+                    + "LEFT JOIN Origin ON users.OriginId = Origin.OriginId "
+                    + "LEFT JOIN JobTitle ON users.JobTitleId = JobTitle.JobTitleId "
+                    + "LEFT JOIN Revenues ON users.RevenueID = Revenues.RevenueID "
+                    + "LEFT JOIN TypeOfBank ON users.TypeOfBankId = TypeOfBank.TypeOfBanklId WHERE UserId = @Id";
                 var user = await _dapper.GetByIdAsync<Users>(sql, new { Id = id });
                 if (user == null)
                     return new ReponsitoryModel { Data = null, StatusCode = 200, Message = "Không tồn tại người dùng có id = " + id + " này!" };
@@ -185,17 +236,17 @@ namespace WebDomain.Services
                 if(model.FullName != null)
                     user.FullName = model.FullName;
 
-                if(model.UserNummberPhone!= null)
+                if(model.UserNumberPhone != null)
                 {
-                    var ExistsUserPhone = await _dapper.FindCloumnTAsync<Users>("Users", "UserNummberPhone", model.UserNummberPhone);
+                    var ExistsUserPhone = await _dapper.FindCloumnTAsync<Users>("Users", "UserNummberPhone", model.UserNumberPhone);
                     if (ExistsUserPhone != null)
                         return new ReponsitoryModel { Data = null, StatusCode = 400, Message = "Số điện thoại này đã có người sử dụng" };
-                    user.UserNummberPhone = model.UserNummberPhone;
+                    user.UserNumberPhone = model.UserNumberPhone;
                 }
                     
 
                 if (model.CompanyNumberPhone != null)
-                    user.CompanyNumberPhone = model.CompanyNumberPhone;
+                    user.UserNumberPhone = model.UserNumberPhone;
 
 
                 // chưa xử lý email trùng với email khác
@@ -256,7 +307,7 @@ namespace WebDomain.Services
 
                 // lấy ra được user
                 // tạo câu truy vấn:
-                var sqlUpdate = @"UPDATE Users SET FirstName = @FirstName, LastName =@LastName, FullName = @FullName,UserNummberPhone = @UserNummberPhone, CompanyNumberPhone = @CompanyNumberPhone,UserEmail = @UserEmail , CompanyEmail= @CompanyEmail, Zalo = @Zalo,TaxCode=@TaxCode, Organize=@Organize,Gender=@Gender, BirthDay=@BirthDay,Facebook =@Facebook,IsUserPhoneActive=@IsUserPhoneActive, IsUserEmailActive=@IsUserEmailActive,VocativeId=@VocativeId, DepartmentID=@DepartmentID, OriginId=@OriginId,JobTitleId=@JobTitleId, RevenueID=@RevenueID,UpdatedAt=@UpdatedAt WHERE UserId = @UserId;";
+                var sqlUpdate = @"UPDATE Users SET FirstName = @FirstName, LastName =@LastName, FullName = @FullName,UserNumberPhone = @UserNumberPhone, CompanyNumberPhone = @CompanyNumberPhone,UserEmail = @UserEmail , CompanyEmail= @CompanyEmail, Zalo = @Zalo,TaxCode=@TaxCode, Organize=@Organize,Gender=@Gender, BirthDay=@BirthDay,Facebook =@Facebook,IsUserPhoneActive=@IsUserPhoneActive, IsUserEmailActive=@IsUserEmailActive,VocativeId=@VocativeId, DepartmentID=@DepartmentID, OriginId=@OriginId,JobTitleId=@JobTitleId, RevenueID=@RevenueID,UpdatedAt=@UpdatedAt WHERE UserId = @UserId;";
                 var result = await _dapper.UpdateTAsync<Users>(sqlUpdate, user);
 
                 if (result == 1)

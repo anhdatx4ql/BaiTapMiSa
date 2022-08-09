@@ -62,15 +62,17 @@ export default {
       // phải lưu cho nó 1 tên biến mới đưa lên được
       customInfo: info,
       customStudents: students,
-      checkShowForm: false,
-      User: Object
+      checkShowForm: false
+     
     };
   },
-  methods: {
+  beforeCreate() {
     
-  }, mounted(){
-    console.log('xong')
-  }
+  },
+  created() {
+  },
+  methods: {},
+  mounted() {},
 };
 </script>
 

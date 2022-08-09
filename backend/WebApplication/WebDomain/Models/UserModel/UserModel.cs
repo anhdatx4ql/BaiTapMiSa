@@ -1,22 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WebInfrastructure.Entities
-{
-
-    // tạo bản ghi dư thừa
-    public class Users
+namespace WebDomain.Models.UserModel
+{ 
+    public class UserModel
     {
-        [Key]
-        public string UserId { set; get; } // Id
+        public string UserId { set; get; } // mã tiềm năng
         public string FirstName { set; get; } // họ và đệm
         public string LastName { set; get; } // tên
         public string FullName { set; get; } // họ và tên
-        public string UserNumberPhone { set; get; } // số điện thoại cá nhân
+        public string UserNummberPhone { set; get; } // số điện thoại cá nhân
         public string CompanyNumberPhone { set; get; }// số điện thoại công ty
         public string UserEmail { set; get; } // email cá nhân
         public string CompanyEmail { set; get; } // email công ty
@@ -40,17 +36,18 @@ namespace WebInfrastructure.Entities
         public bool IsUserPhoneActive { set; get; } //-- cho phép gọi điện
         public bool IsUserEmailActive { set; get; } //-- cho phép gửi email
         public string VocativeId { set; get; } //-- xưng hô
-        //public string VocativeName { set; get; } //-- xưng hô name
         public string DepartmentID { set; get; } //-- một người - 1 phòng ban
-        //public string DepartmentName { set; get; } //-- một người - 1 phòng ban name
         public string OriginId { set; get; } //-- 1 người - 1 nguồn gốc tiềm năng
-        //public string Originname { set; get; } //-- 1 người - 1 nguồn gốc tiềm năng name
         public string JobTitleId { set; get; } //-- 1 người - 1 chức danh
-        //public string JobTitleName { set; get; } //-- 1 người - 1 chức danh name
         public string RevenueID { set; get; } //-- doanh thu của tổ chức
-        //public string RevenueName { set; get; } //-- doanh thu của tổ chức  name
         public string TypeOfBankId { set; get; } //-- Loai hinhf
-        //public string TypeOfBankName { set; get; } //-- Loai hinhf
+        public string VocativeName { set; get; }
+        public string DepartmentName { set; get; }
+        public string OriginName { set; get; }
+        public string JobTitleName { set; get; }
+        public string RevenueName { set; get; }
+        public string TypeOfBankName { set; get; }
+
         public DateTime CreatedAt { set; get; }
         public DateTime UpdatedAt { set; get; }
         public string CreateaBy { set; get; }
