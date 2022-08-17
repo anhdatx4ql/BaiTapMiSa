@@ -1,16 +1,28 @@
 <template>
   <div class="content">
-    <ContentPageLeft :customVocative="vocative" :customjobTitle="jobTitle"></ContentPageLeft>
-    <ContentPageCenter></ContentPageCenter>
-    <ContentPageRight></ContentPageRight>
+    <ContentPageLeft :customCarrer="carrer" :customVocative="vocative"></ContentPageLeft>
+    <ContentPageCenter :customersSearch="customers"
+     @CustomerDetails="customerDetails = $event"
+     :checkShowFormData="checkShowFormData"
+     @ShowFormData="checkShow = $event"
+     @CustomerInfo="CustomerInfo = $event"
+     ></ContentPageCenter>
+    <ContentPageRight :customerDetails="customerDetails"></ContentPageRight>
   </div>
 </template>
 
 <script>
+// nhúng các component con
 import ContentPageCenter from "./ContentPageCenter";
 import ContentPageLeft from "./ContentPageLeft";
 import ContentPageRight from "./ContentPageRight";
-import { getJSONAsync } from "../Services/BaseService.js";
+
+// nhúng service xử lý ngành nghề
+import {CarrerService} from '../Services/CarrerService';
+
+// nhúng service xử lý ngành nghề
+import {VocativeService} from '../Services/VocativeService';
+
 export default {
   name: "ContentPage",
   components: {
@@ -20,74 +32,77 @@ export default {
   },
   data() {
     return {
-      vocative: Object,
-      department: Object,
-      jobTitle: Object,
-      origin: Object,
-      revenue: Object,
-      typeOfBank: Object,
+      carrer: Object,
+      customers:Object,
+      vocative:Object,
+      customerDetails:Object,
+      checkShow:Boolean, // - cho phép
+      CustomerInfo:Object
     };
+  },
+  props:{
+      Customers: {
+        
+      },
+      checkShowFormData: Boolean
+  },
+  watch:{
+    // theo dõi object khách hàng
+    Customers(){
+     this.customers = this.Customers;
+    },
+
+    //theo dõi object chi tiết khách hàng
+    customerDetails(){
+      console.log(this.customerDetails)
+    },
+
+    // theo dõi check show form
+    checkShowFormData(){
+    },
+
+    // theo doi ShowFormData
+    checkShow(){
+      this.$emit('ShowFormData',true);
+    },
+
+    // the doi thong tin chi tiet de chinh sua
+    CustomerInfo(){
+      this.$emit('CustomerInfo',this.CustomerInfo);
+    }
   },
   created() {
 
-    // lay thong tin xung ho
-     getJSONAsync("https://localhost:44355/api/Vocative/getAllIVocative")
-      .then((res) => {
+    //Author: Phạm Văn Đạt
+    // function: lấy thông tin ngành nghề;
+    // created time: 11:50 15/08/2022
+    let _CarrerService = new CarrerService();
+    _CarrerService.getAll()
+    .then(res=>{
+        if(res.data.data)
+          this.carrer = res.data.data;
+      console.log('carrer: ',this.carrer)
+    })
+    .catch(e=>{
+      console.log(e)
+    });
+
+    
+    //Author: Phạm Văn Đạt
+    // function: lấy thông tin xưng hô
+    // created time: 11:50 15/08/2022
+    let _VocativeService = new VocativeService();
+    _VocativeService.getAll()
+    .then(res=>{
+      if(res.data.data)
         this.vocative = res.data.data;
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-    // lay thong tin phong ban
-     getJSONAsync(
-      "https://localhost:44355/api/Department/GetAllDepartment"
-    )
-      .then((res) => {
-        this.department = res.data.data;
-        console.log(this.department);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+      console.log(this.vocative);
+    })
+    .catch(e=>{
+      console.log(e)
+    })
+   
 
-    // lay thong tin nguon goc tiem nang
-    getJSONAsync("https://localhost:44355/api/Origin/getAllOrigin")
-      .then((res) => {
-        this.origin = res.data.data;
-        console.log(this.origin);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-
-    // lay thong tin chuc danh
-    getJSONAsync("https://localhost:44355/api/JobTitle/getAllJobTitle")
-      .then((res) => {
-        this.jobTitle = res.data.data;
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-
-    // lay thong tin doanh thu cua to chuc
-    getJSONAsync("https://localhost:44355/api/Revenues/getAllRevenue")
-      .then((res) => {
-        this.revenue = res.data.data;
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-
-    // lay loai hinh
-    getJSONAsync(
-      "https://localhost:44355/api/TypeOfBank/GetAllTypeOfBank"
-    )
-      .then((res) => {
-        this.typeOfBank = res.data.data;
-      })
-      .catch((e) => {
-        console.log(e);
-      });
   },
   // cho phép sử dụng tham số
   methods: {},

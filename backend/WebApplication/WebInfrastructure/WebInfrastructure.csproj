@@ -96,20 +96,20 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\Career.cs" />
+    <Compile Include="Entities\Customer.cs" />
+    <Compile Include="Entities\CustomerCareer.cs" />
+    <Compile Include="Entities\CustomerField.cs" />
+    <Compile Include="Entities\CustomerPotentialType.cs" />
     <Compile Include="Entities\Department.cs" />
-    <Compile Include="Entities\Fields.cs" />
+    <Compile Include="Entities\Field.cs" />
     <Compile Include="Entities\Files.cs" />
-    <Compile Include="Entities\JobTitle.cs" />
-    <Compile Include="Entities\Origin.cs" />
-    <Compile Include="Entities\Potential.cs" />
-    <Compile Include="Entities\Professions.cs" />
-    <Compile Include="Entities\Revenues.cs" />
-    <Compile Include="Entities\TypeOfBank.cs" />
-    <Compile Include="Entities\UserDetail.cs" />
-    <Compile Include="Entities\Users.cs" />
-    <Compile Include="Entities\User_Field.cs" />
-    <Compile Include="Entities\User_Potential.cs" />
-    <Compile Include="Entities\User_Profession.cs" />
+    <Compile Include="Entities\OrganizationType.cs" />
+    <Compile Include="Entities\Positions.cs" />
+    <Compile Include="Entities\PotentialType.cs" />
+    <Compile Include="Entities\Source.cs" />
+    <Compile Include="Entities\Turnover.cs" />
+    <Compile Include="Entities\CustomerDetail.cs" />
     <Compile Include="Entities\Vocative.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\DapperRepository.cs" />

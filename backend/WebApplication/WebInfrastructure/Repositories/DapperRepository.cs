@@ -8,11 +8,10 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WebInfrastructure.Entities;
 
-namespace WebInfrastructure.Repositories
+namespace WebInfrastructure
 {
-    public class DapperRepository: IDapperRepository
+    public class DapperRepository : IDapperRepository
     {
 
         public DapperRepository()
@@ -22,28 +21,28 @@ namespace WebInfrastructure.Repositories
 
         public DbConnection GetDbconnection()
         {
-            return new MySqlConnection("server=127.0.0.1;user id=root;password=Anhdat=123;port=3306;database=projectmisa;");
+            return new MySqlConnection(@"Server=localhost;Uid=root;Password=Anhdat=123;Database=baitaplonmisa");
             //return new MySqlConnection(@"Server=127.0.0.1;User Id=root;Password='Anhdat=123';Database=projectmisa");
         }
 
         // Author: Phạm Văn Đạt
         // Láy tất cả các cột trong bảng
         // Created: 11:12 07/08/2022
-        public async Task<List<T>> GetAllAsync<T>(string query)
+        public async Task<List<T>> GetAllAsync<T>(string query, DynamicParameters sp_params = null)
         {
             using (IDbConnection db = GetDbconnection())
             {
                 db.Open();
-                var results = await db.QueryAsync<T>(query);
+                var results = await db.QueryAsync<T>(query, sp_params);
                 db.Close();
                 return results.ToList();
             }
         }
 
         // Author: Phạm Văn Đạt
-        // Láy cột chứa id trong bảng - ch
+        // Láy cột trong bảng - ch
         // Created: 11:12 07/08/2022
-        public async Task<T> GetByIdAsync<T>(string query, Object sp_params = null)
+        public async Task<T> GetByIdAsync<T>(string query, DynamicParameters sp_params = null)
         {
             using (IDbConnection db = GetDbconnection())
             {
@@ -53,22 +52,6 @@ namespace WebInfrastructure.Repositories
                 return result;
             }
         }
-
-        /// Author: Phạm Văn Đạt
-        // Láy tất cả các cột trong bảng
-        // Created: 11:12 07/08/2022
-        public async Task<List<T>> GetTByNameAsync<T>(string query)
-        {
-            using (IDbConnection db = GetDbconnection())
-            {
-                db.Open();
-                var result = await db.QueryAsync<T>(query);
-                db.Close();
-                return result.ToList();
-            }
-        }
-
-
 
         /// Author: Phạm Văn Đạt
         // Tạo cột mới
@@ -90,17 +73,23 @@ namespace WebInfrastructure.Repositories
         // Tạo cột mới
         // Created: 20:12 07/08/2022
         //Execute: dùng để thao tác thay đổi dữ liệu  INSERT, UPDATE, and DELETE operations.
-        public async Task<int> UpdateTAsync<T>(string sql, T entity)
+        public async Task<int> UpdateTAsync<T>(string sql, Object sp_params = null)
         {
             using (IDbConnection db = GetDbconnection())
             {
                 db.Open();
-                var result = await db.ExecuteAsync(sql, entity);
+                var Result = await db.ExecuteAsync(sql,sp_params);
                 db.Close();
-                return result;
+                return Result;
             }
         }
 
+
+        /// <summary>
+        /// Xóa cột
+        /// Author: Phạm văn Đạt
+        /// 20;34 10/08/2022
+        /// </summary>
         public async Task<int> DeleteTAsync<T>(string sql, T entity)
         {
             using (IDbConnection db = GetDbconnection())
@@ -112,9 +101,15 @@ namespace WebInfrastructure.Repositories
             }
         }
 
-        public async Task<T> FindCloumnTAsync<T>(string tableName,string cloumnName, string cloumnValue)
+
+        /// <summary>
+        /// Tìm kiếm côt
+        /// Author: Phạm văn Đạt
+        /// 20;34 10/08/2022
+        /// </summary>
+        public async Task<T> FindCloumnTAsync<T>(string tableName, string cloumnName, string cloumnValue)
         {
-            string sql = "Select * from " + tableName + " WHERE " + cloumnName + " = '" + cloumnValue + "';";
+            string sql = "Select "+ cloumnName + " from " + tableName + " WHERE " + cloumnName + " = '" + cloumnValue + "';";
             using (IDbConnection db = GetDbconnection())
             {
                 db.Open();
@@ -125,44 +120,56 @@ namespace WebInfrastructure.Repositories
         }
 
 
-
-        //public async Task<List<T>> QueryAsync<T>(string sql, object parameters = null)
-        //{
-        //    using(IDbConnection db = GetDbconnection())
-        //    {
-        //        db.Open();
-        //        IEnumerable<T> results = await db.QueryAsync<T>(sql, parameters);
-        //        db.Close();
-        //        return results.ToList();
-        //    }
-
-        //}
-
-
-        public async Task<List<Users>> GetAsync()
+        /// <summary>
+        /// Tìm kiếm bản ghi
+        /// Author: Phạm văn Đạt
+        /// 20;34 10/08/2022
+        /// </summary>
+        public async Task<List<T>> FindTAsync<T>(string sql, Dictionary<string, object> sp_params = null)
         {
-
-            try
+            using (IDbConnection db = GetDbconnection())
             {
-                var connectionString = new MySqlConnection(@"Server=127.0.0.1;User Id=root;Password='Anhdat=123';Database=projectmisa");
-
-
-                var sql = "SELECT * FROM users";
-                using (var connection = connectionString)
-                {
-                    connection.Open();
-                    var result = await connection.QueryAsync<Users>(sql);
-                    connection.Close();
-                    return result.ToList();
-                }
+                db.Open();
+                var results = await db.QueryAsync<T>(sql, sp_params);
+                db.Close();
+                return results.ToList();
             }
-            catch
-            {
-                return null;
-            }
-
-
         }
+
+        /// DateTime: 21:03 10/08/2022
+        /// Xoá nhiều
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<int>> DeleteMultipleAsync(string sql, DynamicParameters sp_params = null)
+        {
+           
+            using (IDbConnection db = GetDbconnection())
+            {
+                db.Open();
+                var result = await db.QueryMultipleAsync(sql, sp_params);
+               
+                db.Close();
+                return result.Read<int>().ToList();
+            }
+        }
+
+
+
+        /// DateTime: 21:03 10/08/2022
+        /// truy vấn nhiều
+        /// </summary>
+        /// <returns></returns>
+        public async Task<int> CreateMultipleAsync(string sql, DynamicParameters sp_params = null)
+        {
+            using (IDbConnection db = GetDbconnection())
+            {
+                db.Open();
+                var result = await db.ExecuteAsync(sql, sp_params);
+                db.Close();
+                return result;
+            }
+        }
+
 
     }
 }

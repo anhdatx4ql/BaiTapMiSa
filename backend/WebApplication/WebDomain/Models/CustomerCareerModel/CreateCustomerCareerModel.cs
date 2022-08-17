@@ -1,0 +1,22 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace WebDomain
+{
+    /// <summary>
+    /// Author:Phạm Văn Đạt
+    /// Created: 9:29 13/08/2022
+    /// Form thêm ngành nghề khách hàng
+    /// </summary>
+    public class CreateCustomerCareerModel
+    {
+        public Guid CustomerId { set; get; } // mã khách hàng
+        public Guid CareerID { set; get; } // Mã nghề nghiệp,
+        public string CreatedBy { set; get; }// Người tạo
+        public string UpdatedBy { set; get; }// người cập nhật
+
+    }
+}

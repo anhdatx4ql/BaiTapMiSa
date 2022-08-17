@@ -1,4 +1,4 @@
-/*.nav{*/
-/*    grid-row: 2/3;*/
-/*    grid-column: 1/13;*/
-/*}*/
+.nav{
+   grid-row: 2/3;
+   grid-column: 1/13;
+}

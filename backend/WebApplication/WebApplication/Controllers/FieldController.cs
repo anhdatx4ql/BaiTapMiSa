@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WebDomain.Interfaces;
+using WebDomain;
 
 namespace WebApplication.Controllers
 {
@@ -12,28 +12,36 @@ namespace WebApplication.Controllers
     [ApiController]
     public class FieldController : ControllerBase
     {
-        private readonly IFieldService _field;
-        public FieldController(IFieldService field)
+
+        private readonly IFieldService _FieldService;
+        public FieldController(IFieldService FieldService)
         {
-            _field = field;
+            _FieldService = FieldService;
         }
 
-        [HttpGet("getAllIField")]
-        public async Task<IActionResult> getAllIField()
+
+        /// <summary>
+        /// Author: Phạm Văn Đạt
+        /// - Lấy danh sách lĩnh vực
+        /// DateTime: 4:32 15/08/2022
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ReponsitoryModel> GetAll()
         {
-            return Ok(await _field.getAllField());
+            return await _FieldService.GetAll();
         }
 
-        [HttpGet("GetFieldsByName/{name}")]
-        public async Task<IActionResult> GetFieldsByName(string name)
+        /// <summary>
+        /// Author: Phạm Văn Đạt
+        /// - Lấy danh sách ngành nghề theo tên
+        /// DateTime: 10:25 11/08/2022
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("{search}")]
+        public async Task<ReponsitoryModel> GetsByName(string search)
         {
-            return Ok(await _field.getFieldsByName(name));
-        }
-
-        [HttpGet("GetFieldById/{id}")]
-        public async Task<IActionResult> GetFieldById(string id)
-        {
-            return Ok(await _field.getFieldById(id));
+            return await _FieldService.GetAllByName(search);
         }
     }
 }

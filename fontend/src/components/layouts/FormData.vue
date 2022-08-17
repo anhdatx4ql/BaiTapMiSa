@@ -2,13 +2,13 @@
   <div class="form-container" v-if="checkShowFormData">
     <form @submit.prevent="OnSubmit">
       <div class="form-content">
-        <div class="form-container__title">
-          <div class="form-container__title-left">
-            <div class="filter-title__text" style="font-size: 20px">
+        <div class="form-container-title">
+          <div class="form-container-title-left">
+            <div class="filter-title-text" style="font-size: 20px">
               Thêm tiềm năng
             </div>
           </div>
-          <div class="form-container__title-right">
+          <div class="form-container-title-right">
             <button class="button">Lưu</button>
             <button class="button">Lưu và thêm</button>
             <button class="button" type="button" @click="HandlerCloseForm">
@@ -17,57 +17,57 @@
           </div>
         </div>
 
-        <div class="form-container__content">
+        <div class="form-container-content">
           <!-- ảnh tiềm năng -->
-          <div class="form-container__content-child">
-            <div class="form-container__content-child__title font-latin-bold">
+          <div class="form-container-content-child">
+            <div class="form-container-content-child-title font-latin-bold">
               Ảnh tiềm năng
             </div>
             <div
               class="
-                form-container__content-child--item
-                form-container__content-child__avatar
+                form-container-content-child-item
+                form-container-content-child-avatar
               "
             >
               <label class="label-file" for="file">
-                <span class="background-icon__avatar-push"></span>
+                <span class="background-icon-avatar-push"></span>
               </label>
               <input type="file" class="input-file" id="file" />
             </div>
           </div>
 
           <!-- thông tin chung -->
-          <div class="form-container__content-child">
-            <div class="form-container__content-child__title font-latin-bold">
+          <div class="form-container-content-child">
+            <div class="form-container-content-child-title font-latin-bold">
               Thông tin chung
             </div>
 
             <!-- Start Xưng hô -->
-            <div class="form-container__content-child__body">
-              <div class="form-container__content-child--item">
-                <div class="form-container__content-child--item__label">
+            <div class="form-container-content-child-body">
+              <div class="form-container-content-child-item">
+                <div class="form-container-content-child-item-label">
                   Xưng hô
                 </div>
-                <div class="form-container__content-child--item__input">
+                <div class="form-container-content-child-item-input">
                    <div class="combobox">
                     <div
                       class="combobox-child combobox-content"
                       @click="handlerClickCombobox"
                       check="false"
                     >
-                      <div class="combobox-content__select">- Không chọn -</div>
+                      <div class="combobox-content-select">- Không chọn -</div>
                       <div
                         class="
-                          combobox-content__icon
-                          button-icon__up-black
+                          combobox-content-icon
+                          button-icon-up-black
                           icon-font-16
                         "
                       ></div>
                     </div>
 
                     <div class="combobox-child combobox-data">
-                      <div class="combobox-data__search">
-                        <label class="label-input combobox-data__search-label">
+                      <div class="combobox-data-search">
+                        <label class="label-input combobox-data-search-label">
                           <input
                             type="text"
                             class="input input-icon"
@@ -76,42 +76,22 @@
                           <span class="background-icon-search-input"></span>
                         </label>
                       </div>
-                      <div class="combobox-data__child">
+                      <div class="combobox-data-child">
                         <div
-                          class="combobox-data__child-content"
+                          class="combobox-data-child-content"
                           @click="handlerClickComboboxData"
                           value="- Không chọn -"
                         >
                           - Không chọn -
                         </div>
                         <div
-                          class="combobox-data__child-content"
+                          class="combobox-data-child-content" v-for="v in vocative" :key="v.vocativeId"
                           @click="handlerClickComboboxData"
-                          value="Anh"
+                          :value="v.vocativeId"
                         >
-                          Anh
+                          {{v.vocativeName}}
                         </div>
-                        <div
-                          class="combobox-data__child-content"
-                          @click="handlerClickComboboxData"
-                          value="Chị"
-                        >
-                          Chị
-                        </div>
-                        <div
-                          class="combobox-data__child-content"
-                          @click="handlerClickComboboxData"
-                          value="Em"
-                        >
-                          Em
-                        </div>
-                        <div
-                          class="combobox-data__child-content"
-                          @click="handlerClickComboboxData"
-                          value="Bố"
-                        >
-                          Bố
-                        </div>
+                        
                       </div>
                     </div>
                   </div>
@@ -120,22 +100,22 @@
               <!-- End Xưng hô -->
 
               <!-- Start họ và đệm -->
-              <div class="form-container__content-child--item">
-                <div class="form-container__content-child--item__label">
+              <div class="form-container-content-child-item">
+                <div class="form-container-content-child-item-label">
                   Họ và đệm
                 </div>
-                <div class="form-container__content-child--item__input">
+                <div class="form-container-content-child-item-input">
                   <input type="text" class="input-content" :model="UserInfo.FirstName"/>
                 </div>
               </div>
               <!-- End Họ và đệm -->
 
               <!-- Start Tên -->
-              <div class="form-container__content-child--item">
-                <div class="form-container__content-child--item__label">
+              <div class="form-container-content-child-item">
+                <div class="form-container-content-child-item-label">
                   Tên <span class="not-required">*</span>
                 </div>
-                <div class="form-container__content-child--item__input">
+                <div class="form-container-content-child-item-input">
                   <input type="text" class="input-content" />
                   <span v-if="errors.UserId" class="span-error">Tên không được để trống</span>
                 </div>
@@ -143,11 +123,11 @@
               <!-- End Tên -->
 
               <!-- Start Họ và tên  -->
-              <div class="form-container__content-child--item">
-                <div class="form-container__content-child--item__label">
+              <div class="form-container-content-child-item">
+                <div class="form-container-content-child-item-label">
                   Họ và tên
                 </div>
-                <div class="form-container__content-child--item__input">
+                <div class="form-container-content-child-item-input">
                   <input
                     type="text"
                     class="input-content disabled-input"
@@ -158,30 +138,30 @@
               <!-- End họ và tên -->
 
               <!-- Start Phòng ban -->
-              <div class="form-container__content-child--item">
-                <div class="form-container__content-child--item__label">
+              <div class="form-container-content-child-item">
+                <div class="form-container-content-child-item-label">
                   Phòng ban
                 </div>
-                <div class="form-container__content-child--item__input">
+                <div class="form-container-content-child-item-input">
                   <div class="combobox">
                     <div
                       class="combobox-child combobox-content"
                       @click="handlerClickCombobox"
                       check="false"
                     >
-                      <div class="combobox-content__select">- Không chọn -</div>
+                      <div class="combobox-content-select">- Không chọn -</div>
                       <div
                         class="
-                          combobox-content__icon
-                          button-icon__up-black
+                          combobox-content-icon
+                          button-icon-up-black
                           icon-font-16
                         "
                       ></div>
                     </div>
 
                     <div class="combobox-child combobox-data">
-                      <div class="combobox-data__search">
-                        <label class="label-input combobox-data__search-label">
+                      <div class="combobox-data-search">
+                        <label class="label-input combobox-data-search-label">
                           <input
                             type="text"
                             class="input input-icon"
@@ -190,30 +170,30 @@
                           <span class="background-icon-search-input"></span>
                         </label>
                       </div>
-                      <div class="combobox-data__child">
+                      <div class="combobox-data-child">
                         <div
-                          class="combobox-data__child-content"
+                          class="combobox-data-child-content"
                           @click="handlerClickComboboxData"
                           value="- Không chọn -"
                         >
                           - Không chọn -
                         </div>
                         <div
-                          class="combobox-data__child-content"
+                          class="combobox-data-child-content"
                           @click="handlerClickComboboxData"
                           value="Bố cục"
                         >
                           Bố cục
                         </div>
                         <div
-                          class="combobox-data__child-content"
+                          class="combobox-data-child-content"
                           @click="handlerClickComboboxData"
                           value="Chức danh"
                         >
                           Chức danh
                         </div>
                         <div
-                          class="combobox-data__child-content"
+                          class="combobox-data-child-content"
                           @click="handlerClickComboboxData"
                           value="Doanh thu"
                         >
@@ -227,30 +207,30 @@
               <!-- End phòng ban -->
 
               <!--Start Chức danh -->
-              <div class="form-container__content-child--item">
-                <div class="form-container__content-child--item__label">
+              <div class="form-container-content-child-item">
+                <div class="form-container-content-child-item-label">
                   Chức danh
                 </div>
-                <div class="form-container__content-child--item__input">
+                <div class="form-container-content-child-item-input">
                   <div class="combobox">
                     <div
                       class="combobox-child combobox-content"
                       @click="handlerClickCombobox"
                       check="false"
                     >
-                      <div class="combobox-content__select">- Không chọn -</div>
+                      <div class="combobox-content-select">- Không chọn -</div>
                       <div
                         class="
-                          combobox-content__icon
-                          button-icon__up-black
+                          combobox-content-icon
+                          button-icon-up-black
                           icon-font-16
                         "
                       ></div>
                     </div>
 
                     <div class="combobox-child combobox-data">
-                      <div class="combobox-data__search">
-                        <label class="label-input combobox-data__search-label">
+                      <div class="combobox-data-search">
+                        <label class="label-input combobox-data-search-label">
                           <input
                             type="text"
                             class="input input-icon"
@@ -259,30 +239,30 @@
                           <span class="background-icon-search-input"></span>
                         </label>
                       </div>
-                      <div class="combobox-data__child">
+                      <div class="combobox-data-child">
                         <div
-                          class="combobox-data__child-content"
+                          class="combobox-data-child-content"
                           @click="handlerClickComboboxData"
                           value="- Không chọn -"
                         >
                           - Không chọn -
                         </div>
                         <div
-                          class="combobox-data__child-content"
+                          class="combobox-data-child-content"
                           @click="handlerClickComboboxData"
                           value="Giám đốc"
                         >
                           Giám đốc
                         </div>
                         <div
-                          class="combobox-data__child-content"
+                          class="combobox-data-child-content"
                           @click="handlerClickComboboxData"
                           value="Trưởng nhóm"
                         >
                           Trưởng nhóm
                         </div>
                         <div
-                          class="combobox-data__child-content"
+                          class="combobox-data-child-content"
                           @click="handlerClickComboboxData"
                           value="Nhân viên"
                         >
@@ -296,52 +276,52 @@
               <!-- END chức danh -->
 
               <!-- Start Đt di động -->
-              <div class="form-container__content-child--item">
-                <div class="form-container__content-child--item__label">
+              <div class="form-container-content-child-item">
+                <div class="form-container-content-child-item-label">
                   ĐT di động
                 </div>
-                <div class="form-container__content-child--item__input">
+                <div class="form-container-content-child-item-input">
                   <input type="text" class="input-content" />
                 </div>
               </div>
               <!-- End ĐT di động -->
 
               <!-- Start Đt cơ quan -->
-              <div class="form-container__content-child--item">
-                <div class="form-container__content-child--item__label">
+              <div class="form-container-content-child-item">
+                <div class="form-container-content-child-item-label">
                   ĐT di động
                 </div>
-                <div class="form-container__content-child--item__input">
+                <div class="form-container-content-child-item-input">
                   <input type="text" class="input-content" />
                 </div>
               </div>
               <!-- End ĐT cơ quan-->
 
               <!-- Start Nguồn gốc -->
-              <div class="form-container__content-child--item">
-                <div class="form-container__content-child--item__label">
+              <div class="form-container-content-child-item">
+                <div class="form-container-content-child-item-label">
                   Nguồn gốc
                 </div>
-                <div class="form-container__content-child--item__input">
+                <div class="form-container-content-child-item-input">
                   <div class="combobox">
                     <div
                       class="combobox-child combobox-content"
                       @click="handlerClickCombobox"
                       check="false"
                     >
-                      <div class="combobox-content__select">- Không chọn -</div>
+                      <div class="combobox-content-select">- Không chọn -</div>
                       <div
                         class="
-                          combobox-content__icon
-                          button-icon__up-black
+                          combobox-content-icon
+                          button-icon-up-black
                           icon-font-16
                         "
                       ></div>
                     </div>
 
                     <div class="combobox-child combobox-data">
-                      <div class="combobox-data__search">
-                        <label class="label-input combobox-data__search-label">
+                      <div class="combobox-data-search">
+                        <label class="label-input combobox-data-search-label">
                           <input
                             type="text"
                             class="input input-icon"
@@ -350,30 +330,30 @@
                           <span class="background-icon-search-input"></span>
                         </label>
                       </div>
-                      <div class="combobox-data__child">
+                      <div class="combobox-data-child">
                         <div
-                          class="combobox-data__child-content"
+                          class="combobox-data-child-content"
                           @click="handlerClickComboboxData"
                           value="- Không chọn -"
                         >
                           - Không chọn -
                         </div>
                         <div
-                          class="combobox-data__child-content"
+                          class="combobox-data-child-content"
                           @click="handlerClickComboboxData"
                           value="Giám đốc"
                         >
                           Giám đốc
                         </div>
                         <div
-                          class="combobox-data__child-content"
+                          class="combobox-data-child-content"
                           @click="handlerClickComboboxData"
                           value="Trưởng nhóm"
                         >
                           Trưởng nhóm
                         </div>
                         <div
-                          class="combobox-data__child-content"
+                          class="combobox-data-child-content"
                           @click="handlerClickComboboxData"
                           value="Nhân viên"
                         >
@@ -387,23 +367,23 @@
               <!-- End Nguồn gốc -->
 
               <!-- Start Loại tiềm năng -->
-              <div class="form-container__content-child--item">
-                <div class="form-container__content-child--item__label">
+              <div class="form-container-content-child-item">
+                <div class="form-container-content-child-item-label">
                   Loại tiềm năng
                 </div>
-                <div class="form-container__content-child--item__input">
-                  <div class="combobox combobox__mul">
+                <div class="form-container-content-child-item-input">
+                  <div class="combobox combobox-mul">
                     <div
                       class="combobox-child combobox-content"
                       @click="handlerClickComboboxMul"
                       check="false"
                     >
-                      <div class="combobox-content__select">- Không chọn -</div>
+                      <div class="combobox-content-select">- Không chọn -</div>
                     </div>
 
                     <div class="combobox-child combobox-data">
-                      <div class="combobox-data__search">
-                        <label class="label-input combobox-data__search-label">
+                      <div class="combobox-data-search">
+                        <label class="label-input combobox-data-search-label">
                           <input
                             type="text"
                             class="input input-icon"
@@ -412,30 +392,30 @@
                           <span class="background-icon-search-input"></span>
                         </label>
                       </div>
-                      <div class="combobox-data__child">
+                      <div class="combobox-data-child">
                         <div
-                          class="combobox-data__child-content"
+                          class="combobox-data-child-content"
                           @click="selectValueComboboxMulData"
                           value="- Không chọn -"
                         >
                           - Không chọn -
                         </div>
                         <div
-                          class="combobox-data__child-content"
+                          class="combobox-data-child-content"
                           @click="selectValueComboboxMulData"
                           value="Giám đốc"
                         >
                           Giám đốc
                         </div>
                         <div
-                          class="combobox-data__child-content"
+                          class="combobox-data-child-content"
                           @click="selectValueComboboxMulData"
                           value="Trưởng nhóm"
                         >
                           Trưởng nhóm
                         </div>
                         <div
-                          class="combobox-data__child-content"
+                          class="combobox-data-child-content"
                           @click="selectValueComboboxMulData"
                           value="Nhân viên"
                         >
@@ -449,55 +429,55 @@
               <!-- End Loại tiềm năng -->
 
               <!-- Start Zalo -->
-              <div class="form-container__content-child--item">
-                <div class="form-container__content-child--item__label">
+              <div class="form-container-content-child-item">
+                <div class="form-container-content-child-item-label">
                   Zalo
                 </div>
-                <div class="form-container__content-child--item__input">
+                <div class="form-container-content-child-item-input">
                   <input type="text" class="input-content" />
                 </div>
               </div>
               <!-- End Zalo -->
 
               <!-- Start Email cá nhân -->
-              <div class="form-container__content-child--item">
-                <div class="form-container__content-child--item__label">
+              <div class="form-container-content-child-item">
+                <div class="form-container-content-child-item-label">
                   Email cá nhân
                 </div>
-                <div class="form-container__content-child--item__input">
+                <div class="form-container-content-child-item-input">
                   <input type="text" class="input-content" />
                 </div>
               </div>
               <!-- EndEmail cá nhân -->
 
               <!-- Start cơ quan-->
-              <div class="form-container__content-child--item">
-                <div class="form-container__content-child--item__label">
+              <div class="form-container-content-child-item">
+                <div class="form-container-content-child-item-label">
                   Email cơ quan
                 </div>
-                <div class="form-container__content-child--item__input">
+                <div class="form-container-content-child-item-input">
                   <input type="text" class="input-content" />
                 </div>
               </div>
               <!-- EndEmail cơ quan-->
 
               <!-- Start tổ chức -->
-              <div class="form-container__content-child--item">
-                <div class="form-container__content-child--item__label">
+              <div class="form-container-content-child-item">
+                <div class="form-container-content-child-item-label">
                   Tổ chức
                 </div>
-                <div class="form-container__content-child--item__input">
+                <div class="form-container-content-child-item-input">
                   <input type="text" class="input-content" />
                 </div>
               </div>
               <!-- End Tổ chức-->
 
               <!-- Start Mã số thuế-->
-              <div class="form-container__content-child--item">
-                <div class="form-container__content-child--item__label">
+              <div class="form-container-content-child-item">
+                <div class="form-container-content-child-item-label">
                   Mã số thuế
                 </div>
-                <div class="form-container__content-child--item__input">
+                <div class="form-container-content-child-item-input">
                   <input type="text" class="input-content" />
                 </div>
               </div>
@@ -506,18 +486,18 @@
           </div>
 
           <!-- thông tin tổ chức -->
-          <div class="form-container__content-child">
-            <div class="form-container__content-child__title font-latin-bold">
+          <div class="form-container-content-child">
+            <div class="form-container-content-child-title font-latin-bold">
               Thông tin tổ chức
             </div>
 
             <!-- Start Tài khoản ngân hàng-->
-            <div class="form-container__content-child__body">
-              <div class="form-container__content-child--item">
-                <div class="form-container__content-child--item__label">
+            <div class="form-container-content-child-body">
+              <div class="form-container-content-child-item">
+                <div class="form-container-content-child-item-label">
                   Tài khoản ngân hàng
                 </div>
-                <div class="form-container__content-child--item__input">
+                <div class="form-container-content-child-item-input">
                   <input type="text" class="input-content input-error" />
                   <span class="span-error">Tên không được để trống</span>
                 </div>
@@ -525,33 +505,33 @@
               <!-- End Tài khoản ngân hàng -->
 
               <!-- Start Mở tại ngân hàng -->
-              <div class="form-container__content-child--item">
-                <div class="form-container__content-child--item__label">
+              <div class="form-container-content-child-item">
+                <div class="form-container-content-child-item-label">
                   Mở tại ngân hàng
                 </div>
-                <div class="form-container__content-child--item__input">
+                <div class="form-container-content-child-item-input">
                   <input type="text" class="input-content" />
                 </div>
               </div>
               <!-- End Mở tại ngân hàng-->
 
               <!-- Start Ngày thành lập -->
-              <div class="form-container__content-child--item">
-                <div class="form-container__content-child--item__label">
+              <div class="form-container-content-child-item">
+                <div class="form-container-content-child-item-label">
                   Ngày thành lập
                 </div>
-                <div class="form-container__content-child--item__input">
+                <div class="form-container-content-child-item-input">
                   <input type="date" class="input-content" />
                 </div>
               </div>
               <!-- End Ngày thành lập -->
 
               <!-- Start Loại hình  -->
-              <div class="form-container__content-child--item">
-                <div class="form-container__content-child--item__label">
+              <div class="form-container-content-child-item">
+                <div class="form-container-content-child-item-label">
                   Loại hình
                 </div>
-                <div class="form-container__content-child--item__input">
+                <div class="form-container-content-child-item-input">
                   <input
                     type="text"
                     class="input-content disabled-input"
@@ -562,30 +542,30 @@
               <!-- End Loại hình -->
 
               <!-- Start Lĩnh vực -->
-              <div class="form-container__content-child--item">
-                <div class="form-container__content-child--item__label">
+              <div class="form-container-content-child-item">
+                <div class="form-container-content-child-item-label">
                   Lĩnh vực
                 </div>
-                <div class="form-container__content-child--item__input">
+                <div class="form-container-content-child-item-input">
                   <div class="combobox">
                     <div
                       class="combobox-child combobox-content"
                       @click="handlerClickCombobox"
                       check="false"
                     >
-                      <div class="combobox-content__select">- Không chọn -</div>
+                      <div class="combobox-content-select">- Không chọn -</div>
                       <div
                         class="
-                          combobox-content__icon
-                          button-icon__up-black
+                          combobox-content-icon
+                          button-icon-up-black
                           icon-font-16
                         "
                       ></div>
                     </div>
 
                     <div class="combobox-child combobox-data">
-                      <div class="combobox-data__search">
-                        <label class="label-input combobox-data__search-label">
+                      <div class="combobox-data-search">
+                        <label class="label-input combobox-data-search-label">
                           <input
                             type="text"
                             class="input input-icon"
@@ -594,30 +574,30 @@
                           <span class="background-icon-search-input"></span>
                         </label>
                       </div>
-                      <div class="combobox-data__child">
+                      <div class="combobox-data-child">
                         <div
-                          class="combobox-data__child-content"
+                          class="combobox-data-child-content"
                           @click="handlerClickComboboxData"
                           value="- Không chọn -"
                         >
                           - Không chọn -
                         </div>
                         <div
-                          class="combobox-data__child-content"
+                          class="combobox-data-child-content"
                           @click="handlerClickComboboxData"
                           value="Bố cục"
                         >
                           Bố cục
                         </div>
                         <div
-                          class="combobox-data__child-content"
+                          class="combobox-data-child-content"
                           @click="handlerClickComboboxData"
                           value="Chức danh"
                         >
                           Chức danh
                         </div>
                         <div
-                          class="combobox-data__child-content"
+                          class="combobox-data-child-content"
                           @click="handlerClickComboboxData"
                           value="Doanh thu"
                         >
@@ -631,30 +611,30 @@
               <!-- End Lĩnh vực -->
 
               <!--Start Ngành nghề -->
-              <div class="form-container__content-child--item">
-                <div class="form-container__content-child--item__label">
+              <div class="form-container-content-child-item">
+                <div class="form-container-content-child-item-label">
                   Ngành nghề
                 </div>
-                <div class="form-container__content-child--item__input">
+                <div class="form-container-content-child-item-input">
                   <div class="combobox">
                     <div
                       class="combobox-child combobox-content"
                       @click="handlerClickCombobox"
                       check="false"
                     >
-                      <div class="combobox-content__select">- Không chọn -</div>
+                      <div class="combobox-content-select">- Không chọn -</div>
                       <div
                         class="
-                          combobox-content__icon
-                          button-icon__up-black
+                          combobox-content-icon
+                          button-icon-up-black
                           icon-font-16
                         "
                       ></div>
                     </div>
 
                     <div class="combobox-child combobox-data">
-                      <div class="combobox-data__search">
-                        <label class="label-input combobox-data__search-label">
+                      <div class="combobox-data-search">
+                        <label class="label-input combobox-data-search-label">
                           <input
                             type="text"
                             class="input input-icon"
@@ -663,30 +643,30 @@
                           <span class="background-icon-search-input"></span>
                         </label>
                       </div>
-                      <div class="combobox-data__child">
+                      <div class="combobox-data-child">
                         <div
-                          class="combobox-data__child-content"
+                          class="combobox-data-child-content"
                           @click="handlerClickComboboxData"
                           value="- Không chọn -"
                         >
                           - Không chọn -
                         </div>
                         <div
-                          class="combobox-data__child-content"
+                          class="combobox-data-child-content"
                           @click="handlerClickComboboxData"
                           value="Giám đốc"
                         >
                           Giám đốc
                         </div>
                         <div
-                          class="combobox-data__child-content"
+                          class="combobox-data-child-content"
                           @click="handlerClickComboboxData"
                           value="Trưởng nhóm"
                         >
                           Trưởng nhóm
                         </div>
                         <div
-                          class="combobox-data__child-content"
+                          class="combobox-data-child-content"
                           @click="handlerClickComboboxData"
                           value="Nhân viên"
                         >
@@ -700,30 +680,30 @@
               <!-- END Ngành nghề -->
 
               <!-- Start Doanh thu-->
-              <div class="form-container__content-child--item">
-                <div class="form-container__content-child--item__label">
+              <div class="form-container-content-child-item">
+                <div class="form-container-content-child-item-label">
                   Doanh thu
                 </div>
-                <div class="form-container__content-child--item__input">
+                <div class="form-container-content-child-item-input">
                   <div class="combobox">
                     <div
                       class="combobox-child combobox-content"
                       @click="handlerClickCombobox"
                       check="false"
                     >
-                      <div class="combobox-content__select">- Không chọn -</div>
+                      <div class="combobox-content-select">- Không chọn -</div>
                       <div
                         class="
-                          combobox-content__icon
-                          button-icon__up-black
+                          combobox-content-icon
+                          button-icon-up-black
                           icon-font-16
                         "
                       ></div>
                     </div>
 
                     <div class="combobox-child combobox-data">
-                      <div class="combobox-data__search">
-                        <label class="label-input combobox-data__search-label">
+                      <div class="combobox-data-search">
+                        <label class="label-input combobox-data-search-label">
                           <input
                             type="text"
                             class="input input-icon"
@@ -732,30 +712,30 @@
                           <span class="background-icon-search-input"></span>
                         </label>
                       </div>
-                      <div class="combobox-data__child">
+                      <div class="combobox-data-child">
                         <div
-                          class="combobox-data__child-content"
+                          class="combobox-data-child-content"
                           @click="handlerClickComboboxData"
                           value="- Không chọn -"
                         >
                           - Không chọn -
                         </div>
                         <div
-                          class="combobox-data__child-content"
+                          class="combobox-data-child-content"
                           @click="handlerClickComboboxData"
                           value="Giám đốc"
                         >
                           Giám đốc
                         </div>
                         <div
-                          class="combobox-data__child-content"
+                          class="combobox-data-child-content"
                           @click="handlerClickComboboxData"
                           value="Trưởng nhóm"
                         >
                           Trưởng nhóm
                         </div>
                         <div
-                          class="combobox-data__child-content"
+                          class="combobox-data-child-content"
                           @click="handlerClickComboboxData"
                           value="Nhân viên"
                         >
@@ -773,37 +753,37 @@
           <!-- end thông tin tổ chức -->
 
           <!-- start Thông tin địa chỉ -->
-          <div class="form-container__content-child">
-            <div class="form-container__content-child__title font-latin-bold">
+          <div class="form-container-content-child">
+            <div class="form-container-content-child-title font-latin-bold">
               Thông tin địa chỉ
             </div>
 
-            <div class="form-container__content-child__body">
+            <div class="form-container-content-child-body">
               <!-- Start Quốc Gia -->
-              <div class="form-container__content-child--item">
-                <div class="form-container__content-child--item__label">
+              <div class="form-container-content-child-item">
+                <div class="form-container-content-child-item-label">
                   Quốc gia
                 </div>
-                <div class="form-container__content-child--item__input">
+                <div class="form-container-content-child-item-input">
                   <div class="combobox">
                     <div
                       class="combobox-child combobox-content"
                       @click="handlerClickCombobox"
                       check="false"
                     >
-                      <div class="combobox-content__select">- Không chọn -</div>
+                      <div class="combobox-content-select">- Không chọn -</div>
                       <div
                         class="
-                          combobox-content__icon
-                          button-icon__up-black
+                          combobox-content-icon
+                          button-icon-up-black
                           icon-font-16
                         "
                       ></div>
                     </div>
 
                     <div class="combobox-child combobox-data">
-                      <div class="combobox-data__search">
-                        <label class="label-input combobox-data__search-label">
+                      <div class="combobox-data-search">
+                        <label class="label-input combobox-data-search-label">
                           <input
                             type="text"
                             class="input input-icon"
@@ -812,30 +792,30 @@
                           <span class="background-icon-search-input"></span>
                         </label>
                       </div>
-                      <div class="combobox-data__child">
+                      <div class="combobox-data-child">
                         <div
-                          class="combobox-data__child-content"
+                          class="combobox-data-child-content"
                           @click="handlerClickComboboxData"
                           value="- Không chọn -"
                         >
                           - Không chọn -
                         </div>
                         <div
-                          class="combobox-data__child-content"
+                          class="combobox-data-child-content"
                           @click="handlerClickComboboxData"
                           value="Bố cục"
                         >
                           Bố cục
                         </div>
                         <div
-                          class="combobox-data__child-content"
+                          class="combobox-data-child-content"
                           @click="handlerClickComboboxData"
                           value="Chức danh"
                         >
                           Chức danh
                         </div>
                         <div
-                          class="combobox-data__child-content"
+                          class="combobox-data-child-content"
                           @click="handlerClickComboboxData"
                           value="Doanh thu"
                         >
@@ -849,30 +829,30 @@
               <!-- End Quốc Gia -->
 
               <!--Start Tỉnh/Thành phố-->
-              <div class="form-container__content-child--item">
-                <div class="form-container__content-child--item__label">
+              <div class="form-container-content-child-item">
+                <div class="form-container-content-child-item-label">
                   Tỉnh/Thành phố
                 </div>
-                <div class="form-container__content-child--item__input">
+                <div class="form-container-content-child-item-input">
                   <div class="combobox">
                     <div
                       class="combobox-child combobox-content"
                       @click="handlerClickCombobox"
                       check="false"
                     >
-                      <div class="combobox-content__select">- Không chọn -</div>
+                      <div class="combobox-content-select">- Không chọn -</div>
                       <div
                         class="
-                          combobox-content__icon
-                          button-icon__up-black
+                          combobox-content-icon
+                          button-icon-up-black
                           icon-font-16
                         "
                       ></div>
                     </div>
 
                     <div class="combobox-child combobox-data">
-                      <div class="combobox-data__search">
-                        <label class="label-input combobox-data__search-label">
+                      <div class="combobox-data-search">
+                        <label class="label-input combobox-data-search-label">
                           <input
                             type="text"
                             class="input input-icon"
@@ -881,30 +861,30 @@
                           <span class="background-icon-search-input"></span>
                         </label>
                       </div>
-                      <div class="combobox-data__child">
+                      <div class="combobox-data-child">
                         <div
-                          class="combobox-data__child-content"
+                          class="combobox-data-child-content"
                           @click="handlerClickComboboxData"
                           value="- Không chọn -"
                         >
                           - Không chọn -
                         </div>
                         <div
-                          class="combobox-data__child-content"
+                          class="combobox-data-child-content"
                           @click="handlerClickComboboxData"
                           value="Giám đốc"
                         >
                           Giám đốc
                         </div>
                         <div
-                          class="combobox-data__child-content"
+                          class="combobox-data-child-content"
                           @click="handlerClickComboboxData"
                           value="Trưởng nhóm"
                         >
                           Trưởng nhóm
                         </div>
                         <div
-                          class="combobox-data__child-content"
+                          class="combobox-data-child-content"
                           @click="handlerClickComboboxData"
                           value="Nhân viên"
                         >
@@ -918,30 +898,30 @@
               <!-- END Tỉnh/Thành phố -->
 
               <!-- Start Quận/Huyện -->
-              <div class="form-container__content-child--item">
-                <div class="form-container__content-child--item__label">
+              <div class="form-container-content-child-item">
+                <div class="form-container-content-child-item-label">
                   Quận/Huyện
                 </div>
-                <div class="form-container__content-child--item__input">
+                <div class="form-container-content-child-item-input">
                   <div class="combobox">
                     <div
                       class="combobox-child combobox-content"
                       @click="handlerClickCombobox"
                       check="false"
                     >
-                      <div class="combobox-content__select">- Không chọn -</div>
+                      <div class="combobox-content-select">- Không chọn -</div>
                       <div
                         class="
-                          combobox-content__icon
-                          button-icon__up-black
+                          combobox-content-icon
+                          button-icon-up-black
                           icon-font-16
                         "
                       ></div>
                     </div>
 
                     <div class="combobox-child combobox-data">
-                      <div class="combobox-data__search">
-                        <label class="label-input combobox-data__search-label">
+                      <div class="combobox-data-search">
+                        <label class="label-input combobox-data-search-label">
                           <input
                             type="text"
                             class="input input-icon"
@@ -950,30 +930,30 @@
                           <span class="background-icon-search-input"></span>
                         </label>
                       </div>
-                      <div class="combobox-data__child">
+                      <div class="combobox-data-child">
                         <div
-                          class="combobox-data__child-content"
+                          class="combobox-data-child-content"
                           @click="handlerClickComboboxData"
                           value="- Không chọn -"
                         >
                           - Không chọn -
                         </div>
                         <div
-                          class="combobox-data__child-content"
+                          class="combobox-data-child-content"
                           @click="handlerClickComboboxData"
                           value="Giám đốc"
                         >
                           Giám đốc
                         </div>
                         <div
-                          class="combobox-data__child-content"
+                          class="combobox-data-child-content"
                           @click="handlerClickComboboxData"
                           value="Trưởng nhóm"
                         >
                           Trưởng nhóm
                         </div>
                         <div
-                          class="combobox-data__child-content"
+                          class="combobox-data-child-content"
                           @click="handlerClickComboboxData"
                           value="Nhân viên"
                         >
@@ -987,30 +967,30 @@
               <!-- End Quận/Huyện -->
 
               <!-- Start Phường/Xã -->
-              <div class="form-container__content-child--item">
-                <div class="form-container__content-child--item__label">
+              <div class="form-container-content-child-item">
+                <div class="form-container-content-child-item-label">
                   Phường/Xã
                 </div>
-                <div class="form-container__content-child--item__input">
+                <div class="form-container-content-child-item-input">
                   <div class="combobox">
                     <div
                       class="combobox-child combobox-content"
                       @click="handlerClickCombobox"
                       check="false"
                     >
-                      <div class="combobox-content__select">- Không chọn -</div>
+                      <div class="combobox-content-select">- Không chọn -</div>
                       <div
                         class="
-                          combobox-content__icon
-                          button-icon__up-black
+                          combobox-content-icon
+                          button-icon-up-black
                           icon-font-16
                         "
                       ></div>
                     </div>
 
                     <div class="combobox-child combobox-data">
-                      <div class="combobox-data__search">
-                        <label class="label-input combobox-data__search-label">
+                      <div class="combobox-data-search">
+                        <label class="label-input combobox-data-search-label">
                           <input
                             type="text"
                             class="input input-icon"
@@ -1019,30 +999,30 @@
                           <span class="background-icon-search-input"></span>
                         </label>
                       </div>
-                      <div class="combobox-data__child">
+                      <div class="combobox-data-child">
                         <div
-                          class="combobox-data__child-content"
+                          class="combobox-data-child-content"
                           @click="handlerClickComboboxData"
                           value="- Không chọn -"
                         >
                           - Không chọn -
                         </div>
                         <div
-                          class="combobox-data__child-content"
+                          class="combobox-data-child-content"
                           @click="handlerClickComboboxData"
                           value="Giám đốc"
                         >
                           Giám đốc
                         </div>
                         <div
-                          class="combobox-data__child-content"
+                          class="combobox-data-child-content"
                           @click="handlerClickComboboxData"
                           value="Trưởng nhóm"
                         >
                           Trưởng nhóm
                         </div>
                         <div
-                          class="combobox-data__child-content"
+                          class="combobox-data-child-content"
                           @click="handlerClickComboboxData"
                           value="Nhân viên"
                         >
@@ -1056,33 +1036,33 @@
               <!-- End Phường/Xã -->
 
               <!-- Start Số nhà, Đường phố -->
-              <div class="form-container__content-child--item">
-                <div class="form-container__content-child--item__label">
+              <div class="form-container-content-child-item">
+                <div class="form-container-content-child-item-label">
                   Số nhà, Đường phố
                 </div>
-                <div class="form-container__content-child--item__input">
+                <div class="form-container-content-child-item-input">
                   <input type="text" class="input-content" />
                 </div>
               </div>
               <!-- End Số nhà, Đường phố-->
 
               <!-- Start Mã vùng -->
-              <div class="form-container__content-child--item">
-                <div class="form-container__content-child--item__label">
+              <div class="form-container-content-child-item">
+                <div class="form-container-content-child-item-label">
                   Mã vùng
                 </div>
-                <div class="form-container__content-child--item__input">
+                <div class="form-container-content-child-item-input">
                   <input type="text" class="input-content" />
                 </div>
               </div>
               <!-- Mã vùng -->
 
               <!-- Start Địa chỉ -->
-              <div class="form-container__content-child--item">
-                <div class="form-container__content-child--item__label">
+              <div class="form-container-content-child-item">
+                <div class="form-container-content-child-item-label">
                   Mã vùng
                 </div>
-                <div class="form-container__content-child--item__input">
+                <div class="form-container-content-child-item-input">
                   <textarea class="textarea"></textarea>
                 </div>
               </div>
@@ -1092,23 +1072,23 @@
           <!-- end thông tin địa chỉ -->
 
           <!-- Start thông tin mô tả -->
-          <div class="form-container__content-child">
-            <div class="form-container__content-child__title font-latin-bold">
+          <div class="form-container-content-child">
+            <div class="form-container-content-child-title font-latin-bold">
               Thông tin mô tả
             </div>
 
-            <div class="form-container__content-child__body">
+            <div class="form-container-content-child-body">
               <!-- Start thông tin mô tả -->
               <div
                 class="
-                  form-container__content-child--item
-                  form-container__description
+                  form-container-content-child-item
+                  form-container-description
                 "
               >
-                <div class="form-container__content-child--item__label">
+                <div class="form-container-content-child-item-label">
                   Mô tả
                 </div>
-                <div class="form-container__content-child--item__input">
+                <div class="form-container-content-child-item-input">
                   <textarea class="textarea textarea-description"></textarea>
                 </div>
               </div>
@@ -1118,34 +1098,34 @@
           <!-- End thông tin mô tả -->
 
           <!-- Start thông tin hệ thống -->
-          <div class="form-container__content-child">
-            <div class="form-container__content-child__title font-latin-bold">
+          <div class="form-container-content-child">
+            <div class="form-container-content-child-title font-latin-bold">
               Thông tin hệ thống
             </div>
 
-            <div class="form-container__content-child__body">
+            <div class="form-container-content-child-body">
               <!-- Start dùng chung-->
               <div
                 class="
-                  form-container__content-child--item
-                  form-container__description
+                  form-container-content-child-item
+                  form-container-description
                 "
               >
-                <div class="form-container__content-child--item__label">
+                <div class="form-container-content-child-item-label">
                   Dùng chung
                 </div>
-                <div class="form-container__content-child--item__input">
+                <div class="form-container-content-child-item-input">
                   <input type="checkbox" />
                 </div>
               </div>
               <!-- End dùng chung -->
 
               <!-- Start Mã tiềm năng -->
-              <div class="form-container__content-child--item">
-                <div class="form-container__content-child--item__label">
+              <div class="form-container-content-child-item">
+                <div class="form-container-content-child-item-label">
                   Mã tiềm năng
                 </div>
-                <div class="form-container__content-child--item__input">
+                <div class="form-container-content-child-item-input">
                   <input
                     type="text"
                     class="input-content"
@@ -1164,25 +1144,41 @@
 </template>
 
 <script>
+// các hàm xử lý click combobox
 import {
   ClickShowHideComboboxData,
   selectValueComboboxData,
   ClickShowHideComboboxMulData,
 } from "../../js/test";
+
+// hàm xử lý hiển thị lỗi
 import { ErrorsValidation } from "../../js/validation";
+
+// nhúng service xử lý customer detail
+import {VocativeService} from '../Services/VocativeService';
 
 export default {
   name: "FormDataComponent",
   components: {},
   created() {
-    // alert('khoi tao');
+  let _VocativeService = new VocativeService();
+    _VocativeService.getAll()
+    .then(res=>{
+      if(res.data.data)
+        this.vocative = res.data.data;
+      console.log(this.vocative);
+    })
+    .catch(e=>{
+      console.log(e)
+    })
   },
   props: {
     checkShowFormData: Boolean,
-    User1: Object,
+    CustomerInfo:{}
   },
   data() {
     return {
+      vocative:Object,
        errors: {
         UserId: "",
         LastName: "",
@@ -1224,6 +1220,11 @@ export default {
         UpdatedBy: "",
       },
     };
+  },
+  watch:{
+    CustomerInfo(){
+      console.log(this.CustomerInfo)
+    }
   },
   methods: {
     HandlerCloseForm() {

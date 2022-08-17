@@ -2,7 +2,7 @@
 <template>
   <div class="container">
     <!-- Start header -->
-    <Header></Header>
+    <Header @CustomerByName="customers = $event"></Header>
     <!-- End Header -->
 
     <!-- Start Toolbar -->
@@ -14,20 +14,24 @@
     <!-- End Toolbar -->
 
     <!-- Start Content -->
-    <ContentPage @SelectInfoUser="User = $event"></ContentPage>
+    <ContentPage :Customers="customers"
+     :checkShowFormData="checkShowForm"
+      @ShowFormData="checkShowForm = $event"
+      @CustomerInfo="CustomerInfo = $event">
+      </ContentPage>
     <!-- End content -->
 
     <!-- Start Form create - update -->
     <FormData
       :checkShowFormData="checkShowForm"
       @CloseFormData="checkShowForm = $event"
+      :CustomerInfo="CustomerInfo"
     ></FormData>
     <!-- End Form create - update -->
   </div>
 </template>
 
 <script>
-import { info, students } from "./js/demo";
 import Header from "./components/layouts/Header";
 import Toolbar from "./components/layouts/Toolbar";
 import ContentPage from "./components/layouts/ContentPage";
@@ -58,13 +62,15 @@ export default {
   },
   data() {
     return {
-      username: "",
+      customers: {},
       // phải lưu cho nó 1 tên biến mới đưa lên được
-      customInfo: info,
-      customStudents: students,
-      checkShowForm: false
+      checkShowForm: false,
+      CustomerInfo:{}
      
     };
+  },
+  watch:{
+
   },
   beforeCreate() {
     

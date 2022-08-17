@@ -5,20 +5,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WebInfrastructure.Entities
+namespace WebInfrastructure
 {
-    // bảng lưu file
+    /// <summary>
+    /// Author:Phạm văn Đạt
+    /// Created: 16:43 12:08:2022
+    /// Bảng lưu ảnh
+    /// </summary>
     public class Files
     {
         [Key]
-        public string FileId { set; get; } // varchar(255) not null,
-        public string FileName { set; get; } //varchar(255) not null,
-        public string FileExtension { set; get; } // varchar(255) not null,
-        public string FileCapacity { set; get; } // long not null,
-        public DateTime CreatedAt { set; get; }// datetime,
-        public DateTime UpdatedAt { set; get; }// datetime,
-        public string CreatedBy { set; get; }// varchar(255),
-        public string UpdatedBy { set; get; }// varchar(255),
+        public Guid FileId { set; get; } // mã file ảnh
+        public Guid EntityId { set; get; } // Mã chủ sở hữu
+        public string FileName { set; get; } //tên file
+        public string FileExtension { set; get; } // vđuôi file
+        public string FileCapacity { set; get; } // dung lượng
+        public DateTime CreatedAt { set; get; }// ngày tạo
+        public DateTime UpdatedAt { set; get; }// ngày cập nhật
+        public string CreatedBy { set; get; }// người tạo 
+        public string UpdatedBy { set; get; }// người cập nhật
 
     }
 }

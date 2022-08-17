@@ -7,13 +7,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WebDomain.Interfaces;
-using WebDomain.Services;
-using WebInfrastructure.Repositories;
+using WebDomain;
+using WebInfrastructure;
 
 namespace WebApplication
 {
@@ -45,20 +45,23 @@ namespace WebApplication
 
             services.AddControllers();
             //services.RegisterServices();
+            // Khai báo service
             services.AddScoped<IDapperRepository, DapperRepository>();
-            services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IDepartmentService, DepartmentService>();
-            services.AddScoped<IFieldService, FieldService>();
-            services.AddScoped<IJobTitleService, JobTitleService>();
-            services.AddScoped<IOriginService, OriginService>();
-            services.AddScoped<IPotentialService, PotentialService>();
-            services.AddScoped<IProfessionsService, ProfessionsService>();
-            services.AddScoped<IRevenuesService, RevenuesService>();
-            services.AddScoped<IUserFieldService, UserFieldService>();
-            services.AddScoped<IUserPotentialService, UserPotentialService>();
-            services.AddScoped<IUserProfessionService, UserProfessionService>();
+            services.AddScoped<ICustomerService, CustomerService>();
+            services.AddScoped<ICarrerService, CarrerService>();
+            services.AddScoped<ICustomerCareerService, CustomerCareerService>();
             services.AddScoped<IVocativeService, VocativeService>();
-            services.AddScoped<ITypeOfBankService, TypeOfBankService>();
+            services.AddScoped<IDepartmentService, DepartmentService>();
+            services.AddScoped<ICustomerDetailService, CustomerDetailService>();
+            services.AddScoped<ICustomerCareerService, CustomerCareerService>();
+            services.AddScoped<ICustomerFieldService, CustomerFieldService>();
+            services.AddScoped<ICustomerPotentialTypeService, CustomerPotentialTypeService>();
+            services.AddScoped<IFieldService, FieldService>();
+            services.AddScoped<IOrganizationTypeService, OrganizationTypeService>();
+            services.AddScoped<IPositionsService, PositionsService>();
+            services.AddScoped<IPotentialTypeService, PotentialTypeService>();
+            services.AddScoped<ISourceService, SourceService>();
+            services.AddScoped<ITurnoverService, TurnoverService>();
 
             services.AddSwaggerGen(c =>
             {

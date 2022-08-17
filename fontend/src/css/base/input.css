@@ -35,7 +35,7 @@ input[type="checkbox"] {
     outline:none;
 }
 
-.filter-content-child__checkbox-input {
+.filter-content-child-checkbox-input {
     display: flex;
     align-items: center;
     justify-content: start;

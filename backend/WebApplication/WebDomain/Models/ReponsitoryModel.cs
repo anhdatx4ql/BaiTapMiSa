@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WebDomain.Models
+namespace WebDomain
 {
     public class ReponsitoryModel
     {
         public Object Data { set; get; }
-        public int StatusCode { set; get; }
+        public string StatusCode { set; get; }
         public string Message { set; get; }
     }
 

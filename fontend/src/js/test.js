@@ -46,7 +46,7 @@ export async function selectValueComboboxData(e) {
     console.log('value html',value);
     const containerElement = e.target.parentNode.parentNode.parentNode;
     let containerContent = containerElement.getElementsByClassName(
-      "combobox-content__select"
+      "combobox-content-select"
     )[0];
     let comboboxContent =
       containerElement.getElementsByClassName("combobox-content")[0];
@@ -83,7 +83,7 @@ export async function selectValueComboboxMulData(e) {
     let value = e.target.getAttribute("value");
     const containerElement = e.target.parentNode.parentNode.parentNode;
     let containerContent = containerElement.getElementsByClassName(
-      "combobox-content__select"
+      "combobox-content-select"
     )[0];
 
     containerContent.innerHTML = value;
@@ -101,7 +101,7 @@ export async function HandlerShowHideComboboxData(element) {
     let check = element.getAttribute("check");
     let comboboxData =
       element.parentNode.getElementsByClassName("combobox-data")[0];
-    let iconBox = element.getElementsByClassName("combobox-content__icon")[0];
+    let iconBox = element.getElementsByClassName("combobox-content-icon")[0];
     if (comboboxData) {
       ShowFormData(comboboxData, check, iconBox, element);
     }
@@ -119,8 +119,8 @@ function ShowFormData(comboboxData, check, iconBox = null, element) {
 
       // thay đổi icon
       if (iconBox) {
-        iconBox.classList.remove("button-icon__up-black");
-        iconBox.classList.add("button-icon__down-black");
+        iconBox.classList.remove("button-icon-up-black");
+        iconBox.classList.add("button-icon-down-black");
       }
 
       // chuyển trạng thái check
@@ -131,8 +131,8 @@ function ShowFormData(comboboxData, check, iconBox = null, element) {
 
       // thay doi icon
       if (iconBox) {
-        iconBox.classList.remove("button-icon__down-black");
-        iconBox.classList.add("button-icon__up-black");
+        iconBox.classList.remove("button-icon-down-black");
+        iconBox.classList.add("button-icon-up-black");
       }
 
       // chuyển trạng thái check
@@ -150,10 +150,10 @@ export function handlerClickButtonArrow(left, right, event) {
       document.getElementsByClassName("content")[0].style.gridTemplateColumns =
         "0 100% 0";
       document.getElementsByClassName(
-        "content-sider-bar__left"
+        "content-sider-bar-left"
       )[0].style.display = "none";
       document.getElementsByClassName(
-        "content-sider-bar__right"
+        "content-sider-bar-right"
       )[0].style.display = "none";
     }
 
@@ -162,10 +162,10 @@ export function handlerClickButtonArrow(left, right, event) {
       document.getElementsByClassName("content")[0].style.gridTemplateColumns =
         "0 calc(100% - 320px) 320px";
       document.getElementsByClassName(
-        "content-sider-bar__left"
+        "content-sider-bar-left"
       )[0].style.display = "none";
       document.getElementsByClassName(
-        "content-sider-bar__right"
+        "content-sider-bar-right"
       )[0].style.display = "grid";
     }
 
@@ -173,10 +173,10 @@ export function handlerClickButtonArrow(left, right, event) {
       document.getElementsByClassName("content")[0].style.gridTemplateColumns =
         "240px calc(100% - 240px) 0";
       document.getElementsByClassName(
-        "content-sider-bar__left"
+        "content-sider-bar-left"
       )[0].style.display = "inline-block";
       document.getElementsByClassName(
-        "content-sider-bar__right"
+        "content-sider-bar-right"
       )[0].style.display = "none";
     }
 
@@ -184,10 +184,10 @@ export function handlerClickButtonArrow(left, right, event) {
       document.getElementsByClassName("content")[0].style.gridTemplateColumns =
         "240px calc(100% -  240px - 320px) 320px";
       document.getElementsByClassName(
-        "content-sider-bar__left"
+        "content-sider-bar-left"
       )[0].style.display = "inline-block";
       document.getElementsByClassName(
-        "content-sider-bar__right"
+        "content-sider-bar-right"
       )[0].style.display = "grid";
     }
 

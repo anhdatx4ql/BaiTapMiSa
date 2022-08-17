@@ -5,18 +5,18 @@
     align-items: center;
 }
 
-.combobox-toolbar__text {
+.combobox-toolbar-text {
     font-size: 16px;
     font-family: Latin Bold;
 }
 
-.combobox-toolbar__icon {
+.combobox-toolbar-icon {
     height: 16px;
     width: 16px;
     margin: 0 16px 0 8px;
 }
 
-.table-button__right-combobox {
+.table-button-right-combobox {
     background: #ffffff;
     height: 32px;
     display: flex;
@@ -66,12 +66,12 @@
     z-index: 999;
     background-color: #ffffff;
 }
-.combobox-content__icon {
+.combobox-content-icon {
     margin-left: 8px;
     margin-right: 8px;
 }
 
-.combobox-data__child-content {
+.combobox-data-child-content {
     height: 32px;
     display: flex;
     align-items: center;
@@ -79,11 +79,11 @@
     padding: 0 16px 0 16px;
 }
 
-.combobox-data__child {
+.combobox-data-child {
     padding: 2px 0;
 }
 
-.combobox-data__child-content:hover {
+.combobox-data-child-content:hover {
     background-color: #F0F2F4;
     cursor: pointer;
 }
@@ -91,26 +91,26 @@ body {
     margin: 20px;
 }
 
-.combobox-data__search-label {   
+.combobox-data-search-label {   
     border: none;
     border-radius: 0;
     border-bottom: 1px solid #D3D7DE;
     box-sizing: border-box;
 }
 
-.combobox-data__child {
+.combobox-data-child {
     max-height: 150px;
     overflow: scroll;
     overflow-x: hidden;
 }
 
 /* combobox sider left */
-.combobox-child.combobox-data.filter-content-child__data {
+.combobox-child.combobox-data.filter-content-child-data {
     width: calc(240px - 32px - 10px);
     left: 0px;
 }
 
-.combobox-data__search.filter-content-child__data__child>label {
+.combobox-data-search.filter-content-child-data-child>label {
     width: calc(240px - 32px - 10px);
 }
 
@@ -126,20 +126,20 @@ body {
     border: 1px solid #7C869C ;
 }
 
-.combobox.filter-save.filter-content-child__box--combobox .combobox-content {
+.combobox.filter-save.filter-content-child-box-combobox .combobox-content {
     padding-right: 0;
 }
 
-.select-content__data {
+.select-content-data {
     background-color: #E7EBFD !important;
     color: #4262F0 !important;
 }
 /* 
-.combobox-filter-top label.label-input.combobox-data__search-label {
+.combobox-filter-top label.label-input.combobox-data-search-label {
     padding-right: 16px;
 } */
 
-.form-container__content-child--item__input .combobox-child.combobox-content {
+.form-container-content-child-item-input .combobox-child.combobox-content {
     padding-right: 0;
 }
 

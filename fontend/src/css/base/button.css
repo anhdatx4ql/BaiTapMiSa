@@ -15,28 +15,28 @@
     padding-left: 0 !important;
 }
 
-.button-icon__icon {
+.button-icon-icon {
     margin: 8px;
     width: 16px;
     height: 16px;
     display: flex;
 }
 
-.button-icon__icon-sum{
+.button-icon-icon-sum{
     background: url(../../assets/img/icon_collection.svg) no-repeat -241px -128px;
 }
 
-.button-background__primary{
+.button-background-primary{
     background-color:#4262F0;
     color:#FFFFFF;
 }
 
-.button-background__primary:hover{
+.button-background-primary:hover{
     background-color: #2B4EEE;
     transition: 0.5s;
 }
 
-.button-background__primary:active{
+.button-background-primary:active{
     background-color:#133BEC;
 }
 
@@ -54,7 +54,7 @@
     background-color: #D3D7DE;
 }
 
-.button-icon__text {
+.button-icon-text {
     height: 15px;
     display: flex;
     align-items: center;
@@ -83,14 +83,14 @@
     padding:0;
 }
 
-.button-icon__left{
+.button-icon-left{
     border-radius: 4px 0 0 4px;
 }
 
-.button-icon__right{
+.button-icon-right{
     border-radius: 0 4px 4px 0;
 }
-.button__toolbar-left {
+.button-toolbar-left {
     border: none;
     background: none;
     cursor:pointer;
@@ -99,11 +99,11 @@
     border-radius: 4px;
 }
 
-.button__toolbar-left:hover {
+.button-toolbar-left:hover {
     color: #2B4EEE;
     transition: 0.5s;
 }
-.button__toolbar-refesh {
+.button-toolbar-refesh {
     margin: 0;
 }
 
@@ -116,14 +116,14 @@
     justify-content: space-between;
 }
 
-button.button-icon__refesh {
+button.button-icon-refesh {
     border: none;
     border-radius: 4px;
     background: none;
     cursor: pointer;
 }
 
-.button.button-icon__refesh:hover>.icon-refesh{
+.button.button-icon-refesh:hover>.icon-refesh{
     background: url(../../assets/img/icon_collection.svg) no-repeat -207px -144px;
     transition: 0.5s;
 }

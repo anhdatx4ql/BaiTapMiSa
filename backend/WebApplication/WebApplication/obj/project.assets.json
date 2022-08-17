@@ -6449,11 +6449,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\hoctap\\BTMiSa\\project-push\\backend\\WebApplication\\WebApplication\\WebApplication.csproj",
+      "projectUniqueName": "D:\\hoctap\\BTMiSa\\new-project\\baitapMISA\\backend\\WebApplication\\WebApplication\\WebApplication.csproj",
       "projectName": "WebApplication",
-      "projectPath": "D:\\hoctap\\BTMiSa\\project-push\\backend\\WebApplication\\WebApplication\\WebApplication.csproj",
+      "projectPath": "D:\\hoctap\\BTMiSa\\new-project\\baitapMISA\\backend\\WebApplication\\WebApplication\\WebApplication.csproj",
       "packagesPath": "C:\\Users\\This MC\\.nuget\\packages\\",
-      "outputPath": "D:\\hoctap\\BTMiSa\\project-push\\backend\\WebApplication\\WebApplication\\obj\\",
+      "outputPath": "D:\\hoctap\\BTMiSa\\new-project\\baitapMISA\\backend\\WebApplication\\WebApplication\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -6474,11 +6474,11 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "projectReferences": {
-            "D:\\hoctap\\BTMiSa\\project-push\\backend\\WebApplication\\WebDomain\\WebDomain.csproj": {
-              "projectPath": "D:\\hoctap\\BTMiSa\\project-push\\backend\\WebApplication\\WebDomain\\WebDomain.csproj"
+            "D:\\hoctap\\BTMiSa\\new-project\\baitapMISA\\backend\\WebApplication\\WebDomain\\WebDomain.csproj": {
+              "projectPath": "D:\\hoctap\\BTMiSa\\new-project\\baitapMISA\\backend\\WebApplication\\WebDomain\\WebDomain.csproj"
             },
-            "D:\\hoctap\\BTMiSa\\project-push\\backend\\WebApplication\\WebInfrastructure\\WebInfrastructure.csproj": {
-              "projectPath": "D:\\hoctap\\BTMiSa\\project-push\\backend\\WebApplication\\WebInfrastructure\\WebInfrastructure.csproj"
+            "D:\\hoctap\\BTMiSa\\new-project\\baitapMISA\\backend\\WebApplication\\WebInfrastructure\\WebInfrastructure.csproj": {
+              "projectPath": "D:\\hoctap\\BTMiSa\\new-project\\baitapMISA\\backend\\WebApplication\\WebInfrastructure\\WebInfrastructure.csproj"
             }
           }
         }

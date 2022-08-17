@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WebDomain.Interfaces;
+using WebDomain;
 
 namespace WebApplication.Controllers
 {
@@ -18,23 +18,16 @@ namespace WebApplication.Controllers
             _vocative = vocative;
         }
 
-
-        [HttpGet("getAllIVocative")]
-        public async Task<IActionResult> getAllIVocative()
+        [HttpGet]
+        public async Task<ReponsitoryModel> GetAll()
         {
-            return Ok(await _vocative.getAllVocative());
+            return await _vocative.GetAll();
         }
 
-        [HttpGet("GetVocativesByName/{name}")]
-        public async Task<IActionResult> GetVocativesByName(string name)
+        [HttpGet("{name}")]
+        public async Task<ReponsitoryModel> GetAllByName(string name)
         {
-            return Ok(await _vocative.getVocativesByName(name));
-        }
-
-        [HttpGet("GetVocativeById/{id}")]
-        public async Task<IActionResult> GetVocativeById(string id)
-        {
-            return Ok(await _vocative.getVocativeById(id));
+            return await _vocative.GetAllByName(name);
         }
 
     }

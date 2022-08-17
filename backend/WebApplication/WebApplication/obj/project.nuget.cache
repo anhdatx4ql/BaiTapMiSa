@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "7DNORAetSE8aTaVPkpkDOeuv45+EJZPGR2DPzHzO4ncfYEElXPCr7n4+kjY0dwlJO1JretxDpXYkZieqd4k3EA==",
+  "dgSpecHash": "htWQNUH4ukrww4MWB+oaBQSyrOmHrhrJw1UWL2TEaj9xecpGQs+/qprdNQOWRoRyZIHxdvVixl9Dvg/SpBXcWw==",
   "success": true,
-  "projectFilePath": "D:\\hoctap\\BTMiSa\\project-push\\backend\\WebApplication\\WebApplication\\WebApplication.csproj",
+  "projectFilePath": "D:\\hoctap\\BTMiSa\\new-project\\baitapMISA\\backend\\WebApplication\\WebApplication\\WebApplication.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\This MC\\.nuget\\packages\\dapper\\2.0.123\\dapper.2.0.123.nupkg.sha512",
     "C:\\Users\\This MC\\.nuget\\packages\\google.protobuf\\3.19.4\\google.protobuf.3.19.4.nupkg.sha512",

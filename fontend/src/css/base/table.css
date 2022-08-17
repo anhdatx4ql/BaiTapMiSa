@@ -8,8 +8,7 @@
 
 .tr{
     display: grid;
-    grid-template-columns: 24px 24px 60px 80px 150px 150px 150px 150px 150px 150px 100px 150px 150px 150px 150px 150px 150px 150px 120px 200px;
-    padding: 0 16px;
+    grid-template-columns: 56px 56px 80px 100px 180px 150px 150px 150px 200px 200px 100px 150px 150px 150px 150px 150px 150px 150px 120px 200px;
     height: 32px;
     line-height: 32px;
     text-align: start;
@@ -48,14 +47,14 @@
     padding: 0 16px;
 }
 
-.table-button__right {
+.table-button-right {
     height: 32px;
     display: flex;
     align-items: center;
     justify-content: start;
 }
 
-.table-button__left-text{
+.table-button-left-text{
     font-family: Latin Bold;
 }
 
@@ -69,4 +68,16 @@
     white-space: nowrap;
     text-overflow: ellipsis;
     border-bottom: 1px solid #D3D7DE;
+    padding-right: 16px;
+}
+
+.tr-child-center {
+    padding: 0 16px;
+    display: flex;
+    align-items: center;
+    width: 24px;
+    justify-content: center;
+}
+.td.tr-child-center:hover>span{
+    background: url('../../assets/img/icon_collection.svg') no-repeat -256px -128px;
 }

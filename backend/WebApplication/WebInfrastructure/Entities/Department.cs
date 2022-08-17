@@ -5,17 +5,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WebInfrastructure.Entities
+namespace WebInfrastructure
 {
-    // bảng phòng ban
+    /// <summary>
+    /// Author:Phạm văn Đạt
+    /// Created: 16:41 12:08:2022
+    /// Bảng phòng ban
+    /// </summary>
     public class Department
     {
+
         [Key]
-        public string DepartmentID { set; get; }// varchar(255), -- Guid
-        public string DepartmentName { set; get; }// nvarchar(255), -- tên phòng ban
-        public DateTime CreatedAt { set; get; }// datetime,
-        public DateTime UpdatedAt { set; get; }// datetime,
-        public string CreatedBy { set; get; }// varchar(255),
-        public string UpdatedBy { set; get; }// varchar(255),
+        public Guid DepartmentId { set; get; }// mã phòng ban
+        public string DepartmentName { set; get; }// Tên phòng ban
+        public DateTime CreatedAt { set; get; }// thời gian tạo
+        public DateTime UpdatedAt { set; get; }// thời gian cập nhật
+        public string CreatedBy { set; get; }// Người tạo
+        public string UpdatedBy { set; get; }// Người cập nhật
+
     }
 }

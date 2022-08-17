@@ -9,7 +9,7 @@
     border: none;
     margin-right: 8px;
 }
-.notifi-content-left__icon{
+.notifi-content-left-icon{
     background: url(../../assets/img/icon_collection.svg) no-repeat -272px -112px;
     width:16px;
     height:16px;
@@ -26,7 +26,7 @@
 .notifi-content-right-title{
     font-family: Litin Bold;
 }
-.content-sider-bar__right .notifi-content-container{
+.content-sider-bar-right .notifi-content-container{
     width:100%;
 }
 
