@@ -5,7 +5,7 @@ import axios from 'axios'
 //  created time: 12:06 15/08/2022
 export class CarrerService{
 
-    url= "https://localhost:44355/api/Carrer";
+    url= "https://localhost:44355/api/Carrer/";
 
     // lấy danh sách ngành nghề
     getAll(){

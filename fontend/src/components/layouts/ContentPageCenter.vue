@@ -1,6 +1,12 @@
 <template>
   <div class="content-child content-center">
-    <div class="table-container">
+    <div class="table-container" ref="TableData">  
+      
+      <!-- loading -->
+      <div class="content-background-icon-loading">
+        <div class="background-icon-loading"></div>
+      </div>
+
       <div class="table-header">
         <div class="thead">
           <div class="tr">
@@ -87,6 +93,7 @@
 
 <script>
 import { handlerScroll, handlerClickButtonArrow } from "../../js/test";
+import { UnLoading} from "../../js/Loading";
 
 // nhúng service xử lý customer
 import {CustomerService} from '../Services/CustomerService';
@@ -111,13 +118,14 @@ export default {
     customersSearch:{},
     checkShowFormData:Boolean
   },
-  created() {
+  async created() {
 
     //Author: Phạm Văn Đạt
     // function: lấy thông tin c;
     // created time: 11:50 15/08/2022
+
     let ServiceCustomer = new CustomerService();
-    ServiceCustomer.GetAll()
+    await ServiceCustomer.GetAll()
     .then(res=>{
       if(res.data.data)
         this.customer = res.data.data;
@@ -159,6 +167,11 @@ export default {
   },
   // theo dõi các biến thay đổi và thực hiện hàm nếu có
   watch: {
+    // theo dõi danh sách khách hàng
+    customer(){
+        UnLoading(this.$refs.TableData);
+    },
+
     // hiển thị, ẩn side bar bên trái
     checkLeft() {
       handlerClickButtonArrow(this.checkLeft, this.checkRight,event);
@@ -175,8 +188,8 @@ export default {
     }
   },
   mounted() {
-    
     handlerScroll();
+    
   },
 };
 </script>

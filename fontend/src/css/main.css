@@ -9,6 +9,7 @@
 @import "./base/table.css";
 @import "./base/notifiContent.css";
 @import "./base/formdata.css";
+@import "./base/Loading.css";
 
 @font-face {
     font-family: Latin Bold;

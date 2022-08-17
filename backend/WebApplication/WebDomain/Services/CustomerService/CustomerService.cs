@@ -334,8 +334,13 @@ namespace WebDomain
                 }
                     
 
-                if (model.Gender>=0 && model.Gender<=2)
+                if (model.Gender  >= (int)GenderEnum.Male && model.Gender <= (int)GenderEnum.Other)
                     customer.Gender = model.Gender;
+                else
+                {
+                    return new ReponsitoryModel { Data = null, StatusCode = CodeError.GenderExists, Message = MessageError.GenderExists };
+                }
+                
 
                 if (model.Facebook != null)
                     customer.Facebook = model.Facebook;

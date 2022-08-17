@@ -258,6 +258,12 @@
     background: url('../../assets/img/icon_collection.svg') no-repeat -303px -32px;
 }
 
+.background-icon-loading{
+    background: url('../../assets/img/loadding.svg') no-repeat;
+    width:80px;
+    height:80px;
+}
+
 .icon-font-16{
     width:16px;
     height:16px;

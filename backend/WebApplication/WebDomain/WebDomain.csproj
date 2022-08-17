@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="Common\ContantsError.cs" />
     <Compile Include="Common\ContantsSuccess.cs" />
+    <Compile Include="Enum\GenderEnum.cs" />
     <Compile Include="Models\CareerModel\CareerModel.cs" />
     <Compile Include="Models\CustomerCareerModel\CreateCustomerCareerModel.cs" />
     <Compile Include="Models\CustomerCareerModel\CustomerCareerModel.cs" />

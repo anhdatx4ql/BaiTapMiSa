@@ -1,14 +1,14 @@
 import axios from 'axios'
 
 // Author: Phạm Văn Đạt
-// function: Service xử lý thao tác doanh thu
+// function: Service xử lý thao tác loại tiềm năng
 //  created time: 11:00 16/08/2022
-export class TurnoverService{
+export class PotentialTypeService {
 
-    url= "https://localhost:44355/api/Turnover/";
+    url= "https://localhost:44355/api/PotentialType/";
 
 
-    // lấy danh sách doanh thu
+    // lấy danh sách loại tiềm năng
     getAll(){
        try{
             return axios.get(this.url);         
@@ -18,7 +18,7 @@ export class TurnoverService{
        }
     }
 
-    // lấy danh sách doanh thu theo tên
+    // lấy danh sách loại tiềm năng theo tên
     getByName(search){
         try{
             return axios.get(this.url+search);         

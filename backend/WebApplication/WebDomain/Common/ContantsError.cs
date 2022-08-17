@@ -29,6 +29,7 @@ namespace WebDomain
             public const string CreatedFail = "Thêm mới thất bại.";
             public const string DeletedFail = "Xóa bản ghi thất bại.";
             public const string UpdatedFail = "Cập nhật thông tin thất bại.";
+            public const string GenderExists = "Giới tính không tồn tại.";
         }
 
         /// <summary>
@@ -52,6 +53,7 @@ namespace WebDomain
             public const string DuplicateBankAccount = "E012";
             public const string DeletedFail = "E013";
             public const string DuplicateValue = "E014";
+            public const string GenderExists = "E015";
         }
     }
 }

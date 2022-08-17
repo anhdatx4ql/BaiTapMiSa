@@ -42,16 +42,17 @@
               Thông tin chung
             </div>
 
-            <!-- Start Xưng hô -->
+            
             <div class="form-container-content-child-body">
+              <!-- Start Xưng hô -->
               <div class="form-container-content-child-item">
                 <div class="form-container-content-child-item-label">
                   Xưng hô
                 </div>
                 <div class="form-container-content-child-item-input">
-                   <div class="combobox">
+                  <div class="combobox">
                     <div
-                      class="combobox-child combobox-content"
+                      class="combobox-child combobox-content" id="vocative"
                       @click="handlerClickCombobox"
                       check="false"
                     >
@@ -65,7 +66,12 @@
                       ></div>
                     </div>
 
-                    <div class="combobox-child combobox-data">
+                    <div class="combobox-child combobox-data" ref="vocative">
+                      <!-- loading -->
+                      <div class="content-background-icon-loading">
+                        <div class="background-icon-loading"></div>
+                      </div>
+
                       <div class="combobox-data-search">
                         <label class="label-input combobox-data-search-label">
                           <input
@@ -80,18 +86,19 @@
                         <div
                           class="combobox-data-child-content"
                           @click="handlerClickComboboxData"
-                          value="- Không chọn -"
+                          value=""
                         >
                           - Không chọn -
                         </div>
                         <div
-                          class="combobox-data-child-content" v-for="v in vocative" :key="v.vocativeId"
+                          class="combobox-data-child-content"
+                          v-for="v in vocative"
+                          :key="v.vocativeId"
                           @click="handlerClickComboboxData"
                           :value="v.vocativeId"
                         >
-                          {{v.vocativeName}}
+                          {{ titleCase(v.vocativeName) }}
                         </div>
-                        
                       </div>
                     </div>
                   </div>
@@ -105,7 +112,7 @@
                   Họ và đệm
                 </div>
                 <div class="form-container-content-child-item-input">
-                  <input type="text" class="input-content" :model="UserInfo.FirstName"/>
+                  <input type="text" class="input-content" />
                 </div>
               </div>
               <!-- End Họ và đệm -->
@@ -117,7 +124,7 @@
                 </div>
                 <div class="form-container-content-child-item-input">
                   <input type="text" class="input-content" />
-                  <span v-if="errors.UserId" class="span-error">Tên không được để trống</span>
+                  <span class="span-error">Tên không được để trống</span>
                 </div>
               </div>
               <!-- End Tên -->
@@ -138,14 +145,14 @@
               <!-- End họ và tên -->
 
               <!-- Start Phòng ban -->
-              <div class="form-container-content-child-item">
+             <div class="form-container-content-child-item">
                 <div class="form-container-content-child-item-label">
                   Phòng ban
                 </div>
                 <div class="form-container-content-child-item-input">
                   <div class="combobox">
                     <div
-                      class="combobox-child combobox-content"
+                      class="combobox-child combobox-content" id="department"
                       @click="handlerClickCombobox"
                       check="false"
                     >
@@ -159,7 +166,12 @@
                       ></div>
                     </div>
 
-                    <div class="combobox-child combobox-data">
+                    <div class="combobox-child combobox-data" ref="department">
+                      <!-- loading -->
+                      <div class="content-background-icon-loading">
+                        <div class="background-icon-loading"></div>
+                      </div>
+
                       <div class="combobox-data-search">
                         <label class="label-input combobox-data-search-label">
                           <input
@@ -174,31 +186,19 @@
                         <div
                           class="combobox-data-child-content"
                           @click="handlerClickComboboxData"
-                          value="- Không chọn -"
+                          value=""
                         >
                           - Không chọn -
                         </div>
                         <div
                           class="combobox-data-child-content"
+                          v-for="v in department"
+                          :key="v.departmentId"
                           @click="handlerClickComboboxData"
-                          value="Bố cục"
+                          :value="v.departmentId"
                         >
-                          Bố cục
-                        </div>
-                        <div
-                          class="combobox-data-child-content"
-                          @click="handlerClickComboboxData"
-                          value="Chức danh"
-                        >
-                          Chức danh
-                        </div>
-                        <div
-                          class="combobox-data-child-content"
-                          @click="handlerClickComboboxData"
-                          value="Doanh thu"
-                        >
-                          Doanh thu
-                        </div>
+                          {{ titleCase(v.departmentName) }}
+                        </div>  
                       </div>
                     </div>
                   </div>
@@ -214,7 +214,7 @@
                 <div class="form-container-content-child-item-input">
                   <div class="combobox">
                     <div
-                      class="combobox-child combobox-content"
+                      class="combobox-child combobox-content" id="position"
                       @click="handlerClickCombobox"
                       check="false"
                     >
@@ -228,7 +228,12 @@
                       ></div>
                     </div>
 
-                    <div class="combobox-child combobox-data">
+                    <div class="combobox-child combobox-data" ref="position">
+                      <!-- loading -->
+                      <div class="content-background-icon-loading">
+                        <div class="background-icon-loading"></div>
+                      </div>
+
                       <div class="combobox-data-search">
                         <label class="label-input combobox-data-search-label">
                           <input
@@ -243,30 +248,18 @@
                         <div
                           class="combobox-data-child-content"
                           @click="handlerClickComboboxData"
-                          value="- Không chọn -"
+                          value=""
                         >
                           - Không chọn -
                         </div>
                         <div
                           class="combobox-data-child-content"
+                          v-for="v in position"
+                          :key="v.positionId"
                           @click="handlerClickComboboxData"
-                          value="Giám đốc"
+                          :value="v.positionId"
                         >
-                          Giám đốc
-                        </div>
-                        <div
-                          class="combobox-data-child-content"
-                          @click="handlerClickComboboxData"
-                          value="Trưởng nhóm"
-                        >
-                          Trưởng nhóm
-                        </div>
-                        <div
-                          class="combobox-data-child-content"
-                          @click="handlerClickComboboxData"
-                          value="Nhân viên"
-                        >
-                          Nhân viên
+                          {{ titleCase(v.positionName) }}
                         </div>
                       </div>
                     </div>
@@ -298,14 +291,14 @@
               <!-- End ĐT cơ quan-->
 
               <!-- Start Nguồn gốc -->
-              <div class="form-container-content-child-item">
+               <div class="form-container-content-child-item">
                 <div class="form-container-content-child-item-label">
                   Nguồn gốc
                 </div>
                 <div class="form-container-content-child-item-input">
                   <div class="combobox">
                     <div
-                      class="combobox-child combobox-content"
+                      class="combobox-child combobox-content" id="source"
                       @click="handlerClickCombobox"
                       check="false"
                     >
@@ -319,7 +312,12 @@
                       ></div>
                     </div>
 
-                    <div class="combobox-child combobox-data">
+                    <div class="combobox-child combobox-data" ref="source">
+                      <!-- loading -->
+                      <div class="content-background-icon-loading">
+                        <div class="background-icon-loading"></div>
+                      </div>
+
                       <div class="combobox-data-search">
                         <label class="label-input combobox-data-search-label">
                           <input
@@ -334,30 +332,18 @@
                         <div
                           class="combobox-data-child-content"
                           @click="handlerClickComboboxData"
-                          value="- Không chọn -"
+                          value=""
                         >
                           - Không chọn -
                         </div>
                         <div
                           class="combobox-data-child-content"
+                          v-for="v in source"
+                          :key="v.sourceId"
                           @click="handlerClickComboboxData"
-                          value="Giám đốc"
+                          :value="v.sourceId"
                         >
-                          Giám đốc
-                        </div>
-                        <div
-                          class="combobox-data-child-content"
-                          @click="handlerClickComboboxData"
-                          value="Trưởng nhóm"
-                        >
-                          Trưởng nhóm
-                        </div>
-                        <div
-                          class="combobox-data-child-content"
-                          @click="handlerClickComboboxData"
-                          value="Nhân viên"
-                        >
-                          Nhân viên
+                          {{ titleCase(v.sourceName) }}
                         </div>
                       </div>
                     </div>
@@ -374,14 +360,19 @@
                 <div class="form-container-content-child-item-input">
                   <div class="combobox combobox-mul">
                     <div
-                      class="combobox-child combobox-content"
+                      class="combobox-child combobox-content" id="potentialType"
                       @click="handlerClickComboboxMul"
                       check="false"
                     >
                       <div class="combobox-content-select">- Không chọn -</div>
                     </div>
 
-                    <div class="combobox-child combobox-data">
+                    <div class="combobox-child combobox-data" ref="potentialType">
+                        <!-- loading -->
+                      <div class="content-background-icon-loading">
+                        <div class="background-icon-loading"></div>
+                      </div>
+
                       <div class="combobox-data-search">
                         <label class="label-input combobox-data-search-label">
                           <input
@@ -402,25 +393,14 @@
                         </div>
                         <div
                           class="combobox-data-child-content"
+                           v-for="v in potentialType"
+                          :key="v.potentialTypeId"
+                          :value="v.potentialTypeId"
                           @click="selectValueComboboxMulData"
-                          value="Giám đốc"
                         >
-                          Giám đốc
+                          {{titleCase(v.potentialTypeName)}}
                         </div>
-                        <div
-                          class="combobox-data-child-content"
-                          @click="selectValueComboboxMulData"
-                          value="Trưởng nhóm"
-                        >
-                          Trưởng nhóm
-                        </div>
-                        <div
-                          class="combobox-data-child-content"
-                          @click="selectValueComboboxMulData"
-                          value="Nhân viên"
-                        >
-                          Nhân viên
-                        </div>
+                      
                       </div>
                     </div>
                   </div>
@@ -430,9 +410,7 @@
 
               <!-- Start Zalo -->
               <div class="form-container-content-child-item">
-                <div class="form-container-content-child-item-label">
-                  Zalo
-                </div>
+                <div class="form-container-content-child-item-label">Zalo</div>
                 <div class="form-container-content-child-item-input">
                   <input type="text" class="input-content" />
                 </div>
@@ -680,14 +658,14 @@
               <!-- END Ngành nghề -->
 
               <!-- Start Doanh thu-->
-              <div class="form-container-content-child-item">
+             <div class="form-container-content-child-item">
                 <div class="form-container-content-child-item-label">
                   Doanh thu
                 </div>
                 <div class="form-container-content-child-item-input">
                   <div class="combobox">
                     <div
-                      class="combobox-child combobox-content"
+                      class="combobox-child combobox-content" id="turnover"
                       @click="handlerClickCombobox"
                       check="false"
                     >
@@ -701,7 +679,12 @@
                       ></div>
                     </div>
 
-                    <div class="combobox-child combobox-data">
+                    <div class="combobox-child combobox-data" ref="turnover">
+                      <!-- loading -->
+                      <div class="content-background-icon-loading">
+                        <div class="background-icon-loading"></div>
+                      </div>
+
                       <div class="combobox-data-search">
                         <label class="label-input combobox-data-search-label">
                           <input
@@ -716,30 +699,18 @@
                         <div
                           class="combobox-data-child-content"
                           @click="handlerClickComboboxData"
-                          value="- Không chọn -"
+                          value=""
                         >
                           - Không chọn -
                         </div>
                         <div
                           class="combobox-data-child-content"
+                          v-for="v in turnover"
+                          :key="v.turnoverId"
                           @click="handlerClickComboboxData"
-                          value="Giám đốc"
+                          :value="v.turnoverId"
                         >
-                          Giám đốc
-                        </div>
-                        <div
-                          class="combobox-data-child-content"
-                          @click="handlerClickComboboxData"
-                          value="Trưởng nhóm"
-                        >
-                          Trưởng nhóm
-                        </div>
-                        <div
-                          class="combobox-data-child-content"
-                          @click="handlerClickComboboxData"
-                          value="Nhân viên"
-                        >
-                          Nhân viên
+                          {{ titleCase(v.turnoverName) }}
                         </div>
                       </div>
                     </div>
@@ -1081,13 +1052,10 @@
               <!-- Start thông tin mô tả -->
               <div
                 class="
-                  form-container-content-child-item
-                  form-container-description
+                  form-container-content-child-item form-container-description
                 "
               >
-                <div class="form-container-content-child-item-label">
-                  Mô tả
-                </div>
+                <div class="form-container-content-child-item-label">Mô tả</div>
                 <div class="form-container-content-child-item-input">
                   <textarea class="textarea textarea-description"></textarea>
                 </div>
@@ -1107,8 +1075,7 @@
               <!-- Start dùng chung-->
               <div
                 class="
-                  form-container-content-child-item
-                  form-container-description
+                  form-container-content-child-item form-container-description
                 "
               >
                 <div class="form-container-content-child-item-label">
@@ -1126,11 +1093,7 @@
                   Mã tiềm năng
                 </div>
                 <div class="form-container-content-child-item-input">
-                  <input
-                    type="text"
-                    class="input-content"
-                    :model="UserInfo.UserId"
-                  />
+                  <input type="text" class="input-content" />
                 </div>
               </div>
               <!-- End Mã tiềm năng -->
@@ -1151,82 +1114,112 @@ import {
   ClickShowHideComboboxMulData,
 } from "../../js/test";
 
-// hàm xử lý hiển thị lỗi
-import { ErrorsValidation } from "../../js/validation";
+// hàm xử lý hiển thị loading
+import { UnLoading } from "../../js/Loading";
+// import { ErrorsValidation } from "../../js/validation";
 
-// nhúng service xử lý customer detail
-import {VocativeService} from '../Services/VocativeService';
+import { titleCase } from "../../js/handlerString";
+
+// nhúng service xử lý xưng hô
+import { VocativeService } from "../Services/VocativeService";
+
+// nhúng service xử lý phòng ban
+import { DepartmentService } from "../Services/DepartmentService";
+
+// nhúng service xử lý phòng ban
+import { PositionsService } from "../Services/PositionsService";
+
+// nhúng service xử lý Nguồn gốc
+import { SourceService } from "../Services/SourceService";
+
+// nhúng service xử lý loại tiềm năng
+import { PotentialTypeService  } from "../Services/PotentialTypeService";
+
+// nhúng service xử lý loại doanh thu
+import { TurnoverService  } from "../Services/TurnoverService";
+
+// nhúng service xử lý loại doanh thu
+import { CarrerService  } from "../Services/CarrerService";
+
+
+ 
 
 export default {
   name: "FormDataComponent",
   components: {},
-  created() {
-  let _VocativeService = new VocativeService();
-    _VocativeService.getAll()
-    .then(res=>{
-      if(res.data.data)
-        this.vocative = res.data.data;
-      console.log(this.vocative);
-    })
-    .catch(e=>{
-      console.log(e)
-    })
-  },
+  created() {},
   props: {
     checkShowFormData: Boolean,
-    CustomerInfo:{}
+    CustomerInfo: {},
   },
   data() {
     return {
-      vocative:Object,
-       errors: {
-        UserId: "",
-        LastName: "",
-        UserPhone: "",
-        UserEmail: "",
-      },
-      UserInfo: {
-        UserId: "",
-        FirstName: "",
-        LastName: "",
-        UserNummberPhone: "", //số đt cá nhân
-        CompanyNumberPhone: "", //số đt công ty
-        UserEmail: "", // email cá nhân
-        CompanyEmail: "", // email công ty
-        Zalo: "", //  -- zalo
-        TaxCode: "", //-- mã số thuế
-        Organize: "", //-- tổ chức
-        Gender: "", //-- 1 là Nam, 0 là Nữ
-        BirthDay: "", //-- ngày sinh
-        UserDescription: "", // -- mô tả
-        Address: "", // -- địa chỉ
-        Country: "", // -- quốc gia
-        City: "", //-- tỉnh
-        District: "", //-- Huyện
-        Commune: "", // -- Xã
-        ApartmentNumber: "", // -- số nhà
-        AreaCode: "", // -- mã vùng
-        IsUserPhoneActive: Boolean, // -- cho phép gọi điện
-        IsUserEmailActive: Boolean, // -- cho phép gửi email
-        VocativeId: "", //-- xưng hô Id, 1 user có 1 xưng hô
-        DepartmentID: "", // -- một người - 1 phòng ban
-        OriginId: "", // -- 1 người - 1 nguồn gốc tiềm năng
-        JobTitleId: "", // -- 1 người - 1 chức danh
-        CompanyTypeId: "", // -- loại hình công ty của user /  -- 1 người thuộc 1 tổ chức - ghi thông tin tổ chức ra các bảng
-        RevenueID: "", // -- doanh thu của tổ chức
-        CreatedAt: "",
-        UpdatedAt: "",
-        CreateaBy: "",
-        UpdatedBy: "",
-      },
+      vocative: "",
+      department:  "",
+      position: "",
+      source:"",
+      potentialType:"",
+      turnover:"",
+      carrer:""
     };
   },
-  watch:{
-    CustomerInfo(){
-      console.log(this.CustomerInfo)
+  watch: {
+
+    // theo dõi thông tin khách hàng
+    CustomerInfo() {
+      console.log(this.CustomerInfo);
+    },
+
+    // theo dõi thông tin xưng hô
+    vocative() {
+      console.log(this.$refs.vocative);
+      UnLoading(this.$refs.vocative);
+    },
+
+    // theo dõi thông tin phòng ban
+    department() {
+      console.log(this.$refs.department);
+      UnLoading(this.$refs.department);
+    },
+
+    // theo dõi thông tin chức danh
+    position() {
+      console.log(this.$refs.position);
+      UnLoading(this.$refs.position);
+    },
+
+    //  theo dõi thông tin nguồn gốc
+    source(){
+      console.log(this.$refs.source);
+      UnLoading(this.$refs.source);
+    },
+    
+    //  theo dõi thông tin loại chức danh
+     potentialType(){
+      UnLoading(this.$refs.potentialType);
+    },
+
+    // theo dõi thông tin doanh thu
+     turnover(){
+      UnLoading(this.$refs.turnover);
+    },
+
+    //  theo dõi thông tin ngành nghề
+    carrer(){
+      console.log(this.$refs.carrer);
+      UnLoading(this.$refs.carrer);
     }
+    
   },
   methods: {
+
+    titleCase,
+
+    /**
+     * Author: Phạm Văn Đạt
+     * function:  xử lý đóng form data
+     * created time: 11:28 17/08/2022
+     */
     HandlerCloseForm() {
       try {
         this.$emit("CloseFormData", !this.checkShowFormData);
@@ -1234,8 +1227,190 @@ export default {
         console.log(error);
       }
     },
-    handlerClickCombobox: function (event) {
+
+    /**
+     * Author: Phạm Văn Đạt
+     * function:  xử lý lấy dữ liệu vocative
+     * created time: 11:28 17/08/2022
+     */
+    HandlerSelectVocative(){
+        if(!this.vocative){
+            let _VocativeService = new VocativeService();
+            _VocativeService
+              .getAll()
+              .then((res) => {
+                if (res.data.data) this.vocative = res.data.data;
+                console.log(this.vocative)
+              })
+              .catch((e) => {
+                console.log(e);
+              });
+          }
+    },
+
+    /**
+     * Author: Phạm Văn Đạt
+     * function:  xử lý lấy dữ liệu vocative
+     * created time: 15:28 17/08/2022
+     */
+    HandlerSelectDepartment(){
+        if(!this.department){
+            let _DepartmentService = new DepartmentService();
+            _DepartmentService
+              .getAll()
+              .then((res) => {
+                if (res.data.data) this.department = res.data.data;
+              })
+              .catch((e) => {
+                console.log(e);
+              });
+          }
+    },
+
+    /**
+     * Author: Phạm Văn Đạt
+     * function:  xử lý lấy dữ liệu vocative
+     * created time: 15:28 17/08/2022
+     */
+    HandlerSelectPosition(){
+        if(!this.department){
+            let _PositionsService = new PositionsService();
+            _PositionsService
+              .getAll()
+              .then((res) => {
+                if (res.data.data) this.position = res.data.data;
+              })
+              .catch((e) => {
+                console.log(e);
+              });
+          }
+    },
+    
+    /**
+     * Author: Phạm Văn Đạt
+     * function:  xử lý lấy dữ liệu source: nguồn gốc
+     * created time: 15:28 17/08/2022
+     */
+    HandlerSelectSource(){
+        if(!this.department){
+            let _SourceService = new SourceService();
+            _SourceService
+              .getAll()
+              .then((res) => {
+                if (res.data.data) this.source = res.data.data;
+              })
+              .catch((e) => {
+                console.log(e);
+              });
+          }
+    },
+
+    /**
+     * Author: Phạm Văn Đạt
+     * function:  xử lý lấy dữ liệu potential
+     * created time: 15:28 17/08/2022
+     */
+    HandlerSelectPotentialType(){
+        if(!this.potentialType){
+            let _PotentialTypeService = new PotentialTypeService();
+            _PotentialTypeService
+              .getAll()
+              .then((res) => {
+                if (res.data.data) this.potentialType = res.data.data;
+              })
+              .catch((e) => {
+                console.log(e);
+              });
+          }
+    },
+
+    /**
+     * Author: Phạm Văn Đạt
+     * function:  xử lý lấy dữ liệu doanh thu
+     * created time: 15:28 17/08/2022
+     */
+    HandlerSelectTurnover(){
+        if(!this.potentialType){
+            let _TurnoverService = new TurnoverService();
+            _TurnoverService
+              .getAll()
+              .then((res) => {
+                if (res.data.data) this.turnover = res.data.data;
+              })
+              .catch((e) => {
+                console.log(e);
+              });
+          }
+    },
+
+    /**
+     * Author: Phạm Văn Đạt
+     * function:  xử lý lấy dữ liệu ngành nghề
+     * created time: 00:41 28 18/08/2022
+     */
+    HandlerSelectCarrer(){
+        if(!this.potentialType){
+            let _CarrerService = new CarrerService();
+            _CarrerService
+              .getAll()
+              .then((res) => {
+                if (res.data.data) this.carrer = res.data.data;
+              })
+              .catch((e) => {
+                console.log(e);
+              });
+          }
+    },
+    
+    
+     /**
+     * Author: Phạm Văn Đạt
+     * function:  xử lý đóng form data
+     * created time: 11:28 17/08/2022
+     */
+    handlerClickCombobox: async function (event) {
       try {
+
+        // Nếu click vào combobox xưng hô: nếu chưa có dữ liệu thì loading, nếu có dữ liệu rồi thì không loading
+        if(event.target.getAttribute("id") == "vocative"){
+          /// lấy thông tin xưng hô nếu chưa có dữ liệu
+          this.HandlerSelectVocative();
+        }
+
+         // Nếu click vào combobox phòng ban: nếu chưa có dữ liệu thì loading, nếu có dữ liệu rồi thì không loading
+        if(event.target.getAttribute("id") == "department"){
+          /// lấy thông tin phòng ban nếu chưa có dữ liệu
+          this.HandlerSelectDepartment();
+        }
+
+         // Nếu click vào combobox chức danh: nếu chưa có dữ liệu thì loading, nếu có dữ liệu rồi thì không loading
+        if(event.target.getAttribute("id") == "position"){
+          /// lấy thông tin phòng ban nếu chưa có dữ liệu
+          this.HandlerSelectPosition();
+        }
+
+        
+         // Nếu click vào combobox nguồn gốc: nếu chưa có dữ liệu thì loading, nếu có dữ liệu rồi thì không loading
+        if(event.target.getAttribute("id") == "source"){
+          /// lấy thông tin nguồn gốc nếu chưa có dữ liệu
+          this.HandlerSelectSource();
+        }
+
+         // Nếu click vào combobox doanh thu: nếu chưa có dữ liệu thì loading, nếu có dữ liệu rồi thì không loading
+        if(event.target.getAttribute("id") == "turnover"){
+          /// lấy thông tin nguồn gốc nếu chưa có dữ liệu
+          this.HandlerSelectTurnover();
+        }
+
+         // Nếu click vào combobox doanh thu: nếu chưa có dữ liệu thì loading, nếu có dữ liệu rồi thì không loading
+        if(event.target.getAttribute("id") == "carrer"){
+          /// lấy thông tin nguồn gốc nếu chưa có dữ liệu
+          this.HandlerSelectCarrer();
+        }
+
+
+        
+
         ClickShowHideComboboxData(event);
       } catch (error) {
         console.log(error);
@@ -1250,30 +1425,18 @@ export default {
     },
     handlerClickComboboxMul(event) {
       try {
+          // Nếu click vào combobox  multiple loại tiềm năng: nếu chưa có dữ liệu thì loading, nếu có dữ liệu rồi thì không loading
+        if(event.target.getAttribute("id") == "potentialType"){
+          console.log("chay source")
+          /// lấy thông tin loại tiềm năng  nếu chưa có dữ liệu
+          this.HandlerSelectPotentialType();
+        }
+
+        // xử lý hiển thị form data
         ClickShowHideComboboxMulData(event);
       } catch (error) {
         console.log(error);
       }
-    },
-    validate() {
-      this.errors = {
-        UserId: "",
-        LastName: "",
-        UserPhone: "",
-        UserEmail: "",
-      };
-
-      if (!this.UserInfo.UserId)
-        this.errors.UserId = ErrorsValidation.UserIdRequired;
-
-      if (!this.UserInfo.LastName)
-        this.errors.LastName = ErrorsValidation.LastNameRequired;
-
-      if (!this.UserInfo.UserPhone)
-        this.errors.UserPhone = ErrorsValidation.PhoneRequired;
-
-      if (!this.UserInfo.UserEmail)
-        this.errors.UserEmail = ErrorsValidation.EmailRequired;
     },
     OnSubmit() {
       this.validate();
