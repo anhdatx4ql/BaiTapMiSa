@@ -62,7 +62,7 @@ namespace WebDomain
 
         //mã số thuế 16
         public string TaxCode { set; get; }
-
+        
         // ngày sinh 17
         public DateTime BirthDay { set; get; }
 
@@ -72,25 +72,6 @@ namespace WebDomain
         // facebook 19
         public string Facebook { set; get; }
 
-        // quốc gia 20
-        public string Country { set; get; }
 
-        // Tỉnh/Thành phố 21
-        public string Province { set; get; }
-
-        // Quận/Huyên 22
-        public string District { set; get; }
-
-        // Phường xã 23
-        public string Wards { set; get; }
-
-        // Số nhà. 24
-        public string HomeNumber { set; get; }
-
-        // Mã vùng 25
-        public string RegionCode { set; get; }
-
-        // Địa chỉ 26
-        public string Address { set; get; }
     }
 }

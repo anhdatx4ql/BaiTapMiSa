@@ -33,6 +33,21 @@ input.input {
 input[type="checkbox"] {
     cursor:pointer;
     outline:none;
+    display:none;
+}
+
+.tbody input[type="checkbox"]:checked~ label{
+    background: url('../../assets/img/icon_collection.svg') no-repeat -177px -17px;
+    height:16px;
+    width: 16px;
+    cursor:pointer;
+}
+
+.thead input[type="checkbox"]:checked~ label{
+    background: url('../../assets/img/icon_collection.svg') no-repeat -193px -193px;
+    height:16px;
+    width: 16px;
+    cursor:pointer;
 }
 
 .filter-content-child-checkbox-input {
@@ -66,4 +81,54 @@ textarea.textarea {
     outline: none;
     padding: 8px 16px;
     box-sizing: border-box;
+}
+
+.selected{
+    color: #4262F0;
+}
+
+.border-input-content {
+    width: 240px;
+    height: 32px;
+    border-radius: 4px;
+    outline: none;
+    border: 1px solid #d3d7de;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    overflow:hidden;
+}
+
+
+input.input-content {
+    border: none;
+    outline: none;
+    padding-left:16px;
+    width: 216px !important;
+  }
+
+  .input-icon-content {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding-right: 8px;
+}
+  
+
+.border-input-content:hover>.input-icon-content {
+    display: flex;
+}
+
+.border-input-content:hover,
+.combobox-child:hover {
+    border-color: #7C869C;
+}
+
+.border-input-content:focus{
+    border-color:#4262F0;
+}
+
+input[type="date"].border-input-content {
+    padding: 0 8px 0 16px;
 }

@@ -7,9 +7,9 @@
           @click="handlerClickCombobox"
           check="false"
         >
-          <div class="combobox-content-select">BỘ LỌC ĐÃ LƯU</div>
+          <div class="combobox-content-select combobox-child">BỘ LỌC ĐÃ LƯU</div>
           <div
-            class="combobox-content-icon button-icon-up-black icon-font-16"
+            class="combobox-content-icon button-icon-up-black icon-font-16 combobox-child"
           ></div>
         </div>
 
@@ -87,9 +87,9 @@
               <div class="combobox-child combobox-content border-color-c"
                 @click="handlerClickCombobox"
                 check="false">
-                <div class="combobox-content-select">Là</div>
+                <div class="combobox-content-select combobox-child">Là</div>
                 <div class="combobox-content-icon
-                    button-icon-up-black
+                    button-icon-up-black combobox-child
                     icon-font-16"></div>
               </div>
 

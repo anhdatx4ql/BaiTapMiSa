@@ -83,11 +83,37 @@ namespace WebApplication.Controllers
         /// DateTime: 13:41 12/08/2022
         /// </summary>
         /// <returns></returns>
-        [HttpDelete]
-        [Route("api/[controller]/{id}")]
-        public async Task<ReponsitoryModel> DeleteCustomer(string[] id)
+        [HttpPost]
+        [Route("api/[controller]/DeleteMul")]
+        public async Task<ReponsitoryModel> DeleteCustomer(List<Guid> ListString)
         {
-            return await _customer.DeleteCustomer(id);
+            return await _customer.DeleteCustomer(ListString);
+        }
+
+        /// <summary>
+        /// Author: Phạm Văn Đạt
+        /// - Xóa mềm bản ghi bằng cách chuyển isDelete = true
+        /// DateTime: 13:41 12/08/2022
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/[controller]/GetCode")]
+        public async Task<ReponsitoryModel> GetCode()
+        {
+            return await _customer.GetCustomerCodeMax();
+        }
+
+        /// <summary>
+        /// Author: Phạm Văn Đạt
+        /// - Xóa mềm bản ghi bằng cách chuyển isDelete = true
+        /// DateTime: 13:41 12/08/2022
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("api/[controller]/CheckExists")]
+        public async Task<ReponsitoryModel> GetCode([FromBody] FormCheckExists model)
+        {
+            return await _customer.CheckExistColumn(model);
         }
 
   

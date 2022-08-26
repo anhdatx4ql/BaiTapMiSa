@@ -53,7 +53,6 @@ namespace WebApplication.Controllers
         /// <param name="Models"></param>
         /// <returns></returns>
         [HttpPost]
-        [Route("api/[controller]")]
         public async Task<ReponsitoryModel> CreateAsync([FromBody] CreateCustomerFieldModel[] Models)
         {
             return await _customerFiled.Create(Models);

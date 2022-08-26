@@ -29,11 +29,11 @@ namespace WebDomain
         /// </summary>
         public class CodeSuccess
         {
-            public const string GetSuccess = "S01";
-            public const string UpdatedSuccess = "S02";
-            public const string DeletedSuccess = "S03";
-            public const string SearchSuccess = "S04";
-            public const string CreatedSuccess = "S05";
+            public const string GetSuccess = "200";
+            public const string UpdatedSuccess = "200";
+            public const string DeletedSuccess = "200";
+            public const string SearchSuccess = "200";
+            public const string CreatedSuccess = "201";
         }
 
     }

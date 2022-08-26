@@ -32,12 +32,11 @@ namespace WebDomain
             try {
 
                 // id tự động tạo nếu 
-                if (model.CustomerId == Guid.Empty)
                     model.CustomerId = Guid.NewGuid();
 
                 // kiểm tra mã tiềm năng
                 var ExistsPotentialCode = await _dapper.FindCloumnTAsync<Customer>("Customer", "PotentialCode", model.PotentialCode);
-                if (ExistsPotentialCode != null)
+                if (ExistsPotentialCode ==true)
                     return new ReponsitoryModel { Data = null, Message = MessageError.DuplicateCode, StatusCode = CodeError.DuplicateCode };
 
                 // kiểm tra tên có tồn tại không
@@ -50,7 +49,7 @@ namespace WebDomain
                 {
                     // check trùng số điện thoại cá nhân
                     var ExistsCustomerPhoneNumber = await _dapper.FindCloumnTAsync<Customer>("Customer", "CustomerPhoneNumber", model.CustomerPhoneNumber);
-                    if (ExistsCustomerPhoneNumber != null)
+                    if (ExistsCustomerPhoneNumber == true)
                         return new ReponsitoryModel { Data = null, Message = MessageError.DuplicatePhone, StatusCode = CodeError.DuplicatePhone };
                 }
 
@@ -59,7 +58,7 @@ namespace WebDomain
                 {
                     // check trùng  email
                     var ExistsCustomerEmail = await _dapper.FindCloumnTAsync<Customer>("Customer", "CustomerEmail", model.CustomerEmail);
-                    if (ExistsCustomerEmail != null)
+                    if (ExistsCustomerEmail == true)
                         return new ReponsitoryModel { Data = null, Message = MessageError.DuplicateEmail, StatusCode = CodeError.DuplicateEmail };
                 }
 
@@ -68,7 +67,7 @@ namespace WebDomain
                 {
                     // check trùng mã số thuế
                     var ExistsTaxCode = await _dapper.FindCloumnTAsync<Customer>("Customer", "TaxCode", model.TaxCode);
-                    if (ExistsTaxCode != null)
+                    if (ExistsTaxCode == true)
                         return new ReponsitoryModel { Data = null, Message = MessageError.DuplicateTaxCode, StatusCode = CodeError.DuplicateTaxCode };
                 }
 
@@ -77,7 +76,7 @@ namespace WebDomain
                 {
                     // check trùng tài khoản ngân hàng
                     var ExistsBankAccount = await _dapper.FindCloumnTAsync<Customer>("Customer", "BankAccount", model.BankAccount);
-                    if (ExistsBankAccount != null)
+                    if (ExistsBankAccount == true)
                         return new ReponsitoryModel { Data = null, Message = MessageError.DuplicateBankAccount, StatusCode = CodeError.DuplicateBankAccount };
                 }
 
@@ -91,7 +90,7 @@ namespace WebDomain
 
                 var result = await _dapper.CreateTAsync<CreateCustomerModel>(sql, model);
 
-                return new ReponsitoryModel { Data = result, Message = MessageSuccess.CreatedSuccess, StatusCode = CodeSuccess.CreatedSuccess };
+                return new ReponsitoryModel { Data = model, Message = MessageSuccess.CreatedSuccess, StatusCode = CodeSuccess.CreatedSuccess };
 
             }
             catch(Exception ex)
@@ -108,58 +107,21 @@ namespace WebDomain
         /// 10:10 12/08/2022
         /// xóa nhiều: chưa xong: 10:10 12/08/2022
         /// </summary>
-        public async Task<ReponsitoryModel> DeleteCustomer(string[] ids)
+        public async Task<ReponsitoryModel> DeleteCustomer(List<Guid> ListString)
         {
             try
             {
+               
                 // kiểm tra xem id truyền vào có giá trị hay không
-                if(ids == null)
+                if (ListString.Count == 0)
                     return new ReponsitoryModel { Data = null, Message = MessageError.NotValue, StatusCode = CodeError.NotValue };
 
-                string SqlUpdate = @"UPDATE customer SET IsDelete=true,UpdatedAt = " + DateTime.Now + " WHERE CustomerId IN (";
-                int dem = 0;
-                foreach (string id in ids)
-                {
-                    
-                    // lấy thông tin khách hàng
-                    var sql = @"Select * FROM Customer WHERE CustomerId = @CustomerId";
-                    var dynamicParameterId = new DynamicParameters();
-                    dynamicParameterId.Add(id);
-                    Customer customer = await _dapper.GetByIdAsync<Customer>(sql, dynamicParameterId);
-                    // kiểm tra xem khách hàng có tồn tại hay không
-                    if (customer == null)
-                    {
-                        dem++;
-                        return new ReponsitoryModel { Data = null, Message = MessageError.NotFound, StatusCode = CodeError.NotFound };
+                string SqlUpdate = @"UPDATE customer SET IsDelete=true,UpdatedAt = @UpdatedAt WHERE CustomerId IN @ListString";
+                var parameters = new DynamicParameters();
+                parameters.Add("@ListString", ListString);
+                parameters.Add("UpdatedAt", DateTime.Now);
 
-                    }
-
-                    if (dem ==1)
-                    {
-                        customer.UpdatedAt = DateTime.Now;
-                        // update customer
-                        SqlUpdate += "'@CustomerId" + dem + "'";
-                    }
-                    if (dem >1)
-                    {
-                        customer.UpdatedAt = DateTime.Now;
-                        // update customer
-                        SqlUpdate += ",'@CustomerId" + dem + "'";
-                    }
-                    
-                }
-
-                // đã lấy ra được câu truy vấn, giờ truyền biến vào để thực thi
-                int DemParams = 0;
-                var dynamicParameters = new DynamicParameters();
-                foreach(string id in ids)
-                {
-                    dem++;
-                    dynamicParameters.Add("CustomerId" + DemParams, id);
-                }
-               
-
-                var ResultUpdate = await _dapper.UpdateTAsync<Customer>(SqlUpdate, dynamicParameters);
+                var ResultUpdate = await _dapper.UpdateTAsync<Customer>(SqlUpdate, parameters);
 
                 if (ResultUpdate == 0)
                     return new ReponsitoryModel { Data = ResultUpdate, StatusCode = CodeError.DeletedFail, Message = MessageError.DeletedFail };
@@ -169,7 +131,7 @@ namespace WebDomain
             }
             catch (Exception ex)
             {
-                return new ReponsitoryModel { Data = ex, Message = MessageError.ProcessError, StatusCode = CodeError.ProcessError };
+                return new ReponsitoryModel { Data = ex.Message, Message = MessageError.ProcessError, StatusCode = CodeError.ProcessError };
             }
         }
 
@@ -182,9 +144,9 @@ namespace WebDomain
         /// <returns></returns>
         public async Task<ReponsitoryModel> GetAllCustomer()
         {
-            try
-            {
-                string sql = @"SELECT customer.CustomerId, customer.PotentialCode, customer.FullName, customer.CustomerPhoneNumber, customer.CompanyPhoneNumber, customer.CustomerEmail, customer.CompanyEmail, customer.TaxCode, customer.Zalo, customer.Organization, customer.Address, customer.VocativeId, customer.DepartmentId, customer.PositionId, customer.SourceId, customer.OrganizationTypeId, customer.TurnoverId, customer.IsDelete, vocative.VocativeName, department.DepartmentName, positions.PositionName, source.SourceName, organizationtype.OrganizationTypeName, turnover.TurnoverName FROM customer LEFT JOIN vocative ON customer.VocativeId = vocative.VocativeId LEFT JOIN department ON customer.DepartmentId = department.DepartmentId LEFT JOIN positions ON customer.PositionId = positions.PositionId LEFT JOIN source ON customer.SourceId = source.SourceId LEFT JOIN organizationtype ON customer.OrganizationTypeId = organizationtype.OrganizationTypeId LEFT JOIN turnover ON customer.TurnoverId = turnover.TurnoverId WHERE customer.IsDelete = false ORDER BY customer.UpdatedAt DESC LIMIT 50";
+            try { 
+
+                 string sql = @"SELECT customer.gender,customer.CustomerId,customer.LastName, customer.FirstName, customer.PotentialCode, customer.FullName, customer.CustomerPhoneNumber, customer.CompanyPhoneNumber, customer.CustomerEmail,customer.IsActiveEmail, customer.IsActivePhoneNumber, customer.CompanyEmail, customer.TaxCode, customer.Zalo, customer.Organization, customer.Address, customer.VocativeId, customer.DepartmentId, customer.PositionId, customer.SourceId, customer.OrganizationTypeId, customer.TurnoverId, customer.IsDelete, vocative.VocativeName, department.DepartmentName, positions.PositionName, source.SourceName, organizationtype.OrganizationTypeName, turnover.TurnoverName FROM customer LEFT JOIN vocative ON customer.VocativeId = vocative.VocativeId LEFT JOIN department ON customer.DepartmentId = department.DepartmentId LEFT JOIN positions ON customer.PositionId = positions.PositionId LEFT JOIN source ON customer.SourceId = source.SourceId LEFT JOIN organizationtype ON customer.OrganizationTypeId = organizationtype.OrganizationTypeId LEFT JOIN turnover ON customer.TurnoverId = turnover.TurnoverId WHERE customer.IsDelete = false ORDER BY customer.UpdatedAt DESC LIMIT 50";
 
                 var result = await _dapper.GetAllAsync<CustomerModel>(sql);
                 if (result == null)
@@ -208,7 +170,7 @@ namespace WebDomain
         public async Task<ReponsitoryModel> GetCustomerByFullName(string _search)
         {
             try {
-                var sql = @"SELECT customer.CustomerId, customer.PotentialCode, customer.FullName, customer.CustomerPhoneNumber, customer.CompanyPhoneNumber, customer.CustomerEmail, customer.CompanyEmail, customer.TaxCode, customer.Zalo, customer.Organization, customer.Address, customer.VocativeId, customer.DepartmentId, customer.PositionId, customer.SourceId, customer.OrganizationTypeId, customer.TurnoverId, customer.IsDelete, vocative.VocativeName, department.DepartmentName, positions.PositionName, source.SourceName, organizationtype.OrganizationTypeName, turnover.TurnoverName FROM customer LEFT JOIN vocative ON customer.VocativeId = vocative.VocativeId LEFT JOIN department ON customer.DepartmentId = department.DepartmentId LEFT JOIN positions ON customer.PositionId = positions.PositionId LEFT JOIN source ON customer.SourceId = source.SourceId LEFT JOIN organizationtype ON customer.OrganizationTypeId = organizationtype.OrganizationTypeId LEFT JOIN turnover ON customer.TurnoverId = turnover.TurnoverId WHERE FullName like @search and customer.IsDelete = false LIMIT 10";
+                var sql = @"SELECT customer.gender,customer.CustomerId,customer.LastName, customer.FirstName, customer.PotentialCode, customer.FullName, customer.CustomerPhoneNumber, customer.CompanyPhoneNumber, customer.CustomerEmail,customer.IsActiveEmail, customer.IsActivePhoneNumber, customer.CompanyEmail, customer.TaxCode, customer.Zalo, customer.Organization, customer.Address, customer.VocativeId, customer.DepartmentId, customer.PositionId, customer.SourceId, customer.OrganizationTypeId, customer.TurnoverId, customer.IsDelete, vocative.VocativeName, department.DepartmentName, positions.PositionName, source.SourceName, organizationtype.OrganizationTypeName, turnover.TurnoverName FROM customer LEFT JOIN vocative ON customer.VocativeId = vocative.VocativeId LEFT JOIN department ON customer.DepartmentId = department.DepartmentId LEFT JOIN positions ON customer.PositionId = positions.PositionId LEFT JOIN source ON customer.SourceId = source.SourceId LEFT JOIN organizationtype ON customer.OrganizationTypeId = organizationtype.OrganizationTypeId LEFT JOIN turnover ON customer.TurnoverId = turnover.TurnoverId WHERE FullName like @search and customer.IsDelete = false LIMIT 50";
                 var parameters = new Dictionary<string, object>()
                 {
                     ["search"] = $"%{_search}%"
@@ -222,6 +184,34 @@ namespace WebDomain
             catch (Exception ex)
             {
                 return new ReponsitoryModel { Data = ex, Message = MessageSuccess.GetSuccess, StatusCode = CodeSuccess.GetSuccess };
+            }
+        }
+
+        public async Task<ReponsitoryModel> GetCustomerCodeMax()
+        {
+            try
+            {
+                var SqlDbType = @"SELECT MAX(customer.PotentialCode) as PotentialCode FROM customer";
+
+                var code = await _dapper.GetCodeMaxAsync<CustomerCodeModel>(SqlDbType);
+                if (code == null)
+                    return new ReponsitoryModel { Data = null, Message = MessageError.NotValue, StatusCode = CodeError.NotValue };
+
+                string[] ArrCode = code.PotentialCode.Split('-');
+                long number;
+                var isSuccess = Int64.TryParse(ArrCode[1], out number);
+                if(isSuccess == true)
+                {
+                    var codeNew = ArrCode[0] + "-" + (number + 1).ToString();
+                    return new ReponsitoryModel { Data = codeNew, Message = MessageSuccess.GetSuccess, StatusCode = CodeSuccess.GetSuccess };
+                }
+
+                    return new ReponsitoryModel { Data = null, Message = MessageError.NotValue, StatusCode = CodeError.NotValue };
+
+            }
+            catch (Exception ex)
+            {
+                return new ReponsitoryModel { Data = ex, Message = MessageError.ProcessError, StatusCode = CodeError.ProcessError };
             }
         }
 
@@ -240,7 +230,7 @@ namespace WebDomain
                 if (_id == null)
                     return new ReponsitoryModel { Data = null, Message = "Id " + MessageError.NotExists, StatusCode = CodeError.NotExists };
 
-                var sql = @"Select * FROM Customer WHERE CustomerId = @CustomerId";
+                var sql = @"Select * FROM Customer WHERE CustomerId = @CustomerId LIMIT 1";
                 var dynamicParameters = new DynamicParameters();
                 dynamicParameters.Add("CustomerId", _id);
 
@@ -250,36 +240,43 @@ namespace WebDomain
                 if(customer == null)
                     return new ReponsitoryModel { Data = null, Message = MessageError.NotFound, StatusCode = CodeError.NotFound };
 
-                // không cho null
-                if(model.FirstName == null )
-                    return new ReponsitoryModel { Data = null, Message = "Tên "+MessageError.NotExists, StatusCode = CodeError.NotExists };
-
                 // check trùng mã số thuế
-                if (model.TaxCode != null)
+                if (model.TaxCode !=null)
                 {
-                    var ExistsUserPhone = await _dapper.FindCloumnTAsync<Customer>("Customer", "TaxCode", model.TaxCode);
-                    if (ExistsUserPhone != null)
-                        return new ReponsitoryModel { Data = null, StatusCode =CodeError.DuplicateTaxCode, Message = MessageError.DuplicateTaxCode };
-                    customer.CustomerPhoneNumber = model.CustomerPhoneNumber;
+                    if (customer.TaxCode != model.TaxCode)
+                    {
+                        var ExistsTaxCode = await _dapper.FindCloumnTAsync<Customer>("Customer", "TaxCode", model.TaxCode);
+                        if (ExistsTaxCode == true)
+                            return new ReponsitoryModel { Data = null, StatusCode = CodeError.DuplicateTaxCode, Message = MessageError.DuplicateTaxCode };
+                        customer.TaxCode = model.TaxCode;
+                    }
                 }
+             
                 
                 // check trùng số điện thoại
-                if (model.CustomerPhoneNumber != null)
+                if(model.CustomerPhoneNumber != null)
                 {
-                    var ExistsUserPhone = await _dapper.FindCloumnTAsync<Customer>("Customer", "CustomerPhoneNumber", model.CustomerPhoneNumber);
-                    if (ExistsUserPhone != null)
-                        return new ReponsitoryModel { Data = null, StatusCode =CodeError.DuplicatePhone, Message = MessageError.DuplicatePhone };
-                    customer.CustomerPhoneNumber = model.CustomerPhoneNumber;
+                    if (customer.CustomerPhoneNumber != model.CustomerPhoneNumber)
+                    {
+                        var ExistsUserPhone = await _dapper.FindCloumnTAsync<Customer>("Customer", "CustomerPhoneNumber", model.CustomerPhoneNumber);
+                        if (ExistsUserPhone == true)
+                            return new ReponsitoryModel { Data = null, StatusCode = CodeError.DuplicatePhone, Message = MessageError.DuplicatePhone };
+                        customer.CustomerPhoneNumber = model.CustomerPhoneNumber;
+                    }
                 }
 
                 // check trùng email
                 if (model.CustomerEmail != null)
                 {
-                    var ExistsUserPhone = await _dapper.FindCloumnTAsync<Customer>("Customer", "CustomerEmail", model.CustomerEmail);
-                    if (ExistsUserPhone != null)
-                        return new ReponsitoryModel { Data = null, StatusCode =CodeError.DuplicateEmail, Message = MessageError.DuplicateEmail };
-                    customer.CustomerPhoneNumber = model.CustomerPhoneNumber;
+                    if (customer.CustomerEmail != model.CustomerEmail)
+                    {
+                        var ExistsCustomerEmail = await _dapper.FindCloumnTAsync<Customer>("Customer", "CustomerEmail", model.CustomerEmail);
+                        if (ExistsCustomerEmail == true)
+                            return new ReponsitoryModel { Data = null, StatusCode = CodeError.DuplicateEmail, Message = MessageError.DuplicateEmail };
+                        customer.CustomerPhoneNumber = model.CustomerPhoneNumber;
+                    }
                 }
+              
 
                 if (model.VocativeId != null)
                     customer.VocativeId = model.VocativeId;
@@ -307,11 +304,14 @@ namespace WebDomain
 
                 if (model.IsActivePhoneNumber == true)
                     customer.IsActivePhoneNumber = true;
-                else customer.IsActivePhoneNumber = false;
+                if (model.IsActivePhoneNumber == false)
+                    customer.IsActivePhoneNumber = false;
 
                 if (model.IsActiveEmail == true)
                     customer.IsActiveEmail = true;
-                else customer.IsActiveEmail = false;
+
+                if(model.IsActiveEmail == false)
+                    customer.IsActiveEmail = false;
 
                 if (model.CustomerEmail != null)
                     customer.CustomerEmail = model.CustomerEmail;
@@ -328,7 +328,7 @@ namespace WebDomain
                 if (model.TaxCode != null)
                     customer.TaxCode = model.TaxCode;
 
-                if (model.BirthDay!= DateTime.MinValue)
+                if (model.BirthDay!= null)
                 {
                     customer.BirthDay = model.BirthDay;
                 }
@@ -345,30 +345,10 @@ namespace WebDomain
                 if (model.Facebook != null)
                     customer.Facebook = model.Facebook;
 
-                if (model.Country != null)
-                    customer.Country = model.Country;
-
-                if (model.Province != null)
-                    customer.Province = model.Province;
-
-                if (model.District != null)
-                    customer.District = model.District;
-
-                if (model.Wards != null)
-                    customer.Wards = model.Wards;
-
-                if (model.HomeNumber != null)
-                    customer.HomeNumber = model.HomeNumber;
-
-                if (model.RegionCode != null)
-                    customer.RegionCode = model.RegionCode;
-
-                if (model.Address != null)
-                    customer.Address = model.Address;
 
                 customer.UpdatedAt = DateTime.Now;
                 // update customer
-                var SqlUpdate = @"UPDATE customer SET VocativeId = @VocativeId, LastName = @LastName, FirstName = @FirstName, FullName = @FullName, DepartmentId = @DepartmentId, PositionId = @PositionId, CustomerPhoneNumber = @CustomerPhoneNumber, CompanyPhoneNumber = @CompanyPhoneNumber, IsActivePhoneNumber = @IsActivePhoneNumber, IsActiveEmail = @IsActiveEmail, CustomerEmail = @CustomerEmail, CompanyEmail = @CompanyEmail, Zalo = @Zalo, Organization = @Organization, TaxCode = @TaxCode, BirthDay = @BirthDay, Gender = @Gender, Facebook = @Facebook, Country = @Country, Province = @Province, District = @District, HomeNumber = @HomeNumber, RegionCode = @RegionCode, Address = @Address WHERE CustomerId = @CustomerId";
+                var SqlUpdate = @"UPDATE customer SET VocativeId = @VocativeId, LastName = @LastName, FirstName = @FirstName, FullName = @FullName, DepartmentId = @DepartmentId, PositionId = @PositionId, CustomerPhoneNumber = @CustomerPhoneNumber, CompanyPhoneNumber = @CompanyPhoneNumber, IsActivePhoneNumber = @IsActivePhoneNumber, IsActiveEmail = @IsActiveEmail, CustomerEmail = @CustomerEmail, CompanyEmail = @CompanyEmail, Zalo = @Zalo, Organization = @Organization, TaxCode = @TaxCode, BirthDay = @BirthDay, Gender = @Gender, Facebook = @Facebook WHERE CustomerId = @CustomerId";
                 var dynamicParametersUpdate = new DynamicParameters();
                 dynamicParametersUpdate.Add("VocativeId", customer.VocativeId);
                 dynamicParametersUpdate.Add("LastName", customer.LastName);
@@ -378,7 +358,7 @@ namespace WebDomain
                 dynamicParametersUpdate.Add("PositionId", customer.PositionId);
                 dynamicParametersUpdate.Add("CustomerPhoneNumber", customer.CustomerPhoneNumber);
                 dynamicParametersUpdate.Add("CompanyPhoneNumber", customer.CompanyPhoneNumber);
-                dynamicParametersUpdate.Add("IsActivePhoneNumber", customer.IsActiveEmail);
+                dynamicParametersUpdate.Add("IsActivePhoneNumber", customer.IsActivePhoneNumber);
                 dynamicParametersUpdate.Add("IsActiveEmail", customer.IsActiveEmail);
                 dynamicParametersUpdate.Add("CustomerEmail", customer.CustomerEmail);
                 dynamicParametersUpdate.Add("CompanyEmail", customer.CompanyEmail);
@@ -388,12 +368,6 @@ namespace WebDomain
                 dynamicParametersUpdate.Add("BirthDay", customer.BirthDay);
                 dynamicParametersUpdate.Add("Gender", customer.Gender);
                 dynamicParametersUpdate.Add("Facebook", customer.Facebook);
-                dynamicParametersUpdate.Add("Country", customer.Country);
-                dynamicParametersUpdate.Add("Province", customer.Province);
-                dynamicParametersUpdate.Add("District", customer.District);
-                dynamicParametersUpdate.Add("HomeNumber", customer.HomeNumber);
-                dynamicParametersUpdate.Add("RegionCode", customer.RegionCode);
-                dynamicParametersUpdate.Add("Address", customer.Address);
                 dynamicParametersUpdate.Add("CustomerId", _id);
                 var ResultUpdate = await _dapper.UpdateTAsync<Customer>(SqlUpdate, dynamicParametersUpdate);
                 if (ResultUpdate == 0)
@@ -404,6 +378,27 @@ namespace WebDomain
 
             }
             catch(Exception ex)
+            {
+                return new ReponsitoryModel { Data = ex, Message = MessageError.UpdatedFail, StatusCode = CodeError.UpdateFailed };
+            }
+        }
+
+
+        /// <summary>
+        /// Check trùng mã tiềm năng
+        /// Author: Phạm văn Đạt
+        /// 20;34 10/08/2022
+        /// </summary>
+        public async Task<ReponsitoryModel> CheckExistColumn(FormCheckExists model)
+        {
+            try
+            {
+                if (model.TableName == null || model.ColumnName == null || model.Value == null)
+                    return new ReponsitoryModel { Data = null, StatusCode = CodeError.NotValue, Message = MessageError.NotValue };
+                var result =  await _dapper.FindCloumnTAsync<Customer>(model.TableName, model.ColumnName, model.Value);
+                return new ReponsitoryModel { Data = result, Message = MessageSuccess.GetSuccess, StatusCode = CodeSuccess.GetSuccess };
+            }
+            catch (Exception ex)
             {
                 return new ReponsitoryModel { Data = ex, Message = MessageError.UpdatedFail, StatusCode = CodeError.UpdateFailed };
             }

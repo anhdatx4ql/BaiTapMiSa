@@ -1,6 +1,6 @@
 <!-- eslint-disable no-unused-vars -->
 <template>
-  <div class="container">
+  <div class="container" @click="ClickWindow">
     <!-- Start header -->
     <Header @CustomerByName="customers = $event"></Header>
     <!-- End Header -->
@@ -10,34 +10,88 @@
     <Toolbar
       :checkShowFormData="checkShowForm"
       @ShowFormData="checkShowForm = $event"
+      :listCustomerId="listCustomerId"
+      @checkShowPopUp="checkShowPopUp = $event"
+      @PopUpTitle="PopUpTitle = $event"
+      :ActiveMessage="ActiveMessage"
+      @ActiveMessage="ActiveMessage=$event"
+      @toastMessageInfo="toastMessageInfo=$event"
+      @showToastMessageInfo="showToastMessage=$event"
+      @checkLoadCustomerData="checkLoadCustomerData=$event"
     ></Toolbar>
     <!-- End Toolbar -->
 
     <!-- Start Content -->
     <ContentPage :Customers="customers"
      :checkShowFormData="checkShowForm"
-      @ShowFormData="checkShowForm = $event"
-      @CustomerInfo="CustomerInfo = $event">
+      @ShowFormData="checkShowFormUpdate = $event"
+      @CustomerInfo="CustomerInfo = $event"
+      @listCustomerId="listCustomerId = $event"
+      :checkLoadCustomerData="checkLoadCustomerData"
+      @checkLoadCustomerData="checkLoadCustomerData=$event">
       </ContentPage>
     <!-- End content -->
 
-    <!-- Start Form create - update -->
-    <FormData
-      :checkShowFormData="checkShowForm"
+    <!-- Start Form create  -->
+    <FormCreateCustomer v-if="checkShowForm"
       @CloseFormData="checkShowForm = $event"
-      :CustomerInfo="CustomerInfo"
-    ></FormData>
-    <!-- End Form create - update -->
+      @toastMessageInfo="toastMessageInfo=$event"
+      @showToastMessageInfo="showToastMessage=$event"
+       @checkLoadCustomerData="checkLoadCustomerData=$event"
+    ></FormCreateCustomer>
+    <!-- End Form create  -->
+
+
+    <!-- Start Form Update  -->
+    <FormUpdateCustomer :checkShowFormData="checkShowFormUpdate"
+     :CustomerInfo="CustomerInfo"
+    @CloseFormData="checkShowFormUpdate = $event" 
+     @toastMessageInfo="toastMessageInfo=$event"
+      @showToastMessageInfo="showToastMessage=$event">
+      </FormUpdateCustomer>
+    <!-- End Form Update  -->
+
+    <!-- Start Toast message -->  
+    <ToastMessage :toastMessageInfo="toastMessageInfo"
+     :showToastMessage="showToastMessage" @showToastMessage="showToastMessage=$event"
+     ></ToastMessage>
+    <!-- End Toast Message -->
+
+    <!-- Start PopUp -->
+    <PopUp :checkShowPopUp="checkShowPopUp"
+     @checkShowPopUp="checkShowPopUp=$event"
+     :PopUpTitle="PopUpTitle"
+     @ActiveMessage="ActiveMessage = $event">
+     </PopUp>
+    <!-- End PopUP -->
+
   </div>
 </template>
 
 <script>
+// Nhúng thanh header
 import Header from "./components/layouts/Header";
-import Toolbar from "./components/layouts/Toolbar";
-import ContentPage from "./components/layouts/ContentPage";
-import FormData from "./components/layouts/FormData";
 
-/** VÒNG ĐỜI
+// nhúng toolbar
+import Toolbar from "./components/layouts/Toolbar";
+
+// nhúng contentpage
+import ContentPage from "./components/layouts/ContentPage";
+
+// nhúng form tạo mới customer
+import FormCreateCustomer from "./components/layouts/FormCreateCustomer";
+
+// nhúng form tạo mới customer
+import ToastMessage from "./components/layouts/ToastMessage";
+
+// nhúng pop up
+import PopUp from "./components/layouts/PopUp";
+
+// nhúng form updateCustomer
+import FormUpdateCustomer from "./components/layouts/FormUpdateCustomer";
+import {  handlerClickHideFullComboboxData } from "./js/test";
+
+/** VÒNG ĐỜI  
  * 1: beforeCraete -  Tại thời điểm này, data, event chưa được thiết lập.
  *  2: created // được chạy khi data, event đã thiết lập thành công.
  * 3: BeforeMount: sẽ chạy sau khi data, event được thiết lập và trước khi gắn kết vào DOM.
@@ -58,26 +112,74 @@ export default {
     Header,
     Toolbar,
     ContentPage,
-    FormData,
+    FormCreateCustomer,
+    FormUpdateCustomer,
+    ToastMessage,
+    PopUp
   },
   data() {
     return {
       customers: {},
       // phải lưu cho nó 1 tên biến mới đưa lên được
       checkShowForm: false,
-      CustomerInfo:{}
-     
+      checkShowFormUpdate:false,
+      CustomerInfo:{},
+      toastMessageInfo:"",
+      showToastMessage: false,
+      listCustomerId: [],
+      checkShowPopUp: false,
+      PopUpTitle:"",
+      ActiveMessage: false,
+      checkLoadCustomerData: false
     };
   },
   watch:{
-
+   toastMessageInfo(){
+    console.log(this.toastMessageInfo.Type)
+   },
+   showToastMessage(){
+    console.log(this.showToastMessage)
+   },
+   ActiveMessage(){
+    console.log(this.ActiveMessage)
+   },
+   customers(){
+    console.log(this.customers)
+   }
   },
   beforeCreate() {
     
   },
   created() {
   },
-  methods: {},
+  methods: {
+   
+    ClickWindow:function(){
+
+      // xử lý click vào window
+       window.addEventListener("click", function(e){
+        // kiểm tra khi click vaof combobox data multiple thì không xử lý ẩn form
+        let checkEl = e.target.classList.contains("combobox-data-child-content-text");
+        let checkElIcon = e.target.classList.contains("background-icon-checked");
+        // lấy ra thẻ vừa thao tác click
+        let elClassList = e.target;
+
+        // kiểm tra xem có click vào 1 trong 2 thằng bên dưới không
+        if(!elClassList.classList.contains("combobox-data-child-content") && !checkEl && !checkElIcon )
+         
+         // kiểm tra xem thẻ click có nằm 2 class này không, nếu khoong thì mới xử lý
+          if(!elClassList.classList.contains("combobox-data-child-content") || !e.target.parentNode.classList.contains("combobox-data-child-content")){
+             if(elClassList.classList.contains("combobox-child") == false){
+                handlerClickHideFullComboboxData();
+              }
+              
+          }
+          // ("combobox-child")[0]
+      
+      });
+    },
+    
+  },
   mounted() {},
 };
 </script>

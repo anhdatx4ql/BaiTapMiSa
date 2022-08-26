@@ -1,7 +1,6 @@
 <template>
   <div class="content-child content-center">
-    <div class="table-container" ref="TableData">  
-      
+    <div class="table-container" ref="TableData">
       <!-- loading -->
       <div class="content-background-icon-loading">
         <div class="background-icon-loading"></div>
@@ -14,7 +13,21 @@
               <span class="th-icon-sum background-icon-header-sum"></span>
             </div>
             <div class="th tr-child-center">
-              <input type="checkbox" />
+              <input
+                type="checkbox"
+                id="listCustomerId"
+                :checked="false"
+                :value="listCustomerId"
+              />
+              <label
+                for="listCustomerId"
+                :class="
+                  listCustomerId.length == 0
+                    ? 'background-icon-checked-table'
+                    : 'background-icon-ckecked-header'
+                "
+                @click="clickCheckboxHeader"
+              ></label>
             </div>
             <div class="th">Thẻ</div>
             <div class="th">Xưng hô</div>
@@ -32,29 +45,51 @@
         </div>
       </div>
       <div class="table-content">
-        <div class="tbody">
-          
-          <div class="tr" v-for="c in customer" :key="c.customerId" @click="ClickDetail(c.customerId)">
-            <div class="td tr-child-center" :value="c.customerId" @click="ClickUpdate(c)">
+        <div class="tbody" ref="tbody">
+          <div
+            class="tr"
+            v-for="c in customer"
+            :key="c.customerId"
+            @click="ClickDetail(c.customerId)"
+          >
+            <div
+              class="td tr-child-center"
+              :value="c.customerId"
+              @click="ClickUpdate(c)"
+            >
               <span class="background-icon-update"></span>
             </div>
             <div class="td tr-child-center">
-              <input type="checkbox" :value="c.customerId"/>
+              <input
+                type="checkbox"
+                class="trCheckbox"
+                :value="c.customerId"
+                :id="c.customerId"
+              />
+              <label
+                :for="c.customerId"
+                class="background-icon-checked-table"
+                @click="ClickHandlerChecked"
+              ></label>
             </div>
-            <div class="td"></div> <!-- thẻ -->
-            <div class="td">{{(c.vocativeName)?c.vocativeName:"-" }}</div>            
-            <div class="td">{{(c.fullName)?c.fullName:"-"}}</div>
-            <div class="td">{{(c.positionName)?c.positionName:"-"}}</div>
-            <div class="td">{{(c.customerPhoneNumber)?c.customerPhoneNumber:"-"}}</div>
-            <div class="td">{{(c.companyPhoneNumber)?c.companyPhoneNumber:"-"}}</div>
-            <div class="td">{{(c.companyEmail)?c.companyEmail:"-"}}</div>
-            <div class="td">{{(c.customerEmail)?c.customerEmail:"-"}}</div>
-            <div class="td">{{(c.organization)?c.organization:"-"}}</div>
-            <div class="td">{{(c.taxCode)?c.taxCode:"-"}}</div>
-            <div class="td">{{(c.turnoverName)?c.turnoverName:"-"}}</div>
-            <div class="td">{{(c.address)?c.address:"-"}}</div>
+            <div class="td"></div>
+            <!-- thẻ -->
+            <div class="td">{{ c.vocativeName ? c.vocativeName : "-" }}</div>
+            <div class="td">{{ c.fullName ? c.fullName : "-" }}</div>
+            <div class="td">{{ c.positionName ? c.positionName : "-" }}</div>
+            <div class="td">
+              {{ c.customerPhoneNumber ? c.customerPhoneNumber : "-" }}
+            </div>
+            <div class="td">
+              {{ c.companyPhoneNumber ? c.companyPhoneNumber : "-" }}
+            </div>
+            <div class="td">{{ c.companyEmail ? c.companyEmail : "-" }}</div>
+            <div class="td">{{ c.customerEmail ? c.customerEmail : "-" }}</div>
+            <div class="td">{{ c.organization ? c.organization : "-" }}</div>
+            <div class="td">{{ c.taxCode ? c.taxCode : "-" }}</div>
+            <div class="td">{{ c.turnoverName ? c.turnoverName : "-" }}</div>
+            <div class="td">{{ c.address ? c.address : "-" }}</div>
           </div>
-          
         </div>
       </div>
     </div>
@@ -93,103 +128,172 @@
 
 <script>
 import { handlerScroll, handlerClickButtonArrow } from "../../js/test";
-import { UnLoading} from "../../js/Loading";
+import { UnLoading, Loading } from "../../js/Loading";
 
 // nhúng service xử lý customer
-import {CustomerService} from '../Services/CustomerService';
-
+import { CustomerService } from "../Services/CustomerService";
 
 // nhúng service xử lý customer detail
-import {CustomerDetailService} from '../Services/CustomerDetailService';
-
+import { CustomerDetailService } from "../Services/CustomerDetailService";
 
 export default {
-
   name: "ContentPageCenter",
   data() {
     return {
-      checkShow:false,
+      checkShow: false,
       checkLeft: false,
       checkRight: false,
-      customer: []
+      customer: "",
+      listCustomerId: [],
+      checkReloadData: false,
     };
   },
-  props:{
-    customersSearch:{},
-    checkShowFormData:Boolean
+  props: {
+    customersSearch: {},
+    checkShowFormData: Boolean,
+    checkLoadCustomerData: Boolean
   },
-  async created() {
-
+  created() {
+    
     //Author: Phạm Văn Đạt
     // function: lấy thông tin c;
     // created time: 11:50 15/08/2022
-
-    let ServiceCustomer = new CustomerService();
-    await ServiceCustomer.GetAll()
-    .then(res=>{
-      if(res.data.data)
-        this.customer = res.data.data;
-    })
-    .catch(e=>{
-      console.log(e)
-    })
-
-
+    this.LoadData();
   },
   methods: {
     //Author: Phạm Văn Đạt
     // function: kích nút để hiển thị thông tin chi tiết
     // created time: 11:59 15/08/2022
-    ClickDetail:function (customerId){
+    ClickDetail: function (customerId) {
       let _CustomerDetailService = new CustomerDetailService();
-      _CustomerDetailService.getByCustomerId(customerId)
-        .then(res=>{
-          if(res.data.data){
-            this.$emit('CustomerDetails',res.data.data);
-          }
-          else console.log('không có dữ liệu')
-        })
-        .catch(e=>{
-          console.log(e)
-        })
+      _CustomerDetailService.getByCustomerId(customerId).then((res) => {
+        if (res) this.customer = res;
+      });
     },
 
     //Author: Phạm Văn Đạt
     // function: kích nút để hiển thị form chỉnh sửa thông tin
     // created time: 18:55 16/08/2022
-    ClickUpdate:function (CustomerInfo){
+    ClickUpdate: function (CustomerInfo) {
       this.checkShow = !this.checkShow;
-      this.$emit('ShowFormData',this.checkShow);
-      this.$emit('CustomerInfo',CustomerInfo);
+      this.$emit("ShowFormData", this.checkShow);
+      this.$emit("CustomerInfo", CustomerInfo);
+    },
+    ClickHandlerChecked: function (event) {
+      // xử lý thêm, xóa id trong mảng xử lý xóa, sửa
+      let El = event.target.parentNode.getElementsByTagName("input")[0];
+      if (El) {
+        let check = El.checked;
+        let ElValue = El.getAttribute("value");
+        if (ElValue) {
+          if (check == false) {
+            console.log("add");
+            this.listCustomerId.push(ElValue);
+          } else {
+            console.log("remove");
+            console.log(El.getAttribute("value"));
+            console.log("false");
+            // lấy vị trí phần tử đó trong mảng
+            const valueRemove = this.listCustomerId.indexOf(ElValue);
+            // xóa phân tử đó đi
+            this.listCustomerId.splice(valueRemove, 1);
+          }
+
+        }
+      }
+
+    },
+    // xử lý checkbox header
+    clickCheckboxHeader: function (event) {
+      let ElChecked = event.target;
+      console.log(ElChecked)
+      let El = event.target.parentNode.getElementsByTagName("input")[0];
+      if (El) {
+        let ElsCheckbox = this.$refs.tbody.getElementsByClassName("trCheckbox");
+        // nếu tồn tại các bản đã checked thì xóa hết
+        if (this.listCustomerId.length > 0) {
+          // lấy ra hết các ô kiểm tra xem cái nào checked thì bỏ
+
+          for (let item of ElsCheckbox) {
+            if (item.checked == true) {
+              item.checked = false;
+            }
+          }
+          // xóa gết phần tử trong mảng
+          if (ElChecked.classList.contains("background-icon-ckecked-header")) {
+             El.checked = true;
+            this.listCustomerId.splice(0, this.listCustomerId.length);
+          }
+        } else {
+
+          // thay đổi icon 
+
+          console.log("chay")
+          for (let item of ElsCheckbox) {
+            if (item.checked == false) {
+              const value =  item.getAttribute("value");
+              if(value)
+                this.listCustomerId.push(value)
+              item.checked = true;
+            }
+          }
+        }
+      }
+
+    },
+    LoadData(){
+      let _CustomerService = new CustomerService();
+      _CustomerService.GetAll().then((res) => {
+        this.customer = res;
+        console.log(res);
+      });
     }
-
-
+     
   },
   // theo dõi các biến thay đổi và thực hiện hàm nếu có
   watch: {
     // theo dõi danh sách khách hàng
-    customer(){
-        UnLoading(this.$refs.TableData);
+    customer() {
+      UnLoading(this.$refs.TableData);
     },
 
     // hiển thị, ẩn side bar bên trái
     checkLeft() {
-      handlerClickButtonArrow(this.checkLeft, this.checkRight,event);
+      handlerClickButtonArrow(this.checkLeft, this.checkRight, event);
     },
 
     // hiển thị, ẩn side bar bên phải
     checkRight() {
-      handlerClickButtonArrow(this.checkLeft, this.checkRight,event);
+      handlerClickButtonArrow(this.checkLeft, this.checkRight, event);
     },
 
     // lấy thông tin khách hàng
-    customersSearch(){
+    customersSearch() {
       this.customer = this.customersSearch;
+    },
+    // theo  dõi mảng để xóa danh sác, update
+    listCustomerId: {
+      handler: function (val) {
+        this.$emit("listCustomerId", val);
+      },
+      deep: true
+    
+    },
+    //check load form data
+    checkLoadCustomerData(){
+      this.checkReloadData = this.checkLoadCustomerData;
+
+      this.$emit("checkLoadCustomerData",!this.checkLoadCustomerData)
+    },
+    async checkReloadData(){
+      Loading(this.$refs.TableData)
+      // load lại dữ liệu
+      await this.LoadData();
+      UnLoading(this.$refs.TableData)
     }
   },
   mounted() {
     handlerScroll();
-    
   },
 };
 </script>

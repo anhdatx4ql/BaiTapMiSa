@@ -1,12 +1,17 @@
 <template>
   <div class="content">
+    
     <ContentPageLeft :customCarrer="carrer" :customVocative="vocative"></ContentPageLeft>
     <ContentPageCenter :customersSearch="customers"
      @CustomerDetails="customerDetails = $event"
      :checkShowFormData="checkShowFormData"
      @ShowFormData="checkShow = $event"
      @CustomerInfo="CustomerInfo = $event"
+     @listCustomerId="listCustomerId = $event"
+     :checkLoadCustomerData="checkLoadCustomerData"
+     @checkLoadCustomerData="checkLoadDone=$event"
      ></ContentPageCenter>
+
     <ContentPageRight :customerDetails="customerDetails"></ContentPageRight>
   </div>
 </template>
@@ -18,7 +23,7 @@ import ContentPageLeft from "./ContentPageLeft";
 import ContentPageRight from "./ContentPageRight";
 
 // nhúng service xử lý ngành nghề
-import {CarrerService} from '../Services/CarrerService';
+// import {CarrerService} from '../Services/CarrerService';
 
 // nhúng service xử lý ngành nghề
 import {VocativeService} from '../Services/VocativeService';
@@ -32,35 +37,30 @@ export default {
   },
   data() {
     return {
-      carrer: Object,
-      customers:Object,
-      vocative:Object,
-      customerDetails:Object,
+      carrer: "",
+      customers:"",
+      vocative:"",
+      customerDetails:"",
       checkShow:Boolean, // - cho phép
-      CustomerInfo:Object
+      CustomerInfo:"",
+      listCustomerId: "",
+      checkLoadDone:Boolean
     };
   },
   props:{
-      Customers: {
-        
-      },
-      checkShowFormData: Boolean
+      Customers: {},
+      checkShowFormData: Boolean,
+      checkLoadCustomerData:Boolean
   },
   watch:{
-    // theo dõi object khách hàng
     Customers(){
-     this.customers = this.Customers;
+      console.log(this.Customers)
+      console.log(this.customers)
+      this.customers = this.Customers;
     },
-
-    //theo dõi object chi tiết khách hàng
-    customerDetails(){
-      console.log(this.customerDetails)
+    checkLoadDone(){
+      this.$emit("checkLoadCustomerData",this.checkLoadDone)
     },
-
-    // theo dõi check show form
-    checkShowFormData(){
-    },
-
     // theo doi ShowFormData
     checkShow(){
       this.$emit('ShowFormData',true);
@@ -69,39 +69,25 @@ export default {
     // the doi thong tin chi tiet de chinh sua
     CustomerInfo(){
       this.$emit('CustomerInfo',this.CustomerInfo);
+    },
+
+    // theo dõi danh sách id customer 
+    listCustomerId:{
+       handler: function (val) {
+        this.$emit("listCustomerId", val);
+      },
+      deep: true
     }
   },
   created() {
-
-    //Author: Phạm Văn Đạt
-    // function: lấy thông tin ngành nghề;
-    // created time: 11:50 15/08/2022
-    let _CarrerService = new CarrerService();
-    _CarrerService.getAll()
-    .then(res=>{
-        if(res.data.data)
-          this.carrer = res.data.data;
-      console.log('carrer: ',this.carrer)
-    })
-    .catch(e=>{
-      console.log(e)
-    });
-
-    
     //Author: Phạm Văn Đạt
     // function: lấy thông tin xưng hô
     // created time: 11:50 15/08/2022
     let _VocativeService = new VocativeService();
-    _VocativeService.getAll()
-    .then(res=>{
-      if(res.data.data)
-        this.vocative = res.data.data;
-      console.log(this.vocative);
-    })
-    .catch(e=>{
-      console.log(e)
-    })
-   
+    _VocativeService.getAll().then((res)=>{
+              if(res)
+                this.vocative = res;
+            })
 
   },
   // cho phép sử dụng tham số

@@ -24,3 +24,63 @@
     align-items: center;
     justify-content: center;
 }
+
+.toolbar-child-change>div {
+    margin-right: 16px;
+    position: relative;
+}
+
+.toolbar-child-change button {
+    height: 32px;
+    width: max-content;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+}
+
+.toolbar-left-child-button {
+    background-color: white !important;
+    padding: 0px 16px 0 0;
+}
+
+.toolbar-left-child-button>.button-toolbar-left-icon {
+    margin: 0 12px 0 8px;
+}
+
+.toolbar-child-change>div>button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.toolbar-left-child-button:hover>.button-toolbar-left-icon {
+    background: url('../../assets/img/icon_collection.svg') no-repeat -255px -128px;
+}
+
+.toolbar-left-child-options {
+    position: absolute;
+    display: none;
+    flex-direction: column;
+    background: white;
+    top: 100%;
+    z-index: 999;
+    left: 0;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgb(31 34 41 / 16%);
+}
+
+.toolbar-left-child-button:hover>.background-icon-export {
+    background: url('../../assets/img/icon_collection.svg') no-repeat -320px -272px;
+}
+
+.toolbar-left-child-button:hover>.background-icon-delete {
+    background: url('../../assets/img/icon_collection.svg') no-repeat -191px -129px;
+}
+
+.toolbar-left-child-button-delete:hover{
+    color:red !important;
+}
+
+.toolbar-left-child-options>button {
+    width: 110px;
+}

@@ -14,7 +14,7 @@ namespace WebDomain
     /// </summary>
     public class CreateCustomerModel
     {
-        public Guid CustomerId { set; get; } // Id customer + 
+        public Guid? CustomerId { set; get; } // Id customer + 
         //[Required(ErrorMessage ="Mã Tiềm năng không được bỏ trống")]
         //[StringLength(50)]
         public string PotentialCode { set; get; } // Mã tiềm năng + 
@@ -26,10 +26,8 @@ namespace WebDomain
         public string CustomerPhoneNumber { set; get; } // số điện thoại cá nhân + 
         public string CompanyPhoneNumber { set; get; }// số điện thoại công ty +
 
-        [EmailAddress(ErrorMessage ="Không đúng định dạng Email")]
         public string CustomerEmail { set; get; } // email cá nhân + 
 
-        [EmailAddress(ErrorMessage = "Không đúng định dạng Email")]
         public string CompanyEmail { set; get; } // email công ty + 
         public string Zalo { set; get; } // zalo + 
         public string TaxCode { set; get; } //mã số thuế + 

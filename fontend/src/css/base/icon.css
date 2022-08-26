@@ -16,8 +16,8 @@
     height: 20px;
 }
 
-.background-icon-bag{
-    background: url('../../assets/img/icon_collection.svg') no-repeat -123px -339px;
+.background-icon-bag-header{
+    background: url('../../assets/img/icon_collection.svg') no-repeat -206px -321px;;
     width: 18px;
     height: 20px;
 }
@@ -29,7 +29,7 @@
 }
 
 .background-icon-update{
-    background: url('../../assets/img/icon_collection.svg') no-repeat -128px 0px;
+    background: url('../../assets/img/icon_collection.svg') no-repeat -127px 0px;
     width: 16px;
     height: 16px;
 }
@@ -112,7 +112,7 @@
 }
 
 .background-icon-bag{
-    background: url(../../assets/img/icon_collection.svg) no-repeat -209px -321px;
+    background: url(../../assets/img/icon_collection.svg) no-repeat -206px -321px;
 }
 
 .background-icon-email{
@@ -280,3 +280,53 @@
 .filter-title-icon span {
     padding: 0;
 }
+
+.background-icon-checked{
+    background: url('../../assets/img/icon_collection.svg') no-repeat -208px -257px;
+    display:none;
+}
+
+.background-icon-close{
+    background: url('../../assets/img/icon_collection.svg') no-repeat -80px -16px;
+}
+
+.background-icon-close:hover{
+    cursor: pointer;
+    background: url('../../assets/img/icon_collection.svg') no-repeat -320px -240px;
+}
+
+.background-icon-checked-table{
+    background: url('../../assets/img/icon_collection.svg') no-repeat -193px -16px;
+    height:16px;
+    width: 16px;
+    cursor:pointer;
+}
+
+.background-icon-ckecked-header{
+    background: url('../../assets/img/icon_collection.svg') no-repeat -193px -193px;
+    height:16px;
+    width: 16px;
+    cursor:pointer;
+}
+
+
+
+.background-icon-ckecked-header-full{
+    background: url('../../assets/img/icon_collection.svg') no-repeat -177px -17px;
+    height:16px;
+    width: 16px;
+    cursor:pointer;
+}
+
+.background-icon-delete{
+    background: url('../../assets/img/icon_collection.svg') no-repeat -191px -1px;
+}
+
+
+.background-icon-export{
+    background: url('../../assets/img/icon_collection.svg') no-repeat -304px -224px;
+}
+
+
+
+

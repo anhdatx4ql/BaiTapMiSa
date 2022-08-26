@@ -101,7 +101,6 @@
 
 .button-toolbar-left:hover {
     color: #2B4EEE;
-    transition: 0.5s;
 }
 .button-toolbar-refesh {
     margin: 0;
@@ -111,7 +110,6 @@
     display: flex;
     align-items: center;
     padding-left: 16px;
-    width: 240px;
     box-sizing: border-box;
     justify-content: space-between;
 }

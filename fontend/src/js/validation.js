@@ -1,13 +1,14 @@
 
 
-
-export var ErrorsValidation = {
-    UserIdRequired: 'Mã tiềm năng không được bỏ trống!',
-    UserIdDuplicate: "Mã tiềm năng trùng!",
-    LastNameRequired: 'Tên Không được bỏ trống',
-    FirstNameRequired: 'Họ và đệm không được bỏ trống',
-    PhoneRequired: 'Số điện thoại không được bỏ trống',
-    PhoneDuplicate: 'Số điện thoại này đã có người sử dụng',
-    EmailRequired: 'Email không được bỏ trống',
-    EmailDuplicate: 'Email này đã có người sử dụng'
+/***
+ * Object hiển thị lỗi valdation trong các input
+ */
+export const ErrorsValidation = {
+    CustomerIdRequired: 'Mã tiềm năng không được bỏ trống!',
+    CustomerIdDuplicate: "Mã tiềm năng trùng!",
+    FirstNameRequired: 'Tên Không được bỏ trống!',
+    PhoneDuplicate: 'Số điện thoại này đã có người sử dụng!',
+    EmailDuplicate: 'Email này đã có người sử dụng!',
+    TaxCodeDuplicate: 'Mã số thuế này đã có người sử dụng!',
+    BankAccountDuplicate: "Tài khoản này đã có người sử dụng!"
 }

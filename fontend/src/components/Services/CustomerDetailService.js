@@ -8,9 +8,14 @@ export class CustomerDetailService{
     url= "https://localhost:44355/api/CustomerDetail/";
 
 
-    getByCustomerId(id){
+    async getByCustomerId(id){
        try{
-            return axios.get(this.url+id);         
+            return axios.get(this.url+id).then((res) => {
+                return res.data.data;
+             })
+             .catch((e) => {
+               console.log(e);
+             });         
 
        }catch(error){
         console.log(error);

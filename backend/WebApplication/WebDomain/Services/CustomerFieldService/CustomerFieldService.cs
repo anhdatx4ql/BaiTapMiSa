@@ -36,8 +36,9 @@ namespace WebDomain
         {
             try
             {
+
                 int[] results = { };
-                int dem = 0;
+                int count = 0;
                 string sql = @"INSERT INTO customerfield(CustomerFieldId,CustomerId,FieldId,CreatedAt,UpdatedAt) VALUES ";
                 var dynamicParameters = new DynamicParameters();
                 foreach (CreateCustomerFieldModel model in models)
@@ -53,54 +54,47 @@ namespace WebDomain
 
                     // kiểm tra mã khách hàng có đúng hay không
                     var ExistsCustomerId = await _dapper.FindCloumnTAsync<Customer>("Customer", "CustomerId", model.CustomerId.ToString());
-                    if (ExistsCustomerId == null)
+                    if (ExistsCustomerId == false)
                         return new ReponsitoryModel { Data = null, StatusCode = CodeError.NotValue, Message = MessageError.NotValue };
+
+
+                    // xóa hết dữ liệu hiện có liên quan đến customer : customerId
+                    string sqlDelete = @"DELETE FROM CustomerField WHERE CustomerId = @customerId";
+                    var dynamicParametersDelete = new DynamicParameters();
+                    dynamicParametersDelete.Add("customerId", model.CustomerId);
+                    await _dapper.DeleteTAsync<CustomerField>(sqlDelete, dynamicParametersDelete);
 
 
                     // kiểm tra mã lĩnh vực có đúng hay không
                     var ExistsFieldId = await _dapper.FindCloumnTAsync<Field>("Field", "FieldId", model.FieldId.ToString());
 
                     // kiếm tra dòng dữ liệu này đã tồn tại chưa
-                    if (ExistsFieldId == null)
+                    if (ExistsFieldId == false)
                         return new ReponsitoryModel { Data = null, StatusCode = CodeError.DuplicateValue, Message = MessageError.DuplicateValue };
 
 
-                    // kiểm tra mã ngành nghề có đúng hay không
-                    string sqlSearch = @"SELECT field.FieldName, customerfield.CustomerFieldId, customerfield.CustomerId, customerfield.FieldId FROM customerfield INNER JOIN customer ON customerfield.CustomerId = customer.CustomerId INNER JOIN field ON customerfield.FieldId = field.FieldId WHERE customerfield.FieldId = @FieldId and customerfield.CustomerId=@CustomerId;";
-                    var parameters = new Dictionary<string, object>()
-                    {
-                        ["FieldId"] = $"%{model.FieldId}%",
-                        ["CustomerId"] = $"%{model.CustomerId}%"
-                    };
-
-                    List<CustomerCareerModel> resultSqlSearch = await _dapper.FindTAsync<CustomerCareerModel>(sqlSearch, parameters);
-                    // kiếm tra dòng dữ liệu này đã tồn tại chưa
-                    if (resultSqlSearch != null)
-                    {
-
-                        return new ReponsitoryModel { Data = null, StatusCode = CodeError.DuplicateValue, Message = MessageError.DuplicateValue };
-
-                    }
-
-                    if (ExistsFieldId == null)
-                        return new ReponsitoryModel { Data = null, StatusCode = CodeError.NotValue, Message = MessageError.NotValue };
-                    dem++;
-                    if (models.Length == dem)
-                        sql += "(@CustomerFieldId" + dem + ",@CustomerId" + dem + ",@FieldId" + dem + ",@CreatedAt" + dem + ",@UpdatedAt" + dem + ")";
-                    else
-                        sql += "(@CustomerFieldId" + dem + ",@CustomerId" + dem + ",@FieldId" + dem + ",@CreatedAt" + dem + ",@UpdatedAt" + dem + "),";
-                    dynamicParameters.Add("CustomerFieldId" + dem, Guid.NewGuid());
-                    dynamicParameters.Add("CustomerId" + dem, model.CustomerId);
-                    dynamicParameters.Add("FieldId" + dem, model.FieldId);
-                    dynamicParameters.Add("CreatedAt" + dem, DateTime.Now);
-                    dynamicParameters.Add("UpdatedAt" + dem, DateTime.Now);
+                        count++;
+                        if (count == 1)
+                            sql += "(@CustomerFieldId" + count + ",@CustomerId" + count + ",@FieldId" + count + ",@CreatedAt" + count + ",@UpdatedAt" + count + ")";
+                        else
+                            sql += ",(@CustomerFieldId" + count + ",@CustomerId" + count + ",@FieldId" + count + ",@CreatedAt" + count + ",@UpdatedAt" + count + ")";
+                        dynamicParameters.Add("CustomerFieldId" + count, Guid.NewGuid());
+                        dynamicParameters.Add("CustomerId" + count, model.CustomerId);
+                        dynamicParameters.Add("FieldId" + count, model.FieldId);
+                        dynamicParameters.Add("CreatedAt" + count, DateTime.Now);
+                        dynamicParameters.Add("UpdatedAt" + count, DateTime.Now);
+                  
                 }
 
+               
                 var result = await _dapper.CreateMultipleAsync(sql, dynamicParameters);
                 if (result == 0)
                     return new ReponsitoryModel { Data = null, Message = MessageError.CreatedFail, StatusCode = CodeError.CreateFailed };
 
+             
                 return new ReponsitoryModel { Data = result, Message = MessageSuccess.CreatedSuccess, StatusCode = CodeSuccess.CreatedSuccess };
+
+
 
             }
             catch (Exception ex)
@@ -146,7 +140,7 @@ namespace WebDomain
         {
             try
             {
-                string sql = @"SELECT field.FieldName, customerfield.CustomerFieldId, customerfield.CustomerId, customerfield.FieldId FROM customerfield INNER JOIN customer ON customerfield.CustomerId = customer.CustomerId INNER JOIN field ON customerfield.FieldId = field.FieldId WHERE field.FieldName LIKE @search;";
+                string sql = @"SELECT field.FieldName, customerfield.CustomerFieldId, customerfield.CustomerId, customerfield.FieldId FROM customerfield INNER JOIN customer ON customerfield.CustomerId = customer.CustomerId INNER JOIN field ON customerfield.FieldId = field.FieldId WHERE field.FieldName LIKE @search OR customerfield.CustomerId LIKE @search;";
                 var parameters = new Dictionary<string, object>()
                 {
                     ["search"] = $"%{search}%"

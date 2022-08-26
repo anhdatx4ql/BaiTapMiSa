@@ -69,17 +69,6 @@
   .input-file {
     display: none;
   }
-  
-  input.input-content {
-    width: 240px;
-    height: 32px;
-    border-radius: 4px;
-    outline: none;
-    border: 1px solid #d3d7de;
-    padding: 0 16px;
-    box-sizing: border-box;
-  }
-  
   .form-container-content-child-item {
     display: flex;
       align-items: baseline;
@@ -120,10 +109,11 @@
   
   .disabled-input {
     cursor: no-drop;
+    background: #E2E4E9;
   }
   
   .input-content:focus {
-    border-color: #4262f0;
+    border-color: #4262f0 !important;
   }
   
   .form-container-content {

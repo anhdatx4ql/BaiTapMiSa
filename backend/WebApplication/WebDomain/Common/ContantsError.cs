@@ -39,21 +39,21 @@ namespace WebDomain
         /// </summary>
         public class CodeError
         {
-            public const string DuplicateName = "E001";
-            public const string DuplicateCode = "E002";
-            public const string NotFound = "E003";
-            public const string NotValue = "E004";
-            public const string ProcessError = "E005";
-            public const string CreateFailed = "E006";
-            public const string UpdateFailed = "E007";
-            public const string NotExists = "E008";
-            public const string DuplicateEmail = "E009";
-            public const string DuplicatePhone = "E010";
-            public const string DuplicateTaxCode = "E011";
-            public const string DuplicateBankAccount = "E012";
-            public const string DeletedFail = "E013";
-            public const string DuplicateValue = "E014";
-            public const string GenderExists = "E015";
+            public const string DuplicateName = "400";
+            public const string DuplicateCode = "400";
+            public const string NotFound = "400";
+            public const string NotValue = "400";
+            public const string ProcessError = "400";
+            public const string CreateFailed = "400";
+            public const string UpdateFailed = "400";
+            public const string NotExists = "400";
+            public const string DuplicateEmail = "400";
+            public const string DuplicatePhone = "400";
+            public const string DuplicateTaxCode = "400";
+            public const string DuplicateBankAccount = "400";
+            public const string DeletedFail = "400";
+            public const string DuplicateValue = "400";
+            public const string GenderExists = "400";
         }
     }
 }

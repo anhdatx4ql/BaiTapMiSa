@@ -28,7 +28,7 @@
           </div>
           <div class="header-right-child">
             <button
-              class="button-background-header background-icon-bag"
+              class="button-background-header background-icon-bag-header"
             ></button>
           </div>
           <div class="header-right-child">
@@ -173,20 +173,11 @@ export default {
     // created time: 11:50 15/08/2022
     
     SearchCustomer: function(event){
+      console.log("enter")
       let ServiceCustomer = new CustomerService();
-      ServiceCustomer.FindByName(event.target.value)
-      .then(res=>{
-        // kiểm tra null hiển thị thông báo
-        if(res.data.data == null){
-          alert("Không tồn tại bản ghi nào có tên '"+event.target.value+"'");
-        }else{
-           this.$emit('CustomerByName',res.data.data);
-        }
-
-      })
-      .catch(e=>{
-        console.log(e)
-      })
+      ServiceCustomer.FindByName(event.target.value).then((res)=>{
+              if(res)this.$emit('CustomerByName',res);
+            })
     }
   }
 }

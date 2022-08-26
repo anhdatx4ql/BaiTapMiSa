@@ -9,9 +9,14 @@ export class PotentialTypeService {
 
 
     // lấy danh sách loại tiềm năng
-    getAll(){
+    async getAll(){
        try{
-            return axios.get(this.url);         
+            return axios.get(this.url).then((res) => {
+                return res.data.data;
+             })
+             .catch((e) => {
+               console.log(e);
+             });         
 
        }catch(error){
         console.log(error);
@@ -19,9 +24,14 @@ export class PotentialTypeService {
     }
 
     // lấy danh sách loại tiềm năng theo tên
-    getByName(search){
+    async getByName(search){
         try{
-            return axios.get(this.url+search);         
+            return axios.get(this.url+search).then((res) => {
+                return res.data.data;
+             })
+             .catch((e) => {
+               console.log(e);
+             });         
         }catch(error){
             console.log(error);
         }

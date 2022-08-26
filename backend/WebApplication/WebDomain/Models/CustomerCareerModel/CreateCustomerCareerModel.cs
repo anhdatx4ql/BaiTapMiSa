@@ -14,9 +14,7 @@ namespace WebDomain
     public class CreateCustomerCareerModel
     {
         public Guid CustomerId { set; get; } // mã khách hàng
-        public Guid CareerID { set; get; } // Mã nghề nghiệp,
-        public string CreatedBy { set; get; }// Người tạo
-        public string UpdatedBy { set; get; }// người cập nhật
+        public Guid CareerId { set; get; } // Mã nghề nghiệp,
 
     }
 }

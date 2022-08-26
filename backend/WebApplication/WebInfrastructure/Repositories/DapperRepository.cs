@@ -14,7 +14,7 @@ namespace WebInfrastructure
     public class DapperRepository : IDapperRepository
     {
 
-        public DapperRepository()
+            public DapperRepository()
         {
 
         }
@@ -28,6 +28,7 @@ namespace WebInfrastructure
         // Author: Phạm Văn Đạt
         // Láy tất cả các cột trong bảng
         // Created: 11:12 07/08/2022
+        //  lấy tên bảng: typeof(T).Name => có lên bảng
         public async Task<List<T>> GetAllAsync<T>(string query, DynamicParameters sp_params = null)
         {
             using (IDbConnection db = GetDbconnection())
@@ -90,12 +91,12 @@ namespace WebInfrastructure
         /// Author: Phạm văn Đạt
         /// 20;34 10/08/2022
         /// </summary>
-        public async Task<int> DeleteTAsync<T>(string sql, T entity)
+        public async Task<int> DeleteTAsync<T>(string sql, DynamicParameters sp_params = null)
         {
             using (IDbConnection db = GetDbconnection())
             {
                 db.Open();
-                var result = await db.ExecuteAsync(sql, entity);
+                var result = await db.ExecuteAsync(sql, sp_params);
                 db.Close();
                 return result;
             }
@@ -107,15 +108,18 @@ namespace WebInfrastructure
         /// Author: Phạm văn Đạt
         /// 20;34 10/08/2022
         /// </summary>
-        public async Task<T> FindCloumnTAsync<T>(string tableName, string cloumnName, string cloumnValue)
+        public async Task<Boolean> FindCloumnTAsync<T>(string tableName, string cloumnName, string cloumnValue)
         {
             string sql = "Select "+ cloumnName + " from " + tableName + " WHERE " + cloumnName + " = '" + cloumnValue + "';";
             using (IDbConnection db = GetDbconnection())
             {
                 db.Open();
-                var result = await db.QuerySingleOrDefaultAsync<T>(sql);
+                var result = await db.QuerySingleOrDefaultAsync(sql);
                 db.Close();
-                return result;
+                if (result != null)
+                    return true;
+
+                return false;
             }
         }
 
@@ -170,6 +174,22 @@ namespace WebInfrastructure
             }
         }
 
+        /// DateTime: 21:03 10/08/2022
+        /// truy vấn nhiều
+        /// </summary>
+        /// <returns></returns>
+        public async Task<T> GetCodeMaxAsync<T>(string sql)
+        {
+            using (IDbConnection db = GetDbconnection())
+            {
+                db.Open();
+                var result = await db.QuerySingleOrDefaultAsync<T>(sql);
+                db.Close();
+                return result;
+            }
+        }
+
+      
 
     }
 }

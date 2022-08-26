@@ -40,7 +40,7 @@ namespace WebDomain
         /// Author: Phạm văn Đạt
         /// 20;34 10/08/2022
         /// </summary>
-        Task<ReponsitoryModel> DeleteCustomer(string[] ids);
+        Task<ReponsitoryModel> DeleteCustomer(List<Guid> ListString);
 
         /// <summary>
         /// Tìm kiếm khách hàng theo họ và tên
@@ -48,6 +48,22 @@ namespace WebDomain
         /// 20;34 10/08/2022
         /// </summary>
         Task<ReponsitoryModel> GetCustomerByFullName(string search);
+        
+        /// <summary>
+        /// Lẫy mã tiềm năng lớn nhất
+        /// Author: Phạm văn Đạt
+        /// 20;34 10/08/2022
+        /// </summary>
+        Task<ReponsitoryModel> GetCustomerCodeMax();
+
+        /// <summary>
+        /// Check trùng mã tiềm năng
+        /// Author: Phạm văn Đạt
+        /// 20;34 10/08/2022
+        /// </summary>
+        Task<ReponsitoryModel> CheckExistColumn(FormCheckExists model);
+
+
 
     }
 }

@@ -32,7 +32,7 @@ namespace WebDomain
         {
             try
             {
-                string sql = @"SELECT customercareer.CustomerCareerId, customercareer.CustomerId, customercareer.CareerID, career.CareerName FROM customercareer INNER JOIN career ON customercareer.CareerID = career.CareerId INNER JOIN customer ON customercareer.CustomerId = customer.CustomerId";
+                string sql = @"SELECT customercareer.CustomerCareerId, customercareer.CustomerId, customercareer.CareerId, career.CareerName FROM customercareer INNER JOIN career ON customercareer.CareerId = career.CareerId INNER JOIN customer ON customercareer.CustomerId = customer.CustomerId";
 
                 var result = await _dapper.GetAllAsync<CustomerCareerModel>(sql);
                 if (result == null)
@@ -57,7 +57,7 @@ namespace WebDomain
         {
             try
             {
-                string sql = @"SELECT customercareer.CustomerCareerId, customercareer.CustomerId, customercareer.CareerID, career.CareerName FROM customercareer INNER JOIN career ON customercareer.CareerID = career.CareerId INNER JOIN customer ON customercareer.CustomerId = customer.CustomerId WHERE career.CareerName LIKE @search;";
+                string sql = @"SELECT customercareer.CustomerCareerId, customercareer.CustomerId, customercareer.CareerId, career.CareerName FROM customercareer INNER JOIN career ON customercareer.CareerId = career.CareerId INNER JOIN customer ON customercareer.CustomerId = customer.CustomerId WHERE career.CareerName LIKE @search OR customer.CustomerId LIKE @search;";
                 var parameters = new Dictionary<string, object>()
                 {
                     ["search"] = $"%{search}%"
@@ -76,7 +76,7 @@ namespace WebDomain
 
         /// <summary>
         /// funciton: Tạo mới ngành nghề người dùng
-        /// chưa check xem customerId và FieldID có trùng trong bảng hay không. bằng cách lấy ra id user trong bảng có fieldId, so sánh nếu trùng thì bỏ qua không thêm
+        /// chưa check xem customerId và FieldID có trùng trong bảng hay không. bằng cách lấy ra Id user trong bảng có fieldId, so sánh nếu trùng thì bỏ qua không thêm
         /// </summary>
         /// <param CustomerCareer="model"></param>
         /// <returns></returns>
@@ -85,66 +85,59 @@ namespace WebDomain
             try 
             {
                 int[] results = { };
-                int dem = 0;
-                string sql = @"INSERT INTO customercareer(CustomerCareerId,CustomerId,CareerID,CreatedAt,UpdatedAt) VALUES ";
+                int count = 0;
+                string sql = @"INSERT INTO customercareer(CustomerCareerId,CustomerId,CareerId,CreatedAt,UpdatedAt) VALUES ";
                 var dynamicParameters = new DynamicParameters();
+
                 foreach (CreateCustomerCareerModel model in models)
                 {
-                   
-                        //Kiểm tra null mã khách hàng
-                        if (model.CustomerId == null)
-                            return new ReponsitoryModel { Data = null, Message = "Mã khách hàng " + MessageError.NotExists };
 
-                        // kiểm tra null mã ngành nghề
-                        if (model.CareerID == null)
-                            return new ReponsitoryModel { Data = null, Message = "Mã ngành nghề " + MessageError.NotExists };
+                    //Kiểm tra null mã khách hàng
+                    if (model.CustomerId == null)
+                        return new ReponsitoryModel { Data = null, Message = "Mã khách hàng " + MessageError.NotExists };
 
-                        // kiểm tra mã khách hàng có đúng hay không
-                        var ExistsCustomerId = await _dapper.FindCloumnTAsync<Customer>("Customer", "CustomerId", model.CustomerId.ToString());
-                        if (ExistsCustomerId == null)
-                            return new ReponsitoryModel { Data = null, StatusCode = CodeError.NotValue, Message = MessageError.NotValue };
-                        
-                        // kiểm tra mã khách hàng có đúng hay không
-                        var ExistsCareerId = await _dapper.FindCloumnTAsync<Career>("Career", "CareerId", model.CareerID.ToString());
-                        if (ExistsCareerId == null)
-                            return new ReponsitoryModel { Data = null, StatusCode = CodeError.NotValue, Message = MessageError.NotValue };
+                    // kiểm tra null mã ngành nghề
+                    if (model.CareerId == null)
+                        return new ReponsitoryModel { Data = null, Message = "Mã ngành nghề " + MessageError.NotExists };
+
+                    // kiểm tra mã khách hàng có đúng hay không
+                    var ExistsCustomerId = await _dapper.FindCloumnTAsync<Customer>("Customer", "CustomerId", model.CustomerId.ToString());
+                    if (ExistsCustomerId == null)
+                        return new ReponsitoryModel { Data = null, StatusCode = CodeError.NotValue, Message = MessageError.NotValue };
+
+
+                    // xóa hết dữ liệu hiện có liên quan đến customer : customerId
+                    string sqlDelete = @"DELETE FROM CustomerCareer WHERE CustomerId = @customerId";
+                    var dynamicParametersDelete = new DynamicParameters();
+                    dynamicParametersDelete.Add("customerId", model.CustomerId);
+                    await _dapper.DeleteTAsync<CustomerCareer>(sqlDelete, dynamicParametersDelete);
 
 
                     // kiểm tra mã ngành nghề có đúng hay không
-                    string sqlSearch = @"SELECT customercareer.CustomerCareerId, customercareer.CustomerId, customercareer.CareerID, career.CareerName FROM customercareer INNER JOIN career ON customercareer.CareerID = career.CareerId INNER JOIN customer ON customercareer.CustomerId = customer.CustomerId WHERE customercareer.CareerID = @CareerID and customercareer.CustomerId=@CustomerId;";
-                    var parameters = new Dictionary<string, object>()
-                    {
-                        ["CareerID"] = $"%{model.CareerID}%",
-                        ["CustomerId"] = $"%{model.CustomerId}%"
-                    };
-                   
-                    List<CustomerCareerModel> resultSqlSearch = await _dapper.FindTAsync<CustomerCareerModel>(sqlSearch, parameters);
-                    // kiếm tra dòng dữ liệu này đã tồn tại chưa
-                    if (resultSqlSearch != null)
-                    {
-                        
-                        return new ReponsitoryModel { Data = null, StatusCode = CodeError.DuplicateValue, Message = MessageError.DuplicateValue };
-
-                    }
-
+                    var ExistsCareerId = await _dapper.FindCloumnTAsync<Career>("Career", "CareerId", model.CareerId.ToString());
                     if (ExistsCareerId == null)
-                            return new ReponsitoryModel { Data = null, StatusCode = CodeError.NotValue, Message = MessageError.NotValue };
-                        dem++;
-                        if(models.Length == dem)
-                            sql += "(@CustomerCareerId"+dem+ ",@CustomerId" + dem + ",@CareerID" + dem + ",@CreatedAt" + dem + ",@UpdatedAt" + dem + ")";
+                        return new ReponsitoryModel { Data = null, StatusCode = CodeError.NotValue, Message = MessageError.NotValue };
+
+
+
+                        count++;
+                        if (count == 1)
+                            sql += "(@CustomerCareerId" + count + ",@CustomerId" + count + ",@CareerId" + count + ",@CreatedAt" + count + ",@UpdatedAt" + count + ")";
                         else
-                            sql += "(@CustomerCareerId" + dem + ",@CustomerId" + dem + ",@CareerID" + dem + ",@CreatedAt" + dem + ",@UpdatedAt" + dem + "),";
-                        dynamicParameters.Add("CustomerCareerId" + dem, Guid.NewGuid());
-                        dynamicParameters.Add("CustomerId" + dem, model.CustomerId);
-                        dynamicParameters.Add("CareerID" + dem, model.CareerID);
-                        dynamicParameters.Add("CreatedAt" + dem, DateTime.Now);
-                        dynamicParameters.Add("UpdatedAt" + dem, DateTime.Now);
+                            sql += ",(@CustomerCareerId" + count + ",@CustomerId" + count + ",@CareerId" + count + ",@CreatedAt" + count + ",@UpdatedAt" + count + ")";
+                        dynamicParameters.Add("CustomerCareerId" + count, Guid.NewGuid());
+                        dynamicParameters.Add("CustomerId" + count, model.CustomerId);
+                        dynamicParameters.Add("CareerId" + count, model.CareerId);
+                        dynamicParameters.Add("CreatedAt" + count, DateTime.Now);
+                        dynamicParameters.Add("UpdatedAt" + count, DateTime.Now);
+                    
+
                 }
 
                 var result = await _dapper.CreateMultipleAsync(sql, dynamicParameters);
-                if(result == 0)
+                if (result == 0)
                     return new ReponsitoryModel { Data = null, Message = MessageError.CreatedFail, StatusCode = CodeError.CreateFailed };
-                
+
                 return new ReponsitoryModel { Data = result, Message = MessageSuccess.CreatedSuccess, StatusCode = CodeSuccess.CreatedSuccess };
 
             }

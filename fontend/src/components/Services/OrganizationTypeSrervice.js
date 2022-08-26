@@ -9,9 +9,14 @@ export class OrganizationTypeSrervice{
 
 
     // lấy danh sách loại hình
-    getAll(){
+    async GetAll(){
        try{
-            return axios.get(this.url);         
+            return axios.get(this.url).then((res) => {
+                return res.data.data;
+             })
+             .catch((e) => {
+               console.log(e);
+             });         
 
        }catch(error){
         console.log(error);
@@ -19,9 +24,14 @@ export class OrganizationTypeSrervice{
     }
 
     // lấy danh sách loại hình theo tên
-    getByName(search){
+    async GetByName(search){
         try{
-            return axios.get(this.url+search);         
+            return axios.get(this.url+search).then((res) => {
+                return res.data.data;
+             })
+             .catch((e) => {
+               console.log(e);
+             });         
         }catch(error){
             console.log(error);
         }

@@ -1,0 +1,89 @@
+.toast-message-icon{
+    padding: 12px 16px;
+    height:16px;
+    width:16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.toast-message-close{
+    padding: 12px 16px;
+    height: 16px;
+    width: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+div#toast-message {
+    position: fixed;
+    top: 5%;
+    right: 50%;
+    transform: translateX(50%);
+    z-index:9999;
+}
+
+.toast-message-container {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: max-content;
+    color: white;
+    border-radius: 4px;
+    margin-bottom: 5px;
+    transition: opacity 2s;
+}
+
+.info-container{
+    background-color: #4262F0;
+}
+
+
+
+.warning-container{
+    background-color: #F07D42;
+}
+
+
+
+.error-container{
+    background-color: #EC4141;
+}
+
+
+
+.success-container{
+    background-color: #31B491;
+}
+
+.background-icon-size-16{
+    width:16px;
+    height:16px;
+}
+
+.info{
+    background: url("../../assets/img/icon_collection.svg") no-repeat -368px -144px;
+}
+
+.close{
+    background: url('../../assets/img/icon_collection.svg') no-repeat -319px -474px;;
+    cursor: pointer;
+}
+
+.close:hover{
+    background: url('../../assets/img/icon_collection.svg') no-repeat -384px -128px;
+}
+
+.warning{
+    background: url('../../assets/img/icon_collection.svg') no-repeat -368px -129px;
+}
+
+.success{
+    background: url('../../assets/img/icon_collection.svg') no-repeat -384px -144px;
+}
+
+.error{
+    background: url('../../assets/img/icon_collection.svg') no-repeat -384px -128px;
+}

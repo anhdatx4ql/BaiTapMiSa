@@ -58,7 +58,7 @@ namespace WebInfrastructure
         /// DateTime: 21:08 10/08/2022
         /// </summary>
         /// <returns></returns>
-        Task<int> DeleteTAsync<T>(string sql, T entity);
+        Task<int> DeleteTAsync<T>(string sql, DynamicParameters sp_params = null);
 
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace WebInfrastructure
         /// DateTime: 21:03 10/08/2022
         /// </summary>
         /// <returns></returns>
-        Task<T> FindCloumnTAsync<T>(string tableName, string cloumnName, string cloumnValue);
+        Task<Boolean> FindCloumnTAsync<T>(string tableName, string cloumnName, string cloumnValue);
 
 
         /// DateTime: 21:03 10/08/2022
@@ -87,6 +87,14 @@ namespace WebInfrastructure
         /// </summary>
         /// <returns></returns>
         Task<int> CreateMultipleAsync(string sql, DynamicParameters sp_params = null);
+
+        /// DateTime: 21:03 10/08/2022
+        /// lấy mã code lớn nhất
+        /// </summary>
+        /// <returns></returns>
+        Task<T> GetCodeMaxAsync<T>(string sql);
+
+
 
 
     }
