@@ -404,5 +404,43 @@ namespace WebDomain
             }
         }
 
+        /// <summary>
+        /// Update nhiều
+        /// Author: Phạm văn Đạt
+        /// 16:55 24/08/2022
+        /// </summary>
+        public async Task<ReponsitoryModel> UpdateCustomerMul(UpdateCustomerMul model)
+        {
+            try
+            {
+
+                // kiểm tra xem id truyền vào có giá trị hay không
+                if (model.ListId.Count == 0)
+                    return new ReponsitoryModel { Data = null, Message = MessageError.NotValue, StatusCode = CodeError.NotValue };
+
+                string SqlUpdate = $"UPDATE customer SET {model.ColumnName} = @ColumnValue, UpdatedAt = @UpdatedAt WHERE CustomerId IN @ListId";
+                var parameters = new DynamicParameters();
+                parameters.Add(name :"@ListId",value: model.ListId);
+                //parameters.Add(name: "@ColumnName",value: model.ColumnName, dbType: DbType.String);
+                parameters.Add(name: "@ColumnValue",value: model.ColumnValue, dbType: DbType.String);
+                parameters.Add(name: "UpdatedAt",value: DateTime.Now);
+
+                var ResultUpdate = await _dapper.UpdateTAsync<Customer>(SqlUpdate, parameters);
+
+                if (ResultUpdate == 0)
+                    return new ReponsitoryModel { Data = null, StatusCode = CodeError.DeletedFail, Message = MessageError.DeletedFail };
+                return new ReponsitoryModel { Data = ResultUpdate, Message = MessageSuccess.UpdatedSuccess, StatusCode = CodeSuccess.UpdatedSuccess };
+
+
+            }
+            catch (Exception ex)
+            {
+                return new ReponsitoryModel { Data = ex.Message, Message = MessageError.ProcessError, StatusCode = CodeError.ProcessError };
+            }
+        }
+
+
+
+
     }
 }

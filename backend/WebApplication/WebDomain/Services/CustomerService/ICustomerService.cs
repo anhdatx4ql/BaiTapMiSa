@@ -64,6 +64,12 @@ namespace WebDomain
         Task<ReponsitoryModel> CheckExistColumn(FormCheckExists model);
 
 
+        /// <summary>
+        /// Update nhiều
+        /// Author: Phạm văn Đạt
+        /// 20;34 10/08/2022
+        /// </summary>
+        Task<ReponsitoryModel> UpdateCustomerMul(UpdateCustomerMul model);
 
     }
 }

@@ -125,3 +125,11 @@ button.button-icon-refesh {
     background: url(../../assets/img/icon_collection.svg) no-repeat -207px -144px;
     transition: 0.5s;
 }
+
+button.pop-up-bottom-active:hover {
+    background: #EA2E2E;
+}
+
+button.pop-up-bottom-active:active {
+    background: #E81717;
+}

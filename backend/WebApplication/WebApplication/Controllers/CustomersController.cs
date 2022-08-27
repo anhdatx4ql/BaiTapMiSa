@@ -116,6 +116,19 @@ namespace WebApplication.Controllers
             return await _customer.CheckExistColumn(model);
         }
 
+        /// <summary>
+        /// Author: Phạm Văn Đạt
+        /// - Xóa mềm bản ghi bằng cách chuyển isDelete = true
+        /// DateTime: 13:41 12/08/2022
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("api/[controller]/UpdateMul")]
+        public async Task<ReponsitoryModel> UpdateMul([FromBody] UpdateCustomerMul model)
+        {
+            return await _customer.UpdateCustomerMul(model);
+        }
+
   
     }
 }

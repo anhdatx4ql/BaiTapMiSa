@@ -32,7 +32,7 @@ namespace WebDomain
         {
             try
             {
-                string sql = @"SELECT TurnoverId,TurnoverName FROM Turnover";
+                string sql = @"SELECT TurnoverId,TurnoverName FROM Turnover ORDER BY TurnoverName ASC;";
                 List<TurnoverModel> result = await _dapper.GetAllAsync<TurnoverModel>(sql);
                 if (result.Count == 0)
                     return new ReponsitoryModel { Data = null, Message = MessageError.NotValue, StatusCode = CodeError.NotValue };
@@ -55,7 +55,7 @@ namespace WebDomain
         {
             try
             {
-                string sql = @"SELECT TurnoverId,TurnoverName FROM Turnover WHERE TurnoverName like @search;";
+                string sql = @"SELECT TurnoverId,TurnoverName FROM Turnover WHERE TurnoverName like @search ORDER BY TurnoverName ASC;";
                 var parameters = new Dictionary<string, object>()
                 {
                     ["search"] = $"%{name}%"

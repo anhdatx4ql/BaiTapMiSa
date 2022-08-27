@@ -67,6 +67,7 @@
     <Compile Include="Models\CustomersModel\CustomerModel.cs" />
     <Compile Include="Models\CustomersModel\FormCheckExists.cs" />
     <Compile Include="Models\CustomersModel\UpdateCustomerModel.cs" />
+    <Compile Include="Models\CustomersModel\UpdateCustomerMul.cs" />
     <Compile Include="Models\DepartmentModel\DepartmentModel.cs" />
     <Compile Include="Models\FieldModel\FieldModel.cs" />
     <Compile Include="Models\OrganizationTypeModel\OrganizationTypeModel.cs" />

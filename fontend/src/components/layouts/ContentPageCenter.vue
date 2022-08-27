@@ -246,7 +246,23 @@ export default {
       _CustomerService.GetAll().then((res) => {
         this.customer = res;
         console.log(res);
-      });
+        // load xong bỏ hết các dòng đã chọn
+        this.listCustomerId.splice(0, this.listCustomerId.length);
+
+        // bỏ checked
+        let checkboxs = document.getElementsByClassName("trCheckbox");
+        
+        // chuyển background checked
+        if (checkboxs) {
+        
+            for (let item of checkboxs) {
+              if (item.checked == true) {
+                item.checked = false;
+              }
+            }
+
+          } 
+        });
     }
      
   },

@@ -124,7 +124,22 @@ export class CustomerService{
        console.log(error);
       }
    }
-     
+
+     // cập nhật nhiều
+     async UpdateMul(Data){
+      try{
+
+           return await axios.post(this.url+"UpdateMul",Data).then((res) => {
+             return res;
+          })
+          .catch((e) => {
+            console.log(e);
+          });         
+
+      }catch(error){
+       console.log(error);
+      }
+   }
 }
 
 
