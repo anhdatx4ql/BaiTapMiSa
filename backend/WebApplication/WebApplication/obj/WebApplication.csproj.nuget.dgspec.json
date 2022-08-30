@@ -4,6 +4,21 @@
     "D:\\hoctap\\BTMiSa\\new-project\\baitapMISA\\backend\\WebApplication\\WebApplication\\WebApplication.csproj": {}
   },
   "projects": {
+    "D:\\hoctap\\BTMiSa\\new-project\\baitapMISA\\backend\\WebApplication\\Common\\Common.csproj": {
+      "restore": {
+        "projectUniqueName": "D:\\hoctap\\BTMiSa\\new-project\\baitapMISA\\backend\\WebApplication\\Common\\Common.csproj",
+        "projectName": "Common",
+        "projectPath": "D:\\hoctap\\BTMiSa\\new-project\\baitapMISA\\backend\\WebApplication\\Common\\Common.csproj",
+        "frameworks": {
+          "net472": {
+            "projectReferences": {}
+          }
+        }
+      },
+      "frameworks": {
+        "net472": {}
+      }
+    },
     "D:\\hoctap\\BTMiSa\\new-project\\baitapMISA\\backend\\WebApplication\\WebApplication\\WebApplication.csproj": {
       "version": "1.0.0",
       "restore": {
@@ -55,6 +70,14 @@
               "target": "Package",
               "version": "[2.0.123, )"
             },
+            "DocumentFormat.OpenXml": {
+              "target": "Package",
+              "version": "[2.17.1, )"
+            },
+            "EPPlus": {
+              "target": "Package",
+              "version": "[6.0.6, )"
+            },
             "Microsoft.AspNet.WebApi.Cors": {
               "target": "Package",
               "version": "[5.2.9, )"
@@ -102,6 +125,9 @@
         "frameworks": {
           "net472": {
             "projectReferences": {
+              "D:\\hoctap\\BTMiSa\\new-project\\baitapMISA\\backend\\WebApplication\\Common\\Common.csproj": {
+                "projectPath": "D:\\hoctap\\BTMiSa\\new-project\\baitapMISA\\backend\\WebApplication\\Common\\Common.csproj"
+              },
               "D:\\hoctap\\BTMiSa\\new-project\\baitapMISA\\backend\\WebApplication\\WebInfrastructure\\WebInfrastructure.csproj": {
                 "projectPath": "D:\\hoctap\\BTMiSa\\new-project\\baitapMISA\\backend\\WebApplication\\WebInfrastructure\\WebInfrastructure.csproj"
               }
@@ -120,7 +146,11 @@
         "projectPath": "D:\\hoctap\\BTMiSa\\new-project\\baitapMISA\\backend\\WebApplication\\WebInfrastructure\\WebInfrastructure.csproj",
         "frameworks": {
           "net472": {
-            "projectReferences": {}
+            "projectReferences": {
+              "D:\\hoctap\\BTMiSa\\new-project\\baitapMISA\\backend\\WebApplication\\Common\\Common.csproj": {
+                "projectPath": "D:\\hoctap\\BTMiSa\\new-project\\baitapMISA\\backend\\WebApplication\\Common\\Common.csproj"
+              }
+            }
           }
         }
       },

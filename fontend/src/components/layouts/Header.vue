@@ -12,7 +12,7 @@
             <div class="label-input label-input-icon">
               <label class="background-icon-search-input"></label>
               <input
-                type="text" v-on:keyup.enter="SearchCustomer"
+                type="text" v-on:keyup.enter="SearchCustomer" v-model="textSearch"
                 class="input"
                 placeholder="Tìm kiếm tiềm năng, liên hệ khách hàng"
               />
@@ -161,11 +161,17 @@
 
 <script>
 
-import {CustomerService} from '../Services/CustomerService'
 export default {
   name: 'HeaderComponent',
+  data(){
+    return {
+      textSearch:""
+    }
+  },
   props: {
     
+  },
+  watch:{
   },
   methods:{
     //Author: Phạm Văn Đạt
@@ -173,11 +179,9 @@ export default {
     // created time: 11:50 15/08/2022
     
     SearchCustomer: function(event){
-      console.log("enter")
-      let ServiceCustomer = new CustomerService();
-      ServiceCustomer.FindByName(event.target.value).then((res)=>{
-              if(res)this.$emit('CustomerByName',res);
-            })
+      console.log("enter", event)
+      this.$emit('CustomerByName',this.textSearch);
+      
     }
   }
 }

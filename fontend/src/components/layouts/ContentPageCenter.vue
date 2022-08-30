@@ -96,18 +96,92 @@
 
     <div class="table-button">
       <div class="table-button-left">
-        Tổng số: <span class="table-button-left-text">893</span>
+        Tổng số: <span class="table-button-left-text">{{totalCount}}</span>
       </div>
+
       <div class="table-button-right">
-        <div
-          class="
-            table-button-right-chlid table-button-right-combobox
-            combobox-table
-          "
-        >
-          50 Bản ghi trên Trang
+        <div class="table-button-right-chlid">
+          <div class="form-container-content-child-item-input">
+                <div class="combobox" id="paging">
+                  <div
+                    class="combobox-child combobox-content"
+                    @click="handlerClickCombobox"
+                    check="false"
+                  >
+                    <div
+                      class="combobox-content-select combobox-child"
+                      ref="pagingId"
+                    >
+                      {{pageSize}} bản ghi trên Trang
+                    </div>
+                    <div
+                      class="
+                        combobox-content-icon
+                        button-icon-up-black
+                        icon-font-16
+                        combobox-child
+                      "
+                    ></div>
+                  </div>
+                  <div class="combobox-child combobox-data" ref="pageSize">
+                    <div class="combobox-data-child">
+                      <div
+                        class="combobox-data-child-content"
+                        v-for="v in ListPaging"
+                        :key="v[0]"
+                        :class="{
+                          selected:
+                            v[0] == pageSize? true : false,
+                        }"
+                        @click="handlerClickComboboxData"
+                        :value="v[0]"
+                      >
+                        <div class="combobox-data-child-content-text">
+                           {{v[1]}} bản ghi trên Trang
+                        </div>
+                        <div
+                          class="background-icon-checked icon-font-16"
+                          :style="
+                            v.Code == pageSize
+                              ? 'display:inline-block'
+                              : 'display:none'
+                          "
+                        ></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
         </div>
-        <div class="table-button-right-chlid combobox-table"></div>
+
+        <div class="table-button-right-chlid">
+          <button class="table-button-right-chlid-button button button-background-white" 
+          :class="{'background-disabled':(checkPreData==true)?false:true}"
+          @click="clickPreFirstData">
+            <span class="background-icon-first icon-font-16"></span>
+          </button>
+          <button class="table-button-right-chlid-button button button-background-white" 
+          :class="{'background-disabled':(checkPreData==true)?false:true}"
+          @click="clickPreData">
+            <span  class="background-icon-pre icon-font-16"></span>
+          </button>
+          <div class="table-button-right-chlid-text">
+            <span>{{startColumn}}</span> đến <span>{{endColumn}}</span>
+          </div>
+          <button 
+          class="table-button-right-chlid-button button button-background-white"
+          :class="{'background-disabled':(checkNextData==true)?false:true}"
+          @click="clickNextData">
+          
+            <span class="background-icon-next icon-font-16"></span>
+          </button>
+          <button class="table-button-right-chlid-button button button-background-white" 
+          :class="{'background-disabled':(checkNextData==true)?false:true}"
+          @click="clickNextLastData()">
+            <span class="background-icon-last icon-font-16"></span>
+          </button>
+        </div>
+       
       </div>
     </div>
 
@@ -127,6 +201,12 @@
 </template>
 
 <script>
+// các hàm xử lý click combobox
+import {
+  ClickShowHideComboboxData,
+  selectValueComboboxData,
+} from "../../js/test";
+
 import { handlerScroll, handlerClickButtonArrow } from "../../js/test";
 import { UnLoading, Loading } from "../../js/Loading";
 
@@ -146,21 +226,110 @@ export default {
       customer: "",
       listCustomerId: [],
       checkReloadData: false,
+      currentPage:1,
+      keyword:null,
+      pageSize:10,
+      checkPreData:false,
+      checkNextData:false,
+      totalCount:0,
+      startColumn:0,
+      endColumn:0,
+      totalPages:0,
+      ListPaging: new Map()
     };
-  },
+  },  
   props: {
-    customersSearch: {},
+    searchCustomerCurrent: {},
     checkShowFormData: Boolean,
     checkLoadCustomerData: Boolean
   },
   created() {
-    
+    this.ListPaging.set(10,10);
+    this.ListPaging.set(20,20);
+    this.ListPaging.set(50,50);
+    this.ListPaging.set(100,100);
     //Author: Phạm Văn Đạt
     // function: lấy thông tin c;
     // created time: 11:50 15/08/2022
-    this.LoadData();
+    this.LoadData(this.keyword, this.currentPage,this.pageSize);
+
   },
   methods: {
+
+     /**
+   * Hiển thị dữ liệu trang đầu tiên
+   */
+    clickPreFirstData(){
+      if(this.checkPreData == true){
+        this.currentPage = 1;
+        this.LoadData(this.keyword,this.currentPage,this.pageSize);
+      }
+    },
+
+     /**
+   * Hiển thị dữ liệu trang trước đó
+   */
+    clickPreData(){
+      if(this.checkPreData == true){
+        this.currentPage =  this.currentPage-1;
+        this.LoadData(this.keyword,this.currentPage,this.pageSize)
+
+      }
+    },
+
+    /**
+   * Hiển thị dữ liệu trang tiếp theo
+   */
+    clickNextData(){
+      if(this.checkNextData == true){
+        this.currentPage =  this.currentPage+1;
+        this.LoadData(this.keyword,this.currentPage+1,this.pageSize)
+      }
+    },
+
+  /**
+   * Hiển thị dữ liệu cuối cùng
+   */
+    clickNextLastData(){
+      if(this.checkNextData == true){
+        this.currentPage =  this.totalPages;
+        this.LoadData(this.keyword,this.totalPages,this.pageSize);
+      }
+    },
+    /**
+     * Author: Phạm Văn Đạt
+     * function:  xử lý đóng form data
+     * created time: 11:28 17/08/2022
+     */
+    handlerClickCombobox: function (event) {
+      try {
+
+        // hiển thị combobox data
+        ClickShowHideComboboxData(event);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+     handlerClickComboboxData: function (event) {
+      try {
+
+        // chuyển curent và page về default 
+        this.currentPage =  1;
+
+        // lấy giá trị El
+        let El = event.target;
+        while(!El.getAttribute("value")){
+            El = El.parentNode;
+        }
+
+        this.pageSize = El.getAttribute("value");
+        selectValueComboboxData(event);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
     //Author: Phạm Văn Đạt
     // function: kích nút để hiển thị thông tin chi tiết
     // created time: 11:59 15/08/2022
@@ -241,11 +410,24 @@ export default {
       }
 
     },
-    LoadData(){
+    LoadData(keyword,currentPage,pageSize){
+      console.log("Load data()")
+      console.log(keyword,currentPage,pageSize)
       let _CustomerService = new CustomerService();
-      _CustomerService.GetAll().then((res) => {
-        this.customer = res;
+       _CustomerService.PagingCustomer(keyword,currentPage,pageSize).then((res) => {
+        this.customer = res.data;
+        this.totalCount = res.totalCount
+        this.startColumn = (res.currentPageNumber-1)*res.pageSize +1;
+        this.endColumn =  res.currentPageNumber*res.pageSize;
+        this.checkPreData = res.hasPrePage;
+        this.totalPages = res.totalPages;
+        this.checkNextData = res.hasNextpage;
         console.log(res);
+        console.log("ve sau:"+this.checkPreData);
+        console.log("truoc:"+this.checkNextData);
+        console.log("bắt đầu: "+this.startColumn);
+        console.log("kết thúc: "+this.endColumn);
+        console.log("Tổng bản ghi: "+this.totalCount);
         // load xong bỏ hết các dòng đã chọn
         this.listCustomerId.splice(0, this.listCustomerId.length);
 
@@ -268,6 +450,11 @@ export default {
   },
   // theo dõi các biến thay đổi và thực hiện hàm nếu có
   watch: {
+    // Load lại dữ liệu mỗi khi chọn trang mới
+    pageSize(){
+      this.LoadData(this.keyword, this.currentPage,this.pageSize);
+    },
+
     // theo dõi danh sách khách hàng
     customer() {
       UnLoading(this.$refs.TableData);
@@ -284,8 +471,9 @@ export default {
     },
 
     // lấy thông tin khách hàng
-    customersSearch() {
-      this.customer = this.customersSearch;
+    searchCustomerCurrent() {
+      this.keyword = this.searchCustomerCurrent;
+       this.LoadData(this.keyword, this.currentPage,this.pageSize);
     },
     // theo  dõi mảng để xóa danh sác, update
     listCustomerId: {
@@ -304,7 +492,7 @@ export default {
     async checkReloadData(){
       Loading(this.$refs.TableData)
       // load lại dữ liệu
-      await this.LoadData();
+      await this.LoadData(this.keyword, this.currentPage,this.pageSize);
       UnLoading(this.$refs.TableData)
     }
   },
@@ -315,4 +503,5 @@ export default {
 </script>
 
 <style>
+
 </style>

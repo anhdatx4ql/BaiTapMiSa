@@ -98,3 +98,56 @@
     display: flex;
 }
 
+div#paging .combobox-child.combobox-data.div-inline-block {
+    top: -455%;
+    border-radius: 4px 4px 0 0;
+}
+
+div#paging .combobox-child.combobox-data.div-inline-block .combobox-data-child {
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+div#paging .combobox-data-child {
+    overflow: hidden !important;
+}
+
+div#paging>.combobox-data {
+    width: calc(100% +  2px);
+}
+
+div#paging {
+    width: max-content;
+}
+
+.table-button-right-chlid-text {
+    margin-right:8px;
+}
+
+.table-button-right-chlid {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: end;
+}
+
+.table-button-right-chlid>button:not(:last-child) {
+    margin-right: 8px;
+}
+
+.table-button-right>div:not(:last-child) {
+    margin-right: 16px;
+}
+
+.table-button-right-chlid>button {
+    padding: 8px;
+    border:none;
+}
+.table-button-right-chlid-text>span {
+    font-weight: 600;
+}
+
+.background-disabled{
+    background: none !important;
+    cursor: default !important;
+}

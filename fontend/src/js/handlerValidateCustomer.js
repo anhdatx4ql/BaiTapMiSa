@@ -38,10 +38,15 @@ export async function handlerValidateCustomer(refs,customerInfo,errors){
 
     // nếu số điện thoại, email, bank account, mã số thuế rỗng thì bỏ, không thêm
 
-    // validate Tên, số điện thoại,  email
+    // tên không được bỏ trông
     if(customerInfo.FirstName == null || customerInfo.FirstName == ""){
       errors.set("FirstName",ErrorsValidation.FirstNameRequired)
     }
+
+ // mã tiềm năng không được bỏ trông
+ if(customerInfo.PotentialCode == null || customerInfo.PotentialCode == ""){
+  errors.set("PotentialCode",ErrorsValidation.PotentialCodeRequired)
+}
 
     //  kiểm tra trùng số điện thoại nếu có
     if(customerInfo.CustomerPhoneNumber != null || customerInfo.CustomerPhoneNumber != ""){

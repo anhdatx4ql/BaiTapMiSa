@@ -76,3 +76,5 @@ D:\hoctap\BTMiSa\new-project\baitapMISA\backend\WebApplication\WebInfrastructure
 D:\hoctap\BTMiSa\new-project\baitapMISA\backend\WebApplication\WebInfrastructure\obj\Debug\WebInfrastructure.csproj.CopyComplete
 D:\hoctap\BTMiSa\new-project\baitapMISA\backend\WebApplication\WebInfrastructure\obj\Debug\WebInfrastructure.dll
 D:\hoctap\BTMiSa\new-project\baitapMISA\backend\WebApplication\WebInfrastructure\obj\Debug\WebInfrastructure.pdb
+D:\hoctap\BTMiSa\new-project\baitapMISA\backend\WebApplication\WebInfrastructure\bin\Debug\Common.dll
+D:\hoctap\BTMiSa\new-project\baitapMISA\backend\WebApplication\WebInfrastructure\bin\Debug\Common.pdb

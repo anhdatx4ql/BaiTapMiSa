@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +15,25 @@ namespace WebDomain
     /// </summary>
    public interface ICustomerService
     {
+        /// <summary>
+        /// Xuất file excel
+        /// </summary>
+        /// <param name="ListCustomerId">mảng ID kháchhangf</param>
+        /// <returns></returns>
+        Task<byte[]> ExportExcel(List<Guid> ListCustomerId = null);
+
+
+        /// <summary>
+        /// Phân trang + tìm kiếm
+        /// </summary>
+        /// <param name="keyword">Giá trị tìm kiếm</param>
+        /// <param name="currentPageNumber">Trang hiện tại</param>
+        /// <param name="pageSize">Số lượng bản ghi/Trang</param>
+        /// <returns></returns>
+        Task<ReponsitoryModel> PagingCustomer(string keyword = null, int currentPageNumber=1, int pageSize = 10);
+
+
+
         /// <summary>
         /// Lấy thông tin khách hàng
         /// Author: Phạm văn Đạt

@@ -1,4 +1,5 @@
-﻿using Dapper;
+﻿using Common;
+using Dapper;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -14,15 +15,35 @@ namespace WebInfrastructure
     public class DapperRepository : IDapperRepository
     {
 
-            public DapperRepository()
-        {
-
-        }
-
         public DbConnection GetDbconnection()
         {
             return new MySqlConnection(@"Server=localhost;Uid=root;Password=Anhdat=123;Database=baitaplonmisa");
             //return new MySqlConnection(@"Server=127.0.0.1;User Id=root;Password='Anhdat=123';Database=projectmisa");
+        }
+
+        /// <summary>
+        /// Phân trang, tìm kiếm
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="sql"></param>
+        /// <param name="sp_params"></param>
+        /// <returns></returns>
+        public async Task<PagingModel<T>> PagingT<T>(string sql, Dictionary<string, object> sp_params = null)
+        {
+            using (IDbConnection db = GetDbconnection())
+            {
+                db.Open();
+                var results = await db.QueryMultipleAsync(sql, sp_params);
+                
+                if(results != null) {
+                    var TotalRecords = results.Read<int>().FirstOrDefault();
+                    var Entity =  results.Read<T>().ToList();
+                    db.Close();
+                    return new PagingModel<T>(TotalRecords, Entity);
+                }
+                
+                return new PagingModel<T>(0, null);
+            }
         }
 
         // Author: Phạm Văn Đạt

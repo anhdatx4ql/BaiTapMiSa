@@ -1,13 +1,18 @@
-﻿using Dapper;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using MySql.Data.MySqlClient;
+﻿using Common;
+using System.Text;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using OfficeOpenXml;
 using System.Threading.Tasks;
 using WebDomain;
 using WebInfrastructure;
+using OfficeOpenXml.Style;
+using System.Drawing;
+using System.IO;
+using DocumentFormat.OpenXml.Spreadsheet;
 
 namespace WebApplication.Controllers
 {
@@ -34,6 +39,19 @@ namespace WebApplication.Controllers
         public async Task<ReponsitoryModel> GetAllCustomer()
         {
             return await _customer.GetAllCustomer();
+        }
+
+        /// <summary>
+        /// Author: Phạm Văn Đạt
+        /// - Result api lấy thông tin của customer
+        /// DateTime: 10:25 11/08/2022
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/[controller]/Paging")]
+        public async Task<ReponsitoryModel> PagingCustomer(string keyword=null, int currentPageNumber=1, int pageSize=10)
+        {
+            return await _customer.PagingCustomer(keyword, currentPageNumber, pageSize);
         }
 
 
@@ -129,6 +147,37 @@ namespace WebApplication.Controllers
             return await _customer.UpdateCustomerMul(model);
         }
 
-  
+        /// <summary>
+        /// Author: Phạm Văn Đạt
+        /// - Xóa mềm bản ghi bằng cách chuyển isDelete = true
+        /// DateTime: 13:41 12/08/2022
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("api/[controller]/ExportExcel")]
+        public async Task<IActionResult> ExportExcel ([FromBody] List<Guid> models)
+        {
+
+
+            var fileContents = await _customer.ExportExcel(models);
+            
+            if (fileContents == null || fileContents.Length == 0)
+            {
+                return NotFound();
+            }
+
+            Response.Clear();
+            Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+
+            return File(
+                fileContents: fileContents,
+                contentType: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                fileDownloadName: "ListCustomer-"+DateTime.Now.Ticks.ToString()+".xlsx"
+            );
+
+         
+        }
+
+
     }
 }

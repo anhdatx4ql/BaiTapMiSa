@@ -50,13 +50,13 @@
 
       <div class="toolbar-left-child">
         <button
-          class="button button-dots button-background-white"
+          class="button button-dots button-background-white show-button-toolbar"
           @click="showOptions"
         >
           <span class="button-icon-icon button-icon-icon-dots"></span>
         </button>
         <div class="toolbar-left-child-options">
-          <button class="button-toolbar-left toolbar-left-child-button">
+          <button class="button-toolbar-left toolbar-left-child-button" @click="clickExportExcel">
             <span
               class="
                 button-toolbar-left-icon
@@ -158,7 +158,7 @@
                   </div>
 
                   <div class="combobox-child combobox-data" ref="fields">
-                    <div class="combobox-data-search">
+                    <!-- <div class="combobox-data-search">
                       <label class="label-input combobox-data-search-label">
                         <input
                           type="text"
@@ -167,7 +167,7 @@
                         />
                         <span class="background-icon-search-input"></span>
                       </label>
-                    </div>
+                    </div> -->
                     <div class="combobox-data-child">
                     
                       <div
@@ -223,7 +223,7 @@
                       <div class="background-icon-loading"></div>
                     </div>
 
-                    <div class="combobox-data-search">
+                    <!-- <div class="combobox-data-search">
                       <label class="label-input combobox-data-search-label">
                         <input
                           type="text"
@@ -232,7 +232,7 @@
                         />
                         <span class="background-icon-search-input"></span>
                       </label>
-                    </div>
+                    </div> -->
                     <div class="combobox-data-child">
                       <div
                         class="combobox-data-child-content"
@@ -299,7 +299,7 @@
                       <div class="background-icon-loading"></div>
                     </div>
 
-                    <div class="combobox-data-search">
+                    <!-- <div class="combobox-data-search">
                       <label class="label-input combobox-data-search-label">
                         <input
                           type="text"
@@ -308,7 +308,7 @@
                         />
                         <span class="background-icon-search-input"></span>
                       </label>
-                    </div>
+                    </div> -->
                     <div class="combobox-data-child">
                       <div
                         class="combobox-data-child-content"
@@ -402,7 +402,7 @@
                       <div class="background-icon-loading"></div>
                     </div>
 
-                    <div class="combobox-data-search">
+                    <!-- <div class="combobox-data-search">
                       <label class="label-input combobox-data-search-label">
                         <input
                           type="text"
@@ -411,7 +411,7 @@
                         />
                         <span class="background-icon-search-input"></span>
                       </label>
-                    </div>
+                    </div> -->
                     <div class="combobox-data-child">
                       <div
                         class="combobox-data-child-content"
@@ -600,7 +600,7 @@ export default {
         columnName: null,
         columnValue: null,
         listId: []
-      }
+      },
     };
   },
   created() {
@@ -711,6 +711,18 @@ export default {
     },
   },
   methods: {
+    // xuất file excel
+    async clickExportExcel(event){
+      this.showOptions(event);
+      // // test export excel
+      this.$emit("loadFullScreen",true);
+
+      let data = (this.listCustomerId.Length ==0)?[]:this.listCustomerId;
+      console.log(data);
+      let _CustomerService = new CustomerService();
+      await  _CustomerService.ExportExcel(data);
+      this.$emit("loadFullScreen",false);
+    },
 
     // Cập nhật danh sách
     ClickUpdateMul(){
@@ -757,10 +769,6 @@ export default {
         this.DataUpdate.columnName = this.ColumnName;
         this.DataUpdate.columnValue = this.ColumnValue;
         this.DataUpdate.listId = this.listCustomerId;
-        console.log(this.DataUpdate)  
-        console.log("Updateting")
-        console.log(this.listCustomerId);
-
         // lấy được dữ liệu ->  update
          // xóa dữ liệu
         let _CustomerService = new CustomerService();
@@ -870,8 +878,9 @@ export default {
     clickRemoveListCustomerId: function () {},
 
     // xuwr lys xoas
-    ClickDeleteMul() {
+    ClickDeleteMul(event) {
       try {
+        this.showOptions(event)
         this.$emit("checkShowPopUp", true);
         this.$emit(
           "PopUpTitle",
@@ -943,9 +952,9 @@ export default {
           while(!El.getAttribute("value"))
             El = El.parentNode;
 
-          let ElValue = El.getAttribute("value");
+          let ElValue = (El.getAttribute("value"))?El.getAttribute("value"):undefined;
           
-          if (ElValue){
+          if (El.getAttribute("value")){
             console.log(El)
 
             if(this.fielsUpdate.get(ElValue))
@@ -965,6 +974,7 @@ export default {
         console.log(error);
       }
     },
+
   },
 };
 </script>

@@ -1,8 +1,12 @@
 <!-- eslint-disable no-unused-vars -->
 <template>
   <div class="container" @click="ClickWindow">
+     <!-- loading -->
+     <div class="content-background-icon-loading" v-if="(loadFull== true)?true:false">
+        <div class="background-icon-loading"></div>
+      </div>
     <!-- Start header -->
-    <Header @CustomerByName="customers = $event"></Header>
+    <Header @CustomerByName="searchCustomer = $event"></Header>
     <!-- End Header -->
 
     <!-- Start Toolbar -->
@@ -18,11 +22,12 @@
       @toastMessageInfo="toastMessageInfo=$event"
       @showToastMessageInfo="showToastMessage=$event"
       @checkLoadCustomerData="checkLoadCustomerData=$event"
+      @loadFullScreen="loadFull=$event"
     ></Toolbar>
     <!-- End Toolbar -->
 
     <!-- Start Content -->
-    <ContentPage :Customers="customers"
+    <ContentPage :searchCustomer="searchCustomer"
      :checkShowFormData="checkShowForm"
       @ShowFormData="checkShowFormUpdate = $event"
       @CustomerInfo="CustomerInfo = $event"
@@ -119,7 +124,7 @@ export default {
   },
   data() {
     return {
-      customers: {},
+      searchCustomer: "",
       // phải lưu cho nó 1 tên biến mới đưa lên được
       checkShowForm: false,
       checkShowFormUpdate:false,
@@ -130,7 +135,8 @@ export default {
       checkShowPopUp: false,
       PopUpTitle:"",
       ActiveMessage: false,
-      checkLoadCustomerData: false
+      checkLoadCustomerData: false,
+      loadFull: false,
     };
   },
   watch:{
@@ -143,8 +149,8 @@ export default {
    ActiveMessage(){
     console.log(this.ActiveMessage)
    },
-   customers(){
-    console.log(this.customers)
+   searchCustomer(){
+    console.log(this.searchCustomer)
    }
   },
   beforeCreate() {
@@ -158,6 +164,18 @@ export default {
 
       // xử lý click vào window
        window.addEventListener("click", function(e){
+        if(e.target.classList.contains("show-button-toolbar") || e.target.parentNode.classList.contains("show-button-toolbar")){
+          let checkShowFormHandlerToolbar = document.getElementsByClassName("toolbar-left-child-options")[0];
+          checkShowFormHandlerToolbar.style.display == "flex"
+          console.log("hien thi")
+        }else{
+          let checkShowFormHandlerToolbar = document.getElementsByClassName("toolbar-left-child-options")[0];
+          if(checkShowFormHandlerToolbar != undefined){
+            if(checkShowFormHandlerToolbar.style.display == "flex")
+              checkShowFormHandlerToolbar.style.display = "none";
+          }
+        }
+       
         // kiểm tra khi click vaof combobox data multiple thì không xử lý ẩn form
         let checkEl = e.target.classList.contains("combobox-data-child-content-text");
         let checkElIcon = e.target.classList.contains("background-icon-checked");

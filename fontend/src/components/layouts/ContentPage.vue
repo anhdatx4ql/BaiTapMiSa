@@ -2,7 +2,7 @@
   <div class="content">
     
     <ContentPageLeft :customCarrer="carrer" :customVocative="vocative"></ContentPageLeft>
-    <ContentPageCenter :customersSearch="customers"
+    <ContentPageCenter :searchCustomerCurrent="searchCustomerCurrent"
      @CustomerDetails="customerDetails = $event"
      :checkShowFormData="checkShowFormData"
      @ShowFormData="checkShow = $event"
@@ -38,7 +38,7 @@ export default {
   data() {
     return {
       carrer: "",
-      customers:"",
+      searchCustomerCurrent:"",
       vocative:"",
       customerDetails:"",
       checkShow:Boolean, // - cho phép
@@ -48,15 +48,13 @@ export default {
     };
   },
   props:{
-      Customers: {},
+      searchCustomer: String,
       checkShowFormData: Boolean,
       checkLoadCustomerData:Boolean
   },
   watch:{
-    Customers(){
-      console.log(this.Customers)
-      console.log(this.customers)
-      this.customers = this.Customers;
+    searchCustomer(){
+      this.searchCustomerCurrent = this.searchCustomer;
     },
     checkLoadDone(){
       this.$emit("checkLoadCustomerData",this.checkLoadDone)

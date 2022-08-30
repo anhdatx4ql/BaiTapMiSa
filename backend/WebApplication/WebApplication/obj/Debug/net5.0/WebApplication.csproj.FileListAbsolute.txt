@@ -112,3 +112,11 @@ D:\hoctap\BTMiSa\new-project\baitapMISA\backend\WebApplication\WebApplication\ob
 D:\hoctap\BTMiSa\new-project\baitapMISA\backend\WebApplication\WebApplication\obj\Debug\net5.0\ref\WebApplication.dll
 D:\hoctap\BTMiSa\new-project\baitapMISA\backend\WebApplication\WebApplication\obj\Debug\net5.0\WebApplication.pdb
 D:\hoctap\BTMiSa\new-project\baitapMISA\backend\WebApplication\WebApplication\obj\Debug\net5.0\WebApplication.genruntimeconfig.cache
+D:\hoctap\BTMiSa\new-project\baitapMISA\backend\WebApplication\WebApplication\bin\Debug\net5.0\Common.dll
+D:\hoctap\BTMiSa\new-project\baitapMISA\backend\WebApplication\WebApplication\bin\Debug\net5.0\Common.pdb
+D:\hoctap\BTMiSa\new-project\baitapMISA\backend\WebApplication\WebApplication\bin\Debug\net5.0\EPPlus.dll
+D:\hoctap\BTMiSa\new-project\baitapMISA\backend\WebApplication\WebApplication\bin\Debug\net5.0\EPPlus.Interfaces.dll
+D:\hoctap\BTMiSa\new-project\baitapMISA\backend\WebApplication\WebApplication\bin\Debug\net5.0\EPPlus.System.Drawing.dll
+D:\hoctap\BTMiSa\new-project\baitapMISA\backend\WebApplication\WebApplication\bin\Debug\net5.0\Microsoft.IO.RecyclableMemoryStream.dll
+D:\hoctap\BTMiSa\new-project\baitapMISA\backend\WebApplication\WebApplication\bin\Debug\net5.0\DocumentFormat.OpenXml.dll
+D:\hoctap\BTMiSa\new-project\baitapMISA\backend\WebApplication\WebApplication\bin\Debug\net5.0\System.IO.Packaging.dll

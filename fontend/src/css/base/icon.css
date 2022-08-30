@@ -327,6 +327,21 @@
     background: url('../../assets/img/icon_collection.svg') no-repeat -304px -224px;
 }
 
+.background-icon-pre{
+    background: url('../../assets/img/icon_collection.svg') no-repeat -289px -31px;
+}
+
+.background-icon-first{
+    background: url('../../assets/img/icon_collection.svg') no-repeat -111px -224px;
+}
+
+.background-icon-next{
+    background: url('../../assets/img/icon_collection.svg') no-repeat -303px -32px;
+}
+
+.background-icon-last{
+    background: url('../../assets/img/icon_collection.svg') no-repeat -128px -224px;
+}
 
 
 

@@ -1100,7 +1100,6 @@ export default {
   watch: {
     "customerInfo.gender":{
       handler(){
-        console.log(this.customerInfo.gender)
       }
     },
     customerInfo() {
@@ -1470,7 +1469,8 @@ export default {
     },
     async OnSubmit() {
       try {
-        console.log(this.customerInfo.isActivePhoneNumber);
+
+        // kiểm tra tên không được trống
         if (
           this.customerInfo.firstName == null ||
           this.customerInfo.firstName == ""
@@ -1528,8 +1528,6 @@ export default {
         this.customerInfo.sourceId = IsEmpty(sourceId) ? null : sourceId;
         this.customerInfo.positionId = IsEmpty(positionId) ? null : positionId;
         this.customerInfo.gender = IsEmpty(genderId) ? null : genderId;
-        console.log(this.customerInfo.gender);
-        console.log(this.customerInfo);
         // tạo mới dữ liệu bảng loại tiềm năng
 
         if (this.errors.size == 0) {

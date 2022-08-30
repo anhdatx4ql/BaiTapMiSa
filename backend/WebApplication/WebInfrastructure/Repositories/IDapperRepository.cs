@@ -1,4 +1,5 @@
-﻿using Dapper;
+﻿using Common;
+using Dapper;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -94,8 +95,14 @@ namespace WebInfrastructure
         /// <returns></returns>
         Task<T> GetCodeMaxAsync<T>(string sql);
 
-
-
+        /// <summary>
+        /// Phân trang, tìm kiếm
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="sql"></param>
+        /// <param name="sp_params"></param>
+        /// <returns></returns>
+        Task<PagingModel<T>> PagingT<T>(string sql, Dictionary<string, object> sp_params = null);
 
     }
 }

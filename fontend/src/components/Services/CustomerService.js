@@ -24,6 +24,29 @@ export class CustomerService{
  }
  }
 
+
+ // phân trang + tìm kiếm
+ async PagingCustomer(keyword,currentPage,pageSize){
+  try{
+    let url ="";
+    if(keyword == null || keyword == ""){
+      url =`currentPageNumber=${currentPage}&pageSize=${pageSize}`;
+    }else{
+      url =`keyword=${keyword}&currentPageNumber=${currentPage}&pageSize=${pageSize}`;
+    }
+    console.log(this.url+`Paging?${url}`)
+    return await axios.get(this.url+`Paging?${url}`)
+    .then((res) => {
+        return res.data.data;
+    })
+    .catch((e) => {
+      console.log(e);
+    });   
+  }catch(error){
+    console.log(error)
+  }
+ }
+
     // lấy tất cả thông tin của khách hàng
     async GetAll(){
        try{
@@ -140,6 +163,31 @@ export class CustomerService{
        console.log(error);
       }
    }
+
+   // xuất khẩu
+   async ExportExcel(Data){
+    try{
+         return await axios({
+          url: this.url+"ExportExcel",
+          method: "post",
+          responseType: "blob",
+          data: Data
+         }).then((response) => {
+          const url = URL.createObjectURL(new Blob([response.data], {
+            type: 'application/vnd.ms-excel'
+          }))
+          const d = new Date();
+          let time = d.getTime();
+          const link = document.createElement('a')
+          link.href = url
+          link.setAttribute('download', "InfoCustomers"+time+".xls")
+          document.body.appendChild(link)
+          link.click()
+        });
+    }catch(error){
+     console.log(error);
+    }
+ }
 }
 
 

@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WebInfrastructure;
-using static WebDomain.ContantsError;
-using static WebDomain.ContantsSuccess;
+using static Common.ContantsError;
+using static Common.ContantsSuccess;
 
 namespace WebDomain
 {
@@ -32,7 +32,7 @@ namespace WebDomain
                 List<PositionModel> result = await _dapper.GetAllAsync<PositionModel>(sql);
                 if (result.Count == 0)
                     return new ReponsitoryModel { Data = null, Message = MessageError.NotValue, StatusCode = CodeError.NotValue };
-                return new ReponsitoryModel { Data = result, Message = MessageSuccess.GetSuccess, StatusCode = CodeSuccess.GetSuccess };
+                return new ReponsitoryModel { Data = result, Message = MessageSuccess.GetSuccess, StatusCode = CodeSuccess.Status200 };
             }
             catch (Exception ex)
             {
@@ -59,7 +59,7 @@ namespace WebDomain
                 List<PositionModel> result = await _dapper.FindTAsync<PositionModel>(sql, parameters);
                 if (result.Count == 0)
                     return new ReponsitoryModel { Data = null, Message = MessageError.NotValue, StatusCode = CodeError.NotValue };
-                return new ReponsitoryModel { Data = result, Message = MessageSuccess.GetSuccess, StatusCode = CodeSuccess.GetSuccess };
+                return new ReponsitoryModel { Data = result, Message = MessageSuccess.GetSuccess, StatusCode = CodeSuccess.Status200 };
             }
             catch (Exception ex)
             {
