@@ -52,7 +52,8 @@
      :CustomerInfo="CustomerInfo"
     @CloseFormData="checkShowFormUpdate = $event" 
      @toastMessageInfo="toastMessageInfo=$event"
-      @showToastMessageInfo="showToastMessage=$event">
+      @showToastMessageInfo="showToastMessage=$event"
+      @checkLoadCustomerData="checkLoadCustomerData=$event">
       </FormUpdateCustomer>
     <!-- End Form Update  -->
 
@@ -140,28 +141,26 @@ export default {
     };
   },
   watch:{
-   toastMessageInfo(){
-    console.log(this.toastMessageInfo.Type)
-   },
-   showToastMessage(){
-    console.log(this.showToastMessage)
-   },
-   ActiveMessage(){
-    console.log(this.ActiveMessage)
-   },
-   searchCustomer(){
-    console.log(this.searchCustomer)
-   }
+
+    checkShowForm(){
+      console.log(this.checkShowForm)
+    }
   },
   beforeCreate() {
     
   },
   created() {
+    
+  },
+  mounted(){
   },
   methods: {
-   
-    ClickWindow:function(){
 
+  
+   
+    // Xử lý click show hide combobox
+    ClickWindow:function(e){
+      console.log(e.target)
       // xử lý click vào window
        window.addEventListener("click", function(e){
         if(e.target.classList.contains("show-button-toolbar") || e.target.parentNode.classList.contains("show-button-toolbar")){
@@ -198,7 +197,6 @@ export default {
     },
     
   },
-  mounted() {},
 };
 </script>
 

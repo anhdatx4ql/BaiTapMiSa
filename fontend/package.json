@@ -10,9 +10,15 @@
   "dependencies": {
     "axios": "^0.27.2",
     "core-js": "^3.8.3",
+    "element-plus": "^2.2.16",
+    "primevue": "^3.16.2",
     "vue": "^3.2.13",
+    "vue-add-to-calendar": "^1.0.7",
+    "vue-el-datepicker": "^1.1.0",
     "vue-moment": "^4.1.0",
-    "vue-router": "^4.0.13"
+    "vue-router": "^4.0.13",
+    "vuejs-datetimepicker": "^1.1.13",
+    "vuejs3-datepicker": "^1.0.12"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",

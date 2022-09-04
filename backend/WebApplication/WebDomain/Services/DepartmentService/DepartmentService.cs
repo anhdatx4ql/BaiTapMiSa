@@ -63,7 +63,7 @@ namespace WebDomain
                     ["search"] = $"%{name}%"
                 };
                 List<DepartmentModel> result = await _dapper.FindTAsync<DepartmentModel>(sql, parameters);
-                if (result.Count == 0)
+                if (result == null)
                     return new ReponsitoryModel { Data = null, Message = MessageError.NotValue, StatusCode = CodeError.NotValue };
                 return new ReponsitoryModel { Data = result, Message = MessageSuccess.GetSuccess, StatusCode = CodeSuccess.Status200 };
             }

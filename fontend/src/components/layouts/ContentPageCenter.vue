@@ -74,21 +74,23 @@
             </div>
             <div class="td"></div>
             <!-- thẻ -->
-            <div class="td">{{ c.vocativeName ? c.vocativeName : "-" }}</div>
-            <div class="td">{{ c.fullName ? c.fullName : "-" }}</div>
-            <div class="td">{{ c.positionName ? c.positionName : "-" }}</div>
-            <div class="td">
+            <div class="td">{{ c.vocativeName ? titleCase(c.vocativeName) : "-" }}</div>
+            <div class="td">{{ c.fullName ? titleCase(c.fullName) : "-" }}</div>
+            <div class="td">{{ c.positionName ? titleCase(c.positionName) : "-" }}</div>
+            <div class="td container-phone-number">
+              <span class="background-icon-phone-center icon-font-16"></span>
               {{ c.customerPhoneNumber ? c.customerPhoneNumber : "-" }}
             </div>
-            <div class="td">
+            <div class="td container-phone-number">
+              <span class="background-icon-phone-center icon-font-16"></span>
               {{ c.companyPhoneNumber ? c.companyPhoneNumber : "-" }}
             </div>
             <div class="td">{{ c.companyEmail ? c.companyEmail : "-" }}</div>
             <div class="td">{{ c.customerEmail ? c.customerEmail : "-" }}</div>
-            <div class="td">{{ c.organization ? c.organization : "-" }}</div>
+            <div class="td">{{ c.organization ? titleCase(c.organization) : "-" }}</div>
             <div class="td">{{ c.taxCode ? c.taxCode : "-" }}</div>
-            <div class="td">{{ c.turnoverName ? c.turnoverName : "-" }}</div>
-            <div class="td">{{ c.address ? c.address : "-" }}</div>
+            <div class="td">{{ c.turnoverName ? titleCase(c.turnoverName) : "-" }}</div>
+            <div class="td">{{ c.address ? titleCase(c.address) : "-" }}</div>
           </div>
         </div>
       </div>
@@ -201,6 +203,11 @@
 </template>
 
 <script>
+  //  xử lý hiển thị text
+import { titleCase } from "../../js/handlerString";
+// nhúng status code
+import { StatusCode } from "../Models/StatusCode";
+
 // các hàm xử lý click combobox
 import {
   ClickShowHideComboboxData,
@@ -235,7 +242,8 @@ export default {
       startColumn:0,
       endColumn:0,
       totalPages:0,
-      ListPaging: new Map()
+      ListPaging: new Map(),
+      checkLoadData: false
     };
   },  
   props: {
@@ -248,13 +256,14 @@ export default {
     this.ListPaging.set(20,20);
     this.ListPaging.set(50,50);
     this.ListPaging.set(100,100);
-    //Author: Phạm Văn Đạt
     // function: lấy thông tin c;
-    // created time: 11:50 15/08/2022
-    this.LoadData(this.keyword, this.currentPage,this.pageSize);
+    this.checkLoadData= true;
 
   },
   methods: {
+
+    // xử lý hiển thị text
+    titleCase,
 
      /**
    * Hiển thị dữ liệu trang đầu tiên
@@ -262,7 +271,7 @@ export default {
     clickPreFirstData(){
       if(this.checkPreData == true){
         this.currentPage = 1;
-        this.LoadData(this.keyword,this.currentPage,this.pageSize);
+        this.checkLoadData = true;
       }
     },
 
@@ -272,7 +281,7 @@ export default {
     clickPreData(){
       if(this.checkPreData == true){
         this.currentPage =  this.currentPage-1;
-        this.LoadData(this.keyword,this.currentPage,this.pageSize)
+        this.checkLoadData = true;
 
       }
     },
@@ -283,7 +292,7 @@ export default {
     clickNextData(){
       if(this.checkNextData == true){
         this.currentPage =  this.currentPage+1;
-        this.LoadData(this.keyword,this.currentPage+1,this.pageSize)
+        this.checkLoadData = true;
       }
     },
 
@@ -293,7 +302,7 @@ export default {
     clickNextLastData(){
       if(this.checkNextData == true){
         this.currentPage =  this.totalPages;
-        this.LoadData(this.keyword,this.totalPages,this.pageSize);
+        this.checkLoadData = true;
       }
     },
     /**
@@ -356,12 +365,9 @@ export default {
         let ElValue = El.getAttribute("value");
         if (ElValue) {
           if (check == false) {
-            console.log("add");
             this.listCustomerId.push(ElValue);
           } else {
-            console.log("remove");
             console.log(El.getAttribute("value"));
-            console.log("false");
             // lấy vị trí phần tử đó trong mảng
             const valueRemove = this.listCustomerId.indexOf(ElValue);
             // xóa phân tử đó đi
@@ -375,7 +381,6 @@ export default {
     // xử lý checkbox header
     clickCheckboxHeader: function (event) {
       let ElChecked = event.target;
-      console.log(ElChecked)
       let El = event.target.parentNode.getElementsByTagName("input")[0];
       if (El) {
         let ElsCheckbox = this.$refs.tbody.getElementsByClassName("trCheckbox");
@@ -397,7 +402,6 @@ export default {
 
           // thay đổi icon 
 
-          console.log("chay")
           for (let item of ElsCheckbox) {
             if (item.checked == false) {
               const value =  item.getAttribute("value");
@@ -410,49 +414,54 @@ export default {
       }
 
     },
-    LoadData(keyword,currentPage,pageSize){
-      console.log("Load data()")
-      console.log(keyword,currentPage,pageSize)
+    async LoadData(keyword,currentPage,pageSize){
       let _CustomerService = new CustomerService();
-       _CustomerService.PagingCustomer(keyword,currentPage,pageSize).then((res) => {
-        this.customer = res.data;
-        this.totalCount = res.totalCount
-        this.startColumn = (res.currentPageNumber-1)*res.pageSize +1;
-        this.endColumn =  res.currentPageNumber*res.pageSize;
-        this.checkPreData = res.hasPrePage;
-        this.totalPages = res.totalPages;
-        this.checkNextData = res.hasNextpage;
-        console.log(res);
-        console.log("ve sau:"+this.checkPreData);
-        console.log("truoc:"+this.checkNextData);
-        console.log("bắt đầu: "+this.startColumn);
-        console.log("kết thúc: "+this.endColumn);
-        console.log("Tổng bản ghi: "+this.totalCount);
-        // load xong bỏ hết các dòng đã chọn
-        this.listCustomerId.splice(0, this.listCustomerId.length);
+       await _CustomerService.PagingCustomer(keyword,currentPage,pageSize).then((res) => {
+        if(res.statusCode == StatusCode.GetSuccess){
+          this.customer = res.data.data;
+          this.totalCount = res.data.totalCount
+          this.startColumn = (res.data.currentPageNumber-1)*res.data.pageSize +1;
+          this.endColumn =  (res.data.currentPageNumber*res.data.pageSize < this.totalCount)?res.data.currentPageNumber*res.data.pageSize:this.totalCount;
+          this.checkPreData = res.data.hasPrePage;
+          this.totalPages = res.data.totalPages;
+          this.checkNextData = res.data.hasNextpage;
+          // load xong bỏ hết các dòng đã chọn
+          this.listCustomerId.splice(0, this.listCustomerId.length);
 
-        // bỏ checked
-        let checkboxs = document.getElementsByClassName("trCheckbox");
-        
-        // chuyển background checked
-        if (checkboxs) {
-        
-            for (let item of checkboxs) {
-              if (item.checked == true) {
-                item.checked = false;
+          // bỏ checked
+          let checkboxs = document.getElementsByClassName("trCheckbox");
+          
+          // chuyển background checked
+          if (checkboxs) {
+          
+              for (let item of checkboxs) {
+                if (item.checked == true) {
+                  item.checked = false;
+                }
               }
-            }
 
-          } 
+            } 
+          }
+          
         });
     }
      
   },
   // theo dõi các biến thay đổi và thực hiện hàm nếu có
   watch: {
+
+    async checkLoadData(){
+      if(this.checkLoadData == true){
+        await this.LoadData(this.keyword, this.currentPage,this.pageSize);
+        this.checkLoadData=false;
+        console.log("checkload")
+
+      }
+  
+    },
     // Load lại dữ liệu mỗi khi chọn trang mới
     pageSize(){
-      this.LoadData(this.keyword, this.currentPage,this.pageSize);
+      this.checkLoadData = true;
     },
 
     // theo dõi danh sách khách hàng
@@ -473,7 +482,7 @@ export default {
     // lấy thông tin khách hàng
     searchCustomerCurrent() {
       this.keyword = this.searchCustomerCurrent;
-       this.LoadData(this.keyword, this.currentPage,this.pageSize);
+      this.checkLoadData = true;
     },
     // theo  dõi mảng để xóa danh sác, update
     listCustomerId: {
@@ -485,16 +494,13 @@ export default {
     },
     //check load form data
     checkLoadCustomerData(){
-      this.checkReloadData = this.checkLoadCustomerData;
-
-      this.$emit("checkLoadCustomerData",!this.checkLoadCustomerData)
-    },
-    async checkReloadData(){
-      Loading(this.$refs.TableData)
-      // load lại dữ liệu
-      await this.LoadData(this.keyword, this.currentPage,this.pageSize);
-      UnLoading(this.$refs.TableData)
+       Loading(this.$refs.TableData)
+        // load lại dữ liệu
+        this.checkLoadData = true;
+        UnLoading(this.$refs.TableData)
+        this.$emit("checkLoadCustomerData",false);
     }
+   
   },
   mounted() {
     handlerScroll();

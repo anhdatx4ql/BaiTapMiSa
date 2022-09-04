@@ -42,9 +42,9 @@ export default {
       vocative:"",
       customerDetails:"",
       checkShow:Boolean, // - cho phép
-      CustomerInfo:"",
+      CustomerInfo:{},
       listCustomerId: "",
-      checkLoadDone:Boolean
+      checkLoadDone:true
     };
   },
   props:{
@@ -57,7 +57,8 @@ export default {
       this.searchCustomerCurrent = this.searchCustomer;
     },
     checkLoadDone(){
-      this.$emit("checkLoadCustomerData",this.checkLoadDone)
+      this.$emit("checkLoadCustomerData",false);
+      this.checkLoadDone = true;
     },
     // theo doi ShowFormData
     checkShow(){

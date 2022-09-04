@@ -38,15 +38,22 @@ export async function handlerValidateCustomer(refs,customerInfo,errors){
 
     // nếu số điện thoại, email, bank account, mã số thuế rỗng thì bỏ, không thêm
 
+    //  xóa kí tẹ khoảng trắng
+    const checkFirstName = trimString(customerInfo.FirstName);
+
     // tên không được bỏ trông
-    if(customerInfo.FirstName == null || customerInfo.FirstName == ""){
+    if( customerInfo.FirstName == null || customerInfo.FirstName == "" || checkFirstName==true){
+      console.log("chạy vào đây")
       errors.set("FirstName",ErrorsValidation.FirstNameRequired)
     }
 
+
+    // xóa kí tự khoảng trắng
+    const checkPotentialCode = trimString(customerInfo.PotentialCode);
  // mã tiềm năng không được bỏ trông
- if(customerInfo.PotentialCode == null || customerInfo.PotentialCode == ""){
-  errors.set("PotentialCode",ErrorsValidation.PotentialCodeRequired)
-}
+  if(customerInfo.PotentialCode == null || customerInfo.PotentialCode == "" || checkPotentialCode==true){
+    errors.set("PotentialCode",ErrorsValidation.CustomerIdRequired)
+  }else customerInfo.PotentialCode = customerInfo.PotentialCode.trim();
 
     //  kiểm tra trùng số điện thoại nếu có
     if(customerInfo.CustomerPhoneNumber != null || customerInfo.CustomerPhoneNumber != ""){
@@ -95,7 +102,7 @@ export async function handlerValidateCustomer(refs,customerInfo,errors){
 
 
 
-    // kiểm tra trùng mã số thuế nếu có
+    // kiểm tra trùng mã tiềm năng nếu có
     if(customerInfo.PotentialCode != null || customerInfo.PotentialCode != ""){
       let checkPotentialCode = CheckExistsColumn;
       checkPotentialCode.tableName = "Customer";
@@ -151,4 +158,16 @@ export async function checkExists(model){
 
   return check;
 
+}
+
+function trimString(string){
+  if(string != null){
+    if(string.length > 0)
+    string = string.trim();
+
+    if(string.length == 0)
+      return true;
+ 
+  }
+  return false;
 }

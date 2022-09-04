@@ -55,6 +55,7 @@
     padding-right: 2px;
     box-sizing: content-box;
     display: inline-block;
+    cursor: pointer;
 }
 
 .label-input-icon{
@@ -343,5 +344,19 @@
     background: url('../../assets/img/icon_collection.svg') no-repeat -128px -224px;
 }
 
+.background-icon-phone-center{
+    background: url('../../assets/img/icon_collection.svg') no-repeat -320px -48px;
+}
 
+span.background-icon-phone-center.icon-font-16 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 8px;
+}
 
+.container-phone-number{
+    display:flex;
+    align-items:center;
+    justify-content: start;
+}

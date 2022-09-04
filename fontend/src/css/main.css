@@ -15,17 +15,17 @@
 
 @font-face {
     font-family: Latin Bold;
-    src: url('../assets/fonts/roboto-v20-vietnamese_latin-500.woff2');
+    src: url('../assets/fonts/Roboto-Regular.ttf');
 }
 
 @font-face {
     font-family: Latin Italic;
-    src: url('../assets/fonts/roboto-v20-vietnamese_latin-italic.woff2');
+    src: url('../assets/fonts/Roboto-Regular.ttf');
 }
 
 @font-face {
     font-family: Latin Regular;
-    src: url('../assets/fonts/roboto-v20-vietnamese_latin-regular.woff2');
+    src: url('../assets/fonts/Roboto-Regular.ttf');
 }
 
 body,button,textarea,input{

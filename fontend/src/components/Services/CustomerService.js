@@ -37,7 +37,7 @@ export class CustomerService{
     console.log(this.url+`Paging?${url}`)
     return await axios.get(this.url+`Paging?${url}`)
     .then((res) => {
-        return res.data.data;
+        return res.data;
     })
     .catch((e) => {
       console.log(e);

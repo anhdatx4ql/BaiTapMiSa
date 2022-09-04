@@ -77,16 +77,6 @@
                         <div class="background-icon-loading"></div>
                       </div>
 
-                      <div class="combobox-data-search">
-                        <label class="label-input combobox-data-search-label">
-                          <input
-                            type="text"
-                            class="input input-icon"
-                            placeholder="Tìm kiếm"
-                          />
-                          <span class="background-icon-search-input"></span>
-                        </label>
-                      </div>
                       <div class="combobox-data-child">
                         <div
                           class="combobox-data-child-content"
@@ -219,16 +209,7 @@
                         <div class="background-icon-loading"></div>
                       </div>
 
-                      <div class="combobox-data-search">
-                        <label class="label-input combobox-data-search-label">
-                          <input
-                            type="text"
-                            class="input input-icon"
-                            placeholder="Tìm kiếm"
-                          />
-                          <span class="background-icon-search-input"></span>
-                        </label>
-                      </div>
+                  
                       <div class="combobox-data-child">
                         <div
                           class="combobox-data-child-content"
@@ -307,16 +288,7 @@
                         <div class="background-icon-loading"></div>
                       </div>
 
-                      <div class="combobox-data-search">
-                        <label class="label-input combobox-data-search-label">
-                          <input
-                            type="text"
-                            class="input input-icon"
-                            placeholder="Tìm kiếm"
-                          />
-                          <span class="background-icon-search-input"></span>
-                        </label>
-                      </div>
+                   
                       <div class="combobox-data-child">
                         <div
                           class="combobox-data-child-content"
@@ -430,7 +402,7 @@
                         <div class="background-icon-loading"></div>
                       </div>
 
-                      <div class="combobox-data-search">
+                      <!-- <div class="combobox-data-search">
                         <label class="label-input combobox-data-search-label">
                           <input
                             type="text"
@@ -439,7 +411,7 @@
                           />
                           <span class="background-icon-search-input"></span>
                         </label>
-                      </div>
+                      </div> -->
                       <div class="combobox-data-child">
                         <div
                           class="combobox-data-child-content"
@@ -536,7 +508,7 @@
                         <div class="background-icon-loading"></div>
                       </div>
 
-                      <div class="combobox-data-search">
+                      <!-- <div class="combobox-data-search">
                         <label class="label-input combobox-data-search-label">
                           <input
                             type="text"
@@ -545,7 +517,7 @@
                           />
                           <span class="background-icon-search-input"></span>
                         </label>
-                      </div>
+                      </div> -->
                       <div class="combobox-data-child">
                         <div
                           :class="{ selected: potentialTypeMap.size == 0 }"
@@ -771,7 +743,7 @@
                         <div class="background-icon-loading"></div>
                       </div>
 
-                      <div class="combobox-data-search">
+                      <!-- <div class="combobox-data-search">
                         <label class="label-input combobox-data-search-label">
                           <input
                             type="text"
@@ -780,7 +752,7 @@
                           />
                           <span class="background-icon-search-input"></span>
                         </label>
-                      </div>
+                      </div> -->
                       <div class="combobox-data-child">
                         <div
                           class="combobox-data-child-content"
@@ -876,7 +848,7 @@
                         <div class="background-icon-loading"></div>
                       </div>
 
-                      <div class="combobox-data-search">
+                      <!-- <div class="combobox-data-search">
                         <label class="label-input combobox-data-search-label">
                           <input
                             type="text"
@@ -885,7 +857,7 @@
                           />
                           <span class="background-icon-search-input"></span>
                         </label>
-                      </div>
+                      </div> -->
                       <div class="combobox-data-child">
                         <div
                           :class="{ selected: fieldMap.size == 0 }"
@@ -986,7 +958,7 @@
                         <div class="background-icon-loading"></div>
                       </div>
 
-                      <div class="combobox-data-search">
+                      <!-- <div class="combobox-data-search">
                         <label class="label-input combobox-data-search-label">
                           <input
                             type="text"
@@ -995,7 +967,7 @@
                           />
                           <span class="background-icon-search-input"></span>
                         </label>
-                      </div>
+                      </div> -->
                       <div class="combobox-data-child">
                         <div
                           :class="{ 'selected': careerMap.size == 0 }"
@@ -1079,7 +1051,7 @@
                         <div class="background-icon-loading"></div>
                       </div>
 
-                      <div class="combobox-data-search">
+                      <!-- <div class="combobox-data-search">
                         <label class="label-input combobox-data-search-label">
                           <input
                             type="text"
@@ -1088,7 +1060,7 @@
                           />
                           <span class="background-icon-search-input"></span>
                         </label>
-                      </div>
+                      </div> -->
                       <div class="combobox-data-child">
                         <div
                           class="combobox-data-child-content"
@@ -1150,64 +1122,66 @@
                   Quốc gia
                 </div>
                 <div class="form-container-content-child-item-input">
-                  <div class="combobox">
+
+                  <div class="combobox" id="country">
                     <div
                       class="combobox-child combobox-content"
                       @click="handlerClickCombobox"
                       check="false"
                     >
-                      <div class="combobox-content-select combobox-child">
+                      <div
+                        class="combobox-content-select combobox-child"
+                        ref="countryId"
+                      >
                         - Không chọn -
                       </div>
                       <div
                         class="
                           combobox-content-icon
                           button-icon-up-black
-                          combobox-child
                           icon-font-16
+                          combobox-child
                         "
                       ></div>
                     </div>
 
-                    <div class="combobox-child combobox-data">
-                      <div class="combobox-data-search">
-                        <label class="label-input combobox-data-search-label">
-                          <input
-                            type="text"
-                            class="input input-icon"
-                            placeholder="Tìm kiếm"
-                          />
-                          <span class="background-icon-search-input"></span>
-                        </label>
-                      </div>
+                    <div class="combobox-child combobox-data" ref="country">
+                     
                       <div class="combobox-data-child">
                         <div
-                          class="combobox-data-child-content"
+                          class="combobox-data-child-content country"
                           @click="handlerClickComboboxData"
-                          value="- Không chọn -"
+                         
                         >
-                          - Không chọn -
+                          <div class="combobox-data-child-content-text"
+                          :class="{
+                            selected:
+                            customerInfo.Country == null
+                                ? true
+                                : false,
+                          }">
+                            - Không chọn -
+                          </div>
+                          <div
+                            class="background-icon-checked icon-font-16"
+                            :style="
+                              customerInfo.Country == null
+                                ? 'display:inline-block'
+                                : 'display:none'
+                            "
+                          ></div>
                         </div>
                         <div
-                          class="combobox-data-child-content"
+                          class="combobox-data-child-content country"
                           @click="handlerClickComboboxData"
-                          value="Bố cục"
+                          value="Việt Nam"
                         >
-                          Bố cục
-                        </div>
-                        <div
-                          class="combobox-data-child-content"
-                          @click="handlerClickComboboxData"
-                          value="Chức danh"
-                        >
-                          Chức danh
-                        </div>
-                        <div
-                          class="combobox-data-child-content"
-                          @click="handlerClickComboboxData"
-                          value="Doanh thu"
-                        >
-                          Doanh thu
+                          <div class="combobox-data-child-content-text">
+                            Việt Nam
+                          </div>
+                          <div
+                            class="background-icon-checked icon-font-16"
+                          ></div>
                         </div>
                       </div>
                     </div>
@@ -1222,64 +1196,66 @@
                   Tỉnh/Thành phố
                 </div>
                 <div class="form-container-content-child-item-input">
-                  <div class="combobox">
+                  <div class="combobox" id="province">
                     <div
                       class="combobox-child combobox-content"
                       @click="handlerClickCombobox"
                       check="false"
                     >
-                      <div class="combobox-content-select combobox-child">
+                      <div
+                        class="combobox-content-select combobox-child"
+                        ref="provinceId"
+                      >
                         - Không chọn -
                       </div>
                       <div
                         class="
                           combobox-content-icon
                           button-icon-up-black
-                          combobox-child
                           icon-font-16
+                          combobox-child
                         "
                       ></div>
                     </div>
 
-                    <div class="combobox-child combobox-data">
-                      <div class="combobox-data-search">
-                        <label class="label-input combobox-data-search-label">
-                          <input
-                            type="text"
-                            class="input input-icon"
-                            placeholder="Tìm kiếm"
-                          />
-                          <span class="background-icon-search-input"></span>
-                        </label>
-                      </div>
+                    <div class="combobox-child combobox-data" ref="province">
+
                       <div class="combobox-data-child">
                         <div
-                          class="combobox-data-child-content"
+                          class="combobox-data-child-content province"
                           @click="handlerClickComboboxData"
-                          value="- Không chọn -"
+                          :class="{
+                            selected:
+                              customerInfo.Province == null
+                                ? true
+                                : false,
+                          }"
                         >
-                          - Không chọn -
+                          <div class="combobox-data-child-content-text">
+                            - Không chọn -
+                          </div>
+                          <div
+                            class="background-icon-checked icon-font-16"
+                            :style="
+                              customerInfo.province == null
+                                ? 'display:inline-block'
+                                : 'display:none'
+                            "
+                          ></div>
                         </div>
                         <div
-                          class="combobox-data-child-content"
+                          class="combobox-data-child-content province"
+                          v-for="v in province"
+                          :key="v.code"
                           @click="handlerClickComboboxData"
-                          value="Giám đốc"
+                          :value="v.code"
                         >
-                          Giám đốc
-                        </div>
-                        <div
-                          class="combobox-data-child-content"
-                          @click="handlerClickComboboxData"
-                          value="Trưởng nhóm"
-                        >
-                          Trưởng nhóm
-                        </div>
-                        <div
-                          class="combobox-data-child-content"
-                          @click="handlerClickComboboxData"
-                          value="Nhân viên"
-                        >
-                          Nhân viên
+                          <div class="combobox-data-child-content-text">
+                            {{ titleCase(v.name) }}
+                          </div>
+                          <div
+                            class="background-icon-checked icon-font-16"
+                          ></div>
                         </div>
                       </div>
                     </div>
@@ -1294,64 +1270,66 @@
                   Quận/Huyện
                 </div>
                 <div class="form-container-content-child-item-input">
-                  <div class="combobox">
+                  <div class="combobox" id="districts" ref="districts">
                     <div
                       class="combobox-child combobox-content"
                       @click="handlerClickCombobox"
                       check="false"
                     >
-                      <div class="combobox-content-select combobox-child">
+                      <div
+                        class="combobox-content-select combobox-child"
+                        ref="districtId"
+                      >
                         - Không chọn -
                       </div>
                       <div
                         class="
                           combobox-content-icon
                           button-icon-up-black
-                          combobox-child
                           icon-font-16
+                          combobox-child
                         "
                       ></div>
                     </div>
 
-                    <div class="combobox-child combobox-data">
-                      <div class="combobox-data-search">
-                        <label class="label-input combobox-data-search-label">
-                          <input
-                            type="text"
-                            class="input input-icon"
-                            placeholder="Tìm kiếm"
-                          />
-                          <span class="background-icon-search-input"></span>
-                        </label>
-                      </div>
+                    <div class="combobox-child combobox-data" ref="district">
+
                       <div class="combobox-data-child">
                         <div
-                          class="combobox-data-child-content"
+                          class="combobox-data-child-content district"
                           @click="handlerClickComboboxData"
-                          value="- Không chọn -"
+                          :class="{
+                            selected:
+                              customerInfo.District == null
+                                ? true
+                                : false,
+                          }"
                         >
-                          - Không chọn -
+                          <div class="combobox-data-child-content-text">
+                            - Không chọn -
+                          </div>
+                          <div
+                            class="background-icon-checked icon-font-16"
+                            :style="
+                              customerInfo.District == null
+                                ? 'display:inline-block'
+                                : 'display:none'
+                            "
+                          ></div>
                         </div>
                         <div
-                          class="combobox-data-child-content"
+                          class="combobox-data-child-content district"
+                          v-for="v in districts"
+                          :key="v.code"
                           @click="handlerClickComboboxData"
-                          value="Giám đốc"
+                          :value="v.code"
                         >
-                          Giám đốc
-                        </div>
-                        <div
-                          class="combobox-data-child-content"
-                          @click="handlerClickComboboxData"
-                          value="Trưởng nhóm"
-                        >
-                          Trưởng nhóm
-                        </div>
-                        <div
-                          class="combobox-data-child-content"
-                          @click="handlerClickComboboxData"
-                          value="Nhân viên"
-                        >
-                          Nhân viên
+                          <div class="combobox-data-child-content-text">
+                            {{ titleCase(v.name) }}
+                          </div>
+                          <div
+                            class="background-icon-checked icon-font-16"
+                          ></div>
                         </div>
                       </div>
                     </div>
@@ -1366,64 +1344,66 @@
                   Phường/Xã
                 </div>
                 <div class="form-container-content-child-item-input">
-                  <div class="combobox">
+                  <div class="combobox" id="wards" ref="wards">
                     <div
                       class="combobox-child combobox-content"
                       @click="handlerClickCombobox"
                       check="false"
                     >
-                      <div class="combobox-content-select combobox-child">
+                      <div
+                        class="combobox-content-select combobox-child"
+                        ref="wardId"
+                      >
                         - Không chọn -
                       </div>
                       <div
                         class="
                           combobox-content-icon
                           button-icon-up-black
-                          combobox-child
                           icon-font-16
+                          combobox-child
                         "
                       ></div>
                     </div>
 
-                    <div class="combobox-child combobox-data">
-                      <div class="combobox-data-search">
-                        <label class="label-input combobox-data-search-label">
-                          <input
-                            type="text"
-                            class="input input-icon"
-                            placeholder="Tìm kiếm"
-                          />
-                          <span class="background-icon-search-input"></span>
-                        </label>
-                      </div>
+                    <div class="combobox-child combobox-data" ref="ward">
+
                       <div class="combobox-data-child">
                         <div
                           class="combobox-data-child-content"
                           @click="handlerClickComboboxData"
-                          value="- Không chọn -"
+                          :class="{
+                            selected:
+                              customerInfo.Wards == null
+                                ? true
+                                : false,
+                          }"
                         >
-                          - Không chọn -
+                          <div class="combobox-data-child-content-text">
+                            - Không chọn -
+                          </div>
+                          <div
+                            class="background-icon-checked icon-font-16"
+                            :style="
+                              customerInfo.Wards == null
+                                ? 'display:inline-block'
+                                : 'display:none'
+                            "
+                          ></div>
                         </div>
                         <div
-                          class="combobox-data-child-content"
+                          class="combobox-data-child-content wards"
+                          v-for="v in wards"
+                          :key="v.code"
                           @click="handlerClickComboboxData"
-                          value="Giám đốc"
+                          :value="v.code"
                         >
-                          Giám đốc
-                        </div>
-                        <div
-                          class="combobox-data-child-content"
-                          @click="handlerClickComboboxData"
-                          value="Trưởng nhóm"
-                        >
-                          Trưởng nhóm
-                        </div>
-                        <div
-                          class="combobox-data-child-content"
-                          @click="handlerClickComboboxData"
-                          value="Nhân viên"
-                        >
-                          Nhân viên
+                          <div class="combobox-data-child-content-text">
+                            {{ titleCase(v.name) }}
+                          </div>
+                          <div
+                            class="background-icon-checked icon-font-16"
+                          ></div>
                         </div>
                       </div>
                     </div>
@@ -1473,7 +1453,7 @@
                   Địa chỉ
                 </div>
                 <div class="form-container-content-child-item-input">
-                  <textarea class="textarea"></textarea>
+                  <textarea class="textarea" v-model="customerInfo.Address"></textarea>
                 </div>
               </div>
               <!-- End địa chỉ -->
@@ -1521,7 +1501,7 @@
                    <div class="border-input-content" :class="{'input-error':(errors.get('PotentialCode'))}">
                     <input type="text" class="input-content"  v-model="customerInfo.PotentialCode"/>
                     <div class="input-icon-content">
-                      <span class="icon-font-16 background-icon-close" @click="customerInfo.FirstName = null"></span>
+                      <span class="icon-font-16 background-icon-close" @click="customerInfo.PotentialCode = null"></span>
                     </div>
                   </div>
                   <span class="span-error" v-if="(errors.get('PotentialCode'))">{{errors.get('PotentialCode')}}</span>
@@ -1574,6 +1554,10 @@ import { DepartmentService } from "../Services/DepartmentService";
 // nhúng service xử lý phòng ban
 import { PositionsService } from "../Services/PositionsService";
 
+
+// nhúng service xử lý phòng ban
+import { AddressService } from "../Services/AddressService";
+
 // nhúng service xử lý Nguồn gốc
 import { SourceService } from "../Services/SourceService";
 
@@ -1622,7 +1606,6 @@ export default {
   name: "FormDataComponent",
   components: {},
   created() {
-    console.log("khởi tạo form thêm");
     this.HandlerSelectCodeMax();
   },
   props: {
@@ -1638,6 +1621,10 @@ export default {
       turnover: "",
       career: "",
       field: "",
+      country: "",
+      province:"",
+      districts:"",
+      wards:"",
       organizationType: "",
       customerInfo: CreateCustomerModel,
       potentialTypeMap: new Map(),
@@ -1649,6 +1636,55 @@ export default {
     };
   },
   watch: {
+
+    "customerInfo.Address":{
+      handler(val){
+       console.log(val)
+      }
+    },
+    // quốc gia
+    "customerInfo.Country":{
+      handler(){
+        if(this.customerInfo.Country== null){
+          this.customerInfo.Province = null;
+          this.customerInfo.District = null;
+          this.customerInfo.Wards = null;
+        }
+        this.getAddressSum();
+      }
+    },
+    // tỉnh/ thành phố
+    "customerInfo.Province":{
+      handler(){
+        if(this.customerInfo.Province== null){
+          this.customerInfo.District = null;
+          this.customerInfo.Wards = null;
+        }
+        this.getAddressSum();
+      }
+    },
+
+    // quận/ huyện
+    "customerInfo.District":{
+      handler(){
+        if(this.customerInfo.District== null){
+          this.customerInfo.Wards = null;
+        }
+        this.getAddressSum();
+      }
+    },
+    // phường. xã
+    "customerInfo.Wards":{
+      handler(){
+        this.getAddressSum();
+      }
+    },
+     // phường. xã
+     "customerInfo.HomeNumber":{
+      handler(){
+        this.getAddressSum();
+      }
+    },
     // theo dõi tên
      "customerInfo.FirstName":{
       handler(){
@@ -1659,7 +1695,6 @@ export default {
         let LastName =  (this.customerInfo.LastName!=null)?this.customerInfo.LastName+" ":"";
 
         this.customerInfo.FullName = LastName+Firstname;
-        console.log(this.customerInfo.FullName)
 
       }
 
@@ -1731,31 +1766,28 @@ export default {
 
         if(this.customerInfo.PotentialCode == "")
           this.customerInfo.PotentialCode  =  null;
+          console.log(this.customerInfo.PotentialCode)
       }
 
      },
    
     // theo dõi thông tin xưng hô
     vocative() {
-      console.log(this.$refs.vocative);
       UnLoading(this.$refs.vocative);
     },
 
     // theo dõi thông tin phòng ban
     department() {
-      console.log(this.$refs.department);
       UnLoading(this.$refs.department);
     },
 
     // theo dõi thông tin chức danh
     position() {
-      console.log(this.$refs.position);
       UnLoading(this.$refs.position);
     },
 
     //  theo dõi thông tin nguồn gốc
     source() {
-      console.log(this.$refs.source);
       UnLoading(this.$refs.source);
     },
 
@@ -1781,11 +1813,21 @@ export default {
 
     // theo dõi loại hình
     organizationType() {
-      console.log(this.$refs.organizationType);
       UnLoading(this.$refs.organizationType);
     },
   },
   methods: {
+
+    // get Address
+    getAddressSum(){
+      let HomeNumber = (this.customerInfo.HomeNumber)?this.customerInfo.HomeNumber+", ":"";
+      let Wards = (this.customerInfo.Wards)?this.customerInfo.Wards+", ":"";
+      let District = (this.customerInfo.District)?this.customerInfo.District+", ":"";
+      let Province = (this.customerInfo.Province)?this.customerInfo.Province+", ":"";
+      let Country = (this.customerInfo.Country)?this.customerInfo.Country:"";
+      this.customerInfo.Address = HomeNumber + Wards + District + Province +  Country;
+    },
+
     // lấy mã mới nhất
     HandlerSelectCodeMax(){
       let _CustomerService= new CustomerService();
@@ -1839,6 +1881,7 @@ export default {
      */
     HandlerCloseForm() {
       try {
+        this.removeData();
         this.$emit("CloseFormData", false);
       } catch (error) {
         console.log(error);
@@ -2049,7 +2092,136 @@ export default {
      */
     handlerClickComboboxData: function (event) {
       try {
+        let El = event.target;
+       
+        if(El.classList.contains("country") || El.parentNode.classList.contains("country")){
+          // lấy địa chỉ api
+          // this.customerInfo.Country = 
+          if(!El.classList.contains("country")){
+            El  = El.parentNode;
+          }
+
+          let ElValue = El.getAttribute("value");
+          this.customerInfo.Country =  ElValue;
+
+          if(ElValue == null){
+            this.customerInfo.Province = null;
+            this.province = null;
+          }else{
+            let _AddressService = new AddressService();
+          _AddressService.GetAllProvince().then(res=>{
+            if(res.status == StatusCode.GetSuccess){
+              this.province = res.data;
+            }
+          })
+          }
+            //  xóa giá trị cũ
+            let oldValue =  this.$refs.provinceId;
+              oldValue.innerHTML = "- Không chọn -";
+              oldValue.setAttribute("value",null);
+
+                //  xóa giá trị cũ
+            let oldValueDis =  this.$refs.districtId;
+            this.districts=[];
+            oldValueDis.innerHTML = "- Không chọn -";
+            oldValueDis.setAttribute("value",null);
+
+              //  xóa giá trị cũ
+              let oldValueWard =  this.$refs.wardId;
+              this.wards=[];
+              oldValueWard.innerHTML = "- Không chọn -";
+              oldValueWard.setAttribute("value",null);
+          
+        }
+
+
+        if(El.classList.contains("province") || El.parentNode.classList.contains("province")){
+          // lấy địa chỉ api
+          // this.customerInfo.Country = 
+          this.customerInfo.Province = null;
+          if(El.classList.contains("province") == false){
+           El= El.parentNode;
+          }
+            
+          let ElValue = El.getAttribute("value");
+          // this.customerInfo.Country =  ElValue;
+          
+          if(ElValue){
+            
+            let stringHtml = El.getElementsByClassName("combobox-data-child-content-text")[0];
+            if(stringHtml)
+              this.customerInfo.Province =  stringHtml.innerHTML;
+
+            let _AddressService = new AddressService();
+            _AddressService.GetAllDistricts(ElValue).then(res=>{
+            if(res.status == StatusCode.GetSuccess ){
+              this.districts = res.data.districts;
+            
+            }
+  
+          })
+          }else{
+            this.districts=[];
+          }
+
+            //  xóa giá trị cũ
+            let oldValue =  this.$refs.districtId;
+            oldValue.innerHTML = "- Không chọn -";
+            oldValue.setAttribute("value",null);
+        }
+
+        // districts
+        if(El.classList.contains("district") || El.parentNode.classList.contains("district")){
+          this.customerInfo.District = null;
+          this.wards=[];
+          if(El.classList.contains("district") == false){
+           El= El.parentNode;
+          }
+          let value = El.getAttribute("value");
+          if(value){
+
+          let stringHtml = El.getElementsByClassName("combobox-data-child-content-text")[0];
+            if(stringHtml)
+              this.customerInfo.District =  stringHtml.innerHTML;
+
+              let _AddressService = new AddressService();
+          _AddressService.GetAllWards(value).then(res=>{
+            if(res.status == StatusCode.GetSuccess ){
+              this.wards = res.data.wards;
+            }
+  
+          })
+  
+          }
+              //  xóa giá trị cũ
+              let oldValue =  this.$refs.wardId;
+              oldValue.innerHTML = "- Không chọn -";
+              oldValue.setAttribute("value",null);
+        }
+
+         // wards
+         if(El.classList.contains("wards") || El.parentNode.classList.contains("wards")){
+          this.customerInfo.Wards = null;
+          if(El.classList.contains("wards") == false){
+           El= El.parentNode;
+          }
+          let value = El.getAttribute("value");
+          if(value){
+
+          let stringHtml = El.getElementsByClassName("combobox-data-child-content-text")[0];
+            if(stringHtml)
+              this.customerInfo.Wards =  stringHtml.innerHTML;
+
+  
+          }
+              //  xóa giá trị cũ
+              let oldValue =  this.$refs.wardId;
+              oldValue.innerHTML = "- Không chọn -";
+              oldValue.setAttribute("value",null);
+        }
+
         selectValueComboboxData(event);
+
       } catch (error) {
         console.log(error);
       }
@@ -2062,7 +2234,6 @@ export default {
           )
         ) {
           let nodeId = event.target.parentNode;
-          console.log(nodeId);
           while (nodeId.getAttribute("id") == null) {
             nodeId = nodeId.parentNode;
           }
@@ -2126,7 +2297,7 @@ export default {
       const [customerInfo,errors]= await handlerValidateCustomer(this.$refs,this.customerInfo,this.errors);
       this.customerInfo = customerInfo;
       this.errors = errors;
-
+        console.log(this.errors)
       // nếu khong có xưng hô thì xóa đi
       if(this.customerInfo.VocativeId == ""){
           delete  this.customerInfo.VocativeId;
@@ -2158,22 +2329,14 @@ export default {
           delete  this.customerInfo.TurnoverId;
       }
 
-      console.log(this.customerInfo)
       if(this.errors.size ==0){
           let _CustomerService= new CustomerService();
         _CustomerService.Create(this.customerInfo).then((res)=>{
-          console.log(res)
           if(res.data.statusCode == StatusCode.CreateSuccess){
-            console.log(res.data.message)
             // lấy ra Customer id
               const customerId = res.data.data.customerId
-              // hiển thị thông báo Tạo mới thành công
-              console.log(customerId)
-              console.log(handlerValidateTCustomer(this.potentialTypeMap,"customer"))
               if(customerId){
                 
-
-                console.log("potentialTypeMap: "+this.potentialTypeMap)
                 // tạo mới dữ liệu bảng loại tiềm năng
                 if(this.potentialTypeMap.size != 0){
 
@@ -2219,28 +2382,29 @@ export default {
                 // nếu chck = true thì được thêm và xử lý hiển thị notifi
                
               }
-                  console.log(this.ToastMessageCustomer)      
 
-                 // chuyển trang về trang chính bằng cách ẩn form hiển tại
-                  this.$emit("CloseFormData", false);
-                  this.ToastMessageCustomer.Type = "success";
-                  this.ToastMessageCustomer.Message = res.data.message;
-                       
-                       
+              // chuyển trang về trang chính bằng cách ẩn form hiển tại
+              this.$emit("CloseFormData", false);
+              this.ToastMessageCustomer.Type = "success";
+              this.ToastMessageCustomer.Message = res.data.message;
+    
               // load lại dữ liệu trong form
               this.$emit("checkLoadCustomerData",true);
           }else{
             // hiển thị thông báo thêm thất bại
-            console.log("thêm thất bại")
             this.ToastMessageCustomer.Type = "error";
             this.ToastMessageCustomer.Message = res.data.message;
           }
           // gửi thống báo cho toast message
-          console.log(this.ToastMessageCustomer)
           this.$emit("toastMessageInfo", this.ToastMessageCustomer);
           this.$emit("showToastMessageInfo", true);
+
         })
+
+        this.removeData();
        }
+
+
 
      }catch(error){
         console.log(error)
@@ -2248,10 +2412,30 @@ export default {
     
       
     },
+
+    removeData(){
+      this.customerInfo.LastName = "";
+      this.customerInfo.FirstName = "";
+      this.customerInfo.CustomerPhoneNumber = "";
+      this.customerInfo.CompanyPhoneNumber = "";
+      this.customerInfo.Zalo = "";
+      this.customerInfo.CustomerEmail = "";
+      this.customerInfo.CompanyEmail = "";
+      this.customerInfo.Organization = "";
+      this.customerInfo.TaxCode = "";
+      this.customerInfo.BankAccount = "";
+      this.customerInfo.BankName = "";
+      this.customerInfo.HomeNumber = "";
+      this.customerInfo.RegionCode = "";
+      this.customerInfo.Address = "";
+    }
   },
   mounted() {
     // alert('huy');
   },
+  unmounted(){
+    
+  }
 };
 </script>
 <style>

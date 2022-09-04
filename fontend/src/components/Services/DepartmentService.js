@@ -5,7 +5,7 @@ import axios from 'axios'
 //  created time: 11:00 16/08/2022
 export class DepartmentService{
 
-    url= "https://localhost:44355/api/Department";
+    url= "https://localhost:44355/api/Department/";
 
 
     // lấy danh sách phòng ban
@@ -27,7 +27,7 @@ export class DepartmentService{
     async getByName(search){
         try{
             return axios.get(this.url+search).then((res) => {
-                return res.data.data;
+                return res.data;
              })
              .catch((e) => {
                console.log(e);

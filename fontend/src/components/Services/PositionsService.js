@@ -27,7 +27,7 @@ export class PositionsService{
     async getByName(search){
         try{
             return axios.get(this.url+search).then((res) => {
-                return res.data.data;
+                return res.data;
              })
              .catch((e) => {
                console.log(e);

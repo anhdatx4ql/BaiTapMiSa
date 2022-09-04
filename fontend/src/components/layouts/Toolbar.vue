@@ -127,7 +127,7 @@
             Cập nhật thông tin
           </div>
           <div class="toolbar-update-mul-container-title-icon">
-            <button class="icon-font-16 background-icon-close" @click="ShowFormUpdateMul =  false"></button>
+            <button class="icon-font-16 background-icon-close" @click="ShowFormUpdateMul =  false;ShowField = null"></button>
           </div>
         </div>
         <div class="toolbar-update-mul-container-content">
@@ -235,6 +235,20 @@
                     </div> -->
                     <div class="combobox-data-child">
                       <div
+                          class="combobox-data-child-content"
+                        
+                          @click="handlerClickComboboxData"
+                          value="null"
+                        >
+                          <div class="combobox-data-child-content-text">
+                            - Không chọn -
+                          </div>
+                          <div
+                            class="background-icon-checked icon-font-16"
+                          
+                          ></div>
+                        </div>
+                      <div
                         class="combobox-data-child-content"
                         v-for="v in Vocative"
                         :key="v.vocativeId"
@@ -310,6 +324,20 @@
                       </label>
                     </div> -->
                     <div class="combobox-data-child">
+                      <div
+                          class="combobox-data-child-content"
+                        
+                          @click="handlerClickComboboxData"
+                          value="null"
+                        >
+                          <div class="combobox-data-child-content-text">
+                            - Không chọn -
+                          </div>
+                          <div
+                            class="background-icon-checked icon-font-16"
+                          
+                          ></div>
+                        </div>
                       <div
                         class="combobox-data-child-content"
                         v-for="v in Position"
@@ -413,6 +441,20 @@
                       </label>
                     </div> -->
                     <div class="combobox-data-child">
+                      <div
+                          class="combobox-data-child-content"
+                        
+                          @click="handlerClickComboboxData"
+                          value="null"
+                        >
+                          <div class="combobox-data-child-content-text">
+                            - Không chọn -
+                          </div>
+                          <div
+                            class="background-icon-checked icon-font-16"
+                          
+                          ></div>
+                        </div>
                       <div
                         class="combobox-data-child-content"
                         v-for="v in Turnover"
@@ -745,18 +787,29 @@ export default {
 
         if(this.$refs.vocativeId != undefined){
           let value =  this.$refs.vocativeId.getAttribute("value");
-          if(value)
+        
+          if(value){
+            if(value  == "null")
+              value = null;
             this.ColumnValue =  value;
+          }
+
         }
         if(this.$refs.positionId != undefined){
            let value =  this.$refs.positionId.getAttribute("value");
-          if(value)
+           if(value){
+            if(value  == "null")
+              value = null;
             this.ColumnValue =  value;
+          }
         }
         if(this.$refs.turnoverId != undefined){
            let value =  this.$refs.turnoverId.getAttribute("value");
-          if(value)
+           if(value){
+            if(value  == "null")
+              value = null;
             this.ColumnValue =  value;
+          }
         }
 
         if(this.$refs.genderId  != null){
@@ -810,38 +863,42 @@ export default {
      * function:  xử lý lấy dữ liệu vocative
      * created time: 11:28 17/08/2022
      */
-    HandlerSelectVocative() {
+    async HandlerSelectVocative() {
       if (!this.Vocative) {
         let _VocativeService = new VocativeService();
-        _VocativeService.getAll().then((res) => {
+        await _VocativeService.getAll().then((res) => {
           console.log(res);
           this.Vocative = res;
         });
-      }
+        UnLoading(this.$refs.vocative)
+      }else
+        UnLoading(this.$refs.vocative)
     },
 
      /**
      * function:  xử lý lấy dữ liệu position
      */
-    HandlerSelectPosition() {
+    async HandlerSelectPosition() {
       if (!this.Position) {
         let _PositionsService = new PositionsService();
-        _PositionsService.getAll().then((res) => {
+        await _PositionsService.getAll().then((res) => {
           this.Position = res;
         });
-      }
+        UnLoading(this.$refs.position)
+      }else UnLoading(this.$refs.position)
     },
 
      /**
      * function:  xử lý lấy dữ liệu doanh thu
      */
-    HandlerSelectTurnover() {
+    async HandlerSelectTurnover() {
       if (!this.Turnover) {
         let _TurnoverService = new TurnoverService();
-        _TurnoverService.getAll().then((res) => {
+        await _TurnoverService.getAll().then((res) => {
           if (res) this.Turnover = res;
         });
-      }
+        UnLoading(this.$refs.turnover)
+      }else UnLoading(this.$refs.turnover)
     },
     // click hiển thị form
     ClickShowForm: function () {
@@ -955,7 +1012,6 @@ export default {
           let ElValue = (El.getAttribute("value"))?El.getAttribute("value"):undefined;
           
           if (El.getAttribute("value")){
-            console.log(El)
 
             if(this.fielsUpdate.get(ElValue))
               this.ShowField = ElValue;

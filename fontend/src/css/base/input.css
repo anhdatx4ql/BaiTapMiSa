@@ -132,3 +132,75 @@ input.input-content {
 input[type="date"].border-input-content {
     padding: 0 8px 0 16px;
 }
+
+.label-input.label-input-icon:hover {
+    border-color: #7C869C;
+}
+
+.label-input.label-input-icon:hover {
+    border-color: #7C869C;
+}
+
+textarea.textarea:hover {
+    border-color: #7C869C;
+}
+
+textarea.textarea:focus {
+    border-color: #4262F0;
+}
+
+/* datetime picker */
+.vuejs3-datepicker__value {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    outline:none;
+    border:1px solid #d3d7de;
+    height:32px;
+    font-size: 13px  !IMPORTANT;
+    padding: 0;
+    align-items: baseline;
+    border-radius: 4px;
+    width: 240px;
+    align-items: center;
+}
+
+.vuejs3-datepicker__value:hover{
+    border-color:#7C869C;
+}
+
+.vuejs3-datepicker__value:focus{
+    border-color:red;
+}
+
+.vuejs3-datepicker__content {
+    margin: 0;
+    padding-left: 16px;
+}
+
+span.vuejs3-datepicker__icon {
+    margin: 0;
+    padding-right: 8px;
+}
+
+.form-container-content-child {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.vuejs3-datepicker.vuejs3-green {
+    position: relative;
+}
+
+.vuejs3-datepicker__calendar.vuejs3-green {
+    position: absolute;
+    top: -960%;
+    left: 0;
+    right: 0;
+    width: 240px;
+    z-index: 9999;
+}
+
+section.vuejs3-datepicker__calendar-topbar {
+    display: none;
+}

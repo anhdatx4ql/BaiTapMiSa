@@ -57,6 +57,7 @@
   .form-container-content-child-title {
     margin-bottom: 16px;
     font-size: 16px;
+    width:100%;
   }
   
   .label-file {

@@ -1,6 +1,6 @@
 <template>
   <div class="form-container" v-if="checkShowFormData">
-    <form @submit.prevent="OnSubmit">
+    <form @submit.prevent>
       <div class="form-content">
         <div class="form-container-title">
           <div class="form-container-title-left">
@@ -9,9 +9,9 @@
             </div>
           </div>
           <div class="form-container-title-right">
-            <button class="button">Lưu</button>
-            <button class="button">Lưu và thêm</button>
-            <button class="button" type="button" @click="HandlerCloseForm">
+            <button type="button" class="button" @click="OnSubmit">Lưu</button>
+            <button type="button" class="button">Lưu và sửa</button>
+            <button type="button" class="button" @click="HandlerCloseForm">
               Hủy bỏ
             </button>
           </div>
@@ -83,15 +83,19 @@
                       <div class="content-background-icon-loading">
                         <div class="background-icon-loading"></div>
                       </div>
-
-                      <div class="combobox-data-search">
-                        <label class="label-input combobox-data-search-label">
+                      
+                      <!-- tìm kiếm -->
+                      <div class="combobox-data-search combobox-data-child-content-text" >
+                        <label class="label-input combobox-data-search-label combobox-data-child-content-text">
                           <input
                             type="text"
-                            class="input input-icon"
+                            class="input input-icon combobox-data-child-content-text"
                             placeholder="Tìm kiếm"
+                            v-on:keyup.enter="SearchVocative"
+                            v-model="searchVocative"
                           />
-                          <span class="background-icon-search-input"></span>
+                          <span class="background-icon-search-input combobox-data-child-content-text"
+                          @click="SearchVocative"></span>
                         </label>
                       </div>
                       <div class="combobox-data-child">
@@ -267,14 +271,18 @@
                         <div class="background-icon-loading"></div>
                       </div>
 
-                      <div class="combobox-data-search">
-                        <label class="label-input combobox-data-search-label">
+                      <!-- Tìm kiếm -->
+                      <div class="combobox-data-search combobox-data-child-content-text">
+                        <label class="label-input combobox-data-search-label combobox-data-child-content-text">
                           <input
                             type="text"
-                            class="input input-icon"
+                            class="input input-icon arduino combobox-data-child-content-text"
                             placeholder="Tìm kiếm"
+                            v-on:keyup.enter="SearchDepartment"
+                            v-model="searchDepartment"
                           />
-                          <span class="background-icon-search-input"></span>
+                          <span class="background-icon-search-input combobox-data-child-content-text"
+                          @click="SearchDepartment"></span>
                         </label>
                       </div>
                       <div class="combobox-data-child">
@@ -370,14 +378,17 @@
                         <div class="background-icon-loading"></div>
                       </div>
 
-                      <div class="combobox-data-search">
-                        <label class="label-input combobox-data-search-label">
+                      <div class="combobox-data-search combobox-data-child-content-text">
+                        <label class="label-input combobox-data-search-label combobox-data-child-content-text">
                           <input
                             type="text"
-                            class="input input-icon"
+                            class="input input-icon combobox-data-child-content-text"
                             placeholder="Tìm kiếm"
+                            v-on:keyup.enter="SearchpPosition"
+                            v-model="searchpPosition"
                           />
-                          <span class="background-icon-search-input"></span>
+                          <span class="background-icon-search-input combobox-data-child-content-text"
+                          @click="SearchpPosition"></span>
                         </label>
                       </div>
                       <div class="combobox-data-child">
@@ -532,14 +543,17 @@
                         <div class="background-icon-loading"></div>
                       </div>
 
-                      <div class="combobox-data-search">
-                        <label class="label-input combobox-data-search-label">
+                      <div class="combobox-data-search combobox-data-child-content-text">
+                        <label class="label-input combobox-data-search-label combobox-data-child-content-text">
                           <input
                             type="text"
-                            class="input input-icon"
+                            class="input input-icon combobox-data-child-content-text"
                             placeholder="Tìm kiếm"
+                            v-on:keyup.enter="SearchSource"
+                            v-model="searchSource"
                           />
-                          <span class="background-icon-search-input"></span>
+                          <span class="background-icon-search-input combobox-data-child-content-text"
+                          @click="SearchSource"></span>
                         </label>
                       </div>
                       <div class="combobox-data-child">
@@ -958,6 +972,14 @@
                 Ngày sinh
               </div>
               <div class="form-container-content-child-item-input">
+                <!-- <p>{{date}}</p>
+ 
+                <el-date-picker
+                  v-model="date"
+                  type="date"
+                  placeholder="Pick a day"
+                  :size="size"
+                /> -->
                 <input
                   type="date"
                   class="border-input-content"
@@ -1000,8 +1022,13 @@
 </template>
 
 <script>
-// nhúng status code
+
+  // nhúng status code
 import { StatusCode } from "../Models/StatusCode";
+
+// nhúng model view customer xử lý sửa
+import { UpdateCustomerModel } from "../Models/CustomerModel/UpdateCustomerModel";
+
 
 // nhúng giới tính
 import { GenderModel } from "../Models/GenderModel";
@@ -1023,13 +1050,11 @@ import {
 } from "../../js/test";
 
 // các hàm xử lý click combobox
-import { IsEmpty } from "../../js/formatData";
+import { IsEmpty,formatDate } from "../../js/formatData";
 
 // các hàm xử lý click combobox
 import { handlerValidateTCustomer } from "../../js/handlerValidateCustomer";
 
-// nhúng status code
-// import { StatusCode } from "../Models/StatusCode";
 
 // hàm xử lý hiển thị loading
 import { UnLoading } from "../../js/Loading";
@@ -1043,8 +1068,10 @@ import {
   hanlderClickComboboxMulData,
 } from "../../js/comboboxDataMultiple";
 
+// xử lý hiển thị text
 import { titleCase } from "../../js/handlerString";
 
+// xử lý check trùng
 import { checkExists } from "../../js/handlerValidateCustomer";
 
 // nhúng service xử lý xưng hô
@@ -1067,7 +1094,7 @@ import { CustomerPotentialTypeService } from "../Services/CustomerPotentialTypeS
 
 export default {
   name: "FormDataComponent",
-  components: {},
+  components: { },
 
   props: {
     checkShowFormData: Boolean,
@@ -1094,17 +1121,28 @@ export default {
       CustomerEmail: "",
       TaxCode: "",
       gender: GenderModel,
+      date: Date(),
+      customerUpdate: UpdateCustomerModel,
+      searchVocative:"",
+      searchDepartment:"",
+      searchSource:"",
+      searchpPosition:""
     };
   },
   created() {},
   watch: {
-    "customerInfo.gender":{
+    date(){
+      console.log(this.date)
+    },
+    "customerInfo.birthDay":{
       handler(){
+        console.log(this.customerInfo.birthDay)
       }
     },
+  
     customerInfo() {
-      console.log(this.customerInfo.firstName);
       // lấy thông tin bảng loại tiềm năng
+      this.customerInfo.birthDay  = formatDate(this.customerInfo.birthDay);
       this.HandlerCustomerPotentialType(this.customerInfo.customerId);
     },
     "customerInfo.firstName": {
@@ -1121,7 +1159,6 @@ export default {
             : "";
 
         this.customerInfo.fullName = LastName + Firstname;
-        console.log(this.customerInfo.fullName);
       },
     },
 
@@ -1157,7 +1194,6 @@ export default {
       handler() {
         if (this.errors.get("CustomerEmail"))
           this.errors.delete("CustomerEmail");
-        console.log("thay doi");
         if (this.customerInfo.customerEmail != this.CustomerEmail) {
           this.checkValidateEmail = true;
         } else this.checkValidateEmail = false;
@@ -1183,34 +1219,14 @@ export default {
       this.CustomerPhone = this.customerInfo.customerPhoneNumber;
       this.CustomerEmail = this.customerInfo.customerEmail;
       this.TaxCode = this.customerInfo.taxCode;
-      console.log(this.CustomerInfo);
     },
 
-    // theo dõi thông tin xưng hô
-    vocative() {
-      UnLoading(this.$refs.vocative);
-    },
-
+    // // theo dõi thông tin xưng hô
+    // vocative() {
+    //   UnLoading(this.$refs.vocative);
+    // },
     // theo dõi thông tin phòng ban
-    department() {
-      UnLoading(this.$refs.department);
-    },
-
-    // theo dõi thông tin chức danh
-    position() {
-      UnLoading(this.$refs.position);
-    },
-
-    //  theo dõi thông tin nguồn gốc
-    source() {
-      UnLoading(this.$refs.source);
-    },
-
-    //  theo dõi thông tin loại chức danh
-    potentialType() {
-      UnLoading(this.$refs.potentialType);
-    },
-
+   
     // lấy loại tiềm năng đã được chọn
     customerPotentialType() {
       if (this.customerPotentialType) {
@@ -1223,10 +1239,57 @@ export default {
         }
       }
       // customerPotentialTypeMap
-      console.log(this.customerPotentialTypeMap.size);
     },
   },
   methods: {
+
+    // xử lý tìm kiếm Chức danh
+    async SearchpPosition(){
+      let _PositionService = new PositionsService();
+        await _PositionService.getByName(this.searchpPosition).then((res) => {
+          console.log(res)
+          if(res.statusCode == StatusCode.GetSuccess){
+            this.position = res.data;
+          }
+        });
+    },
+
+     // xử lý tìm kiếm nguồn gốc
+    async SearchSource(){
+      let _SearchSource = new SourceService();
+        await _SearchSource.getByName(this.searchSource).then((res) => {
+          console.log(res)
+          if(res.statusCode == StatusCode.GetSuccess){
+            this.source = res.data;
+          }
+        });
+    },
+
+     // xử lý tìm kiếm phòng ban
+    async SearchDepartment(){
+      let _SearchDepartment = new DepartmentService();
+        await _SearchDepartment.getByName(this.searchDepartment).then((res) => {
+          console.log(res)
+          if(res.statusCode == StatusCode.GetSuccess){
+            this.department = res.data;
+          }
+        });
+    },
+
+    // xử lý tìm kiếm xưng hô
+    async SearchVocative(){
+      let _VocativeService = new VocativeService();
+        await _VocativeService.getByName(this.searchVocative).then((res) => {
+          if(res.statusCode == StatusCode.GetSuccess){
+            this.vocative = res.data;
+          }
+         
+        });
+    },
+
+    // format thời gian
+    formatDate,
+
     // llấy giới tính
     selectGenderName: function (value) {
       for (let i = 0; i < this.gender.length; i++) {
@@ -1271,7 +1334,6 @@ export default {
         this.customerPotentialTypeMap
       );
       // this.customerPotentialTypeMap.delete(event.target.getAttribute("value"))
-      console.log(this.customerPotentialTypeMap);
     },
 
     /**
@@ -1292,12 +1354,16 @@ export default {
      * function:  xử lý lấy dữ liệu vocative
      * created time: 11:28 17/08/2022
      */
-    HandlerSelectVocative() {
+    async HandlerSelectVocative() {
       if (!this.vocative) {
         let _VocativeService = new VocativeService();
-        _VocativeService.getAll().then((res) => {
+        await _VocativeService.getAll().then((res) => {
           this.vocative = res;
         });
+        UnLoading(this.$refs.vocative)
+      }else{
+        UnLoading(this.$refs.vocative);
+
       }
     },
 
@@ -1308,13 +1374,11 @@ export default {
      */
     HandlerCustomerPotentialType(customerId) {
       if (!this.customerPotentialType) {
-        console.log(customerId);
         let _CustomerPotentialTypeService = new CustomerPotentialTypeService();
         _CustomerPotentialTypeService.getByNameId(customerId).then((res) => {
           this.customerPotentialType = res;
-          console.log(this.customerPotentialType);
         });
-      }
+      } 
     },
 
     /**
@@ -1328,7 +1392,8 @@ export default {
         _DepartmentService.getAll().then((res) => {
           this.department = res;
         });
-      }
+        UnLoading(this.$refs.department)
+      }else UnLoading(this.$refs.department)
     },
 
     /**
@@ -1342,7 +1407,8 @@ export default {
         _PositionsService.getAll().then((res) => {
           this.position = res;
         });
-      }
+        UnLoading(this.$refs.position)
+      }else UnLoading(this.$refs.position)
     },
 
     /**
@@ -1356,7 +1422,8 @@ export default {
         _SourceService.getAll().then((res) => {
           if (res) this.source = res;
         });
-      }
+        UnLoading(this.$refs.source)
+      }else UnLoading(this.$refs.source)
     },
 
     /**
@@ -1372,8 +1439,9 @@ export default {
             this.potentialType = res;
             // tạo map lưu lại giá trị để so sánh
           }
+          UnLoading(this.$refs.potentialType)
         });
-      }
+      }else UnLoading(this.$refs.potentialType)
     },
 
     /**
@@ -1467,9 +1535,9 @@ export default {
         console.log(error);
       }
     },
-    async OnSubmit() {
+    async OnSubmit(event) {
       try {
-
+        console.log(event.target)
         // kiểm tra tên không được trống
         if (
           this.customerInfo.firstName == null ||
@@ -1528,47 +1596,84 @@ export default {
         this.customerInfo.sourceId = IsEmpty(sourceId) ? null : sourceId;
         this.customerInfo.positionId = IsEmpty(positionId) ? null : positionId;
         this.customerInfo.gender = IsEmpty(genderId) ? null : genderId;
+
         // tạo mới dữ liệu bảng loại tiềm năng
 
         if (this.errors.size == 0) {
           // Biến kiểm tra có được phép  chỉnh sửa thông tin khách hàng hay không
+          // format lại data
+          console.log(this.customerUpdate)
+          this.customerUpdate.VocativeId = this.customerInfo.vocativeId;
+          this.customerUpdate.LastName = this.customerInfo.lastName;
+          this.customerUpdate.FirstName = this.customerInfo.firstName;
+          this.customerUpdate.FullName = this.customerInfo.fullName;
+          this.customerUpdate.DepartmentId = this.customerInfo.departmentId;
+          this.customerUpdate.PositionId = this.customerInfo.positionId;
+          this.customerUpdate.CustomerPhoneNumber = this.customerInfo.customerPhoneNumber;
+          this.customerUpdate.CompanyPhoneNumber = this.customerInfo.companyPhoneNumber;
+          this.customerUpdate.SourceId = this.customerInfo.sourceId;
+          this.customerUpdate.IsActivePhoneNumber = this.customerInfo.isActivePhoneNumber;
+          this.customerUpdate.IsActiveEmail = this.customerInfo.isActiveEmail;
+          this.customerUpdate.Zalo = this.customerInfo.zalo;
+          this.customerUpdate.CompanyEmail = this.customerInfo.companyEmail;
+          this.customerUpdate.Organization = this.customerInfo.organization;
+          this.customerUpdate.TaxCode = this.customerInfo.taxCode;
+          this.customerUpdate.BirthDay = this.customerInfo.birthDay;
+          this.customerUpdate.Gender = this.customerInfo.gender;
+          this.customerUpdate.Facebook = this.customerInfo.facebook;
 
-          // thao tác thêm mới loại tiềm năng
-          // update customer
+          console.log(this.customerUpdate.BirthDay)
+
+          if(IsEmpty(this.customerUpdate.BirthDay))
+            delete this.customerUpdate.BirthDay;
+
           let _CustomerService = new CustomerService();
           await _CustomerService
-            .Update(this.customerInfo.customerId, this.customerInfo)
+            .Update(this.customerInfo.customerId, this.customerUpdate)
             .then((res) => {
-              if (res.data.statusCode == StatusCode.UpdateSuccess) {
-                // lấy thông tin data lưu thành mảng
+              if(res){
+                if (res.data.statusCode == StatusCode.UpdateSuccess) {
+                  // lấy thông tin data lưu thành mảng
 
-                let potentialTypeMapArr = handlerValidateTCustomer(
-                  this.customerPotentialTypeMap,
-                  this.customerInfo.customerId
-                );
-                if (potentialTypeMapArr != []) {
-                  let _CustomerPotentialTypeService =
-                    new CustomerPotentialTypeService();
-                  _CustomerPotentialTypeService
-                    .Create(potentialTypeMapArr)
-                    .then((res) => {
-                      if (res.data.statusCode == StatusCode.CreateSuccess) {
-                        console.log(res);
-                      }
-                    });
-                }
-                // chuyển trang về trang chính bằng cách ẩn form hiển tại
-                this.ToastMessageCustomer.Type = "success";
-                this.ToastMessageCustomer.Message = res.data.message;
-                this.HandlerCloseForm();
-              } else {
+                  let potentialTypeMapArr = handlerValidateTCustomer(
+                    this.customerPotentialTypeMap,
+                    this.customerInfo.customerId
+                  );
+                  if (potentialTypeMapArr != []) {
+                    let _CustomerPotentialTypeService =
+                      new CustomerPotentialTypeService();
+                    _CustomerPotentialTypeService
+                      .Create(potentialTypeMapArr)
+                      .then((res) => {
+                        if (res.data.statusCode == StatusCode.CreateSuccess) {
+                          console.log(res);
+                        }
+                      });
+                  }
+                  // chuyển trang về trang chính bằng cách ẩn form hiển tại
+                  this.ToastMessageCustomer.Type = "success";
+                  this.ToastMessageCustomer.Message = res.data.message;
+                  this.$emit("toastMessageInfo", this.ToastMessageCustomer);
+                  this.$emit("showToastMessageInfo", true);
+                  this.HandlerCloseForm();
+                  // load lại dữ liệu trong form
+                this.$emit("checkLoadCustomerData",true);
+                console.log("load lai du lieu");
+                } else {
                 console.log("failed");
                 this.ToastMessageCustomer.Type = "error";
                 this.ToastMessageCustomer.Message = res.data.message;
+                this.$emit("toastMessageInfo", this.ToastMessageCustomer);
+                this.$emit("showToastMessageInfo", true);
+              }
+              }else{
+                this.ToastMessageCustomer.Type = "error";
+                this.ToastMessageCustomer.Message = "Cập nhật thất bại!";
+                this.$emit("toastMessageInfo", this.ToastMessageCustomer);
+                this.$emit("showToastMessageInfo", true);
               }
 
-              this.$emit("toastMessageInfo", this.ToastMessageCustomer);
-              this.$emit("showToastMessageInfo", true);
+              
             });
 
           // end them
