@@ -113,6 +113,8 @@
     <Compile Include="Models\CustomerPotentialTypeModel\CustomerPotentialTypeModel.cs" />
     <Compile Include="Models\CustomersModel\CreateCustomerModel.cs" />
     <Compile Include="Models\CustomersModel\CustomerCodeModel.cs" />
+    <Compile Include="Models\CustomersModel\CustomerFilterDataModel.cs" />
+    <Compile Include="Models\CustomersModel\CustomerFilterModel.cs" />
     <Compile Include="Models\CustomersModel\CustomerModel.cs" />
     <Compile Include="Models\CustomersModel\FormCheckExists.cs" />
     <Compile Include="Models\CustomersModel\UpdateCustomerModel.cs" />

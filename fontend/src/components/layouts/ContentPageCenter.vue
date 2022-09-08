@@ -205,6 +205,7 @@
 <script>
   //  xử lý hiển thị text
 import { titleCase } from "../../js/handlerString";
+// các hàm xử lý click combobox
 // nhúng status code
 import { StatusCode } from "../Models/StatusCode";
 
@@ -249,7 +250,8 @@ export default {
   props: {
     searchCustomerCurrent: {},
     checkShowFormData: Boolean,
-    checkLoadCustomerData: Boolean
+    checkLoadCustomerData: Boolean,
+    ArrayObjectData:{}
   },
   created() {
     this.ListPaging.set(10,10);
@@ -261,7 +263,6 @@ export default {
 
   },
   methods: {
-
     // xử lý hiển thị text
     titleCase,
 
@@ -414,7 +415,46 @@ export default {
       }
 
     },
+
+    async LoadDataFilter(Data,keyword,currentPage,pageSize){
+      // loading
+      if(this.$refs.TableData != undefined)
+        Loading(this.$refs.TableData);
+      let _CustomerService = new CustomerService();
+       await _CustomerService.PagingFilterCustomer(Data,keyword,currentPage,pageSize).then((res) => {
+        if(res.statusCode == StatusCode.GetSuccess){
+          this.customer = res.data.data;
+          this.totalCount = res.data.totalCount
+          this.startColumn = (res.data.currentPageNumber-1)*res.data.pageSize +1;
+          this.endColumn =  (res.data.currentPageNumber*res.data.pageSize < this.totalCount)?res.data.currentPageNumber*res.data.pageSize:this.totalCount;
+          this.checkPreData = res.data.hasPrePage;
+          this.totalPages = res.data.totalPages;
+          this.checkNextData = res.data.hasNextpage;
+          // load xong bỏ hết các dòng đã chọn
+          this.listCustomerId.splice(0, this.listCustomerId.length);
+
+          // bỏ checked
+          let checkboxs = document.getElementsByClassName("trCheckbox");
+          
+          // chuyển background checked
+          if (checkboxs) {
+          
+              for (let item of checkboxs) {
+                if (item.checked == true) {
+                  item.checked = false;
+                }
+              }
+
+            } 
+          }
+          
+        });
+        UnLoading(this.$refs.TableData);
+    },
+
     async LoadData(keyword,currentPage,pageSize){
+      if(this.$refs.TableData != undefined)
+        Loading(this.$refs.TableData);
       let _CustomerService = new CustomerService();
        await _CustomerService.PagingCustomer(keyword,currentPage,pageSize).then((res) => {
         if(res.statusCode == StatusCode.GetSuccess){
@@ -444,15 +484,30 @@ export default {
           }
           
         });
+        UnLoading(this.$refs.TableData);
     }
      
   },
   // theo dõi các biến thay đổi và thực hiện hàm nếu có
   watch: {
 
+    // theo dõi mảng giá trị lặp
+    ArrayObjectData(){
+      // PagingFilterCustomer
+      this.LoadDataFilter(this.ArrayObjectData,this.keyword, this.currentPage,this.pageSize);
+      console.log(this.ArrayObjectData.length)
+      // gọi api
+    },
+
+    // kiểm tra check load dữ liệu
     async checkLoadData(){
       if(this.checkLoadData == true){
-        await this.LoadData(this.keyword, this.currentPage,this.pageSize);
+        if(this.ArrayObjectData.length == 0){
+          await this.LoadData(this.keyword, this.currentPage,this.pageSize);
+        }
+        else{
+          await this.LoadDataFilter(this.ArrayObjectData,this.keyword, this.currentPage,this.pageSize);
+        }
         this.checkLoadData=false;
         console.log("checkload")
 

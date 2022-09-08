@@ -54,7 +54,20 @@ namespace WebApplication.Controllers
             return await _customer.PagingCustomer(keyword, currentPageNumber, pageSize);
         }
 
+        /// <summary>
+        /// Author: Phạm Văn Đạt
+        /// - Result api lấy thông tin của customer
+        /// DateTime: 10:25 11/08/2022
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("api/[controller]/PagingFilter")]
+        public async Task<ReponsitoryModel> PagingFilterCustomer([FromBody] List<CustomerFilterModel> models, string keyword = null, int currentPageNumber = 1, int pageSize = 10)
+        {
+            return await _customer.PagingFilterCustomer(models, keyword, currentPageNumber, pageSize);
+        }
 
+        
         /// <summary>
         /// Author: Phạm Văn Đạt
         /// - Result api lấy thông tin của customer bằng tên

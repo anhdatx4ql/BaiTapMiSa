@@ -204,3 +204,9 @@ span.vuejs3-datepicker__icon {
 section.vuejs3-datepicker__calendar-topbar {
     display: none;
 }
+
+.filter-content-child-box .border-input-content {
+    width: 200px;
+    margin-top: 8px;
+    background: white;
+}

@@ -6,7 +6,11 @@
         <div class="background-icon-loading"></div>
       </div>
     <!-- Start header -->
-    <Header @CustomerByName="searchCustomer = $event"></Header>
+    <Header 
+      @CustomerByName="searchCustomer = $event"
+      @toastMessageInfo="toastMessageInfo=$event"
+      @showToastMessageInfo="showToastMessage=$event"
+    ></Header>
     <!-- End Header -->
 
     <!-- Start Toolbar -->
@@ -159,8 +163,7 @@ export default {
   
    
     // Xử lý click show hide combobox
-    ClickWindow:function(e){
-      console.log(e.target)
+    ClickWindow:function(){
       // xử lý click vào window
        window.addEventListener("click", function(e){
         if(e.target.classList.contains("show-button-toolbar") || e.target.parentNode.classList.contains("show-button-toolbar")){
@@ -177,12 +180,13 @@ export default {
        
         // kiểm tra khi click vaof combobox data multiple thì không xử lý ẩn form
         let checkEl = e.target.classList.contains("combobox-data-child-content-text");
+        let checkElFilter = e.target.classList.contains("combobox-data-child-content-text-filter");
         let checkElIcon = e.target.classList.contains("background-icon-checked");
         // lấy ra thẻ vừa thao tác click
         let elClassList = e.target;
 
         // kiểm tra xem có click vào 1 trong 2 thằng bên dưới không
-        if(!elClassList.classList.contains("combobox-data-child-content") && !checkEl && !checkElIcon )
+        if(!elClassList.classList.contains("combobox-data-child-content") && !checkEl && !checkElIcon && !checkElFilter )
          
          // kiểm tra xem thẻ click có nằm 2 class này không, nếu khoong thì mới xử lý
           if(!elClassList.classList.contains("combobox-data-child-content") || !e.target.parentNode.classList.contains("combobox-data-child-content")){

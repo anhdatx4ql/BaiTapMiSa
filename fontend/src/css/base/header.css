@@ -107,15 +107,19 @@
 .header-nav-item-content {
     display: flex;
     align-items: center;
-    border-bottom: 2px solid white;
+    border-bottom: 2px solid white !important;
     height: 36px;
     box-sizing: border-box;
     /* font-family: Latin Bold; */
 }
 
 .header-nav-item-content-select,.header-nav-item-content:hover {
-    border-bottom: 2px solid #0F2FBD;
+    border-bottom: 2px solid #0F2FBD !important;
     color: #0F2FBD;
     cursor: pointer;
 }
 
+button.header-nav-item-content {
+    border: none;
+    background: none;
+}

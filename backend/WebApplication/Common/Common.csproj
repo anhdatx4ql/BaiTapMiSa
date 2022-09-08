@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Common\ContantsError.cs" />
     <Compile Include="Common\ContantsSuccess.cs" />
+    <Compile Include="Common\CustomerFilterTypeEnum.cs" />
     <Compile Include="Common\ExcelModel.cs" />
     <Compile Include="Common\PagingDataModel.cs" />
     <Compile Include="Common\PagingModel.cs" />

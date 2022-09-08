@@ -21,33 +21,33 @@
         </div>
 
         <div class="header-right">
-          <div class="header-right-child" onclick="clickbutton(this)">
-            <button
+          <div class="header-right-child">
+            <button @click="showNotFound"
               class="button-background-header background-icon-face"
             ></button>
           </div>
           <div class="header-right-child">
-            <button
+            <button @click="showNotFound"
               class="button-background-header background-icon-bag-header"
             ></button>
           </div>
           <div class="header-right-child">
-            <button
+            <button @click="showNotFound"
               class="button-background-header background-icon-bell"
             ></button>
           </div>
           <div class="header-right-child">
-            <button
+            <button @click="showNotFound"
               class="button-background-header background-icon-setting"
             ></button>
           </div>
           <div class="header-right-child">
-            <button
+            <button @click="showNotFound"
               class="button-background-header background-icon-question"
             ></button>
           </div>
           <div class="header-right-child header-right-child-avatar">
-            <button
+            <button @click="showNotFound"
               class="button-background-header background-icon-avatar"
             ></button>
           </div>
@@ -55,117 +55,120 @@
       </div>
       <div class="header-nav">
         <div class="header-nav-item">
-          <div class="header-nav-item-content background-icon-home-hover">
+          <button class="header-nav-item-content background-icon-home-hover" @click="showNotFound">
             <span
               class="header-nav-item-background background-icon-home"
             ></span>
             <span>Bàn làm việc</span>
-          </div>
+          </button>
         </div>
         <div class="header-nav-item">
-          <div class="header-nav-item-content background-icon-tiemnang-hover header-nav-item-content-select">
+          <button class="header-nav-item-content background-icon-tiemnang-hover header-nav-item-content-select">
             <span
               class="header-nav-item-background background-icon-tiemnang"
             ></span>
             <span>Tiềm năng</span>
-          </div>
+          </button>
         </div>
         <div class="header-nav-item">
-          <div class="header-nav-item-content background-icon-chaohang-hover">
+          <button class="header-nav-item-content background-icon-chaohang-hover" @click="showNotFound">
             <span
               class="header-nav-item-background background-icon-chaohang"
             ></span>
             <span>Chào hàng</span>
-          </div>
+          </button>
         </div>
         <div class="header-nav-item">
-          <div class="header-nav-item-content background-icon-lienhe-hover">
+          <button class="header-nav-item-content background-icon-lienhe-hover" @click="showNotFound">
             <span
               class="header-nav-item-background background-icon-lienhe"
             ></span>
             <span>Liên hệ</span>
-          </div>
+          </button>
         </div>
         <div class="header-nav-item">
-          <div
-            class="header-nav-item-content background-icon-khachhang-hover"
+          <button
+            class="header-nav-item-content background-icon-khachhang-hover" @click="showNotFound"
           >
             <span
               class="header-nav-item-background background-icon-khachhang"
             ></span>
             <span>Khách hàng</span>
-          </div>
+        </button>
         </div>
         <div class="header-nav-item">
-          <div class="header-nav-item-content background-icon-cohoi-hover">
+          <button class="header-nav-item-content background-icon-cohoi-hover" @click="showNotFound">
             <span
               class="header-nav-item-background background-icon-cohoi"
             ></span>
             <span>Cơ hội</span>
-          </div>
+          </button>
         </div>
         <div class="header-nav-item">
-          <div class="header-nav-item-content background-icon-baogia-hover">
+          <button class="header-nav-item-content background-icon-baogia-hover" @click="showNotFound">
             <span
               class="header-nav-item-background background-icon-baogia"
             ></span>
             <span>Báo giá</span>
-          </div>
+          </button>
         </div>
         <div class="header-nav-item">
-          <div class="header-nav-item-content background-icon-donhang-hover">
+          <button class="header-nav-item-content background-icon-donhang-hover" @click="showNotFound">
             <span
               class="header-nav-item-background background-icon-donhang"
             ></span>
             <span>Đơn hàng</span>
-          </div>
+          </button>
         </div>
 
         <div class="header-nav-item">
-          <div class="header-nav-item-content background-icon-muctieu-hover">
+          <button class="header-nav-item-content background-icon-muctieu-hover" @click="showNotFound">
             <span
               class="header-nav-item-background background-icon-muctieu"
             ></span>
             <span>Mục tiêu</span>
-          </div>
+          </button>
         </div>
         <div class="header-nav-item">
-          <div
-            class="header-nav-item-content background-icon-chiendich-hover"
+          <button
+            class="header-nav-item-content background-icon-chiendich-hover" @click="showNotFound"
           >
             <span
               class="header-nav-item-background background-icon-chiendich"
             ></span>
             <span>Chiến dịch</span>
-          </div>
+        </button>
         </div>
         <div class="header-nav-item">
-          <div class="header-nav-item-content background-icon-baocao-hover">
+          <button class="header-nav-item-content background-icon-baocao-hover" @click="showNotFound">
             <span
               class="header-nav-item-background background-icon-baocao"
             ></span>
             <span>Báo cáo</span>
-          </div>
+          </button>
         </div>
         <div class="header-nav-item">
-          <div class="header-nav-item-content background-icon-khac-hover">
+          <button class="header-nav-item-content background-icon-khac-hover" @click="showNotFound">
             <span
               class="header-nav-item-background background-icon-khac"
             ></span>
             <span>Khác</span>
-          </div>
+          </button>
         </div>
       </div>
     </div>
 </template>
 
 <script>
+// nhúng Toastmessage
+import { ToastMessage } from "../Models/ToastMessage";
 
 export default {
   name: 'HeaderComponent',
   data(){
     return {
-      textSearch:""
+      textSearch:"",
+      ToastMessageCustomer: ToastMessage,
     }
   },
   props: {
@@ -174,6 +177,13 @@ export default {
   watch:{
   },
   methods:{
+    // click show notfound
+    showNotFound(){
+      this.ToastMessageCustomer.Type = "info";
+      this.ToastMessageCustomer.Message = "Chúng tôi sẽ sớm ra mắt";
+      this.$emit("toastMessageInfo", this.ToastMessageCustomer);
+      this.$emit("showToastMessageInfo", true);
+    },
     //Author: Phạm Văn Đạt
     // function: lấy thông tin customer theo tên
     // created time: 11:50 15/08/2022

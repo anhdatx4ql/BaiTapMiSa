@@ -8,6 +8,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@vuepic/vue-datepicker": "^3.4.7",
     "axios": "^0.27.2",
     "core-js": "^3.8.3",
     "element-plus": "^2.2.16",
@@ -17,6 +18,7 @@
     "vue-el-datepicker": "^1.1.0",
     "vue-moment": "^4.1.0",
     "vue-router": "^4.0.13",
+    "vue3-datepicker": "^0.3.4",
     "vuejs-datetimepicker": "^1.1.13",
     "vuejs3-datepicker": "^1.0.12"
   },

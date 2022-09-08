@@ -1,15 +1,29 @@
 <template>
   <div class="content">
     
-    <ContentPageLeft :customCarrer="carrer" :customVocative="vocative"></ContentPageLeft>
-    <ContentPageCenter :searchCustomerCurrent="searchCustomerCurrent"
+    <ContentPageLeft
+     @ArrayObjectData="ArrayObjectData = $event">
+    </ContentPageLeft>
+    <ContentPageCenter 
+
+    :searchCustomerCurrent="searchCustomerCurrent"
+
      @CustomerDetails="customerDetails = $event"
+
      :checkShowFormData="checkShowFormData"
+
      @ShowFormData="checkShow = $event"
+
      @CustomerInfo="CustomerInfo = $event"
+
      @listCustomerId="listCustomerId = $event"
+
      :checkLoadCustomerData="checkLoadCustomerData"
+
      @checkLoadCustomerData="checkLoadDone=$event"
+
+     :ArrayObjectData="ArrayObjectData"
+
      ></ContentPageCenter>
 
     <ContentPageRight :customerDetails="customerDetails"></ContentPageRight>
@@ -22,11 +36,6 @@ import ContentPageCenter from "./ContentPageCenter";
 import ContentPageLeft from "./ContentPageLeft";
 import ContentPageRight from "./ContentPageRight";
 
-// nhúng service xử lý ngành nghề
-// import {CarrerService} from '../Services/CarrerService';
-
-// nhúng service xử lý ngành nghề
-import {VocativeService} from '../Services/VocativeService';
 
 export default {
   name: "ContentPage",
@@ -37,14 +46,13 @@ export default {
   },
   data() {
     return {
-      carrer: "",
       searchCustomerCurrent:"",
-      vocative:"",
       customerDetails:"",
       checkShow:Boolean, // - cho phép
       CustomerInfo:{},
       listCustomerId: "",
-      checkLoadDone:true
+      checkLoadDone:true,
+      ArrayObjectData:[]
     };
   },
   props:{
@@ -53,6 +61,7 @@ export default {
       checkLoadCustomerData:Boolean
   },
   watch:{
+
     searchCustomer(){
       this.searchCustomerCurrent = this.searchCustomer;
     },
@@ -79,15 +88,6 @@ export default {
     }
   },
   created() {
-    //Author: Phạm Văn Đạt
-    // function: lấy thông tin xưng hô
-    // created time: 11:50 15/08/2022
-    let _VocativeService = new VocativeService();
-    _VocativeService.getAll().then((res)=>{
-              if(res)
-                this.vocative = res;
-            })
-
   },
   // cho phép sử dụng tham số
   methods: {},

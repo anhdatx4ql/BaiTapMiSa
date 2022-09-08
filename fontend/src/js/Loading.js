@@ -15,6 +15,4 @@ export async function UnLoading(element){
     console.log("unloading")
     if(DivLoadingChild)
         DivLoadingChild.style.display =  "none"
-
-    // DivParent.removeChild(DivLoadingChild);
 }

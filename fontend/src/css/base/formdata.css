@@ -141,8 +141,11 @@
   }
   
   .form-container-content-child-item-label {
-      width: 100px;
-      margin-right: 44px;
+    width: 100px;
+    margin-right: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: start;
   }
 
   .form-container-content-child-item.form-container-description {

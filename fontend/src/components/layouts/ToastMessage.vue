@@ -31,7 +31,6 @@ export default {
 
     },
     showToastMessage(){
-        console.log("an sau 5s")
         this.AutoHideToastMessage();
         this.$emit("showToastMessage", false);
     }
@@ -48,13 +47,11 @@ export default {
     
      AutoHideToastMessage(){
         let Element = this.$refs.notifi;
-        console.log(Element)
         if(Element){
             Element.style.display = "flex"; 
             setTimeout(function(){
                 Element.style.display = "none";    
-                console.log(this.message);
-            }, 5000);
+            }, 3000);
         }
     },
     ClickHideToastMessage: function(event){

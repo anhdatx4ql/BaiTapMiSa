@@ -27,31 +27,32 @@
 }
 
 .button-background-primary{
-    background-color:#4262F0;
-    color:#FFFFFF;
+    background-color:#4262F0 !important;
+    color:#FFFFFF !important;
 }
 
 .button-background-primary:hover{
-    background-color: #2B4EEE;
+    background-color: #2B4EEE !important;
     transition: 0.5s;
 }
 
 .button-background-primary:active{
-    background-color:#133BEC;
+    background-color:#133BEC !important;
 }
 
 .button-background-white{
-    border:1px solid #D3D7DE;
+    border:1px solid #D3D7DE !important;
     background-color:#ffffff;
+    color:#1F2229 !important;
 }
 
 .button-background-white:hover{
-    background-color: #E2E4E9;
+    background-color: #E2E4E9 !important;
     transition: 0.5s;
 }
  
 .button-background-white:active{
-    background-color: #D3D7DE;
+    background-color: #D3D7DE !important;
 }
 
 .button-icon-text {

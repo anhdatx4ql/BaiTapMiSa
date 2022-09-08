@@ -83,3 +83,7 @@ body,button,textarea,input{
 .div-inline-block{
     display:inline-block;;
 }
+
+/* .filter-content::-webkit-scrollbar{
+    background-color: white;
+} */

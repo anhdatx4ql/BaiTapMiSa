@@ -1,6 +1,6 @@
 <template>
   <div class="form-container">
-    <form @submit.prevent="OnSubmit">
+    <form @submit.prevent>
       <div class="form-content">
         <div class="form-container-title">
           <div class="form-container-title-left">
@@ -9,9 +9,9 @@
             </div>
           </div>
           <div class="form-container-title-right">
-            <button class="button">Lưu</button>
-            <button class="button">Lưu và thêm</button>
-            <button class="button" type="button" @click="HandlerCloseForm">
+            <button type="button" class="button button-background-primary save" @click="OnSubmit">Lưu</button>
+            <button type="button" class="button button-background-white created" @click="OnSubmit">Lưu và thêm</button>
+            <button type="button" class="button button-background-white" @click="HandlerCloseForm">
               Hủy bỏ
             </button>
           </div>
@@ -75,6 +75,21 @@
                       <!-- loading -->
                       <div class="content-background-icon-loading">
                         <div class="background-icon-loading"></div>
+                      </div>
+
+                        <!-- tìm kiếm -->
+                        <div class="combobox-data-search combobox-data-child-content-text" >
+                        <label class="label-input combobox-data-search-label combobox-data-child-content-text">
+                          <input
+                            type="text"
+                            class="input input-icon combobox-data-child-content-text"
+                            placeholder="Tìm kiếm"
+                            v-on:keyup.enter="SearchVocative"
+                            v-model="searchVocative"
+                          />
+                          <span class="background-icon-search-input combobox-data-child-content-text"
+                          @click="SearchVocative"></span>
+                        </label>
                       </div>
 
                       <div class="combobox-data-child">
@@ -209,6 +224,20 @@
                         <div class="background-icon-loading"></div>
                       </div>
 
+                        <!-- Tìm kiếm -->
+                        <div class="combobox-data-search combobox-data-child-content-text">
+                        <label class="label-input combobox-data-search-label combobox-data-child-content-text">
+                          <input
+                            type="text"
+                            class="input input-icon arduino combobox-data-child-content-text"
+                            placeholder="Tìm kiếm"
+                            v-on:keyup.enter="SearchDepartment"
+                            v-model="searchDepartment"
+                          />
+                          <span class="background-icon-search-input combobox-data-child-content-text"
+                          @click="SearchDepartment"></span>
+                        </label>
+                      </div>
                   
                       <div class="combobox-data-child">
                         <div
@@ -288,7 +317,21 @@
                         <div class="background-icon-loading"></div>
                       </div>
 
-                   
+                      <!-- Tìm kiếm -->
+                      <div class="combobox-data-search combobox-data-child-content-text">
+                        <label class="label-input combobox-data-search-label combobox-data-child-content-text">
+                          <input
+                            type="text"
+                            class="input input-icon combobox-data-child-content-text"
+                            placeholder="Tìm kiếm"
+                            v-on:keyup.enter="SearchpPosition"
+                            v-model="searchpPosition"
+                          />
+                          <span class="background-icon-search-input combobox-data-child-content-text"
+                          @click="SearchpPosition"></span>
+                        </label>
+                      </div>
+
                       <div class="combobox-data-child">
                         <div
                           class="combobox-data-child-content"
@@ -337,6 +380,7 @@
               <div class="form-container-content-child-item">
                 <div class="form-container-content-child-item-label">
                   ĐT di động
+                  <ToolTip :type="'top'" :text="'Điện thoại di động'"></ToolTip>
                 </div>
                 <div class="form-container-content-child-item-input">
                    <div class="border-input-content" :class="{'input-error':(errors.get('CustomerPhoneNumber'))}">
@@ -355,6 +399,7 @@
               <div class="form-container-content-child-item">
                 <div class="form-container-content-child-item-label">
                   ĐT cơ quan
+                  <ToolTip :type="'top'" :text="'Điện thoại cơ quan'"></ToolTip>
                 </div>
                 <div class="form-container-content-child-item-input">
                    <div class="border-input-content">
@@ -402,16 +447,19 @@
                         <div class="background-icon-loading"></div>
                       </div>
 
-                      <!-- <div class="combobox-data-search">
-                        <label class="label-input combobox-data-search-label">
+                      <div class="combobox-data-search combobox-data-child-content-text">
+                        <label class="label-input combobox-data-search-label combobox-data-child-content-text">
                           <input
                             type="text"
-                            class="input input-icon"
+                            class="input input-icon combobox-data-child-content-text"
                             placeholder="Tìm kiếm"
+                            v-on:keyup.enter="SearchSource"
+                            v-model="searchSource"
                           />
-                          <span class="background-icon-search-input"></span>
+                          <span class="background-icon-search-input combobox-data-child-content-text"
+                          @click="SearchSource"></span>
                         </label>
-                      </div> -->
+                      </div>
                       <div class="combobox-data-child">
                         <div
                           class="combobox-data-child-content"
@@ -468,7 +516,7 @@
                     >
                       <div class="combobox-content-select combobox-mul-child">
                         <div
-                          class="combobox-content-select-content"
+                          class="combobox-content-select-content combobox-content-select-content-none"
                           v-if="potentialTypeMap.size == 0"
                         >
                           <div class="">- Không chọn -</div>
@@ -700,8 +748,9 @@
                   Ngày thành lập
                 </div>
                 <div class="form-container-content-child-item-input">
-                  
-                  <input type="date" class="border-input-content" v-model="customerInfo.CreatedTimeBankAccount"/>
+                  <el-config-provider :locale="locale"> 
+                  <el-date-picker v-model="customerInfo.CreatedTimeBankAccount" type="date" format="DD/MM/YYYY"></el-date-picker>
+                </el-config-provider>
                 </div>
               </div>
               <!-- End Ngày thành lập -->
@@ -743,16 +792,20 @@
                         <div class="background-icon-loading"></div>
                       </div>
 
-                      <!-- <div class="combobox-data-search">
-                        <label class="label-input combobox-data-search-label">
+                      <!-- tìm kiếm -->
+                      <div class="combobox-data-search combobox-data-child-content-text">
+                        <label class="label-input combobox-data-search-label combobox-data-child-content-text">
                           <input
                             type="text"
-                            class="input input-icon"
+                            class="input input-icon combobox-data-child-content-text"
                             placeholder="Tìm kiếm"
+                            v-on:keyup.enter="SearchOrganizationType"
+                            v-model="searchOrganizationType"
                           />
-                          <span class="background-icon-search-input"></span>
+                          <span class="background-icon-search-input combobox-data-child-content-text"
+                          @click="SearchOrganizationType"></span>
                         </label>
-                      </div> -->
+                      </div>
                       <div class="combobox-data-child">
                         <div
                           class="combobox-data-child-content"
@@ -811,11 +864,10 @@
                     >
                       <div class="combobox-content-select combobox-mul-child">
                         <div
-                          class="combobox-content-select-content"
+                          class="combobox-content-select-content combobox-content-select-content-none"
                           v-if="fieldMap.size == 0"
                         >
-                          <div class="">- Không chọn -</div>
-                          <!-- <div class="combobox-content-select-content-icon background-icon-close icon-font-16"></div> -->
+                          <div>- Không chọn -</div>
                         </div>
 
                         <div
@@ -921,7 +973,7 @@
                     >
                       <div class="combobox-content-select combobox-mul-child">
                         <div
-                          class="combobox-content-select-content"
+                          class="combobox-content-select-content combobox-content-select-content-none"
                           v-if="careerMap.size == 0"
                         >
                           <div class="">- Không chọn -</div>
@@ -1050,17 +1102,20 @@
                       <div class="content-background-icon-loading">
                         <div class="background-icon-loading"></div>
                       </div>
-
-                      <!-- <div class="combobox-data-search">
-                        <label class="label-input combobox-data-search-label">
+                      <!-- tìm kiếm -->
+                      <div class="combobox-data-search combobox-data-child-content-text">
+                        <label class="label-input combobox-data-search-label combobox-data-child-content-text">
                           <input
                             type="text"
-                            class="input input-icon"
+                            class="input input-icon combobox-data-child-content-text"
                             placeholder="Tìm kiếm"
+                            v-on:keyup.enter="SearchTurnover"
+                            v-model="searchTurnover"
                           />
-                          <span class="background-icon-search-input"></span>
+                          <span class="background-icon-search-input combobox-data-child-content-text"
+                          @click="SearchTurnover"></span>
                         </label>
-                      </div> -->
+                      </div>
                       <div class="combobox-data-child">
                         <div
                           class="combobox-data-child-content"
@@ -1519,6 +1574,10 @@
 </template>
 
 <script>
+  import { ElConfigProvider ,ElDatePicker }  from '../../../node_modules/element-plus';
+  import '../../../node_modules/element-plus/dist/index.css'
+  import vi from '../../../node_modules/element-plus/es/locale/lang/vi'
+
 // các hàm xử lý click combobox
 import {
   ClickShowHideComboboxData,
@@ -1598,13 +1657,25 @@ import { handlerValidateCustomer,handlerValidateTCustomer } from "../../js/handl
 // nhúng model view customer xử lý thêm customer
 import { CreateCustomerModel } from "../Models/CustomerModel/CreateCustomerModel";
 
-
 // nhúng model view customer xử lý thêm customer
 import { CustomerPotentialTypeModel } from "../Models/CustomerPotentialTypeModel/CustomerPotentialTypeModel";
 
+// nhung tooltip
+import ToolTip from "./ToolTip"
+
 export default {
   name: "FormDataComponent",
-  components: {},
+  components: {
+    ToolTip,
+    ElDatePicker,
+    ElConfigProvider 
+  },
+  
+  setup() {
+    return {
+      locale: vi,
+    }
+  },
   created() {
     this.HandlerSelectCodeMax();
   },
@@ -1632,7 +1703,13 @@ export default {
       careerMap: new Map(),
       errors: new Map(),
       customerPotentialType: CustomerPotentialTypeModel,
-      ToastMessageCustomer: ToastMessage
+      ToastMessageCustomer: ToastMessage,
+      searchVocative:"",
+      searchDepartment:"",
+      searchSource:"",
+      searchpPosition:"",
+      searchOrganizationType:"",
+      searchTurnover: ""
     };
   },
   watch: {
@@ -1817,7 +1894,78 @@ export default {
     },
   },
   methods: {
+  
 
+    //  xử lý khởi tạo lại dữ liệu
+    ResetCustomerInfo(){
+      this.customerInfo = new CreateCustomerModel();
+    },
+    
+    // xử lý tìm kiếm doanh thu
+    async SearchTurnover(){
+      let _TurnoverService = new TurnoverService();
+        await _TurnoverService.getByName(this.searchTurnover).then((res) => {
+          console.log(res)
+          if(res.statusCode == StatusCode.GetSuccess){
+            this.turnover = res.data;
+          }
+        });
+    },
+
+     // xử lý tìm kiếm loại hình
+     async SearchOrganizationType(){
+      let _OrganizationTypeSrervice = new OrganizationTypeSrervice();
+        await _OrganizationTypeSrervice.getByName(this.searchOrganizationType).then((res) => {
+          console.log(res)
+          if(res.statusCode == StatusCode.GetSuccess){
+            this.organizationType = res.data;
+          }
+        });
+    },
+
+    // xử lý tìm kiếm Chức danh
+    async SearchpPosition(){
+      let _PositionService = new PositionsService();
+        await _PositionService.getByName(this.searchpPosition).then((res) => {
+          console.log(res)
+          if(res.statusCode == StatusCode.GetSuccess){
+            this.position = res.data;
+          }
+        });
+    },
+
+     // xử lý tìm kiếm nguồn gốc
+    async SearchSource(){
+      let _SearchSource = new SourceService();
+        await _SearchSource.getByName(this.searchSource).then((res) => {
+          console.log(res)
+          if(res.statusCode == StatusCode.GetSuccess){
+            this.source = res.data;
+          }
+        });
+    },
+
+     // xử lý tìm kiếm phòng ban
+    async SearchDepartment(){
+      let _SearchDepartment = new DepartmentService();
+        await _SearchDepartment.getByName(this.searchDepartment).then((res) => {
+          console.log(res)
+          if(res.statusCode == StatusCode.GetSuccess){
+            this.department = res.data;
+          }
+        });
+    },
+
+    // xử lý tìm kiếm xưng hô
+    async SearchVocative(){
+      let _VocativeService = new VocativeService();
+        await _VocativeService.getByName(this.searchVocative).then((res) => {
+          if(res.statusCode == StatusCode.GetSuccess){
+            this.vocative = res.data;
+          }
+         
+        });
+    },
     // get Address
     getAddressSum(){
       let HomeNumber = (this.customerInfo.HomeNumber)?this.customerInfo.HomeNumber+", ":"";
@@ -2292,7 +2440,7 @@ export default {
         console.log(error);
       }
     },
-    async OnSubmit() {
+    async OnSubmit(e) {
       try{
       const [customerInfo,errors]= await handlerValidateCustomer(this.$refs,this.customerInfo,this.errors);
       this.customerInfo = customerInfo;
@@ -2384,7 +2532,11 @@ export default {
               }
 
               // chuyển trang về trang chính bằng cách ẩn form hiển tại
-              this.$emit("CloseFormData", false);
+              if(e.target.classList.contains("created") == true){
+                this.HandlerSelectCodeMax();
+              }else{
+                this.$emit("CloseFormData", false);
+              }
               this.ToastMessageCustomer.Type = "success";
               this.ToastMessageCustomer.Message = res.data.message;
     

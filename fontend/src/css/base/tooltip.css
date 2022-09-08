@@ -1,0 +1,61 @@
+.background-icon-tool-tip{
+    background: url('../../assets/img/icon_collection.svg') no-repeat -209px 0px;
+    width: 16px;
+    height:16px;
+}
+
+.background-icon-tool-tip:hover{
+    background: url('../../assets/img/icon_collection.svg') no-repeat -289px -128px;
+    width: 16px;
+    height:16px;
+}
+
+#tool-tip{
+    display:inline-block;
+    width:16px;
+    height:16px;
+}
+
+
+div#tool-tip {
+    position: relative;
+    margin-left: 8px;
+    cursor: pointer;
+}
+
+.tool-tip-text {
+    position: absolute;
+    top: -250%;
+    width: max-content;
+    background: #424857;
+    transform: translateX(-50%);
+    left: 50%;
+    padding: 8px 16px;
+    color: white;
+    border-radius: 4px;
+    height: 16px;
+    display: none;
+}
+
+.tool-tip-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+div#tool-tip:hover .tool-tip-text {
+    display: inline-block;
+}
+
+span.tool-tip-text-top-arrow {
+    display: flex;
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 12px solid #424857;
+}

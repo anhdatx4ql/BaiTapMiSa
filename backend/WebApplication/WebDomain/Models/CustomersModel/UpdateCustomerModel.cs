@@ -64,7 +64,7 @@ namespace WebDomain
         public string TaxCode { set; get; }
         
         // ngày sinh 17
-        public DateTime BirthDay { set; get; }
+        public string BirthDay { set; get; }
 
         // giới tính 18
         public int Gender { set; get; }

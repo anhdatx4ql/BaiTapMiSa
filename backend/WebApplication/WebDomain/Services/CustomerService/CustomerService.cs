@@ -26,6 +26,13 @@ namespace WebDomain
             _dapper = dapper;
         }
 
+        /// <summary>
+        /// Xử lý phân trang
+        /// </summary>
+        /// <param name="keyword">tìm kiếm bản ghi</param>
+        /// <param name="currentPageNumber">Trang hiện tại</param>
+        /// <param name="pageSize">số lượng bản ghi/trang </param>
+        /// <returns></returns>
         public async Task<ReponsitoryModel> PagingCustomer(string keyword = null, int currentPageNumber = 1, int pageSize = 10)
         {
             try
@@ -45,10 +52,6 @@ namespace WebDomain
                 {
                     strQuery += @"SELECT customer.gender,customer.CustomerId,customer.LastName, customer.FirstName, customer.PotentialCode,customer.BirthDay, customer.FullName, customer.CustomerPhoneNumber, customer.CompanyPhoneNumber, customer.CustomerEmail,customer.IsActiveEmail, customer.IsActivePhoneNumber, customer.CompanyEmail, customer.TaxCode, customer.Zalo, customer.Organization, customer.Address, customer.VocativeId, customer.DepartmentId, customer.PositionId, customer.SourceId, customer.OrganizationTypeId, customer.TurnoverId, customer.IsDelete, vocative.VocativeName, department.DepartmentName, positions.PositionName, source.SourceName, organizationtype.OrganizationTypeName, turnover.TurnoverName,customer.Country,customer.District,customer.Wards,customer.HomeNumber FROM customer LEFT JOIN vocative ON customer.VocativeId = vocative.VocativeId LEFT JOIN department ON customer.DepartmentId = department.DepartmentId LEFT JOIN positions ON customer.PositionId = positions.PositionId LEFT JOIN source ON customer.SourceId = source.SourceId LEFT JOIN organizationtype ON customer.OrganizationTypeId = organizationtype.OrganizationTypeId LEFT JOIN turnover ON customer.TurnoverId = turnover.TurnoverId WHERE customer.IsDelete = false ORDER BY customer.UpdatedAt DESC LIMIT @Offset,@PageSize";
                 }
-                //var parameters = new DynamicParameters();
-
-                //parameters.Add("Offset", Offset);
-                //parameters.Add("PageSize", pageSize);
                 var parameterWhere = new Dictionary<string, object>()
                 {
                     ["keyword"] = $"%{keyword}%",
@@ -75,11 +78,193 @@ namespace WebDomain
 
 
         /// <summary>
-        /// Tạo mới khách hàng
-        /// Author: Phạm văn Đạt
-        /// 20;34 10/08/2022
-        ///  10:10 12/08/2022 : chưa xử lý loại tiềm năng, lĩnh vực, ngành nghề
+        /// Phân trang lọc khách hàng
         /// </summary>
+        /// <param name="models">Form dữ liệu phân trang</param>
+        /// <param name="currentPageNumber">trang hiện tại</param>
+        /// <param name="pageSize">số lượng bản ghi/trang </param>
+        /// <returns></returns>
+        /// Note: Đang dùng cộng chuỗi, truyền @ không nhận giá trị
+        public async Task<ReponsitoryModel> PagingFilterCustomer(List<CustomerFilterModel> models, string keyword = null, int currentPageNumber = 1, int pageSize = 10)
+        {
+            try
+            {
+                // lấy nhiều nhất là 100 bản ghi
+                var maxPagesize = 100;
+                pageSize = (pageSize < maxPagesize) ? pageSize : maxPagesize;
+
+                var Offset = (currentPageNumber - 1) * pageSize;
+
+                var strQuery = @"SELECT COUNT(*) FROM Customer WHERE CustomerId IN (SELECT Customer.CustomerId FROM customer LEFT JOIN vocative ON customer.VocativeId = vocative.VocativeId LEFT JOIN department ON customer.DepartmentId = department.DepartmentId LEFT JOIN positions ON customer.PositionId = positions.PositionId LEFT JOIN source ON customer.SourceId = source.SourceId LEFT JOIN organizationtype ON customer.OrganizationTypeId = organizationtype.OrganizationTypeId LEFT JOIN turnover ON customer.TurnoverId = turnover.TurnoverId WHERE customer.IsDelete = false);";
+                
+                // xử lý tách 3 models: là, chứa, không trống
+                
+                    var ListDataExactly = new List<CustomerFilterDataModel>();
+                    var ListDataContain = new List<CustomerFilterDataModel>();
+                    var ListDataNotEmpty = new List<CustomerFilterDataModel>();
+                    var ListDataEmpty = new List<CustomerFilterDataModel>();
+
+                    for (var i=0;i< models.Count; i++)
+                    {
+                        if(models[i].Type == CustomerFilterTypeEnum.Exactly)
+                        {
+                            ListDataExactly = models[i].Data;
+                        }
+                        else if(models[i].Type == CustomerFilterTypeEnum.Contain)
+                        {
+                            ListDataContain = models[i].Data;
+                        }
+                        else if(models[i].Type == CustomerFilterTypeEnum.NotEmpty)
+                        {
+                            ListDataNotEmpty = models[i].Data;
+                        }else if(models[i].Type == CustomerFilterTypeEnum.Empty)
+                        {
+                            ListDataEmpty = models[i].Data;
+                    }
+                    }
+                    List<string> whereExactly = new List<string>();
+                    List<string> whereContain = new List<string>();
+                    List<string> whereNotEmpty = new List<string>();
+                    List<string> whereEmpty = new List<string>();
+
+                    if (ListDataExactly.Count >0)
+                    {
+                        for(var i=0;i<ListDataExactly.Count; i++)
+                        {
+                            var strString = ListDataExactly[i].CloumnName + " IN (";
+                            if(ListDataExactly[i].Value.Count == 1)
+                            {
+                                strString += "'"+ListDataExactly[i].Value[0] + "')";
+                            }else
+                                for(var j = 0; j < ListDataExactly[i].Value.Count; j++)
+                                {
+                                    if (j == 0)
+                                        strString += "'"+ListDataExactly[i].Value[j] + "'";
+                                    else
+                                    {
+                                        strString += ", '"+ ListDataExactly[i].Value[j]+"'";
+                                    }
+                                    if (j == ListDataExactly[i].Value.Count - 1)
+                                        strString += ")";
+                                }
+
+                            whereExactly.Add(strString);
+
+                        }
+                    }
+                    
+                    if (ListDataContain.Count > 0)
+                    {
+                        for (var i = 0; i < ListDataContain.Count; i++)
+                        {
+                            var strString = ListDataContain[i].CloumnName + " LIKE ";
+                            if (ListDataContain[i].Value.Count == 1)
+                            {
+                                strString += "'%" + ListDataContain[i].Value[0] + "%'";
+                            }
+
+                            whereContain.Add(strString);
+
+                        }
+                       
+                    }
+
+                    if (ListDataNotEmpty.Count > 0)
+                    {
+                        for (var i = 0; i < ListDataNotEmpty.Count; i++)
+                        {
+                            var strString = ListDataNotEmpty[i].CloumnName + " IS NOT NULL";
+
+                            whereNotEmpty.Add(strString);
+
+                        }
+                     
+                    }
+
+                    if (ListDataEmpty.Count > 0)
+                    {
+                        for (var i = 0; i < ListDataEmpty.Count; i++)
+                        {
+                            var strString = ListDataEmpty[i].CloumnName + " IS NULL";
+
+                            whereEmpty.Add(strString);
+
+                        }
+                     
+                    }
+
+                    string strWhereExactly = "1=1";
+                    string strWhereContain = "1=1";
+                    string strWhereNotEmpty = "1=1";
+                    string strWhereEmpty = "1=1";
+                    // lấy được 3 mảng where, join thành 1 chuỗi
+                    // join mảng type  = "là" thành 1 chuỗi
+                    if (whereExactly.Count > 0)
+                        strWhereExactly = String.Join(" and ", whereExactly);
+
+                    // join mảng type  = "Chứa" thành 1 chuỗi
+                if (whereContain.Count > 0)
+                        strWhereContain = String.Join(" and ", whereContain);
+
+                    // join mảng type  = "Không trống" thành 1 chuỗi
+                    if (whereNotEmpty.Count > 0)
+                        strWhereNotEmpty = String.Join(" and ", whereNotEmpty);
+
+                // join mảng type  = "trống" thành 1 chuỗi
+                if (whereEmpty.Count > 0)
+                    strWhereEmpty = String.Join(" and ", whereEmpty);
+
+
+                if (models.Count > 0)
+                {
+                    strQuery = @"SELECT COUNT(*) FROM Customer WHERE CustomerId IN (SELECT Customer.CustomerId FROM customer LEFT JOIN vocative ON customer.VocativeId = vocative.VocativeId LEFT JOIN department ON customer.DepartmentId = department.DepartmentId LEFT JOIN positions ON customer.PositionId = positions.PositionId LEFT JOIN source ON customer.SourceId = source.SourceId LEFT JOIN organizationtype ON customer.OrganizationTypeId = organizationtype.OrganizationTypeId LEFT JOIN turnover ON customer.TurnoverId = turnover.TurnoverId WHERE customer.IsDelete = false) and " + strWhereExactly + " and " + strWhereContain + " and " + strWhereNotEmpty + " and " + strWhereEmpty+";";
+                }
+
+                // lấy được 3 where: là, chứa, not null
+                if (keyword != null)
+                {
+                    strQuery += @"SELECT customer.gender,customer.CustomerId,customer.LastName, customer.FirstName, customer.PotentialCode, customer.FullName, customer.CustomerPhoneNumber, customer.CompanyPhoneNumber, customer.CustomerEmail,customer.IsActiveEmail, customer.IsActivePhoneNumber, customer.CompanyEmail, customer.TaxCode, customer.Zalo, customer.Organization, customer.Address, customer.VocativeId, customer.DepartmentId, customer.PositionId, customer.SourceId, customer.OrganizationTypeId, customer.TurnoverId, customer.IsDelete, vocative.VocativeName, department.DepartmentName, positions.PositionName, source.SourceName, organizationtype.OrganizationTypeName, turnover.TurnoverName,customer.Country,customer.District,customer.Wards,customer.HomeNumber FROM customer LEFT JOIN vocative ON customer.VocativeId = vocative.VocativeId LEFT JOIN department ON customer.DepartmentId = department.DepartmentId LEFT JOIN positions ON customer.PositionId = positions.PositionId LEFT JOIN source ON customer.SourceId = source.SourceId LEFT JOIN organizationtype ON customer.OrganizationTypeId = organizationtype.OrganizationTypeId LEFT JOIN turnover ON customer.TurnoverId = turnover.TurnoverId WHERE customer.IsDelete = false and (FullName LIKE @keyword OR CustomerPhoneNumber LIKE @keyword OR PotentialCode LIKE @keyword) and " + strWhereExactly + " and " + strWhereContain + " and " + strWhereNotEmpty + " and " + strWhereEmpty + " ORDER BY customer.UpdatedAt DESC LIMIT @Offset,@PageSize";
+                }
+                else
+                {
+                    strQuery += @"SELECT customer.gender,customer.CustomerId,customer.LastName, customer.FirstName, customer.PotentialCode,customer.BirthDay, customer.FullName, customer.CustomerPhoneNumber, customer.CompanyPhoneNumber, customer.CustomerEmail,customer.IsActiveEmail, customer.IsActivePhoneNumber, customer.CompanyEmail, customer.TaxCode, customer.Zalo, customer.Organization, customer.Address, customer.VocativeId, customer.DepartmentId, customer.PositionId, customer.SourceId, customer.OrganizationTypeId, customer.TurnoverId, customer.IsDelete, vocative.VocativeName, department.DepartmentName, positions.PositionName, source.SourceName, organizationtype.OrganizationTypeName, turnover.TurnoverName,customer.Country,customer.District,customer.Wards,customer.HomeNumber FROM customer LEFT JOIN vocative ON customer.VocativeId = vocative.VocativeId LEFT JOIN department ON customer.DepartmentId = department.DepartmentId LEFT JOIN positions ON customer.PositionId = positions.PositionId LEFT JOIN source ON customer.SourceId = source.SourceId LEFT JOIN organizationtype ON customer.OrganizationTypeId = organizationtype.OrganizationTypeId LEFT JOIN turnover ON customer.TurnoverId = turnover.TurnoverId WHERE customer.IsDelete = false and "+ strWhereExactly+" and "+strWhereContain +" and "+strWhereNotEmpty+" and " + strWhereEmpty + " ORDER BY customer.UpdatedAt DESC LIMIT @Offset,@PageSize";
+                }
+
+
+                var parameterWhere = new Dictionary<string, object>()
+                {
+                    ["keyword"] = $"%{keyword}%",
+                    ["Offset"] = Offset,
+                    ["PageSize"] = pageSize,
+                    //["strWhereExactly"] = strWhereExactly,
+                    //["strWhereContain"] = strWhereContain,
+                    //["strWhereNotEmpty"] = strWhereNotEmpty
+                };
+
+
+                PagingModel<CustomerModel> result = await _dapper.PagingT<CustomerModel>(strQuery, parameterWhere);
+                if (result.Data == null)
+                    return new ReponsitoryModel { Data = null, Message = MessageError.NotValue, StatusCode = CodeError.NotValue };
+
+                // lấy được data, totalcount
+
+                var pagingData = new PagingDataModel<CustomerModel>(result.TotalCount, result.Data, currentPageNumber, pageSize);
+                return new ReponsitoryModel { Data = pagingData, Message = MessageSuccess.GetSuccess, StatusCode = CodeSuccess.Status200 };
+
+            }
+            catch (Exception ex)
+            {
+                return new ReponsitoryModel { Data = ex.Message, Message = MessageError.ProcessError, StatusCode = CodeError.ProcessError };
+            }
+        }
+
+
+
+        /// <summary>
+        /// Tạo mới khách hàng
+        /// </summary>
+        /// <param name="model">form dữ liệu tọa mới khách hàng</param>
+        /// <returns></returns>
         public async Task<ReponsitoryModel> CreateCustomer(CreateCustomerModel model)
         {
             try {
@@ -154,12 +339,11 @@ namespace WebDomain
         }
 
 
-        /// <summary>
-        /// Tạo mới khách hàng
-        /// Author: Phạm văn Đạt
-        /// 10:10 12/08/2022
-        /// xóa nhiều: chưa xong: 10:10 12/08/2022
-        /// </summary>
+       /// <summary>
+       /// Xóa khách hàng
+       /// </summary>
+       /// <param name="ListString">Danh sách Id khách hàng cần xóa</param>
+       /// <returns></returns>
         public async Task<ReponsitoryModel> DeleteCustomer(List<Guid> ListString)
         {
             try
@@ -189,10 +373,7 @@ namespace WebDomain
         }
 
         /// <summary>
-        /// Hàm lấy thông tin customers
-        /// Author: Phạm Văn Đạt
-        /// DateTime:  6;29 10/08/2022
-        /// Xong
+        /// Lấy tất cả khách hàng
         /// </summary>
         /// <returns></returns>
         public async Task<ReponsitoryModel> GetAllCustomer()
@@ -215,11 +396,10 @@ namespace WebDomain
 
 
         /// <summary>
-        /// Tìm kiếm khách hàng theo họ và tên
-        /// Author: Phạm văn Đạt
-        /// 20;34 10/08/2022
-        /// đang có lỗi @FullName query có lỗi
+        /// Tìm kiếm khách hàng
         /// </summary>
+        /// <param name="_search">Tên tìm kiếm</param>
+        /// <returns></returns>
         public async Task<ReponsitoryModel> GetCustomerByFullName(string _search)
         {
             try {
@@ -275,11 +455,11 @@ namespace WebDomain
 
 
         /// <summary>
-        /// Cập nhật thông tin khách hàng
-        /// Author: Phạm văn Đạt
-        /// 20;34 10/08/2022
-        /// chưa xong // update loai tiem nang
+        /// cập nhật khách hàng
         /// </summary>
+        /// <param name="model">form cập nhật</param>
+        /// <param name="_id">id khách hàng</param>
+        /// <returns></returns>
         public async Task<ReponsitoryModel> UpdateCustomer(UpdateCustomerModel model,string _id)
         {
             try
@@ -336,27 +516,23 @@ namespace WebDomain
               
                 customer.VocativeId = model.VocativeId;
 
-                if (model.LastName != null)
-                    customer.LastName = model.LastName;
+                customer.LastName = model.LastName;
 
-                if (model.FirstName != null)
-                    customer.FirstName = model.FirstName;
+                customer.FirstName = model.FirstName;
 
-                if (model.FullName != null)
-                    customer.FullName = model.FullName;
+                customer.FullName = model.FullName;
 
                 customer.DepartmentId = model.DepartmentId;
 
                 customer.PositionId = model.PositionId;
 
-                if (model.CustomerPhoneNumber != null)
-                    customer.CustomerPhoneNumber = model.CustomerPhoneNumber;
+                customer.CustomerPhoneNumber = model.CustomerPhoneNumber;
 
-                if (model.CompanyPhoneNumber != null)
-                    customer.CompanyPhoneNumber = model.CompanyPhoneNumber;
+                customer.CompanyPhoneNumber = model.CompanyPhoneNumber;
 
                 if (model.IsActivePhoneNumber == true)
                     customer.IsActivePhoneNumber = true;
+
                 if (model.IsActivePhoneNumber == false)
                     customer.IsActivePhoneNumber = false;
 
@@ -366,25 +542,19 @@ namespace WebDomain
                 if(model.IsActiveEmail == false)
                     customer.IsActiveEmail = false;
 
-                if (model.CustomerEmail != null)
-                    customer.CustomerEmail = model.CustomerEmail;
+                customer.CustomerEmail = model.CustomerEmail;
 
-                if (model.Zalo != null)
-                    customer.Zalo = model.Zalo;
+                customer.Zalo = model.Zalo;
 
-                if (model.CompanyEmail != null)
-                    customer.CompanyEmail = model.CompanyEmail;
+                customer.CompanyEmail = model.CompanyEmail;
 
-                if (model.Organization != null)
-                    customer.Organization = model.Organization;
+                customer.Organization = model.Organization;
 
-                if (model.TaxCode != null)
-                    customer.TaxCode = model.TaxCode;
+                customer.TaxCode = model.TaxCode;
 
-                if (model.BirthDay!= null)
-                {
-                    customer.BirthDay = model.BirthDay;
-                }
+
+                customer.BirthDay = model.BirthDay;
+
                     
 
                 if (model.Gender  >= (int)GenderEnum.Male && model.Gender <= (int)GenderEnum.Other)
@@ -393,10 +563,9 @@ namespace WebDomain
                 {
                     return new ReponsitoryModel { Data = null, StatusCode = CodeError.GenderExists, Message = MessageError.GenderExists };
                 }
-                
 
-                if (model.Facebook != null)
-                    customer.Facebook = model.Facebook;
+
+                customer.Facebook = model.Facebook;
 
 
                 customer.UpdatedAt = DateTime.Now;
@@ -438,10 +607,10 @@ namespace WebDomain
 
 
         /// <summary>
-        /// Check trùng mã tiềm năng
-        /// Author: Phạm văn Đạt
-        /// 20;34 10/08/2022
+        /// Check trùng
         /// </summary>
+        /// <param name="model">form check trùng</param>
+        /// <returns></returns>
         public async Task<ReponsitoryModel> CheckExistColumn(FormCheckExists model)
         {
             try
@@ -459,9 +628,9 @@ namespace WebDomain
 
         /// <summary>
         /// Update nhiều
-        /// Author: Phạm văn Đạt
-        /// 16:55 24/08/2022
         /// </summary>
+        /// <param name="model">form update nhiều</param>
+        /// <returns></returns>
         public async Task<ReponsitoryModel> UpdateCustomerMul(UpdateCustomerMul model)
         {
             try
@@ -492,6 +661,11 @@ namespace WebDomain
             }
         }
 
+        /// <summary>
+        /// Xuất excel
+        /// </summary>
+        /// <param name="ListCustomerId">danh sách id khách hàng cần xuất excel</param>
+        /// <returns></returns>
         public async Task<byte[]> ExportExcel(List<Guid> ListCustomerId = null)
         {
             byte[] fileContents;

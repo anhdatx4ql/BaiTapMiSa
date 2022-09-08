@@ -31,7 +31,7 @@ namespace WebDomain
         public string District { set; get; } //-- Quận/Huyện
         public string Wards { set; get; }// Phường xã
         public string HomeNumber { set; get; } //-- số nhà + 
-        public string BirthDay { set; get; }
+        public string BirthDay { set; get; } // Ngày sinh
         public string RegionCode { set; get; } //-- mã vùng +
         public Guid VocativeId { set; get; } //-- xưng hô
         public string VocativeName { set; get; } //-- xưng hô

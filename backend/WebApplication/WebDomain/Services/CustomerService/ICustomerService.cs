@@ -24,6 +24,15 @@ namespace WebDomain
 
 
         /// <summary>
+        /// Phân trang lọc khách hàng
+        /// </summary>
+        /// <param name="models">Form dữ liệu phân trang</param>
+        /// <param name="currentPageNumber">trang hiện tại</param>
+        /// <param name="pageSize">số lượng bản ghi/trang </param>
+        /// <returns></returns>
+        Task<ReponsitoryModel> PagingFilterCustomer(List<CustomerFilterModel> models,string keyword = null, int currentPageNumber = 1, int pageSize = 10);
+
+        /// <summary>
         /// Phân trang + tìm kiếm
         /// </summary>
         /// <param name="keyword">Giá trị tìm kiếm</param>

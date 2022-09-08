@@ -25,6 +25,29 @@ export class CustomerService{
  }
 
 
+// phân trang + tìm kiếm
+async PagingFilterCustomer(Data,keyword,currentPage,pageSize){
+  try{
+    let url ="";
+    if(keyword == null || keyword == ""){
+      url =`currentPageNumber=${currentPage}&pageSize=${pageSize}`;
+    }else{
+      url =`keyword=${keyword}&currentPageNumber=${currentPage}&pageSize=${pageSize}`;
+    }
+    console.log(this.url+`PagingFilter?${url}`)
+    return await axios.post(this.url+`PagingFilter?${url}`,Data)
+    .then((res) => {
+      console.log(res)
+        return res.data;
+    })
+    .catch((e) => {
+      console.log(e);
+    });   
+  }catch(error){
+    console.log(error)
+  }
+ }
+
  // phân trang + tìm kiếm
  async PagingCustomer(keyword,currentPage,pageSize){
   try{

@@ -164,6 +164,7 @@ body {
     padding-left: 8px;
     margin:4px  0;
     margin-right:4px;
+    width:max-content;
 }
 
 .combobox-content-select-content-icon {
@@ -184,4 +185,9 @@ body {
 .div-disabled{
     background-color: #F8F8F8;
     cursor: no-drop !important;
+}
+
+.combobox-content-select-content-none {
+    background: none;
+    color: #99A1B2 !important;
 }

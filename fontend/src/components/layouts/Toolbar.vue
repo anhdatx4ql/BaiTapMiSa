@@ -15,7 +15,7 @@
         <button class="button-toolbar-left">Sửa</button>
       </div>
       <div class="toolbar-left-child">
-        <button class="button-icon-refesh">
+        <button class="button-icon-refesh" @click="loadData">
           <span class="button-icon-icon icon-refesh"></span>
         </button>
       </div>
@@ -101,18 +101,19 @@
           </button>
           <button
             class="button-arrow button-background-primary button-icon-right"
+            @click="showNotFound"
           >
             <span class="button-icon-icon button-icon-down"></span>
           </button>
         </div>
       </div>
       <div class="toolbar-right-child">
-        <button class="button button-dots button-background-white">
+        <button class="button button-dots button-background-white" @click="showNotFound">
           <span class="button-icon-icon button-icon-icon-dots"></span>
         </button>
       </div>
       <div class="toolbar-right-child">
-        <button class="button button-dots button-background-white">
+        <button class="button button-dots button-background-white" @click="showNotFound">
           <span class="button-icon-icon button-icon-tiles"></span>
           <span class="button-icon-icon button-icon-down-black"></span>
         </button>
@@ -223,16 +224,20 @@
                       <div class="background-icon-loading"></div>
                     </div>
 
-                    <!-- <div class="combobox-data-search">
-                      <label class="label-input combobox-data-search-label">
-                        <input
-                          type="text"
-                          class="input input-icon"
-                          placeholder="Tìm kiếm"
-                        />
-                        <span class="background-icon-search-input"></span>
-                      </label>
-                    </div> -->
+                   <!-- tìm kiếm -->
+                   <div class="combobox-data-search combobox-data-child-content-text" >
+                        <label class="label-input combobox-data-search-label combobox-data-child-content-text">
+                          <input
+                            type="text"
+                            class="input input-icon combobox-data-child-content-text"
+                            placeholder="Tìm kiếm"
+                            v-on:keyup.enter="SearchVocative"
+                            v-model="searchVocative"
+                          />
+                          <span class="background-icon-search-input combobox-data-child-content-text"
+                          @click="SearchVocative"></span>
+                        </label>
+                      </div>
                     <div class="combobox-data-child">
                       <div
                           class="combobox-data-child-content"
@@ -313,16 +318,19 @@
                       <div class="background-icon-loading"></div>
                     </div>
 
-                    <!-- <div class="combobox-data-search">
-                      <label class="label-input combobox-data-search-label">
-                        <input
-                          type="text"
-                          class="input input-icon"
-                          placeholder="Tìm kiếm"
-                        />
-                        <span class="background-icon-search-input"></span>
-                      </label>
-                    </div> -->
+                    <div class="combobox-data-search combobox-data-child-content-text">
+                        <label class="label-input combobox-data-search-label combobox-data-child-content-text">
+                          <input
+                            type="text"
+                            class="input input-icon combobox-data-child-content-text"
+                            placeholder="Tìm kiếm"
+                            v-on:keyup.enter="SearchpPosition"
+                            v-model="searchpPosition"
+                          />
+                          <span class="background-icon-search-input combobox-data-child-content-text"
+                          @click="SearchpPosition"></span>
+                        </label>
+                      </div>
                     <div class="combobox-data-child">
                       <div
                           class="combobox-data-child-content"
@@ -430,16 +438,20 @@
                       <div class="background-icon-loading"></div>
                     </div>
 
-                    <!-- <div class="combobox-data-search">
-                      <label class="label-input combobox-data-search-label">
-                        <input
-                          type="text"
-                          class="input input-icon"
-                          placeholder="Tìm kiếm"
-                        />
-                        <span class="background-icon-search-input"></span>
-                      </label>
-                    </div> -->
+                  <!-- tìm kiếm -->
+                  <div class="combobox-data-search combobox-data-child-content-text">
+                        <label class="label-input combobox-data-search-label combobox-data-child-content-text">
+                          <input
+                            type="text"
+                            class="input input-icon combobox-data-child-content-text"
+                            placeholder="Tìm kiếm"
+                            v-on:keyup.enter="SearchTurnover"
+                            v-model="searchTurnover"
+                          />
+                          <span class="background-icon-search-input combobox-data-child-content-text"
+                          @click="SearchTurnover"></span>
+                        </label>
+                      </div>
                     <div class="combobox-data-child">
                       <div
                           class="combobox-data-child-content"
@@ -557,7 +569,7 @@
             Cập nhật
           </button>
           <button
-          @click="ShowFormUpdateMul = false"
+          @click="ShowFormUpdateMul = false,ShowField = null"
             type="button"
             class="button-background-white"
           >
@@ -643,6 +655,9 @@ export default {
         columnValue: null,
         listId: []
       },
+      searchVocative:"",
+      searchpPosition:"",
+      searchTurnover: ""
     };
   },
   created() {
@@ -753,6 +768,53 @@ export default {
     },
   },
   methods: {
+
+    loadData(){
+      // load lại dữ liệu trong form
+      this.$emit("checkLoadCustomerData",true);
+    },
+
+    // hiển thị thông báo chưa xử lý
+    showNotFound(){
+      this.ToastMessageCustomer.Type = "info";
+      this.ToastMessageCustomer.Message = "Chúng tôi sẽ sớm ra mắt";
+      this.$emit("toastMessageInfo", this.ToastMessageCustomer);
+      this.$emit("showToastMessageInfo", true);
+    },
+
+    // xử lý tìm kiếm doanh thu
+    async SearchTurnover(){
+      let _TurnoverService = new TurnoverService();
+        await _TurnoverService.getByName(this.searchTurnover).then((res) => {
+          console.log(res)
+          if(res.statusCode == StatusCode.GetSuccess){
+            this.Turnover = res.data;
+          }
+        });
+    },
+
+    // xử lý tìm kiếm Chức danh
+    async SearchpPosition(){
+      let _PositionService = new PositionsService();
+        await _PositionService.getByName(this.searchpPosition).then((res) => {
+          console.log(res)
+          if(res.statusCode == StatusCode.GetSuccess){
+            this.Position = res.data;
+          }
+        });
+    },
+
+      // xử lý tìm kiếm xưng hô
+      async SearchVocative(){
+      let _VocativeService = new VocativeService();
+        await _VocativeService.getByName(this.searchVocative).then((res) => {
+          if(res.statusCode == StatusCode.GetSuccess){
+            this.Vocative = res.data;
+          }
+         
+        });
+    },
+
     // xuất file excel
     async clickExportExcel(event){
       this.showOptions(event);
@@ -846,6 +908,8 @@ export default {
               this.$emit("toastMessageInfo", this.ToastMessageCustomer);
               this.$emit("showToastMessageInfo", true);
         });
+
+        this.ShowField = null
       }
    
     },

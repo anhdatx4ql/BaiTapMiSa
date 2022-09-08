@@ -9,8 +9,8 @@
             </div>
           </div>
           <div class="form-container-title-right">
-            <button type="button" class="button" @click="OnSubmit">Lưu</button>
-            <button type="button" class="button">Lưu và sửa</button>
+            <button type="button" class="button button-background-primary save" @click="OnSubmit">Lưu</button>
+            <button type="button" class="button button-background-white created" @click="OnSubmit">Lưu và thêm</button>
             <button type="button" class="button" @click="HandlerCloseForm">
               Hủy bỏ
             </button>
@@ -447,6 +447,7 @@
               <div class="form-container-content-child-item">
                 <div class="form-container-content-child-item-label">
                   ĐT di động
+                  <ToolTip :type="'top'" :text="'Điện thoại di động'"></ToolTip>
                 </div>
                 <div class="form-container-content-child-item-input">
                   <div
@@ -482,6 +483,7 @@
               <div class="form-container-content-child-item">
                 <div class="form-container-content-child-item-label">
                   ĐT cơ quan
+                  <ToolTip :type="'top'" :text="'Điện thoại cơ quan'"></ToolTip>
                 </div>
                 <div class="form-container-content-child-item-input">
                   <div class="border-input-content">
@@ -972,19 +974,12 @@
                 Ngày sinh
               </div>
               <div class="form-container-content-child-item-input">
-                <!-- <p>{{date}}</p>
- 
-                <el-date-picker
-                  v-model="date"
-                  type="date"
-                  placeholder="Pick a day"
-                  :size="size"
-                /> -->
-                <input
-                  type="date"
-                  class="border-input-content"
-                  v-model="customerInfo.birthDay"
-                />
+                <!-- <Datepicker class="border-input-content" type="date">
+                </Datepicker> -->
+                <el-config-provider :locale="locale"> 
+                  <el-date-picker v-model="customerInfo.birthDay" type="date" format="DD/MM/YYYY"></el-date-picker>
+                </el-config-provider>
+                
               </div>
             </div>
             <!-- End Ngày sinh-->
@@ -1092,9 +1087,26 @@ import { PotentialTypeService } from "../Services/PotentialTypeService";
 // nhúng service xử lý loại tiềm năng khách hàng
 import { CustomerPotentialTypeService } from "../Services/CustomerPotentialTypeService";
 
+// nhung tooltip
+import ToolTip from "./ToolTip"
+
+import { ElConfigProvider ,ElDatePicker }  from '../../../node_modules/element-plus';
+import '../../../node_modules/element-plus/dist/index.css'
+import vi from '../../../node_modules/element-plus/es/locale/lang/vi'
+// import Datepicker from '../../../node_modules/vue3-datepicker';
 export default {
   name: "FormDataComponent",
-  components: { },
+  components: {
+    ToolTip,
+    ElDatePicker,
+    ElConfigProvider 
+
+   },
+   setup() {
+      return {
+        locale: vi,
+      }
+    },
 
   props: {
     checkShowFormData: Boolean,
@@ -1102,6 +1114,7 @@ export default {
   },
   data() {
     return {
+      date: new Date("YYYY-MM-dd"),
       vocative: "",
       department: "",
       position: "",
@@ -1121,7 +1134,6 @@ export default {
       CustomerEmail: "",
       TaxCode: "",
       gender: GenderModel,
-      date: Date(),
       customerUpdate: UpdateCustomerModel,
       searchVocative:"",
       searchDepartment:"",
@@ -1131,9 +1143,6 @@ export default {
   },
   created() {},
   watch: {
-    date(){
-      console.log(this.date)
-    },
     "customerInfo.birthDay":{
       handler(){
         console.log(this.customerInfo.birthDay)
@@ -1142,7 +1151,7 @@ export default {
   
     customerInfo() {
       // lấy thông tin bảng loại tiềm năng
-      this.customerInfo.birthDay  = formatDate(this.customerInfo.birthDay);
+      console.log(this.customerInfo)
       this.HandlerCustomerPotentialType(this.customerInfo.customerId);
     },
     "customerInfo.firstName": {
@@ -1242,6 +1251,20 @@ export default {
     },
   },
   methods: {
+
+    // remove dataa
+     removeData(){
+      this.customerInfo.LastName = "";
+      this.customerInfo.FirstName = "";
+      this.customerInfo.CustomerPhoneNumber = "";
+      this.customerInfo.CompanyPhoneNumber = "";
+      this.customerInfo.Zalo = "";
+      this.customerInfo.CustomerEmail = "";
+      this.customerInfo.CompanyEmail = "";
+      this.customerInfo.Organization = "";
+      this.customerInfo.TaxCode = "";
+      this.customerInfo.Facebook = "";
+    },
 
     // xử lý tìm kiếm Chức danh
     async SearchpPosition(){
@@ -1343,6 +1366,8 @@ export default {
      */
     HandlerCloseForm() {
       try {
+        // xóa dữ liệu cũ
+        this.removeData();
         this.$emit("CloseFormData", false);
       } catch (error) {
         console.log(error);
@@ -1603,29 +1628,32 @@ export default {
           // Biến kiểm tra có được phép  chỉnh sửa thông tin khách hàng hay không
           // format lại data
           console.log(this.customerUpdate)
-          this.customerUpdate.VocativeId = this.customerInfo.vocativeId;
-          this.customerUpdate.LastName = this.customerInfo.lastName;
-          this.customerUpdate.FirstName = this.customerInfo.firstName;
-          this.customerUpdate.FullName = this.customerInfo.fullName;
-          this.customerUpdate.DepartmentId = this.customerInfo.departmentId;
-          this.customerUpdate.PositionId = this.customerInfo.positionId;
-          this.customerUpdate.CustomerPhoneNumber = this.customerInfo.customerPhoneNumber;
-          this.customerUpdate.CompanyPhoneNumber = this.customerInfo.companyPhoneNumber;
-          this.customerUpdate.SourceId = this.customerInfo.sourceId;
-          this.customerUpdate.IsActivePhoneNumber = this.customerInfo.isActivePhoneNumber;
-          this.customerUpdate.IsActiveEmail = this.customerInfo.isActiveEmail;
-          this.customerUpdate.Zalo = this.customerInfo.zalo;
-          this.customerUpdate.CompanyEmail = this.customerInfo.companyEmail;
-          this.customerUpdate.Organization = this.customerInfo.organization;
-          this.customerUpdate.TaxCode = this.customerInfo.taxCode;
-          this.customerUpdate.BirthDay = this.customerInfo.birthDay;
+          this.customerUpdate.VocativeId = (this.customerInfo.vocativeId)?this.customerInfo.vocativeId:null;
+          this.customerUpdate.LastName = (this.customerInfo.lastName)?this.customerInfo.lastName:null;
+          this.customerUpdate.FirstName = (this.customerInfo.firstName)?this.customerInfo.firstName:null;
+          this.customerUpdate.FullName = (this.customerInfo.fullName)?this.customerInfo.fullName:null;
+          this.customerUpdate.DepartmentId = (this.customerInfo.departmentId)?this.customerInfo.departmentId:null;
+          this.customerUpdate.PositionId = (this.customerInfo.positionId)?this.customerInfo.positionId:null;
+          this.customerUpdate.CustomerPhoneNumber = (this.customerInfo.customerPhoneNumber)?this.customerInfo.customerPhoneNumber:null;
+          this.customerUpdate.CompanyPhoneNumber = (this.customerInfo.companyPhoneNumber)?this.customerInfo.companyPhoneNumber:null;
+          this.customerUpdate.SourceId = (this.customerInfo.sourceId)?this.customerInfo.sourceId:null;
+          this.customerUpdate.IsActivePhoneNumber = (this.customerInfo.isActivePhoneNumber)?this.customerInfo.isActivePhoneNumber:null;
+          this.customerUpdate.IsActiveEmail = (this.customerInfo.isActiveEmail)?this.customerInfo.isActiveEmail:null;
+          this.customerUpdate.Zalo = (this.customerInfo.zalo)?this.customerInfo.zalo:null;
+          this.customerUpdate.CompanyEmail = (this.customerInfo.companyEmail)?this.customerInfo.companyEmail:null;
+          this.customerUpdate.Organization = (this.customerInfo.organization)?this.customerInfo.organization:null;
+          this.customerUpdate.TaxCode = (this.customerInfo.taxCode)?this.customerInfo.taxCode:null;
+          this.customerUpdate.BirthDay = (this.customerInfo.birthDay)?this.customerInfo.birthDay:null;
           this.customerUpdate.Gender = this.customerInfo.gender;
-          this.customerUpdate.Facebook = this.customerInfo.facebook;
+          this.customerUpdate.Facebook = (this.customerInfo.facebook)?this.customerInfo.facebook:null;
 
-          console.log(this.customerUpdate.BirthDay)
-
-          if(IsEmpty(this.customerUpdate.BirthDay))
+          if(this.customerUpdate.BirthDay == "Invalid date")
             delete this.customerUpdate.BirthDay;
+
+          if(!IsEmpty(this.customerUpdate.BirthDay))
+            this.customerUpdate.BirthDay = formatDate(this.customerUpdate.BirthDay)
+
+          console.log(this.customerUpdate)
 
           let _CustomerService = new CustomerService();
           await _CustomerService
@@ -1655,7 +1683,10 @@ export default {
                   this.ToastMessageCustomer.Message = res.data.message;
                   this.$emit("toastMessageInfo", this.ToastMessageCustomer);
                   this.$emit("showToastMessageInfo", true);
-                  this.HandlerCloseForm();
+                  if(event.target.classList.contains("created") != true){
+                    this.HandlerCloseForm();
+                  }
+                    
                   // load lại dữ liệu trong form
                 this.$emit("checkLoadCustomerData",true);
                 console.log("load lai du lieu");
@@ -1695,4 +1726,5 @@ input[type="checkbox"]:checked ~ label {
   width: 16px;
   cursor: pointer;
 }
+
 </style>
