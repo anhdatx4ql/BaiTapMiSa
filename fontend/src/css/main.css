@@ -41,6 +41,10 @@ body,button,textarea,input{
     grid-template-columns:repeat(12, auto);
 }
 
+.combobox-child.combobox-content::-webkit-scrollbar{
+    border-radius:4px;
+}
+
 ::-webkit-scrollbar {
     width: 8px;
     height: 8px;
@@ -83,7 +87,3 @@ body,button,textarea,input{
 .div-inline-block{
     display:inline-block;;
 }
-
-/* .filter-content::-webkit-scrollbar{
-    background-color: white;
-} */

@@ -25,12 +25,12 @@ namespace WebDomain
 
                 var result = await _dapper.GetAllAsync<CustomerDetail>(sql);
                 if (result == null)
-                    return new ReponsitoryModel { Data = null, Message = MessageError.NotValue, StatusCode = CodeError.NotValue };
-                return new ReponsitoryModel { Data = result, Message = MessageSuccess.GetSuccess, StatusCode = CodeSuccess.Status200 };
+                    return new ReponsitoryModel(null, CodeError.Code400, MessageError.NotValue);
+                return new ReponsitoryModel(result, CodeSuccess.Status200, MessageSuccess.GetSuccess);
             }
             catch (Exception ex)
             {
-                return new ReponsitoryModel { Data = ex, Message = MessageError.ProcessError, StatusCode = CodeError.ProcessError };
+                return new ReponsitoryModel(ex.Message, CodeError.Code400, MessageError.ProcessError);
             }
         }
 
@@ -42,14 +42,14 @@ namespace WebDomain
                 var dynamicParameters = new DynamicParameters();
                 dynamicParameters.Add("CustomerId", CustomerId);
                 var result = await _dapper.GetAllAsync<CustomerDetailModel>(sql, dynamicParameters);
-                if (result.Count ==0)
-                    return new ReponsitoryModel { Data = null, Message = MessageError.NotValue, StatusCode = CodeError.NotValue };
-                return new ReponsitoryModel { Data = result, Message = MessageSuccess.GetSuccess, StatusCode = CodeSuccess.Status200 };
+                if (result.Count == 0)
+                    return new ReponsitoryModel(null, CodeError.Code400, MessageError.NotValue);
+                return new ReponsitoryModel(result, CodeSuccess.Status200, MessageSuccess.GetSuccess);
 
             }
             catch (Exception ex)
             {
-                return new ReponsitoryModel { Data = ex.Message, Message = MessageError.ProcessError, StatusCode = CodeError.ProcessError };
+                return new ReponsitoryModel(ex.Message, CodeError.Code400, MessageError.ProcessError);
             }
         }
 
@@ -64,12 +64,12 @@ namespace WebDomain
                 };
                 var result = await _dapper.FindTAsync<Career>(sql, parameters);
                 if (result == null)
-                    return new ReponsitoryModel { Data = null, Message = MessageError.NotValue, StatusCode = CodeError.NotValue };
+                    return new ReponsitoryModel { Data = null, Message = MessageError.NotValue, StatusCode = CodeError.Code400 };
                 return new ReponsitoryModel { Data = result, Message = MessageSuccess.GetSuccess, StatusCode = CodeSuccess.Status200 };
             }
             catch (Exception ex)
             {
-                return new ReponsitoryModel { Data = ex.Message, Message = MessageError.ProcessError, StatusCode = CodeError.ProcessError };
+                return new ReponsitoryModel { Data = ex.Message, Message = MessageError.ProcessError, StatusCode = CodeError.Code400 };
             }
         }
     }

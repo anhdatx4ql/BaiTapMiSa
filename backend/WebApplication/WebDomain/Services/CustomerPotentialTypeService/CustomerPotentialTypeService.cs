@@ -56,7 +56,7 @@ namespace WebDomain
 
                     // kiếm tra dòng dữ liệu này đã tồn tại chưa
                     if (ExistsCustomer == false)
-                        return new ReponsitoryModel { Data = null, StatusCode = CodeError.NotValue, Message = MessageError.NotValue };
+                        return new ReponsitoryModel { Data = null, StatusCode = CodeError.Code400, Message = MessageError.NotValue };
 
 
                     // xóa hết dữ liệu hiện có liên quan đến customer : customerId
@@ -69,7 +69,7 @@ namespace WebDomain
                     // kiểm tra mã lĩnh vực có đúng hay không
                     var ExistsFieldId = await _dapper.FindCloumnTAsync<PotentialType>("PotentialType", "PotentialTypeId", model.PotentialTypeId.ToString());
                     if (ExistsFieldId == false)
-                        return new ReponsitoryModel { Data = null, StatusCode = CodeError.NotValue, Message = MessageError.NotValue };
+                        return new ReponsitoryModel { Data = null, StatusCode = CodeError.Code400, Message = MessageError.NotValue };
 
                        count++;
                         if (count==1)
@@ -88,7 +88,7 @@ namespace WebDomain
               
                 var result = await _dapper.CreateMultipleAsync(sql, dynamicParameters);
                 if (result == 0 || count ==0)
-                    return new ReponsitoryModel { Data = null, Message = MessageError.CreatedFail, StatusCode = CodeError.CreateFailed };
+                    return new ReponsitoryModel { Data = null, Message = MessageError.CreatedFail, StatusCode = CodeError.Code400 };
 
                 return new ReponsitoryModel { Data = result, Message = MessageSuccess.CreatedSuccess, StatusCode = CodeSuccess.Status201 };
 
@@ -96,7 +96,7 @@ namespace WebDomain
             }
             catch (Exception ex)
             {
-                return new ReponsitoryModel { Data = ex.Message, Message = MessageError.ProcessError, StatusCode = CodeError.ProcessError };
+                return new ReponsitoryModel { Data = ex.Message, Message = MessageError.ProcessError, StatusCode = CodeError.Code400 };
             }
 
         }
@@ -115,12 +115,12 @@ namespace WebDomain
 
                 var result = await _dapper.GetAllAsync<CustomerPotentialTypeModel>(sql);
                 if (result == null)
-                    return new ReponsitoryModel { Data = null, Message = MessageError.NotValue, StatusCode = CodeError.NotValue };
+                    return new ReponsitoryModel { Data = null, Message = MessageError.NotValue, StatusCode = CodeError.Code400 };
                 return new ReponsitoryModel { Data = result, Message = MessageSuccess.GetSuccess, StatusCode = CodeSuccess.Status200 };
             }
             catch (Exception ex)
             {
-                return new ReponsitoryModel { Data = ex, Message = MessageError.ProcessError, StatusCode = CodeError.ProcessError };
+                return new ReponsitoryModel { Data = ex, Message = MessageError.ProcessError, StatusCode = CodeError.Code400 };
             }
         }
 
@@ -143,12 +143,12 @@ namespace WebDomain
                 };
                 var result = await _dapper.FindTAsync<CustomerPotentialTypeModel>(sql, parameters);
                 if (result == null)
-                    return new ReponsitoryModel { Data = null, Message = MessageError.NotValue, StatusCode = CodeError.NotValue };
+                    return new ReponsitoryModel { Data = null, Message = MessageError.NotValue, StatusCode = CodeError.Code400 };
                 return new ReponsitoryModel { Data = result, Message = MessageSuccess.GetSuccess, StatusCode = CodeSuccess.Status200 };
             }
             catch (Exception ex)
             {
-                return new ReponsitoryModel { Data = ex, Message = MessageError.ProcessError, StatusCode = CodeError.ProcessError };
+                return new ReponsitoryModel { Data = ex, Message = MessageError.ProcessError, StatusCode = CodeError.Code400 };
             }
         }
     }

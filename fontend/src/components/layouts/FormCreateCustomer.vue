@@ -1,7 +1,7 @@
 <template>
   <div class="form-container">
     <form @submit.prevent>
-      <div class="form-content">
+      <div class="form-content" ref="form" >
         <div class="form-container-title">
           <div class="form-container-title-left">
             <div class="filter-title-text" style="font-size: 20px">
@@ -9,9 +9,9 @@
             </div>
           </div>
           <div class="form-container-title-right">
-            <button type="button" class="button button-background-primary save" @click="OnSubmit">Lưu</button>
-            <button type="button" class="button button-background-white created" @click="OnSubmit">Lưu và thêm</button>
-            <button type="button" class="button button-background-white" @click="HandlerCloseForm">
+            <button type="button" class="button button-background-primary save" @click="OnSubmit" tabindex="18">Lưu</button>
+            <button type="button" class="button button-background-white created" @click="OnSubmit" tabindex="19">Lưu và thêm</button>
+            <button type="button" class="button button-background-white" @click="HandlerCloseForm" tabindex="20">
               Hủy bỏ
             </button>
           </div>
@@ -143,7 +143,7 @@
                 </div>
                 <div class="form-container-content-child-item-input">
                   <div class="border-input-content">
-                    <input type="text" class="input-content" v-model="customerInfo.LastName"/>
+                    <input type="text" class="input-content" v-model="customerInfo.LastName" tabindex="1" ref="LastName"/>
                     <div class="input-icon-content">
                       <span class="icon-font-16 background-icon-close" @click="customerInfo.LastName = null"></span>
                     </div>
@@ -159,7 +159,7 @@
                 </div>
                 <div class="form-container-content-child-item-input">
                    <div class="border-input-content" :class="{'input-error':(errors.get('FirstName'))}">
-                    <input type="text" class="input-content"  v-model="customerInfo.FirstName"/>
+                    <input type="text" class="input-content"  v-model="customerInfo.FirstName" tabindex="2"/>
                     <div class="input-icon-content">
                       <span class="icon-font-16 background-icon-close" @click="customerInfo.FirstName = null"></span>
                     </div>
@@ -384,7 +384,7 @@
                 </div>
                 <div class="form-container-content-child-item-input">
                    <div class="border-input-content" :class="{'input-error':(errors.get('CustomerPhoneNumber'))}">
-                    <input type="text" class="input-content" v-model="customerInfo.CustomerPhoneNumber"/>
+                    <input type="text" class="input-content" tabindex="3" v-model="customerInfo.CustomerPhoneNumber"/>
 
                     <div class="input-icon-content">
                       <span class="icon-font-16 background-icon-close" @click="customerInfo.CustomerPhoneNumber = null"></span>
@@ -403,7 +403,7 @@
                 </div>
                 <div class="form-container-content-child-item-input">
                    <div class="border-input-content">
-                  <input type="text" class="input-content" v-model="customerInfo.CompanyPhoneNumber"/>
+                  <input type="text" class="input-content" tabindex="4" v-model="customerInfo.CompanyPhoneNumber"/>
                     
                     <div class="input-icon-content">
                       <span class="icon-font-16 background-icon-close" @click="customerInfo.CompanyPhoneNumber = null"></span>
@@ -620,7 +620,7 @@
                 <div class="form-container-content-child-item-label">Zalo</div>
                 <div class="form-container-content-child-item-input">
                    <div class="border-input-content">
-                  <input type="text" class="input-content" v-model="customerInfo.Zalo"/>
+                  <input type="text" class="input-content" tabindex="5" v-model="customerInfo.Zalo"/>
 
                     <div class="input-icon-content">
                       <span class="icon-font-16 background-icon-close" @click="customerInfo.Zalo = null"></span>
@@ -637,7 +637,7 @@
                 </div>
                 <div class="form-container-content-child-item-input">
                    <div class="border-input-content" :class="{'input-error':(errors.get('CustomerEmail'))}">
-                  <input type="text" class="input-content" v-model="customerInfo.CustomerEmail"/>
+                  <input type="email" class="input-content" tabindex="6" v-model="customerInfo.CustomerEmail"/>
 
                     <div class="input-icon-content">
                       <span class="icon-font-16 background-icon-close" @click="customerInfo.CustomerEmail = null"></span>
@@ -655,7 +655,7 @@
                 </div>
                 <div class="form-container-content-child-item-input">
                    <div class="border-input-content">
-                  <input type="text" class="input-content" v-model="customerInfo.CompanyEmail"/>
+                  <input type="email" class="input-content" tabindex="7" v-model="customerInfo.CompanyEmail"/>
 
                     <div class="input-icon-content">
                       <span class="icon-font-16 background-icon-close" @click="customerInfo.CompanyEmail = null"></span>
@@ -672,7 +672,7 @@
                 </div>
                 <div class="form-container-content-child-item-input">
                   <div class="border-input-content">
-                  <input type="text" class="input-content" v-model="customerInfo.Organization"/>
+                  <input type="text" class="input-content" tabindex="8" v-model="customerInfo.Organization"/>
 
                     <div class="input-icon-content">
                       <span class="icon-font-16 background-icon-close" @click="customerInfo.Organization = null"></span>
@@ -689,7 +689,7 @@
                 </div>
                 <div class="form-container-content-child-item-input">
                    <div class="border-input-content" :class="{'input-error':(errors.get('TaxCode'))}">
-                    <input type="text" class="input-content"  v-model="customerInfo.TaxCode"/>
+                    <input type="text" class="input-content" tabindex="9" v-model="customerInfo.TaxCode"/>
                     <div class="input-icon-content">
                       <span class="icon-font-16 background-icon-close" @click="customerInfo.TaxCode = null"></span>
                     </div>
@@ -715,7 +715,7 @@
                 </div>
                 <div class="form-container-content-child-item-input">
                    <div class="border-input-content" :class="{'input-error':(errors.get('BankAccount'))}">
-                    <input type="text" class="input-content"  v-model="customerInfo.BankAccount"/>
+                    <input type="text" class="input-content" tabindex="10" v-model="customerInfo.BankAccount"/>
                     <div class="input-icon-content">
                       <span class="icon-font-16 background-icon-close" @click="customerInfo.BankAccount = null"></span>
                     </div>
@@ -732,7 +732,7 @@
                 </div>
                 <div class="form-container-content-child-item-input">
                     <div class="border-input-content">
-                  <input type="text" class="input-content" v-model="customerInfo.BankName" />
+                  <input type="text" class="input-content" tabindex="11" v-model="customerInfo.BankName" />
 
                     <div class="input-icon-content">
                       <span class="icon-font-16 background-icon-close" @click="customerInfo.BankName = null"></span>
@@ -749,8 +749,10 @@
                 </div>
                 <div class="form-container-content-child-item-input">
                   <el-config-provider :locale="locale"> 
-                  <el-date-picker v-model="customerInfo.CreatedTimeBankAccount" type="date" format="DD/MM/YYYY"></el-date-picker>
+                  <el-date-picker tabindex="12" v-model="customerInfo.CreatedTimeBankAccount" type="date" format="DD/MM/YYYY"
+                  :style="(errors.get('DateTimeError'))?'border:1px solid red !important':''"></el-date-picker>
                 </el-config-provider>
+                <span class="span-error" v-if="(errors.get('DateTimeError'))">{{errors.get('DateTimeError')}}</span>
                 </div>
               </div>
               <!-- End Ngày thành lập -->
@@ -1474,7 +1476,7 @@
                 </div>
                 <div class="form-container-content-child-item-input">
                   <div class="border-input-content">
-                  <input type="text" class="input-content" v-model="customerInfo.HomeNumber" />
+                  <input type="text" class="input-content" tabindex="13" v-model="customerInfo.HomeNumber" />
 
                     <div class="input-icon-content">
                       <span class="icon-font-16 background-icon-close" @click="customerInfo.HomeNumber = null"></span>
@@ -1492,7 +1494,7 @@
                 <div class="form-container-content-child-item-input">
 
                    <div class="border-input-content">
-                  <input type="text" class="input-content" v-model="customerInfo.RegionCode" />
+                  <input type="text" class="input-content" tabindex="14" v-model="customerInfo.RegionCode" />
 
                     <div class="input-icon-content">
                       <span class="icon-font-16 background-icon-close" @click="customerInfo.RegionCode = null"></span>
@@ -1508,7 +1510,7 @@
                   Địa chỉ
                 </div>
                 <div class="form-container-content-child-item-input">
-                  <textarea class="textarea" v-model="customerInfo.Address"></textarea>
+                  <textarea class="textarea" tabindex="15" v-model="customerInfo.Address"></textarea>
                 </div>
               </div>
               <!-- End địa chỉ -->
@@ -1531,7 +1533,7 @@
               >
                 <div class="form-container-content-child-item-label">Mô tả</div>
                 <div class="form-container-content-child-item-input">
-                  <textarea class="textarea textarea-description"></textarea>
+                  <textarea class="textarea textarea-description" tabindex="16"></textarea>
                 </div>
               </div>
               <!-- End địa chỉ -->
@@ -1554,7 +1556,7 @@
                 </div>
                 <div class="form-container-content-child-item-input">
                    <div class="border-input-content" :class="{'input-error':(errors.get('PotentialCode'))}">
-                    <input type="text" class="input-content"  v-model="customerInfo.PotentialCode"/>
+                    <input type="text" class="input-content" tabindex="17" v-model="customerInfo.PotentialCode"/>
                     <div class="input-icon-content">
                       <span class="icon-font-16 background-icon-close" @click="customerInfo.PotentialCode = null"></span>
                     </div>
@@ -1600,7 +1602,7 @@ import { CustomerService } from "../Services/CustomerService";
 
 // hàm xử lý hiển thị loading
 import { UnLoading } from "../../js/Loading";
-// import { ErrorsValidation } from "../../js/validation";
+import { ErrorsValidation } from "../../js/validation";
 
 import { titleCase } from "../../js/handlerString";
 
@@ -1649,7 +1651,7 @@ import { CustomerFieldService } from "../Services/CustomerFieldService";
 import { OrganizationTypeSrervice } from "../Services/OrganizationTypeSrervice";
 
 // các hàm xử lý click combobox
-import { IsEmpty } from "../../js/formatData";
+import { IsEmpty,formatDate } from "../../js/formatData";
 
 // các hàm xử lý click combobox
 import { handlerValidateCustomer,handlerValidateTCustomer } from "../../js/handlerValidateCustomer";
@@ -1709,10 +1711,23 @@ export default {
       searchSource:"",
       searchpPosition:"",
       searchOrganizationType:"",
-      searchTurnover: ""
+      searchTurnover: "",
+      ErrorsValidation:ErrorsValidation
     };
   },
   watch: {
+  "customerInfo.CreatedTimeBankAccount":{
+    handler(val){
+      let today = new Date();
+       if(val > today){
+        if(this.errors.get("DateTimeError") ==undefined)
+          this.errors.set("DateTimeError",this.ErrorsValidation.DateTimeError);
+       }else{
+        if(this.errors.get("DateTimeError"))
+          this.errors.delete("DateTimeError");
+       }
+      }
+  },
 
     "customerInfo.Address":{
       handler(val){
@@ -1895,7 +1910,7 @@ export default {
   },
   methods: {
   
-
+    formatDate,
     //  xử lý khởi tạo lại dữ liệu
     ResetCustomerInfo(){
       this.customerInfo = new CreateCustomerModel();
@@ -2445,7 +2460,7 @@ export default {
       const [customerInfo,errors]= await handlerValidateCustomer(this.$refs,this.customerInfo,this.errors);
       this.customerInfo = customerInfo;
       this.errors = errors;
-        console.log(this.errors)
+
       // nếu khong có xưng hô thì xóa đi
       if(this.customerInfo.VocativeId == ""){
           delete  this.customerInfo.VocativeId;
@@ -2533,8 +2548,10 @@ export default {
 
               // chuyển trang về trang chính bằng cách ẩn form hiển tại
               if(e.target.classList.contains("created") == true){
+                console.log("iep thuc")
                 this.HandlerSelectCodeMax();
               }else{
+                console.log("nghi")
                 this.$emit("CloseFormData", false);
               }
               this.ToastMessageCustomer.Type = "success";
@@ -2584,6 +2601,9 @@ export default {
   },
   mounted() {
     // alert('huy');
+    if(this.$refs.LastName){  
+      this.$refs.LastName.focus();
+    }
   },
   unmounted(){
     

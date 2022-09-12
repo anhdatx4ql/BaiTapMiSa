@@ -160,7 +160,6 @@
 }
 
 .el-input__wrapper {
-    border:1px solid #d3d7de !important;
     display: flex;
     box-shadow: none;
 }
@@ -168,6 +167,8 @@
 .el-input.el-input--prefix.el-input--suffix.el-date-editor.el-date-editor--date.el-tooltip__trigger.el-tooltip__trigger {
     width: 240px !important;
     font-size:13px;
+    border:1px solid #d3d7de !important;
+    border-radius:4px;
 }
 
 .el-input__wrapper {
@@ -224,23 +225,24 @@ span.el-date-table-cell__text {
     justify-content: space-between;
 }
 
-.el-input__wrapper:hover {
+.el-input.el-input--prefix.el-input--suffix.el-date-editor.el-date-editor--date.el-tooltip__trigger.el-tooltip__trigger:hover {
     border: 1px solid #7C869C !important;
     box-shadow: none;
     cursor: pointer;
 }
-.el-input__wrapper:hover span.el-input__prefix{
+.el-input.el-input--prefix.el-input--suffix.el-date-editor.el-date-editor--date.el-tooltip__trigger.el-tooltip__trigger:hover span.el-input__prefix{
     display:none;
+}
+
+.el-input__wrapper.is-focus{
+    box-shadow: none;
 }
 
 .el-input__inner:hover {
     cursor: pointer;
 }
 
-.el-input__wrapper.is-focus {
-    border: 1px solid #D3D7DE !important;
-    box-shadow: none;
-}
+.el-input__wrapper:hover {box-shadow: none;}
 
 .el-icon svg {
     height: 16px !important;

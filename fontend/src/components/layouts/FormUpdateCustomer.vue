@@ -165,6 +165,8 @@
                         type="text"
                         class="input-content"
                         v-model="customerInfo.lastName"
+                        tabindex="1"
+                        ref="LastName"
                       />
                       <div class="input-icon-content">
                         <span
@@ -192,6 +194,7 @@
                       type="text"
                       class="input-content"
                       v-model="customerInfo.firstName"
+                      tabindex="2"
                     />
                     <div class="input-icon-content">
                       <span
@@ -460,6 +463,7 @@
                       type="text"
                       class="input-content"
                       v-model="customerInfo.customerPhoneNumber"
+                      tabindex="3"
                     />
 
                     <div class="input-icon-content">
@@ -491,6 +495,7 @@
                       type="text"
                       class="input-content"
                       v-model="customerInfo.companyPhoneNumber"
+                      tabindex="4"
                     />
 
                     <div class="input-icon-content">
@@ -738,6 +743,7 @@
                     type="checkbox"
                     id="isActivePhoneNumber"
                     v-model="customerInfo.isActivePhoneNumber"
+                    tabindex="5"
                   />
                   <label
                     for="isActivePhoneNumber"
@@ -757,6 +763,7 @@
                     type="checkbox"
                     id="isActiveEmail"
                     v-model="customerInfo.isActiveEmail"
+                    tabindex="6"
                   />
                   <label
                     for="isActiveEmail"
@@ -775,6 +782,7 @@
                       type="text"
                       class="input-content"
                       v-model="customerInfo.zalo"
+                      tabindex="7"
                     />
 
                     <div class="input-icon-content">
@@ -802,6 +810,7 @@
                       type="text"
                       class="input-content"
                       v-model="customerInfo.customerEmail"
+                      tabindex="8"
                     />
 
                     <div class="input-icon-content">
@@ -830,6 +839,7 @@
                       type="text"
                       class="input-content"
                       v-model="customerInfo.companyEmail"
+                      tabindex="9"
                     />
 
                     <div class="input-icon-content">
@@ -855,6 +865,7 @@
                       type="text"
                       class="input-content"
                       v-model="customerInfo.organization"
+                      tabindex="10"
                     />
 
                     <div class="input-icon-content">
@@ -882,6 +893,7 @@
                       type="text"
                       class="input-content"
                       v-model="customerInfo.taxCode"
+                      tabindex="11"
                     />
                     <div class="input-icon-content">
                       <span
@@ -977,7 +989,8 @@
                 <!-- <Datepicker class="border-input-content" type="date">
                 </Datepicker> -->
                 <el-config-provider :locale="locale"> 
-                  <el-date-picker v-model="customerInfo.birthDay" type="date" format="DD/MM/YYYY"></el-date-picker>
+                  <el-date-picker tabindex="12" v-model="customerInfo.birthDay" type="date" format="DD/MM/YYYY"
+                  style="border-color:red;"></el-date-picker>
                 </el-config-provider>
                 
               </div>
@@ -995,6 +1008,7 @@
                     type="text"
                     class="input-content"
                     v-model="customerInfo.facebook"
+                    tabindex="13"
                   />
 
                   <div class="input-icon-content">
@@ -1141,7 +1155,9 @@ export default {
       searchpPosition:""
     };
   },
-  created() {},
+  created() {
+    console.log(this.customerInfo);
+  },
   watch: {
     "customerInfo.birthDay":{
       handler(){
@@ -1716,6 +1732,10 @@ export default {
   },
   mounted() {
     // alert('huy');
+    console.log(this.$refs)
+    if(this.$refs.LastName){  
+      this.$refs.LastName.focus();
+    }
   },
 };
 </script>

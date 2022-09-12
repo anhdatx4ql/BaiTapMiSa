@@ -31,7 +31,6 @@
 .combobox{
     width:240px;
     height:32px;
-    border:1px solid #D3D7DE;
     border-radius:4px;
     box-sizing: border-box;
     position: relative;
@@ -52,7 +51,7 @@
     background-color: #ffffff;
     box-sizing: border-box;
     height: 32px;
-    border-bottom: 1px solid #D3D7DE;
+    border: 1px solid #D3D7DE;
     flex-wrap:wrap;
 }
 
@@ -162,7 +161,7 @@ body {
     height: 24px;
     padding-right: 4px;
     padding-left: 8px;
-    margin:4px  0;
+    margin:3px 0;
     margin-right:4px;
     width:max-content;
 }

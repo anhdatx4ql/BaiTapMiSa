@@ -103,7 +103,7 @@ import {  handlerClickHideFullComboboxData } from "./js/test";
 
 /** VÒNG ĐỜI  
  * 1: beforeCraete -  Tại thời điểm này, data, event chưa được thiết lập.
- *  2: created // được chạy khi data, event đã thiết lập thành công.
+ * 2: created // được chạy khi data, event đã thiết lập thành công.
  * 3: BeforeMount: sẽ chạy sau khi data, event được thiết lập và trước khi gắn kết vào DOM.
  *                 Trong hook này chúng ta vẫn chưa - truy cập được phần tử trong DOM.
  * 4: mounted: có thể truy cập vào phẩn tử trong DOM
@@ -157,19 +157,18 @@ export default {
     
   },
   mounted(){
+
   },
   methods: {
-
-  
    
     // Xử lý click show hide combobox
     ClickWindow:function(){
       // xử lý click vào window
        window.addEventListener("click", function(e){
-        if(e.target.classList.contains("show-button-toolbar") || e.target.parentNode.classList.contains("show-button-toolbar")){
+        if(e.target.classList){
+          if(e.target.classList.contains("show-button-toolbar") || e.target.parentNode.classList.contains("show-button-toolbar")){
           let checkShowFormHandlerToolbar = document.getElementsByClassName("toolbar-left-child-options")[0];
           checkShowFormHandlerToolbar.style.display == "flex"
-          console.log("hien thi")
         }else{
           let checkShowFormHandlerToolbar = document.getElementsByClassName("toolbar-left-child-options")[0];
           if(checkShowFormHandlerToolbar != undefined){
@@ -177,6 +176,8 @@ export default {
               checkShowFormHandlerToolbar.style.display = "none";
           }
         }
+        }
+       
        
         // kiểm tra khi click vaof combobox data multiple thì không xử lý ẩn form
         let checkEl = e.target.classList.contains("combobox-data-child-content-text");

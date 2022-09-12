@@ -360,3 +360,14 @@ span.background-icon-phone-center.icon-font-16 {
     align-items:center;
     justify-content: start;
 }
+
+span.el-input__suffix {
+    width: 16px;
+    height: 16px;
+    font-size: 16px;
+}
+
+span.el-input__suffix:hover {
+    background: #797A7F;
+    border-radius: 50%;
+}

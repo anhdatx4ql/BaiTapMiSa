@@ -157,6 +157,7 @@ export async function selectValueComboboxMulData(e) {
 // function xử lý hiển thị combobox data
 export async function HandlerShowHideComboboxData(element) {
   try {
+    
     let check = element.getAttribute("check");
     if(check){
       let comboboxData = element.parentNode.getElementsByClassName("combobox-data")[0];
@@ -176,9 +177,22 @@ export async function HandlerShowHideComboboxData(element) {
 // Hiển thị combobox Data
 function ShowFormData(comboboxData, check, iconBox = null, element) {
   try {
+
+    let ElClasses = element.classList;
+    let checkChangeBorder = false;
+    if(ElClasses.contains('combobox-child') && ElClasses.contains('combobox-content')){
+      checkChangeBorder = true;
+    }
+
+
      // lấy class các form
     handlerClickHideFullComboboxData();
     if (check == "false") {
+      // thay đổi border-color xanh
+      if(checkChangeBorder == true){
+        if(ElClasses.contains("border-input-forcus") == false)
+          ElClasses.add("border-input-forcus");
+      }
 
       // hiển thị box
       comboboxData.classList.add("div-inline-block");
@@ -192,6 +206,12 @@ function ShowFormData(comboboxData, check, iconBox = null, element) {
       // chuyển trạng thái check
       element.setAttribute("check", "true");
     } else {
+      //xóa border-color xanh
+      if(checkChangeBorder == true){
+        if(ElClasses.contains("border-input-forcus") == true)
+          ElClasses.remove("border-input-forcus");
+      }
+
       // ẩn box
       comboboxData.classList.remove("div-inline-block");
       // thay doi icon
@@ -214,6 +234,21 @@ export function handlerClickHideFullComboboxData(){
 
   for(let i=0;i<comboboxDataFull.length; i++){
    if(comboboxDataFull[i].classList.contains("div-inline-block")){
+    const El = comboboxDataFull[i].parentNode.getElementsByClassName("combobox-content")[0];
+    // xử lý màu border
+    if(El){
+      let ElClasses = El.classList;
+      let checkChangeBorder = false;
+      if(ElClasses.contains('combobox-child') && ElClasses.contains('combobox-content')){
+        checkChangeBorder = true;
+      }
+  
+      if(checkChangeBorder == true){
+        if(ElClasses.contains("border-input-forcus") == true)
+          ElClasses.remove("border-input-forcus");
+      }
+    }
+  
      // lấy ra ô input để chỉnh sửa
      let inputCombobox = comboboxDataFull[i].parentNode.getElementsByClassName("combobox-content")[0];
 

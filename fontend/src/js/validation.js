@@ -11,5 +11,6 @@ export const ErrorsValidation = {
     PhoneDuplicate: 'Số điện thoại này đã có người sử dụng!',
     EmailDuplicate: 'Email này đã có người sử dụng!',
     TaxCodeDuplicate: 'Mã số thuế này đã có người sử dụng!',
-    BankAccountDuplicate: "Tài khoản này đã có người sử dụng!"
+    BankAccountDuplicate: "Tài khoản này đã có người sử dụng!",
+    DateTimeError: "Thời gian không vượt quá thời gian hiện tại"
 }

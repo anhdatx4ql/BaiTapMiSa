@@ -62,17 +62,17 @@ namespace WebDomain
 
                 PagingModel<CustomerModel> result = await _dapper.PagingT<CustomerModel>(strQuery, parameterWhere);
                 if (result.Data == null)
-                    return new ReponsitoryModel { Data = null, Message = MessageError.NotValue, StatusCode = CodeError.NotValue };
+                    return new ReponsitoryModel(null, CodeError.Code400, MessageError.NotValue);
 
                 // lấy được data, totalcount
 
                 var pagingData = new PagingDataModel<CustomerModel>(result.TotalCount, result.Data, currentPageNumber, pageSize);
-                return new ReponsitoryModel { Data = pagingData, Message = MessageSuccess.GetSuccess, StatusCode = CodeSuccess.Status200 };
+                return new ReponsitoryModel(pagingData, CodeSuccess.Status200, MessageSuccess.GetSuccess);
 
             }
             catch (Exception ex)
             {
-                return new ReponsitoryModel { Data = ex.Message, Message = MessageError.ProcessError, StatusCode = CodeError.ProcessError };
+                return new ReponsitoryModel(ex.Message, CodeError.Code400, MessageError.ProcessError);
             }
         }
 
@@ -244,17 +244,17 @@ namespace WebDomain
 
                 PagingModel<CustomerModel> result = await _dapper.PagingT<CustomerModel>(strQuery, parameterWhere);
                 if (result.Data == null)
-                    return new ReponsitoryModel { Data = null, Message = MessageError.NotValue, StatusCode = CodeError.NotValue };
+                    return new ReponsitoryModel(null, CodeError.Code400, MessageError.NotValue);
 
                 // lấy được data, totalcount
 
                 var pagingData = new PagingDataModel<CustomerModel>(result.TotalCount, result.Data, currentPageNumber, pageSize);
-                return new ReponsitoryModel { Data = pagingData, Message = MessageSuccess.GetSuccess, StatusCode = CodeSuccess.Status200 };
+                return new ReponsitoryModel(pagingData, CodeSuccess.Status200, MessageSuccess.GetSuccess);
 
             }
             catch (Exception ex)
             {
-                return new ReponsitoryModel { Data = ex.Message, Message = MessageError.ProcessError, StatusCode = CodeError.ProcessError };
+                return new ReponsitoryModel(ex.Message, CodeError.Code400, MessageError.ProcessError);
             }
         }
 
@@ -274,12 +274,12 @@ namespace WebDomain
 
                 // kiểm tra mã tiềm năng
                 var ExistsPotentialCode = await _dapper.FindCloumnTAsync<Customer>("Customer", "PotentialCode", model.PotentialCode);
-                if (ExistsPotentialCode ==true)
-                    return new ReponsitoryModel { Data = null, Message = MessageError.DuplicateCode, StatusCode = CodeError.DuplicateCode };
+                if (ExistsPotentialCode == true)
+                    return new ReponsitoryModel(null, CodeError.Code400, MessageError.DuplicateCode);
 
                 // kiểm tra tên có tồn tại không
                 if (model.FirstName == null)
-                    return new ReponsitoryModel { Data = null, Message = "Tên " + MessageError.NotExists, StatusCode = CodeError.NotExists };
+                    return new ReponsitoryModel(null, CodeError.Code400, "Tên " + MessageError.NotExists);
 
              
                 // Kiểm tra số điện thoại cá nhân có tồn tại hay không rồi mới check trùng
@@ -288,7 +288,7 @@ namespace WebDomain
                     // check trùng số điện thoại cá nhân
                     var ExistsCustomerPhoneNumber = await _dapper.FindCloumnTAsync<Customer>("Customer", "CustomerPhoneNumber", model.CustomerPhoneNumber);
                     if (ExistsCustomerPhoneNumber == true)
-                        return new ReponsitoryModel { Data = null, Message = MessageError.DuplicatePhone, StatusCode = CodeError.DuplicatePhone };
+                        return new ReponsitoryModel(null, CodeError.Code400, MessageError.DuplicatePhone);
                 }
 
                 // kiểm tra email có tồn tại hay không
@@ -297,7 +297,7 @@ namespace WebDomain
                     // check trùng  email
                     var ExistsCustomerEmail = await _dapper.FindCloumnTAsync<Customer>("Customer", "CustomerEmail", model.CustomerEmail);
                     if (ExistsCustomerEmail == true)
-                        return new ReponsitoryModel { Data = null, Message = MessageError.DuplicateEmail, StatusCode = CodeError.DuplicateEmail };
+                        return new ReponsitoryModel(null, CodeError.Code400, MessageError.DuplicateEmail);
                 }
 
                 // kiểm tra mã số thuế có tồn tại hay không
@@ -306,7 +306,7 @@ namespace WebDomain
                     // check trùng mã số thuế
                     var ExistsTaxCode = await _dapper.FindCloumnTAsync<Customer>("Customer", "TaxCode", model.TaxCode);
                     if (ExistsTaxCode == true)
-                        return new ReponsitoryModel { Data = null, Message = MessageError.DuplicateTaxCode, StatusCode = CodeError.DuplicateTaxCode };
+                        return new ReponsitoryModel(null, CodeError.Code400, MessageError.DuplicateTaxCode);
                 }
 
                 // kiểm tra tài khoản ngân hàng có tồn tại hay không
@@ -315,7 +315,7 @@ namespace WebDomain
                     // check trùng tài khoản ngân hàng
                     var ExistsBankAccount = await _dapper.FindCloumnTAsync<Customer>("Customer", "BankAccount", model.BankAccount);
                     if (ExistsBankAccount == true)
-                        return new ReponsitoryModel { Data = null, Message = MessageError.DuplicateBankAccount, StatusCode = CodeError.DuplicateBankAccount };
+                        return new ReponsitoryModel(null, CodeError.Code400, MessageError.DuplicateBankAccount);
                 }
 
                 model.updatedAt = DateTime.Now;
@@ -328,13 +328,13 @@ namespace WebDomain
 
                 var result = await _dapper.CreateTAsync<CreateCustomerModel>(sql, model);
 
-                return new ReponsitoryModel { Data = model, Message = MessageSuccess.CreatedSuccess, StatusCode = CodeSuccess.Status201 };
+                return new ReponsitoryModel(model, CodeSuccess.Status201, MessageSuccess.CreatedSuccess);
 
             }
             catch(Exception ex)
             
             {
-                return new ReponsitoryModel { Data = ex, Message = MessageError.ProcessError, StatusCode = CodeError.ProcessError };
+                return new ReponsitoryModel(ex.Message, CodeError.Code400, MessageError.ProcessError);
             }
         }
 
@@ -346,12 +346,13 @@ namespace WebDomain
        /// <returns></returns>
         public async Task<ReponsitoryModel> DeleteCustomer(List<Guid> ListString)
         {
+
             try
             {
-               
+
                 // kiểm tra xem id truyền vào có giá trị hay không
                 if (ListString.Count == 0)
-                    return new ReponsitoryModel { Data = null, Message = MessageError.NotValue, StatusCode = CodeError.NotValue };
+                    return new ReponsitoryModel(null, CodeError.Code400, MessageError.NotValue);
 
                 string SqlUpdate = @"UPDATE customer SET IsDelete=true,UpdatedAt = @UpdatedAt WHERE CustomerId IN @ListString";
                 var parameters = new DynamicParameters();
@@ -361,14 +362,14 @@ namespace WebDomain
                 var ResultUpdate = await _dapper.UpdateTAsync<Customer>(SqlUpdate, parameters);
 
                 if (ResultUpdate == 0)
-                    return new ReponsitoryModel { Data = ResultUpdate, StatusCode = CodeError.DeletedFail, Message = MessageError.DeletedFail };
-                return new ReponsitoryModel { Data = ResultUpdate, Message = MessageSuccess.DeletedSuccess, StatusCode = CodeSuccess.Status200 };
+                    return new ReponsitoryModel(ResultUpdate, CodeError.Code400, MessageError.DeletedFail);
+                return new ReponsitoryModel(ResultUpdate, CodeSuccess.Status200, MessageSuccess.DeletedSuccess);
 
 
             }
             catch (Exception ex)
             {
-                return new ReponsitoryModel { Data = ex.Message, Message = MessageError.ProcessError, StatusCode = CodeError.ProcessError };
+                return new ReponsitoryModel(ex.Message, CodeError.Code400, MessageError.ProcessError); 
             }
         }
 
@@ -384,12 +385,12 @@ namespace WebDomain
 
                 var result = await _dapper.GetAllAsync<CustomerModel>(sql);
                 if (result == null)
-                    return new ReponsitoryModel { Data = null, Message = MessageError.NotValue, StatusCode = CodeError.NotValue };
-                return new ReponsitoryModel { Data = result, Message = MessageSuccess.GetSuccess, StatusCode = CodeSuccess.Status200 };
+                    return new ReponsitoryModel(null, CodeError.Code400, MessageError.NotValue);
+                return new ReponsitoryModel(result, CodeSuccess.Status200, MessageSuccess.GetSuccess);
             }
             catch(Exception ex)
             {
-                return new ReponsitoryModel { Data = ex, Message = MessageError.ProcessError, StatusCode = CodeError.ProcessError };
+                return new ReponsitoryModel(ex.Message, CodeError.Code400, MessageError.ProcessError);
             }
             
         }
@@ -410,13 +411,13 @@ namespace WebDomain
                 };
                 var result = await _dapper.FindTAsync<CustomerModel>(sql, parameters);
                 if (result.Count == 0)
-                    return new ReponsitoryModel { Data = null, Message = MessageError.NotValue, StatusCode = CodeError.NotValue };
-                return new ReponsitoryModel { Data = result, Message = MessageSuccess.GetSuccess, StatusCode = CodeSuccess.Status200 };
+                    return new ReponsitoryModel(null, CodeError.Code400, MessageError.NotValue);
+                return new ReponsitoryModel(result, CodeSuccess.Status200, MessageSuccess.GetSuccess);
 
             }
             catch (Exception ex)
             {
-                return new ReponsitoryModel { Data = ex, Message = MessageSuccess.GetSuccess, StatusCode = CodeSuccess.Status200 };
+                return new ReponsitoryModel(ex.Message, CodeError.Code400, MessageError.ProcessError);
             }
         }
 
@@ -432,7 +433,7 @@ namespace WebDomain
 
                 var code = await _dapper.GetCodeMaxAsync<CustomerCodeModel>(SqlDbType);
                 if (code == null)
-                    return new ReponsitoryModel { Data = null, Message = MessageError.NotValue, StatusCode = CodeError.NotValue };
+                    return new ReponsitoryModel(null, CodeError.Code400, MessageError.NotValue);
 
                 string[] ArrCode = code.PotentialCode.Split('-');
                 long number;
@@ -440,15 +441,14 @@ namespace WebDomain
                 if(isSuccess == true)
                 {
                     var codeNew = ArrCode[0] + "-" + (number + 1).ToString();
-                    return new ReponsitoryModel { Data = codeNew, Message = MessageSuccess.GetSuccess, StatusCode = CodeSuccess.Status200 };
+                    return new ReponsitoryModel(codeNew, CodeSuccess.Status200, MessageSuccess.GetSuccess);
                 }
 
-                    return new ReponsitoryModel { Data = null, Message = MessageError.NotValue, StatusCode = CodeError.NotValue };
-
+                    return new ReponsitoryModel(null, CodeError.Code400, MessageError.NotValue);
             }
             catch (Exception ex)
             {
-                return new ReponsitoryModel { Data = ex, Message = MessageError.ProcessError, StatusCode = CodeError.ProcessError };
+                return new ReponsitoryModel(null, CodeError.Code400, MessageError.ProcessError);
             }
         }
 
@@ -465,7 +465,7 @@ namespace WebDomain
             try
             {
                 if (_id == null)
-                    return new ReponsitoryModel { Data = null, Message = "Id " + MessageError.NotExists, StatusCode = CodeError.NotExists };
+                    return new ReponsitoryModel(null, CodeError.Code400, "Id " + MessageError.NotExists);
 
                 var sql = @"Select * FROM Customer WHERE CustomerId = @CustomerId LIMIT 1";
                 var dynamicParameters = new DynamicParameters();
@@ -475,7 +475,7 @@ namespace WebDomain
                 // lấy thông tin customerId
                 //var customer = await _dapper.GetByIdAsync<Customer>(sql);
                 if(customer == null)
-                    return new ReponsitoryModel { Data = null, Message = MessageError.NotFound, StatusCode = CodeError.NotFound };
+                    return new ReponsitoryModel(null, CodeError.Code400, MessageError.NotFound);
 
                 // check trùng mã số thuế
                 if (model.TaxCode !=null)
@@ -484,7 +484,7 @@ namespace WebDomain
                     {
                         var ExistsTaxCode = await _dapper.FindCloumnTAsync<Customer>("Customer", "TaxCode", model.TaxCode);
                         if (ExistsTaxCode == true)
-                            return new ReponsitoryModel { Data = null, StatusCode = CodeError.DuplicateTaxCode, Message = MessageError.DuplicateTaxCode };
+                            return new ReponsitoryModel(null, CodeError.Code400, MessageError.DuplicateTaxCode);
                         customer.TaxCode = model.TaxCode;
                     }
                 }
@@ -497,7 +497,7 @@ namespace WebDomain
                     {
                         var ExistsUserPhone = await _dapper.FindCloumnTAsync<Customer>("Customer", "CustomerPhoneNumber", model.CustomerPhoneNumber);
                         if (ExistsUserPhone == true)
-                            return new ReponsitoryModel { Data = null, StatusCode = CodeError.DuplicatePhone, Message = MessageError.DuplicatePhone };
+                            return new ReponsitoryModel(null, CodeError.Code400, MessageError.DuplicatePhone);
                         customer.CustomerPhoneNumber = model.CustomerPhoneNumber;
                     }
                 }
@@ -509,8 +509,8 @@ namespace WebDomain
                     {
                         var ExistsCustomerEmail = await _dapper.FindCloumnTAsync<Customer>("Customer", "CustomerEmail", model.CustomerEmail);
                         if (ExistsCustomerEmail == true)
-                            return new ReponsitoryModel { Data = null, StatusCode = CodeError.DuplicateEmail, Message = MessageError.DuplicateEmail };
-                        customer.CustomerPhoneNumber = model.CustomerPhoneNumber;
+                            return new ReponsitoryModel(null, CodeError.Code400, MessageError.DuplicateEmail);
+                        customer.CustomerEmail = model.CustomerEmail;
                     }
                 }
               
@@ -542,8 +542,6 @@ namespace WebDomain
                 if(model.IsActiveEmail == false)
                     customer.IsActiveEmail = false;
 
-                customer.CustomerEmail = model.CustomerEmail;
-
                 customer.Zalo = model.Zalo;
 
                 customer.CompanyEmail = model.CompanyEmail;
@@ -552,7 +550,8 @@ namespace WebDomain
 
                 customer.TaxCode = model.TaxCode;
 
-
+                if (DateTime.Parse(model.BirthDay) > DateTime.Now)
+                    return new ReponsitoryModel(null, CodeError.Code400, MessageError.DateTime);
                 customer.BirthDay = model.BirthDay;
 
                     
@@ -561,7 +560,7 @@ namespace WebDomain
                     customer.Gender = model.Gender;
                 else
                 {
-                    return new ReponsitoryModel { Data = null, StatusCode = CodeError.GenderExists, Message = MessageError.GenderExists };
+                    return new ReponsitoryModel(null, CodeError.Code400, MessageError.GenderExists);
                 }
 
 
@@ -593,15 +592,15 @@ namespace WebDomain
                 dynamicParametersUpdate.Add("CustomerId", _id);
                 var ResultUpdate = await _dapper.UpdateTAsync<Customer>(SqlUpdate, dynamicParametersUpdate);
                 if (ResultUpdate == 0)
-                     return new ReponsitoryModel { Data = customer, StatusCode = CodeError.UpdateFailed, Message = MessageError.UpdatedFail };
-                return new ReponsitoryModel { Data = customer, Message = MessageSuccess.UpdatedSuccess, StatusCode = CodeSuccess.Status200 };
+                    return new ReponsitoryModel(customer, CodeError.Code400, MessageError.UpdatedFail);
+                return new ReponsitoryModel(customer, CodeSuccess.Status200, MessageSuccess.UpdatedSuccess);
 
                 // update loai tiem nang
 
             }
             catch(Exception ex)
             {
-                return new ReponsitoryModel { Data = ex, Message = MessageError.UpdatedFail, StatusCode = CodeError.UpdateFailed };
+                return new ReponsitoryModel(ex.Message, CodeError.Code400, MessageError.UpdatedFail);
             }
         }
 
@@ -616,13 +615,13 @@ namespace WebDomain
             try
             {
                 if (model.TableName == null || model.ColumnName == null || model.Value == null)
-                    return new ReponsitoryModel { Data = null, StatusCode = CodeError.NotValue, Message = MessageError.NotValue };
+                    return new ReponsitoryModel(null, CodeError.Code400, MessageError.NotValue);
                 var result =  await _dapper.FindCloumnTAsync<Customer>(model.TableName, model.ColumnName, model.Value);
-                return new ReponsitoryModel { Data = result, Message = MessageSuccess.GetSuccess, StatusCode = CodeSuccess.Status200 };
+                return new ReponsitoryModel(result, CodeSuccess.Status200, MessageSuccess.GetSuccess);
             }
             catch (Exception ex)
             {
-                return new ReponsitoryModel { Data = ex, Message = MessageError.UpdatedFail, StatusCode = CodeError.UpdateFailed };
+                return new ReponsitoryModel(ex.Message, CodeError.Code400, MessageError.UpdatedFail);
             }
         }
 
@@ -638,7 +637,7 @@ namespace WebDomain
 
                 // kiểm tra xem id truyền vào có giá trị hay không
                 if (model.ListId.Count == 0)
-                    return new ReponsitoryModel { Data = null, Message = MessageError.NotValue, StatusCode = CodeError.NotValue };
+                    return new ReponsitoryModel(null, CodeError.Code400, MessageError.NotValue);
 
                 string SqlUpdate = $"UPDATE customer SET {model.ColumnName} = @ColumnValue, UpdatedAt = @UpdatedAt WHERE CustomerId IN @ListId";
                 var parameters = new DynamicParameters();
@@ -650,14 +649,15 @@ namespace WebDomain
                 var ResultUpdate = await _dapper.UpdateTAsync<Customer>(SqlUpdate, parameters);
 
                 if (ResultUpdate == 0)
-                    return new ReponsitoryModel { Data = null, StatusCode = CodeError.DeletedFail, Message = MessageError.DeletedFail };
-                return new ReponsitoryModel { Data = ResultUpdate, Message = MessageSuccess.UpdatedSuccess, StatusCode = CodeSuccess.Status200 };
+                    return new ReponsitoryModel(null, CodeError.Code400, MessageError.DeletedFail);
+
+                return new ReponsitoryModel(null, CodeSuccess.Status200, MessageSuccess.UpdatedSuccess);
 
 
             }
             catch (Exception ex)
             {
-                return new ReponsitoryModel { Data = ex.Message, Message = MessageError.ProcessError, StatusCode = CodeError.ProcessError };
+                return new ReponsitoryModel(ex.Message, CodeError.Code400, MessageError.ProcessError);
             }
         }
 

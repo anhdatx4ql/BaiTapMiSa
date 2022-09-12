@@ -24,12 +24,13 @@ namespace Common
             public const string NotExists = "không được bỏ trống!";
             public const string NotFound = "Bản ghi đã chọn không tồn tại!";
             public const string DuplicateValue = "Bản ghi đã tồn tại. Không thể thêm!";
-            public const string NotValue = "Không có dữ liệu";
-            public const string ProcessError = "Có lỗi trong quá trình xử lý.";
-            public const string CreatedFail = "Thêm mới thất bại.";
-            public const string DeletedFail = "Xóa bản ghi thất bại.";
-            public const string UpdatedFail = "Cập nhật thông tin thất bại.";
-            public const string GenderExists = "Giới tính không tồn tại.";
+            public const string NotValue = "Không có dữ liệu!";
+            public const string ProcessError = "Có lỗi trong quá trình xử lý!";
+            public const string CreatedFail = "Thêm mới thất bại!";
+            public const string DeletedFail = "Xóa bản ghi thất bại!";
+            public const string UpdatedFail = "Cập nhật thông tin thất bại!";
+            public const string GenderExists = "Giới tính không tồn tại!";
+            public const string DateTime = "Ngày tháng không vượt quá ngày hiện tại!";
         }
 
         /// <summary>
@@ -39,21 +40,7 @@ namespace Common
         /// </summary>
         public class CodeError
         {
-            public const string DuplicateName = "400";
-            public const string DuplicateCode = "400";
-            public const string NotFound = "400";
-            public const string NotValue = "400";
-            public const string ProcessError = "400";
-            public const string CreateFailed = "400";
-            public const string UpdateFailed = "400";
-            public const string NotExists = "400";
-            public const string DuplicateEmail = "400";
-            public const string DuplicatePhone = "400";
-            public const string DuplicateTaxCode = "400";
-            public const string DuplicateBankAccount = "400";
-            public const string DeletedFail = "400";
-            public const string DuplicateValue = "400";
-            public const string GenderExists = "400";
+            public const string Code400 = "400";
         }
     }
 }

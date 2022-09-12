@@ -210,3 +210,12 @@ section.vuejs3-datepicker__calendar-topbar {
     margin-top: 8px;
     background: white;
 }
+
+.border-input-forcus,
+.border-input-content:focus-within,
+.label-input.label-input-icon:focus-within{
+    border-color:#4262F0 !important;
+}
+.el-input.el-input--prefix.el-input--suffix.el-date-editor.el-date-editor--date.el-tooltip__trigger.el-tooltip__trigger:focus-within {
+    border-color: #4262F0  !important;
+}
