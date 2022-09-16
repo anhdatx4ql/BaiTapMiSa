@@ -1,12 +1,11 @@
-﻿using Dapper;
+﻿using Common.Resources;
+using Dapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WebInfrastructure;
-using static Common.ContantsError;
-using static Common.ContantsSuccess;
 
 namespace WebDomain
 {
@@ -39,6 +38,7 @@ namespace WebDomain
 
                 int[] results = { };
                 int count = 0;
+                string strMessage = "";
                 string sql = @"INSERT INTO customerfield(CustomerFieldId,CustomerId,FieldId,CreatedAt,UpdatedAt) VALUES ";
                 var dynamicParameters = new DynamicParameters();
                 foreach (CreateCustomerFieldModel model in models)
@@ -46,17 +46,22 @@ namespace WebDomain
 
                     //Kiểm tra null mã khách hàng
                     if (model.CustomerId == null)
-                        return new ReponsitoryModel(null, CodeError.Code400, "Mã khách hàng " + MessageError.NotExists);
+                    {
+                        strMessage += "Mã khách hàng " + MessageError.NotExists+"\n";
+                    }
 
                     // kiểm tra null mã lĩnh vực
                     if (model.FieldId == null)
-                        return new ReponsitoryModel(null, CodeError.Code400, "Mã lĩnh vực " + MessageError.NotExists);
+                    {
+                        strMessage += "Mã lĩnh vực " + MessageError.NotExists + "\n";
+                    }
 
                     // kiểm tra mã khách hàng có đúng hay không
                     var ExistsCustomerId = await _dapper.FindCloumnTAsync<Customer>("Customer", "CustomerId", model.CustomerId.ToString());
                     if (ExistsCustomerId == false)
-                        return new ReponsitoryModel(null, CodeError.Code400, MessageError.NotValue);
-
+                    {
+                        strMessage += MessageError.NotValue + "\n";
+                    }
 
                     // xóa hết dữ liệu hiện có liên quan đến customer : customerId
                     string sqlDelete = @"DELETE FROM CustomerField WHERE CustomerId = @customerId";
@@ -88,7 +93,7 @@ namespace WebDomain
                
                 var result = await _dapper.CreateMultipleAsync(sql, dynamicParameters);
                 if (result == 0)
-                    return new ReponsitoryModel(null,CodeError.Code400 ,MessageError.CreatedFail);
+                    return new ReponsitoryModel(null,CodeError.Code400 , strMessage);
 
 
                 return new ReponsitoryModel(result, CodeSuccess.Status201, MessageSuccess.CreatedSuccess);
@@ -98,7 +103,7 @@ namespace WebDomain
             }
             catch (Exception ex)
             {
-                return new ReponsitoryModel(ex.Message, CodeError.Code400, MessageError.ProcessError);
+                return new ReponsitoryModel(ex.Message, CodeError.Code500, MessageError.ProcessError);
             }
         }
 

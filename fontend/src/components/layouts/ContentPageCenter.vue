@@ -27,6 +27,7 @@
                     : 'background-icon-ckecked-header'
                 "
                 @click="clickCheckboxHeader"
+                ref="checkboxHeader"
               ></label>
             </div>
             <div class="th">Thẻ</div>
@@ -213,9 +214,9 @@ import { StatusCode } from "../Models/StatusCode";
 import {
   ClickShowHideComboboxData,
   selectValueComboboxData,
-} from "../../js/test";
+} from "../../js/handlerCombobox";
 
-import { handlerScroll, handlerClickButtonArrow } from "../../js/test";
+import { handlerScroll, handlerClickButtonArrow } from "../../js/handlerCombobox";
 import { UnLoading, Loading } from "../../js/Loading";
 
 // nhúng service xử lý customer
@@ -244,14 +245,16 @@ export default {
       endColumn:0,
       totalPages:0,
       ListPaging: new Map(),
-      checkLoadData: false
+      checkLoadData: false,
+      customerDetail:{}
     };
   },  
   props: {
     searchCustomerCurrent: {},
     checkShowFormData: Boolean,
     checkLoadCustomerData: Boolean,
-    ArrayObjectData:{}
+    ArrayObjectData:{},
+    removeListCustomerId:Boolean
   },
   created() {
     this.ListPaging.set(10,10);
@@ -267,8 +270,9 @@ export default {
     titleCase,
 
      /**
-   * Hiển thị dữ liệu trang đầu tiên
-   */
+     * Author:Phạm Văn Đạt
+     * function:Hiển thị dữ liệu trang đầu tiên
+     */
     clickPreFirstData(){
       if(this.checkPreData == true){
         this.currentPage = 1;
@@ -276,9 +280,10 @@ export default {
       }
     },
 
-     /**
-   * Hiển thị dữ liệu trang trước đó
-   */
+   /**
+     * Author:Phạm Văn Đạt
+     * function:  Hiển thị dữ liệu trang trước đó
+     */
     clickPreData(){
       if(this.checkPreData == true){
         this.currentPage =  this.currentPage-1;
@@ -287,9 +292,10 @@ export default {
       }
     },
 
-    /**
-   * Hiển thị dữ liệu trang tiếp theo
-   */
+  /**
+     * Author:Phạm Văn Đạt
+     * function: Hiển thị dữ liệu trang tiếp theo
+     */
     clickNextData(){
       if(this.checkNextData == true){
         this.currentPage =  this.currentPage+1;
@@ -321,6 +327,10 @@ export default {
       }
     },
 
+     /**
+     * Author: Phạm Văn Đạt
+     * function:  xử lý click combobox data
+     */
      handlerClickComboboxData: function (event) {
       try {
 
@@ -346,7 +356,8 @@ export default {
     ClickDetail: function (customerId) {
       let _CustomerDetailService = new CustomerDetailService();
       _CustomerDetailService.getByCustomerId(customerId).then((res) => {
-        if (res) this.customer = res;
+        console.log(res)
+        if (res.statusCode == StatusCode.GetSuccess ) this.customerDetail = res.data;
       });
     },
 
@@ -358,6 +369,11 @@ export default {
       this.$emit("ShowFormData", this.checkShow);
       this.$emit("CustomerInfo", CustomerInfo);
     },
+
+     /**
+     * Author: Phạm Văn Đạt
+     * function:  xử lý click checked input
+     */
     ClickHandlerChecked: function (event) {
       // xử lý thêm, xóa id trong mảng xử lý xóa, sửa
       let El = event.target.parentNode.getElementsByTagName("input")[0];
@@ -379,7 +395,11 @@ export default {
       }
 
     },
-    // xử lý checkbox header
+
+     /**
+     * Author: Phạm Văn Đạt
+     * function: xử lý checkbox header
+     */
     clickCheckboxHeader: function (event) {
       let ElChecked = event.target;
       let El = event.target.parentNode.getElementsByTagName("input")[0];
@@ -416,6 +436,10 @@ export default {
 
     },
 
+     /**
+     * Author: Phạm Văn Đạt
+     * function: Load dữ liệu khi lọc
+     */
     async LoadDataFilter(Data,keyword,currentPage,pageSize){
       // loading
       if(this.$refs.TableData != undefined)
@@ -452,11 +476,16 @@ export default {
         UnLoading(this.$refs.TableData);
     },
 
+    /**
+     * Author: Phạm Văn Đạt
+     * function: Load dữ liệu hiển thì và tìm kiếm
+     */
     async LoadData(keyword,currentPage,pageSize){
       if(this.$refs.TableData != undefined)
         Loading(this.$refs.TableData);
       let _CustomerService = new CustomerService();
        await _CustomerService.PagingCustomer(keyword,currentPage,pageSize).then((res) => {
+        console.log(res)
         if(res.statusCode == StatusCode.GetSuccess){
           this.customer = res.data.data;
           this.totalCount = res.data.totalCount
@@ -490,8 +519,29 @@ export default {
   },
   // theo dõi các biến thay đổi và thực hiện hàm nếu có
   watch: {
+    /**
+     * Author: Phạm Văn Đạt
+     * function: bỏ hết checked
+     */
+     removeListCustomerId(){
+      if(this.$refs.checkboxHeader){
+        this.$refs.checkboxHeader.click();
+      }
 
-    // theo dõi mảng giá trị lặp
+    },
+
+    /**
+     * Author: Phạm Văn Đạt
+     * function: theo dõi chi tiết khách hàng
+     */
+    customerDetail(value){
+      this.$emit("customerDetails",value);
+    },
+
+    /**
+     * Author: Phạm Văn Đạt
+     * function: theo dõi mảng giá trị lặp
+     */
     ArrayObjectData(){
       // PagingFilterCustomer
       this.LoadDataFilter(this.ArrayObjectData,this.keyword, this.currentPage,this.pageSize);
@@ -499,7 +549,10 @@ export default {
       // gọi api
     },
 
-    // kiểm tra check load dữ liệu
+    /**
+     * Author: Phạm Văn Đạt
+     * function: kiểm tra check load dữ liệu
+     */
     async checkLoadData(){
       if(this.checkLoadData == true){
         if(this.ArrayObjectData.length == 0){
@@ -509,37 +562,56 @@ export default {
           await this.LoadDataFilter(this.ArrayObjectData,this.keyword, this.currentPage,this.pageSize);
         }
         this.checkLoadData=false;
-        console.log("checkload")
 
       }
   
     },
-    // Load lại dữ liệu mỗi khi chọn trang mới
+
+     /**
+     * Author: Phạm Văn Đạt
+     * function: Load lại dữ liệu mỗi khi chọn trang mới
+     */
     pageSize(){
       this.checkLoadData = true;
     },
 
-    // theo dõi danh sách khách hàng
+     /**
+     * Author: Phạm Văn Đạt
+     * function: theo dõi danh sách khách hàng
+     */
     customer() {
       UnLoading(this.$refs.TableData);
     },
 
-    // hiển thị, ẩn side bar bên trái
+    /**
+     * Author: Phạm Văn Đạt
+     * function: hiển thị, ẩn side bar bên trái
+     */
     checkLeft() {
       handlerClickButtonArrow(this.checkLeft, this.checkRight, event);
     },
 
-    // hiển thị, ẩn side bar bên phải
+     /**
+     * Author: Phạm Văn Đạt
+     * function: hiển thị, ẩn side bar bên phải
+     */
     checkRight() {
       handlerClickButtonArrow(this.checkLeft, this.checkRight, event);
     },
 
-    // lấy thông tin khách hàng
+    /**
+     * Author: Phạm Văn Đạt
+     * function: lấy thông tin khách hàng
+     */
     searchCustomerCurrent() {
       this.keyword = this.searchCustomerCurrent;
       this.checkLoadData = true;
     },
-    // theo  dõi mảng để xóa danh sác, update
+
+    /**
+     * Author: Phạm Văn Đạt
+     * function: theo  dõi mảng để xóa danh sác, update
+     */
     listCustomerId: {
       handler: function (val) {
         this.$emit("listCustomerId", val);
@@ -547,7 +619,11 @@ export default {
       deep: true
     
     },
-    //check load form data
+
+    /**
+     * Author: Phạm Văn Đạt
+     * function: check load form data
+     */
     checkLoadCustomerData(){
        Loading(this.$refs.TableData)
         // load lại dữ liệu
@@ -558,6 +634,10 @@ export default {
    
   },
   mounted() {
+    /**
+     * Author: Phạm Văn Đạt
+     * function: Xử lý scroll
+     */
     handlerScroll();
   },
 };

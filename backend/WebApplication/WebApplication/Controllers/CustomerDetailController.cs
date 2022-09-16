@@ -22,7 +22,7 @@ namespace WebApplication.Controllers
 
         /// <summary>
         /// Author: Phạm Văn Đạt
-        /// - Lấy danh sách thông tin khách hàng theo CustomerId
+        /// - Lấy danh sách ngành nghề khách hàng theo CustomerId
         /// DateTime: 10:25 11/08/2022
         /// </summary>
         /// <returns></returns>

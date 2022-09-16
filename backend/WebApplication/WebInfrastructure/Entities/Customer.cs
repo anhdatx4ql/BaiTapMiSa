@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,12 +22,14 @@ namespace WebInfrastructure
         public string FullName { set; get; } // họ và tên
         public string CustomerPhoneNumber { set; get; } // số điện thoại cá nhân
         public string CompanyPhoneNumber { set; get; }// số điện thoại công ty
+        [Column(TypeName = "Email")]
         public string CustomerEmail { set; get; } // email cá nhân
+        [Column(TypeName = "Email")]
         public string CompanyEmail { set; get; } // email công ty
         public string Zalo { set; get; } // zalo
         public string TaxCode { set; get; } //mã số thuế
         public string Organization { set; get; } //tổ chức
-        public int Gender { set; get; } // giới tính
+        public Nullable<int> Gender { set; get; } // giới tính
         public string BirthDay { set; get; } // ngày sinh
         public string CustomerDescription { set; get; } // mô tả thông tin
         public string Address { set; get; } // địa chỉ

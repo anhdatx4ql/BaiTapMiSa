@@ -11,7 +11,7 @@ export class CustomerDetailService{
     async getByCustomerId(id){
        try{
             return axios.get(this.url+id).then((res) => {
-                return res.data.data;
+                return res.data;
              })
              .catch((e) => {
                console.log(e);

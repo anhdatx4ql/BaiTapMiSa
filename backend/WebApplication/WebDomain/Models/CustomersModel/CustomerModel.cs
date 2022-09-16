@@ -48,7 +48,7 @@ namespace WebDomain
         public DateTime CreatedAt { set; get; } // thời gian tạo
         public DateTime UpdatedAt { set; get; } // thời gian cập nhật
         public bool IsActivePhoneNumber { set; get; } // cho phép gọi điện 
-        public byte Gender { set; get; } // giới tính: = tinyint trong mysql
+        public Nullable<byte> Gender { set; get; } // giới tính: = tinyint trong mysql
         public bool IsActiveEmail { set; get; }// cho phép gửi email
         public bool IsDelete { set; get; } // kiểm tra đã xóa hay chưa
     }

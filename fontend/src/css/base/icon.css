@@ -137,7 +137,11 @@
 }
 
 .background-icon-tiemnang{
-    background: url(../../assets/img/icon_collection.svg) no-repeat 0px -48px;
+    background: url(../../assets/img/icon_collection.svg) no-repeat -160px -288px;
+}
+
+.background-icon-tiemnang-focus{
+    background: url(../../assets/img/icon_collection.svg) no-repeat -160px -288px;
 }
 
 .background-icon-chaohang{
@@ -370,4 +374,28 @@ span.el-input__suffix {
 span.el-input__suffix:hover {
     background: #797A7F;
     border-radius: 50%;
+}
+
+.el-input__inner {
+    color: black;
+}
+
+.background-icon-tool-tip{
+    background: url('../../assets/img/icon_collection.svg') no-repeat -209px 0px;
+    width: 16px;
+    height: 16px;
+    position: relative;
+    margin-left: 8px;
+}
+
+.background-icon-tool-tip:hover{
+    background: url('../../assets/img/icon_collection.svg') no-repeat -289px -128px;
+    width: 16px;
+    height: 16px;
+    position: relative;
+    margin-left: 8px;
+}
+
+.tool-tip-container:hover>.tool-tip-text {
+    display: inline-block;
 }

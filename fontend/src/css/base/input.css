@@ -219,3 +219,7 @@ section.vuejs3-datepicker__calendar-topbar {
 .el-input.el-input--prefix.el-input--suffix.el-date-editor.el-date-editor--date.el-tooltip__trigger.el-tooltip__trigger:focus-within {
     border-color: #4262F0  !important;
 }
+
+.el-popper.is-pure.is-light.el-picker__popper {
+    z-index: 9999 !important;
+}

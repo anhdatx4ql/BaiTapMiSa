@@ -21,6 +21,7 @@
     box-sizing: border-box;
     display: flex;
     justify-content: start;
+    padding-top: 0;
 }
 
 .notifi-content-right-title{

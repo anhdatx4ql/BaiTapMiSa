@@ -121,6 +121,7 @@
     <Compile Include="Models\CustomersModel\UpdateCustomerMul.cs" />
     <Compile Include="Models\DepartmentModel\DepartmentModel.cs" />
     <Compile Include="Models\FieldModel\FieldModel.cs" />
+    <Compile Include="Models\FileModel\FileModel.cs" />
     <Compile Include="Models\OrganizationTypeModel\OrganizationTypeModel.cs" />
     <Compile Include="Models\PositionModel\PositionModel.cs" />
     <Compile Include="Models\PotentialTypeModel\PotentialTypeModel.cs" />

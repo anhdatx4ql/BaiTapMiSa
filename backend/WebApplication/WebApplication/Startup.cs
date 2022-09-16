@@ -62,6 +62,7 @@ namespace WebApplication
             services.AddScoped<IPotentialTypeService, PotentialTypeService>();
             services.AddScoped<ISourceService, SourceService>();
             services.AddScoped<ITurnoverService, TurnoverService>();
+            services.AddScoped<IFilesService, FilesService>();
 
             services.AddSwaggerGen(c =>
             {

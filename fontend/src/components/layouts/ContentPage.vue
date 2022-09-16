@@ -4,11 +4,12 @@
     <ContentPageLeft
      @ArrayObjectData="ArrayObjectData = $event">
     </ContentPageLeft>
-    <ContentPageCenter 
 
+    <ContentPageCenter
+    :removeListCustomerId="removeListCustomerId"
     :searchCustomerCurrent="searchCustomerCurrent"
 
-     @CustomerDetails="customerDetails = $event"
+     @customerDetails="customerDetails = $event"
 
      :checkShowFormData="checkShowFormData"
 
@@ -47,38 +48,53 @@ export default {
   data() {
     return {
       searchCustomerCurrent:"",
-      customerDetails:"",
+      customerDetails:{},
       checkShow:Boolean, // - cho phép
       CustomerInfo:{},
       listCustomerId: "",
       checkLoadDone:true,
-      ArrayObjectData:[]
+      ArrayObjectData:[],
+      removeListCustomerIdCurrent:true
     };
   },
   props:{
       searchCustomer: String,
       checkShowFormData: Boolean,
-      checkLoadCustomerData:Boolean
+      checkLoadCustomerData:Boolean,
+      removeListCustomerId:Boolean
   },
   watch:{
 
+    removeListCustomerIdCurrent(value){
+      console.log(value)
+    },
+  
+    // Author: Phạm Văn Đạt
+    // function: theo dõi tìm kiếm khách hàng
     searchCustomer(){
       this.searchCustomerCurrent = this.searchCustomer;
     },
+
+     // Author: Phạm Văn Đạt
+    // function: kiểm tra load dữ liệu
     checkLoadDone(){
       this.$emit("checkLoadCustomerData",false);
       this.checkLoadDone = true;
     },
+
+     // Author: Phạm Văn Đạt
     // theo doi ShowFormData
     checkShow(){
       this.$emit('ShowFormData',true);
     },
 
+     // Author: Phạm Văn Đạt
     // the doi thong tin chi tiet de chinh sua
     CustomerInfo(){
       this.$emit('CustomerInfo',this.CustomerInfo);
     },
 
+     // Author: Phạm Văn Đạt
     // theo dõi danh sách id customer 
     listCustomerId:{
        handler: function (val) {

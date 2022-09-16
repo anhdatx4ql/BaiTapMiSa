@@ -1,12 +1,12 @@
-﻿using Dapper;
+﻿using Common.Resources;
+using Dapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WebInfrastructure;
-using static Common.ContantsError;
-using static Common.ContantsSuccess;
+
 
 namespace WebDomain
 {
@@ -41,7 +41,7 @@ namespace WebDomain
             }
             catch (Exception ex)
             {
-                return new ReponsitoryModel(null, CodeError.Code400, MessageError.ProcessError);
+                return new ReponsitoryModel(null, CodeError.Code500, MessageError.ProcessError);
             }
         }
 
@@ -70,7 +70,7 @@ namespace WebDomain
             }
             catch (Exception ex)
             {
-                return new ReponsitoryModel(ex.Message, CodeError.Code400, MessageError.ProcessError);
+                return new ReponsitoryModel(ex.Message, CodeError.Code500, MessageError.ProcessError);
             }
         }
 

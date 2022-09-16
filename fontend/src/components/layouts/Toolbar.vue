@@ -12,11 +12,14 @@
         </div>
       </div>
       <div class="toolbar-left-child">
-        <button class="button-toolbar-left">Sửa</button>
+        <button class="button-toolbar-left">
+          Sửa
+        </button>
       </div>
       <div class="toolbar-left-child">
-        <button class="button-icon-refesh" @click="loadData">
+        <button class="button-icon-refesh tool-tip-container" @click="loadData">
           <span class="button-icon-icon icon-refesh"></span>
+          <ToolTip :type="'top'" :text="'Tải lại dữ liệu'"></ToolTip>
         </button>
       </div>
       <!-- // End  TH1   -->
@@ -34,7 +37,7 @@
       </div>
 
       <div class="toolbar-left-child">
-        <button class="button-toolbar-left" @click="clickRemoveListCustomerId">
+        <button class="button-toolbar-left" @click="clickremoveListCustomerId">
           Bỏ chọn
         </button>
       </div>
@@ -100,22 +103,25 @@
             <span class="button-icon-text">Thêm</span>
           </button>
           <button
-            class="button-arrow button-background-primary button-icon-right"
+            class="button-arrow button-background-primary button-icon-right tool-tip-container"
             @click="showNotFound"
           >
             <span class="button-icon-icon button-icon-down"></span>
+            <ToolTip :type="'top'" :text="'Xem thêm'"></ToolTip>
           </button>
         </div>
       </div>
       <div class="toolbar-right-child">
-        <button class="button button-dots button-background-white" @click="showNotFound">
+        <button class="button button-dots button-background-white tool-tip-container" @click="showNotFound">
           <span class="button-icon-icon button-icon-icon-dots"></span>
+          <ToolTip :type="'top'" :text="'Menu'"></ToolTip>
         </button>
       </div>
       <div class="toolbar-right-child">
-        <button class="button button-dots button-background-white" @click="showNotFound">
+        <button class="button button-dots button-background-white tool-tip-container" @click="showNotFound">
           <span class="button-icon-icon button-icon-tiles"></span>
           <span class="button-icon-icon button-icon-down-black"></span>
+          <ToolTip :type="'top'" :text="'Khác'"></ToolTip>
         </button>
       </div>
     </div>
@@ -203,7 +209,7 @@
                     check="false" ref="CloumnValue"
                   >
                     <div
-                      class="combobox-content-select combobox-child"
+                      class="combobox-content-select combobox-child combobox-content-select-content-none"
                       ref="vocativeId"
                     >
                       - Không chọn -
@@ -297,7 +303,7 @@
                     check="false"
                   >
                     <div
-                      class="combobox-content-select combobox-child"
+                      class="combobox-content-select combobox-child combobox-content-select-content-none"
                       ref="positionId"
                     >
                       - Không chọn -
@@ -417,7 +423,7 @@
                     check="false"
                   >
                     <div
-                      class="combobox-content-select combobox-child"
+                      class="combobox-content-select combobox-child combobox-content-select-content-none"
                       ref="turnoverId"
                     >
                       - Không chọn -
@@ -496,11 +502,10 @@
                     check="false"
                   >
                     <div
-                      class="combobox-content-select combobox-child"
+                      class="combobox-content-select combobox-child combobox-content-select-content-none"
                       ref="genderId"
-                      value="0"
                     >
-                      {{ selectGenderName(customerGender) }}
+                      - Không chọn -  
                     </div>
                     <div
                       class="
@@ -512,13 +517,22 @@
                     ></div>
                   </div>
                   <div class="combobox-child combobox-data" ref="gender">
-                    <div class="combobox-data-child"></div>
                     <div class="combobox-data-child">
+                      <div
+                        class="combobox-data-child-content"
+                        @click="handlerClickComboboxData"
+                        value="null"
+                      >
+                        <div class="combobox-data-child-content-text">
+                          - Không chọn -
+                        </div>
+                        <div class="background-icon-checked icon-font-16"></div>
+                      </div>
+
                       <div
                         class="combobox-data-child-content"
                         v-for="v in gender"
                         :key="v.Code"
-                        :class="{'selected':(customerGender == v.Code)}"
                         @click="handlerClickComboboxData"
                         :value="v.Code"
                       >
@@ -526,13 +540,7 @@
                           {{ titleCase(v.Name) }}
                         </div>
                         <div
-                          class="background-icon-checked icon-font-16"
-                          :style="
-                            v.Code == customerGender
-                              ? 'display:inline-block'
-                              : 'display:none'
-                          "
-                        ></div>
+                          class="background-icon-checked icon-font-16"></div>
                       </div>
                     </div>
                   </div>
@@ -584,6 +592,13 @@
 </template>
 
 <script>
+
+  // nhung tooltip
+import ToolTip from "./ToolTip"
+
+// check null
+import { IsEmpty } from "../../js/formatData";
+
 // nhúng service xử lý Customer
 import { CustomerService } from "../Services/CustomerService";
 
@@ -618,19 +633,24 @@ import { ErrorsValidation } from "../../js/validation";
 import {
   ClickShowHideComboboxData,
   selectValueComboboxData,
-} from "../../js/test";
+} from "../../js/handlerCombobox";
 
 // ClickShowHideComboboxMulData,
 
 export default {
   name: "ToolbarComponent",
+  components: {
+    ToolTip
+   },
   props: {
     checkShowFormData: Boolean,
     listCustomerId: Array,
     ActiveMessage: Boolean,
+    
   },
   data() {
     return {
+      checkRemoveId: false,
       ActiveMessageCurrent: false,
       ToastMessageCustomer: ToastMessage,
       fielsUpdate: new Map(),
@@ -671,7 +691,10 @@ export default {
     this.fielsUpdate.set("Gender", "Giới tính");
   },
   watch: {
-
+    /**
+     * Author: Phạm Văn Đạt
+     * function: theo dõi họ và tên
+     */
     FullName(){
       if(this.FullName == "") this.FullName = null;
 
@@ -729,14 +752,6 @@ export default {
       console.log(this.$refs.position);
       UnLoading(this.$refs.turnover);
     },
-
-    // theo dõi list xóa, update
-    listCustomerId: {
-      handler: function (val) {
-        console.log(val);
-      },
-      deep: true,
-    },
     ActiveMessage() {
       this.ActiveMessageCurrent = this.ActiveMessage;
     },
@@ -769,12 +784,34 @@ export default {
   },
   methods: {
 
+     /**
+     * Author: Phạm Văn Đạt
+     * function: xóa các id đã chọn
+     */
+     clickremoveListCustomerId(){
+      this.$emit("removeListCustomerId",!this.checkRemoveId);
+      this.checkRemoveId = !this.checkRemoveId;
+    },
+
+     /**
+     * Author: Phạm Văn Đạt
+     * function: kiểm tra giá trị null
+     */
+    IsEmpty,
+
+    /**
+     * Author: Phạm Văn Đạt
+     * function: check load data
+     */
     loadData(){
       // load lại dữ liệu trong form
       this.$emit("checkLoadCustomerData",true);
     },
 
-    // hiển thị thông báo chưa xử lý
+    /**
+     * Author: Phạm Văn Đạt
+     * function: hiển thị thông báo chưa xử lý
+     */
     showNotFound(){
       this.ToastMessageCustomer.Type = "info";
       this.ToastMessageCustomer.Message = "Chúng tôi sẽ sớm ra mắt";
@@ -782,7 +819,10 @@ export default {
       this.$emit("showToastMessageInfo", true);
     },
 
-    // xử lý tìm kiếm doanh thu
+     /**
+     * Author: Phạm Văn Đạt
+     * function: xử lý tìm kiếm doanh thu
+     */
     async SearchTurnover(){
       let _TurnoverService = new TurnoverService();
         await _TurnoverService.getByName(this.searchTurnover).then((res) => {
@@ -793,7 +833,10 @@ export default {
         });
     },
 
-    // xử lý tìm kiếm Chức danh
+    /**
+     * Author: Phạm Văn Đạt
+     * function: xử lý tìm kiếm Chức danh
+     */
     async SearchpPosition(){
       let _PositionService = new PositionsService();
         await _PositionService.getByName(this.searchpPosition).then((res) => {
@@ -804,7 +847,10 @@ export default {
         });
     },
 
-      // xử lý tìm kiếm xưng hô
+    /**
+     * Author: Phạm Văn Đạt
+     * function: xử lý tìm kiếm xưng hô
+     */
       async SearchVocative(){
       let _VocativeService = new VocativeService();
         await _VocativeService.getByName(this.searchVocative).then((res) => {
@@ -815,7 +861,10 @@ export default {
         });
     },
 
-    // xuất file excel
+    /**
+     * Author: Phạm Văn Đạt
+     * function: xuất file excel
+     */
     async clickExportExcel(event){
       this.showOptions(event);
       // // test export excel
@@ -828,7 +877,10 @@ export default {
       this.$emit("loadFullScreen",false);
     },
 
-    // Cập nhật danh sách
+    /**
+     * Author: Phạm Văn Đạt
+     * function: Cập nhật danh sách
+     */
     ClickUpdateMul(){
       if(this.checkUpdate == true || this.errors.size ==0  && this.ColumnName !=null){
 
@@ -876,8 +928,11 @@ export default {
 
         if(this.$refs.genderId  != null){
           let value =  this.$refs.genderId.getAttribute("value");
-          if(value)
+          if(value){
+            if(value  == "null")
+              value = null;
             this.ColumnValue =  value;
+          }
         }
         
 
@@ -914,7 +969,10 @@ export default {
    
     },
 
-      // lấy giới tính
+    /**
+     * Author: Phạm Văn Đạt
+     * function:  lấy giới tính
+     */
     selectGenderName: function (value) {
       for (let i = 0; i < this.gender.length; i++) {
         if (value == this.gender[i].Code) return this.gender[i].Name;
@@ -940,6 +998,7 @@ export default {
     },
 
      /**
+      * Author: Phạm Văn Đạt
      * function:  xử lý lấy dữ liệu position
      */
     async HandlerSelectPosition() {
@@ -953,6 +1012,7 @@ export default {
     },
 
      /**
+      * Author: Phạm Văn Đạt
      * function:  xử lý lấy dữ liệu doanh thu
      */
     async HandlerSelectTurnover() {
@@ -964,7 +1024,11 @@ export default {
         UnLoading(this.$refs.turnover)
       }else UnLoading(this.$refs.turnover)
     },
-    // click hiển thị form
+
+    /**
+     * Author: Phạm Văn Đạt
+     * function: click hiển thị form
+     */
     ClickShowForm: function () {
       try {
         this.$emit("ShowFormData", !this.checkShowFormData);
@@ -972,7 +1036,11 @@ export default {
         console.log(error);
       }
     },
-    // Hiển thị form chọn xuất khẩu, xóa
+
+    /**
+     * Author: Phạm Văn Đạt
+     * function: Hiển thị form chọn xuất khẩu, xóa
+     */
     showOptions: function (event) {
       try {
         let el = event.target;
@@ -995,10 +1063,10 @@ export default {
       }
     },
 
-    // xử lý bỏ chọn
-    clickRemoveListCustomerId: function () {},
-
-    // xuwr lys xoas
+     /**
+     * Author: Phạm Văn Đạt
+     * function: xử lý xóa
+     */
     ClickDeleteMul(event) {
       try {
         this.showOptions(event)
@@ -1011,7 +1079,11 @@ export default {
         console.log(error);
       }
     },
-    // xử lý click combobox
+
+     /**
+     * Author: Phạm Văn Đạt
+     * function: xử lý click combobox
+     */
     handlerClickCombobox: function (event) {
       try {
         console.log(event)
@@ -1050,6 +1122,7 @@ export default {
     },
 
     /***
+     * Author: Phạm Văn Đạt
      * function:  xử lý kích combobox multiple
      */
     handlerClickComboboxData: function (event) {

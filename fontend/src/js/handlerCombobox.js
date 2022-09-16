@@ -1,15 +1,5 @@
 
 
-// // xử lý ẩn các combobox khi kích vào chỗ bên ngoài
-// export function HideCombobox(){
-  
-//   window.addEventListener("click", function(){
-
-//     handlerClickHideFullComboboxData();
-//   });
-// }
-
-
 // Hàm xử lý scroll thanh cuộn của table
 // Author: Phạm Văn Đạt
 // created: 0h24' 1/08/2022
@@ -107,6 +97,26 @@ export async function selectValueComboboxData(e) {
         containerContent.innerHTML = innerHTML;
         containerContent.removeAttribute("value");
         containerContent.setAttribute("value", value);
+
+        // xử lý màu chữ
+        let colorElement = containerElement.getElementsByClassName("combobox-content-select")[0];
+        if(colorElement){
+          let valueColorElement = colorElement.getAttribute("value");
+          if(valueColorElement){
+            let classColorElement = colorElement.classList.contains("combobox-content-select-content-none");
+            if(classColorElement){
+              colorElement.classList.remove("combobox-content-select-content-none");
+            }
+          }else{
+            let classColorElement = colorElement.classList.contains("combobox-content-select-content-none");
+            
+            if(classColorElement == false){
+              colorElement.classList.add("combobox-content-select-content-none");
+
+            }
+          }
+        }
+
         await HandlerShowHideComboboxData(comboboxContent);
       }
       
@@ -174,7 +184,11 @@ export async function HandlerShowHideComboboxData(element) {
   }
 }
 
-// Hiển thị combobox Data
+/**
+ * Author: Phạm Văn Đạt
+ * function: Hiển thị combobox data
+ * created: 20:35 20/08/2022
+ */
 function ShowFormData(comboboxData, check, iconBox = null, element) {
   try {
 
@@ -228,50 +242,64 @@ function ShowFormData(comboboxData, check, iconBox = null, element) {
   }
 }
 
+/**
+ * Author: Phạm Văn Đạt
+ * function: Xử lý ẩn combobox data
+ * created: 20:30 20/08/2022
+ */
 export function handlerClickHideFullComboboxData(){
+  try{
   // lấy class các form
   const comboboxDataFull = document.getElementsByClassName("combobox-data");
 
-  for(let i=0;i<comboboxDataFull.length; i++){
-   if(comboboxDataFull[i].classList.contains("div-inline-block")){
-    const El = comboboxDataFull[i].parentNode.getElementsByClassName("combobox-content")[0];
-    // xử lý màu border
-    if(El){
-      let ElClasses = El.classList;
-      let checkChangeBorder = false;
-      if(ElClasses.contains('combobox-child') && ElClasses.contains('combobox-content')){
-        checkChangeBorder = true;
-      }
-  
-      if(checkChangeBorder == true){
-        if(ElClasses.contains("border-input-forcus") == true)
-          ElClasses.remove("border-input-forcus");
-      }
+for(let i=0;i<comboboxDataFull.length; i++){
+ if(comboboxDataFull[i].classList.contains("div-inline-block")){
+  const El = comboboxDataFull[i].parentNode.getElementsByClassName("combobox-content")[0];
+  // xử lý màu border
+  if(El){
+    let ElClasses = El.classList;
+    let checkChangeBorder = false;
+    if(ElClasses.contains('combobox-child') && ElClasses.contains('combobox-content')){
+      checkChangeBorder = true;
     }
-  
-     // lấy ra ô input để chỉnh sửa
-     let inputCombobox = comboboxDataFull[i].parentNode.getElementsByClassName("combobox-content")[0];
 
-     // lấy ra icon để thay đổi
-     let iconCombobox = comboboxDataFull[i].parentNode.getElementsByClassName("combobox-content-icon")[0];
+    if(checkChangeBorder == true){
+      if(ElClasses.contains("border-input-forcus") == true)
+        ElClasses.remove("border-input-forcus");
+    }
+  }
 
-     // thay đổi icon
-     if(iconCombobox){
+   // lấy ra ô input để chỉnh sửa
+   let inputCombobox = comboboxDataFull[i].parentNode.getElementsByClassName("combobox-content")[0];
 
-       if(iconCombobox.classList.contains("button-icon-down-black") == true){
-         iconCombobox.classList.remove("button-icon-down-black");
-         iconCombobox.classList.add("button-icon-up-black");
-       }
+   // lấy ra icon để thay đổi
+   let iconCombobox = comboboxDataFull[i].parentNode.getElementsByClassName("combobox-content-icon")[0];
+
+   // thay đổi icon
+   if(iconCombobox){
+
+     if(iconCombobox.classList.contains("button-icon-down-black") == true){
+       iconCombobox.classList.remove("button-icon-down-black");
+       iconCombobox.classList.add("button-icon-up-black");
      }
-    
-
-     inputCombobox.setAttribute("check", "false");
-     comboboxDataFull[i].classList.remove("div-inline-block")
    }
+  
+
+   inputCombobox.setAttribute("check", "false");
+   comboboxDataFull[i].classList.remove("div-inline-block")
  }
 }
+  } catch (error) {
+    console.log(error);
+  }
+  
+}
 
-// xử lý click hiển thị, ẩn side bar left/right
+/**
+ * Author: Phạm Văn Đạt
+ * function: xử lý click hiển thị, ẩn side bar left/right
+ * created: 20:30 20/08/2022
+ */
 export function handlerClickButtonArrow(left, right, event) {
   try {
     if (left == true && right == true) {
@@ -335,7 +363,11 @@ export function handlerClickButtonArrow(left, right, event) {
   }
 }
 
-// start hàm xử lý thay đổi mũi tên trong lúc click để ẩn/ hiển thị side bar
+
+/**
+ * Author: Phạm Văn Đạt
+ * function: start hàm xử lý thay đổi mũi tên trong lúc click để ẩn/ hiển thị side bar
+ */
 function rightToLeft(element) {
   try {
     element.classList.remove("background-icon-arrow-right");

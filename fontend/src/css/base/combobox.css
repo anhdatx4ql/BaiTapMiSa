@@ -175,12 +175,6 @@ body {
     overflow-x: hidden;
     padding: 0 8px;
 }
-
-/* .combobox-content-select.combobox-mul-child {
-    display: flex;
-    flex-wrap: wrap;
-} */
-
 .div-disabled{
     background-color: #F8F8F8;
     cursor: no-drop !important;
@@ -189,4 +183,8 @@ body {
 .combobox-content-select-content-none {
     background: none;
     color: #99A1B2 !important;
+}
+
+.combobox-child.combobox-content:hover {
+    border: 1px solid #7C869C;
 }

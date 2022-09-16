@@ -1,4 +1,8 @@
-// xử lý hiển thị loading khhi đang tải dữ liệu
+
+/**
+ * Author: Phạm Văn Đạt
+ * function:  xử lý hiển thị loading khhi đang tải dữ liệu
+ */
 export async function Loading(element){
     if(element){
         let DivLoadingChild= element.getElementsByClassName("content-background-icon-loading")[0];
@@ -8,7 +12,10 @@ export async function Loading(element){
     
 }
 
-// xử lý ẩn loading khi đã tải dữ liệu xong
+/**
+ * Author: Phạm Văn Đạt
+ * function:  xử lý ẩn loading khi đã tải dữ liệu xong
+ */
 export async function UnLoading(element){
 
     // lấy thẻ cha chứa loading

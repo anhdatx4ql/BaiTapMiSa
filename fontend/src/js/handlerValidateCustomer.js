@@ -1,5 +1,7 @@
 import {formatDate} from "./formatData";
 
+import { checkEmail } from "./handlerString";
+
 import {ErrorsValidation} from "./validation";
 
 // nhúng service xử lý Customer
@@ -19,7 +21,8 @@ import { StatusCode } from "../components/Models/StatusCode";
  * Function: hàm xử lý create customer
  */
 export async function handlerValidateCustomer(refs,customerInfo,errors){
-  console.log("validation")
+  try{
+    console.log("validation")
     let vocativeId = refs.vocativeId.getAttribute("value");
     let departmentId= refs.departmentId.getAttribute("value");
     let sourceId = refs.sourceId.getAttribute("value");
@@ -68,14 +71,26 @@ export async function handlerValidateCustomer(refs,customerInfo,errors){
     }
 
     //kiểm tra trùng email nếu có
-    if(customerInfo.CustomerEmail != null || customerInfo.CustomerEmail != ""){
-      let checkEmail = CheckExistsColumn;
-      checkEmail.tableName = "Customer";
-      checkEmail.columnName = "CustomerEmail";
-      checkEmail.value = customerInfo.CustomerEmail;
-      let result = await checkExists(checkEmail)
-      if(result == true)
-      errors.set("CustomerEmail",ErrorsValidation.EmailDuplicate)
+    if(customerInfo.CustomerEmail){
+      console.log(customerInfo.CustomerEmail)
+
+      if(checkEmail(customerInfo.CustomerEmail) == null){
+        if(!errors.get("CustomerEmail"))
+          errors.set("CustomerEmail",ErrorsValidation.EmailType);
+      }else{
+        if(errors.get("CustomerEmail"))
+          errors.delete("CustomerEmail")
+
+          let checkEmail = CheckExistsColumn;
+          checkEmail.tableName = "Customer";
+          checkEmail.columnName = "CustomerEmail";
+          checkEmail.value = customerInfo.CustomerEmail;
+          let result = await checkExists(checkEmail)
+          if(result == true)
+          errors.set("CustomerEmail",ErrorsValidation.EmailDuplicate)
+      }
+
+     
     }
 
     // kiểm tra trùng bank account nếu có
@@ -99,8 +114,17 @@ export async function handlerValidateCustomer(refs,customerInfo,errors){
       if(result == true)
       errors.set("TaxCode",ErrorsValidation.TaxCodeDuplicate)
     }
-
-
+    
+    if(customerInfo.CompanyEmail){
+      if(checkEmail(customerInfo.CompanyEmail) == null){
+        if(!errors.get("CompanyEmail"))
+          errors.set("CompanyEmail",ErrorsValidation.EmailType);
+      }else{
+        if(errors.get("CompanyEmail"))
+          errors.delete("CompanyEmail")
+      }
+    }
+    
 
     // kiểm tra trùng mã tiềm năng nếu có
     if(customerInfo.PotentialCode != null || customerInfo.PotentialCode != ""){
@@ -123,9 +147,14 @@ export async function handlerValidateCustomer(refs,customerInfo,errors){
 
     return [customerInfo,errors];
 
+  } catch (error) {
+    console.log(error);
+  }
+ 
 }
 
 /**
+ * Author: Phạm Văn Đạt
  * Xử lý vlaidate dữ liệu bảng nhiều nhiều
  */
 export function handlerValidateTCustomer(_MapValue,_customerId){
@@ -139,6 +168,7 @@ export function handlerValidateTCustomer(_MapValue,_customerId){
 }
 
 /**
+ * Author: Phạm Văn Đạt
  * Xử lý check trùng
  */
 
@@ -160,6 +190,11 @@ export async function checkExists(model){
 
 }
 
+
+/**
+ * Author: Phạm Văn Đạt
+ * function: Xóa khoảng trắng chuỗi
+ */
 function trimString(string){
   if(string != null){
     if(string.length > 0)

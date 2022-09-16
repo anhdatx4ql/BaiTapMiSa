@@ -9,6 +9,7 @@
     right: 0;
     align-items: center;
     justify-content: center;
+    z-index:9999;
   }
   
   .form-container-title-left {
@@ -72,9 +73,9 @@
   }
   .form-container-content-child-item {
     display: flex;
-      align-items: baseline;
-      justify-content: start;
-      width: 384px;
+    align-items: baseline;
+    justify-content: start;
+    width: 404px;
   }
   
   .form-container-content .form-container-content-child-item:not(:last-child) {
@@ -85,6 +86,7 @@
   .form-container-content-child-body {
     display: flex;
     flex-wrap: wrap;
+    width:80%;
   }
   
   .font-latin-bold {
@@ -97,7 +99,7 @@
   }
   
   .form-container-content-child-item-input > span {
-    margin-top: 12px;
+    margin-top: 8px;
   }
   
   .span-error {
@@ -118,13 +120,13 @@
   }
   
   .form-container-content {
-    height: calc(100vh - 100px - 48px);
+    height: calc(100vh - 48px);
     overflow: scroll;
     overflow-x: hidden;
   }
   
   .form-container > form {
-    width: 80%;
+    width: 100%;
     display: inline-block;
   }
   
@@ -141,17 +143,14 @@
   }
   
   .form-container-content-child-item-label {
-    width: 100px;
+    width: 120px;
     margin-right: 44px;
     display: flex;
     align-items: center;
     justify-content: start;
   }
 
-  .form-container-content-child-item.form-container-description {
-    width: calc(384px + 384px + 32px);
-}
 
 textarea.textarea.textarea-description {
-    width: calc(384px + 384px - 144px + 32px);
+    width: calc(384px + 384px - 144px + 32px + 20px);
 }

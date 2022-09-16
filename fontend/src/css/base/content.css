@@ -252,3 +252,8 @@ span.el-date-table-cell__text {
 .table-button-right-chlid .button-background-white {
     border: none !important;
 }
+
+.content-sider-bar-right-content.content-sider-bar-right-child .combobox-toolbar-text {
+    padding: 0 16px;
+    font-weight: 600;
+}

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,8 +27,9 @@ namespace WebDomain
         public string CustomerPhoneNumber { set; get; } // số điện thoại cá nhân + 
         public string CompanyPhoneNumber { set; get; }// số điện thoại công ty +
 
+        [Column(TypeName = "Email")]
         public string CustomerEmail { set; get; } // email cá nhân + 
-
+        [Column(TypeName = "Email")]
         public string CompanyEmail { set; get; } // email công ty + 
         public string Zalo { set; get; } // zalo + 
         public string TaxCode { set; get; } //mã số thuế + 

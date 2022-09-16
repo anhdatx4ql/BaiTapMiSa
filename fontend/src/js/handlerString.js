@@ -1,3 +1,8 @@
+
+/**
+ * Author: Phạm Văn Đạt
+ * function: In hoa chữ cái đầu
+ */
 export function titleCase(string) {
     //1. Tách các từ, cụm từ trong chuỗi ban đầu
     let sentence = string.toLowerCase().split(" ");
@@ -11,4 +16,14 @@ export function titleCase(string) {
       return sentence.join(" ");
    }
     return string;
-  }
+}
+
+
+/**
+ * Author: Phạm Văn Đạt
+ * function: Kiểm tra định dạng email
+ */
+export function checkEmail(value){
+   let myRe = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,5}$/;
+   return myRe.exec(value);
+}

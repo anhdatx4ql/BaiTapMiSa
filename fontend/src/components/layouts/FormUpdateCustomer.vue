@@ -9,9 +9,9 @@
             </div>
           </div>
           <div class="form-container-title-right">
-            <button type="button" class="button button-background-primary save" @click="OnSubmit">Lưu</button>
-            <button type="button" class="button button-background-white created" @click="OnSubmit">Lưu và thêm</button>
-            <button type="button" class="button" @click="HandlerCloseForm">
+            <button type="button" class="button button-background-primary save" @click="OnSubmit" ref="save">Lưu</button>
+            <button type="button" class="button button-background-white created" @click="OnSubmit" ref="saveAndAdd">Lưu và thêm</button>
+            <button type="button" class="button button-background-white" @click="HandlerCloseForm">
               Hủy bỏ
             </button>
           </div>
@@ -58,6 +58,7 @@
                       <div
                         class="combobox-content-select combobox-child"
                         ref="vocativeId"
+                        :class="{'combobox-content-select-content-none':(IsEmpty(customerInfo.vocativeId))?true:false}"
                         :value="
                           customerInfo.vocativeId ? customerInfo.vocativeId : ''
                         "
@@ -246,6 +247,7 @@
                       <div
                         class="combobox-content-select combobox-child"
                         ref="departmentId"
+                        :class="{'combobox-content-select-content-none':(IsEmpty(customerInfo.departmentId))?true:false}"
                         :value="
                           customerInfo.departmentId
                             ? customerInfo.departmentId
@@ -355,6 +357,7 @@
                       <div
                         class="combobox-content-select combobox-child"
                         ref="positionId"
+                        :class="{'combobox-content-select-content-none':(IsEmpty(customerInfo.positionId))?true:false}"
                         :value="
                           customerInfo.positionId ? customerInfo.positionId : ''
                         "
@@ -450,7 +453,9 @@
               <div class="form-container-content-child-item">
                 <div class="form-container-content-child-item-label">
                   ĐT di động
-                  <ToolTip :type="'top'" :text="'Điện thoại di động'"></ToolTip>
+                  <span class="background-icon-tool-tip tool-tip-container">
+                    <ToolTip :type="'top'" :text="'Điện thoại di động'"></ToolTip>
+                  </span>
                 </div>
                 <div class="form-container-content-child-item-input">
                   <div
@@ -487,7 +492,9 @@
               <div class="form-container-content-child-item">
                 <div class="form-container-content-child-item-label">
                   ĐT cơ quan
-                  <ToolTip :type="'top'" :text="'Điện thoại cơ quan'"></ToolTip>
+                  <span class="background-icon-tool-tip tool-tip-container">
+                    <ToolTip :type="'top'" :text="'Điện thoại di động'"></ToolTip>
+                  </span>
                 </div>
                 <div class="form-container-content-child-item-input">
                   <div class="border-input-content">
@@ -524,6 +531,7 @@
                       <div
                         class="combobox-content-select combobox-child"
                         ref="sourceId"
+                        :class="{'combobox-content-select-content-none':(IsEmpty(customerInfo.sourceId))?true:false}"
                         :value="
                           customerInfo.sourceId ? customerInfo.sourceId : ''
                         "
@@ -627,7 +635,7 @@
                     >
                       <div class="combobox-content-select combobox-mul-child">
                         <div
-                          class="combobox-content-select-content"
+                          class="combobox-content-select-content combobox-content-select-content-none"
                           v-if="customerPotentialTypeMap.size == 0"
                         >
                           <div class="">- Không chọn -</div>
@@ -834,7 +842,7 @@
                   Email cơ quan
                 </div>
                 <div class="form-container-content-child-item-input">
-                  <div class="border-input-content">
+                  <div class="border-input-content" :class="{ 'input-error': errors.get('CompanyEmail') }">
                     <input
                       type="text"
                       class="input-content"
@@ -849,7 +857,9 @@
                       ></span>
                     </div>
                   </div>
-                  <!-- <span class="span-error">Tên không được để trống</span> -->
+                  <span class="span-error" v-if="errors.get('CompanyEmail')">{{
+                    errors.get("CompanyEmail")
+                  }}</span>
                 </div>
               </div>
               <!-- EndEmail cơ quan-->
@@ -916,8 +926,8 @@
             <div class="form-container-content-child-title font-latin-bold">
               Thông tin cá nhân
             </div>
-
-            <!-- Start giới tính -->
+            <div class="form-container-content-child-body">
+                <!-- Start giới tính -->
             <div class="form-container-content-child-item">
               <div class="form-container-content-child-item-label">
                 Giới tính
@@ -932,11 +942,16 @@
                     <div
                       class="combobox-content-select combobox-child"
                       ref="genderId"
+                      :class="{'combobox-content-select-content-none':(IsEmpty(customerInfo.gender))?true:false}"
                       :value="
-                        customerInfo.gender != null ? customerInfo.gender : ''
+                        customerInfo.gender != null ? customerInfo.gender : null
                       "
                     >
-                      {{ selectGenderName(customerInfo.gender) }}
+                    {{
+                          (customerInfo.gender != null)
+                            ? selectGenderName(customerInfo.gender)
+                            : "- Không chọn -"
+                        }}
                     </div>
                     <div
                       class="
@@ -948,8 +963,26 @@
                     ></div>
                   </div>
                   <div class="combobox-child combobox-data" ref="gender">
-                    <div class="combobox-data-child"></div>
                     <div class="combobox-data-child">
+                      <div
+                          class="combobox-data-child-content"
+                          :class="{
+                            selected: IsEmpty(customerInfo.gender),
+                          }"
+                          @click="handlerClickComboboxData"
+                        >
+                          <div class="combobox-data-child-content-text">
+                            - Không chọn -
+                          </div>
+                          <div
+                            class="background-icon-checked icon-font-16"
+                            :style="
+                              IsEmpty(customerInfo.gender)
+                                ? 'display:inline-block'
+                                : 'display:none'
+                            "
+                          ></div>
+                        </div>
                       <div
                         class="combobox-data-child-content"
                         v-for="v in gender"
@@ -990,9 +1023,10 @@
                 </Datepicker> -->
                 <el-config-provider :locale="locale"> 
                   <el-date-picker tabindex="12" v-model="customerInfo.birthDay" type="date" format="DD/MM/YYYY"
-                  style="border-color:red;"></el-date-picker>
+                  :style="(errors.get('DateTimeError'))?'border:1px solid red !important':''"
+                  ></el-date-picker>
                 </el-config-provider>
-                
+                <span class="span-error" v-if="(errors.get('DateTimeError'))">{{errors.get('DateTimeError')}}</span>
               </div>
             </div>
             <!-- End Ngày sinh-->
@@ -1021,6 +1055,8 @@
               </div>
             </div>
             <!-- End Facebook -->
+            </div>
+            
           </div>
         </div>
 
@@ -1056,7 +1092,7 @@ import {
   ClickShowHideComboboxData,
   selectValueComboboxData,
   ClickShowHideComboboxMulData,
-} from "../../js/test";
+} from "../../js/handlerCombobox";
 
 // các hàm xử lý click combobox
 import { IsEmpty,formatDate } from "../../js/formatData";
@@ -1078,7 +1114,7 @@ import {
 } from "../../js/comboboxDataMultiple";
 
 // xử lý hiển thị text
-import { titleCase } from "../../js/handlerString";
+import { titleCase,checkEmail } from "../../js/handlerString";
 
 // xử lý check trùng
 import { checkExists } from "../../js/handlerValidateCustomer";
@@ -1114,7 +1150,6 @@ export default {
     ToolTip,
     ElDatePicker,
     ElConfigProvider 
-
    },
    setup() {
       return {
@@ -1143,6 +1178,7 @@ export default {
       ToastMessageCustomer: ToastMessage,
       checkValidatePhone: false,
       checkValidateEmail: false,
+      checkValidateCompanyEmail:false,
       checkValidateTaxCode: false,
       CustomerPhone: "",
       CustomerEmail: "",
@@ -1152,18 +1188,30 @@ export default {
       searchVocative:"",
       searchDepartment:"",
       searchSource:"",
-      searchpPosition:""
+      searchpPosition:"",
+      ErrorsValidation:ErrorsValidation
     };
   },
   created() {
-    console.log(this.customerInfo);
   },
   watch: {
-    "customerInfo.birthDay":{
-      handler(){
-        console.log(this.customerInfo.birthDay)
+    "customerInfo.isActivePhoneNumber":{
+      handler(val){
+        console.log(val)
       }
     },
+    "customerInfo.birthDay":{
+    handler(val){
+      let today = new Date();
+       if(val > today){
+        console.log(this.errors.get("DateTimeError"))
+          this.errors.set("DateTimeError",this.ErrorsValidation.DateTimeError);
+       }else{
+        if(this.errors.get("DateTimeError"))
+          this.errors.delete("DateTimeError");
+       }    
+      }
+  },
   
     customerInfo() {
       // lấy thông tin bảng loại tiềm năng
@@ -1216,20 +1264,33 @@ export default {
 
     //  theo doi email
     "customerInfo.customerEmail": {
-      handler() {
+      handler(newValue,oldValue) {
         if (this.errors.get("CustomerEmail"))
           this.errors.delete("CustomerEmail");
-        if (this.customerInfo.customerEmail != this.CustomerEmail) {
+
+        if (this.customerInfo.customerEmail != this.CustomerEmail && (this.customerInfo.customerEmail!= null || this.customerInfo.customerEmail != "") && newValue != oldValue) {
           this.checkValidateEmail = true;
         } else this.checkValidateEmail = false;
       },
     },
 
+     //  theo doi email công ty
+     "customerInfo.companyEmail": {
+      handler() {
+        if (this.errors.get("CompanyEmail"))
+          this.errors.delete("CompanyEmail");
+
+        if (this.customerInfo.companyEmail != this.companyEmail) {
+          this.checkValidateCompanyEmail = true;
+        } else this.checkValidateCompanyEmail = false;
+      },
+    },
+
     //  theo doi ma so thue
     "customerInfo.taxCode": {
-      handler() {
+      handler(newValue,oldValue) {
         if (this.errors.get("TaxCode")) this.errors.delete("TaxCode");
-        if (this.customerInfo.taxCode != this.TaxCode) {
+        if (this.customerInfo.taxCode != this.TaxCode && newValue != oldValue) {
           this.checkValidateTaxCode = true;
         } else this.checkValidateTaxCode = false;
       },
@@ -1579,6 +1640,16 @@ export default {
     async OnSubmit(event) {
       try {
         console.log(event.target)
+        // disabled nút lưu
+        if(this.$refs.save){
+          this.$refs.save.setAttribute("disabled", "disabled");
+        }
+
+        // disabled nút lưu và thêm
+        if(this.$refs.saveAndAdd){
+          this.$refs.saveAndAdd.setAttribute("disabled", "disabled");
+        }
+
         // kiểm tra tên không được trống
         if (
           this.customerInfo.firstName == null ||
@@ -1602,17 +1673,34 @@ export default {
             );
         }
 
-        // check trùng email
+        // validate email
         if (this.checkValidateEmail == true) {
-          let customerEmail = CheckExistsColumn;
-          customerEmail.tableName = "Customer";
-          customerEmail.columnName = "customerEmail";
-          customerEmail.value = this.customerInfo.customerEmail;
 
-          let result = await checkExists(customerEmail);
-          if (result == true)
-            this.errors.set("CustomerEmail", ErrorsValidation.EmailDuplicate);
+          // kiểm tra có đúng định dạng
+          if(checkEmail(this.customerInfo.customerEmail) == null){
+            if(!this.errors.get("CustomerEmail"))
+              this.errors.set("CustomerEmail",ErrorsValidation.EmailType);
+          }else{
+            // kiếm tra trùng
+            let customerEmail = CheckExistsColumn;
+            customerEmail.tableName = "Customer";
+            customerEmail.columnName = "customerEmail";
+            customerEmail.value = this.customerInfo.customerEmail;
+
+            let result = await checkExists(customerEmail);
+            if (result == true)
+              this.errors.set("CustomerEmail", ErrorsValidation.EmailDuplicate);
+            }
         }
+
+        if (this.checkValidateCompanyEmail == true) {
+
+          // kiểm tra có đúng định dạng
+          if(checkEmail(this.customerInfo.companyEmail) == null){
+            if(!this.errors.get("CompanyEmail"))
+              this.errors.set("CompanyEmail",ErrorsValidation.EmailType);
+          }
+          }
 
         // check trùng mã số thuế
         if (this.checkValidateTaxCode == true) {
@@ -1653,28 +1741,32 @@ export default {
           this.customerUpdate.CustomerPhoneNumber = (this.customerInfo.customerPhoneNumber)?this.customerInfo.customerPhoneNumber:null;
           this.customerUpdate.CompanyPhoneNumber = (this.customerInfo.companyPhoneNumber)?this.customerInfo.companyPhoneNumber:null;
           this.customerUpdate.SourceId = (this.customerInfo.sourceId)?this.customerInfo.sourceId:null;
-          this.customerUpdate.IsActivePhoneNumber = (this.customerInfo.isActivePhoneNumber)?this.customerInfo.isActivePhoneNumber:null;
-          this.customerUpdate.IsActiveEmail = (this.customerInfo.isActiveEmail)?this.customerInfo.isActiveEmail:null;
+          this.customerUpdate.IsActivePhoneNumber = (this.customerInfo.isActivePhoneNumber)?this.customerInfo.isActivePhoneNumber:false;
+          this.customerUpdate.IsActiveEmail = (this.customerInfo.isActiveEmail)?this.customerInfo.isActiveEmail:false;
           this.customerUpdate.Zalo = (this.customerInfo.zalo)?this.customerInfo.zalo:null;
+          this.customerUpdate.CustomerEmail = (this.customerInfo.customerEmail)?this.customerInfo.customerEmail:null;
           this.customerUpdate.CompanyEmail = (this.customerInfo.companyEmail)?this.customerInfo.companyEmail:null;
           this.customerUpdate.Organization = (this.customerInfo.organization)?this.customerInfo.organization:null;
           this.customerUpdate.TaxCode = (this.customerInfo.taxCode)?this.customerInfo.taxCode:null;
           this.customerUpdate.BirthDay = (this.customerInfo.birthDay)?this.customerInfo.birthDay:null;
-          this.customerUpdate.Gender = this.customerInfo.gender;
+          this.customerUpdate.Gender = (this.customerInfo.gender)?this.customerInfo.gender:null;
           this.customerUpdate.Facebook = (this.customerInfo.facebook)?this.customerInfo.facebook:null;
 
           if(this.customerUpdate.BirthDay == "Invalid date")
             delete this.customerUpdate.BirthDay;
 
-          if(!IsEmpty(this.customerUpdate.BirthDay))
-            this.customerUpdate.BirthDay = formatDate(this.customerUpdate.BirthDay)
-
-          console.log(this.customerUpdate)
+          if(!IsEmpty(this.customerUpdate.BirthDay)){
+            this.customerUpdate.BirthDay = formatDate(this.customerUpdate.BirthDay);
+          }
+          else{
+            this.customerUpdate.BirthDay = null;
+          }
 
           let _CustomerService = new CustomerService();
           await _CustomerService
             .Update(this.customerInfo.customerId, this.customerUpdate)
             .then((res) => {
+              console.log(res)
               if(res){
                 if (res.data.statusCode == StatusCode.UpdateSuccess) {
                   // lấy thông tin data lưu thành mảng
@@ -1724,6 +1816,15 @@ export default {
             });
 
           // end them
+        }
+
+        if(this.$refs.save){
+          this.$refs.save.removeAttribute("disabled");
+        }
+
+        // disabled nút lưu và thêm
+        if(this.$refs.saveAndAdd){
+          this.$refs.saveAndAdd.removeAttribute("disabled");
         }
       } catch (error) {
         console.log(error);

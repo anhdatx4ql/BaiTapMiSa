@@ -1,6 +1,6 @@
 import { createApp } from 'vue'
 import App from './App.vue'
-
-// routing ở đây
+// routing
 
 createApp(App).mount('#app')
+

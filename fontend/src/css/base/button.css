@@ -1,3 +1,7 @@
+button{
+    position:relative;
+}
+
 .button {
     height: 32px;
     padding: 0 16px;
@@ -10,6 +14,11 @@
     align-items: center;
     justify-content: start;
     outline:none;
+    box-sizing: border-box;
+}
+
+.button:focus{
+    border: 1px solid blue !important;
 }
 
 .button-icon {
@@ -134,4 +143,18 @@ button.pop-up-bottom-active:hover {
 
 button.pop-up-bottom-active:active {
     background: #E81717;
+}
+
+.tool-tip-container:hover>.tool-tip-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.content-sider-bar-right-child-icon button {
+    background: none;
+}
+
+.table-button-right-chlid button:focus {
+    border: none !important;
 }

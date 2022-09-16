@@ -24,32 +24,39 @@
           <div class="header-right-child">
             <button @click="showNotFound"
               class="button-background-header background-icon-face"
-            ></button>
+            >
+            <ToolTip :type="'bottom'" :text="'Facebook'"></ToolTip>
+          </button>
           </div>
           <div class="header-right-child">
             <button @click="showNotFound"
-              class="button-background-header background-icon-bag-header"
-            ></button>
+              class="button-background-header background-icon-bag-header background-icon-face"
+            > <ToolTip :type="'bottom'" :text="'Lịch'"></ToolTip></button>
           </div>
           <div class="header-right-child">
             <button @click="showNotFound"
               class="button-background-header background-icon-bell"
-            ></button>
+            >
+            <ToolTip :type="'bottom'" :text="'Thông báo'"></ToolTip></button>
           </div>
           <div class="header-right-child">
             <button @click="showNotFound"
               class="button-background-header background-icon-setting"
-            ></button>
+            >
+            <ToolTip :type="'bottom'" :text="'Cài đặt'"></ToolTip>
+          </button>
           </div>
           <div class="header-right-child">
             <button @click="showNotFound"
               class="button-background-header background-icon-question"
-            ></button>
+            ><ToolTip :type="'bottom'" :text="'Câu hỏi'"></ToolTip></button>
           </div>
           <div class="header-right-child header-right-child-avatar">
             <button @click="showNotFound"
               class="button-background-header background-icon-avatar"
-            ></button>
+            >
+            <ToolTip :type="'bottomRight'" :text="'Ảnh đại diện'"></ToolTip>
+          </button>
           </div>
         </div>
       </div>
@@ -163,8 +170,14 @@
 // nhúng Toastmessage
 import { ToastMessage } from "../Models/ToastMessage";
 
+  // nhung tooltip
+import ToolTip from "./ToolTip"
+
 export default {
   name: 'HeaderComponent',
+  components:{
+    ToolTip
+  },
   data(){
     return {
       textSearch:"",

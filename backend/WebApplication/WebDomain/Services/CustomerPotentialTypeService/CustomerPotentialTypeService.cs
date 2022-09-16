@@ -1,12 +1,11 @@
-﻿using Dapper;
+﻿using Common.Resources;
+using Dapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WebInfrastructure;
-using static Common.ContantsError;
-using static Common.ContantsSuccess;
 
 namespace WebDomain
 {
@@ -37,6 +36,7 @@ namespace WebDomain
             {
                 int[] results = { };
                 int count = 0;
+                string strMessage = "";
                 string sql = @"INSERT INTO CustomerPotentialType(CustomerPotentialTypeId,CustomerId,PotentialTypeId,CreatedAt,UpdatedAt) VALUES ";
                 var dynamicParameters = new DynamicParameters();
                 foreach (CreateCustomerPotentialTypeModel model in models)
@@ -44,11 +44,11 @@ namespace WebDomain
 
                     //Kiểm tra null mã khách hàng
                     if (model.CustomerId == null)
-                        return new ReponsitoryModel { Data = null, Message = "Mã khách hàng " + MessageError.NotExists };
+                        strMessage += "Mã khách hàng " + MessageError.NotExists + "\n";
 
                     // kiểm tra null mã loại tiềm năng
                     if (model.PotentialTypeId == null)
-                        return new ReponsitoryModel { Data = null, Message = "Mã lĩnh vực " + MessageError.NotExists };
+                        strMessage += "Mã lĩnh vực " + MessageError.NotExists + "\n";
 
                     // kiểm tra mã khách hàng có đúng hay không
                     var ExistsCustomer = await _dapper.FindCloumnTAsync<Customer>("Customer", "CustomerId", model.CustomerId.ToString());
@@ -56,7 +56,7 @@ namespace WebDomain
 
                     // kiếm tra dòng dữ liệu này đã tồn tại chưa
                     if (ExistsCustomer == false)
-                        return new ReponsitoryModel { Data = null, StatusCode = CodeError.Code400, Message = MessageError.NotValue };
+                        strMessage += MessageError.NotValue + "\n";
 
 
                     // xóa hết dữ liệu hiện có liên quan đến customer : customerId
@@ -69,7 +69,7 @@ namespace WebDomain
                     // kiểm tra mã lĩnh vực có đúng hay không
                     var ExistsFieldId = await _dapper.FindCloumnTAsync<PotentialType>("PotentialType", "PotentialTypeId", model.PotentialTypeId.ToString());
                     if (ExistsFieldId == false)
-                        return new ReponsitoryModel { Data = null, StatusCode = CodeError.Code400, Message = MessageError.NotValue };
+                        strMessage += MessageError.NotValue + "\n";
 
                        count++;
                         if (count==1)
@@ -87,16 +87,16 @@ namespace WebDomain
 
               
                 var result = await _dapper.CreateMultipleAsync(sql, dynamicParameters);
-                if (result == 0 || count ==0)
-                    return new ReponsitoryModel { Data = null, Message = MessageError.CreatedFail, StatusCode = CodeError.Code400 };
+                if (result == 0 || count == 0)
+                    return new ReponsitoryModel(null, CodeError.Code400, strMessage);
 
-                return new ReponsitoryModel { Data = result, Message = MessageSuccess.CreatedSuccess, StatusCode = CodeSuccess.Status201 };
+                return new ReponsitoryModel(result, CodeSuccess.Status201, MessageSuccess.CreatedSuccess);
 
 
             }
             catch (Exception ex)
             {
-                return new ReponsitoryModel { Data = ex.Message, Message = MessageError.ProcessError, StatusCode = CodeError.Code400 };
+                return new ReponsitoryModel(ex.Message, CodeError.Code500, MessageError.ProcessError);
             }
 
         }

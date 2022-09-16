@@ -1,31 +1,7 @@
-.background-icon-tool-tip{
-    background: url('../../assets/img/icon_collection.svg') no-repeat -209px 0px;
-    width: 16px;
-    height:16px;
-}
 
-.background-icon-tool-tip:hover{
-    background: url('../../assets/img/icon_collection.svg') no-repeat -289px -128px;
-    width: 16px;
-    height:16px;
-}
-
-#tool-tip{
-    display:inline-block;
-    width:16px;
-    height:16px;
-}
-
-
-div#tool-tip {
-    position: relative;
-    margin-left: 8px;
-    cursor: pointer;
-}
 
 .tool-tip-text {
     position: absolute;
-    top: -250%;
     width: max-content;
     background: #424857;
     transform: translateX(-50%);
@@ -35,6 +11,15 @@ div#tool-tip {
     border-radius: 4px;
     height: 16px;
     display: none;
+    z-index:999;
+}
+
+.tool-tip-text-top{
+    bottom: 130%;
+}
+
+.tool-tip-text-bottom{
+    top: 150%;
 }
 
 .tool-tip-icon {
@@ -50,12 +35,40 @@ div#tool-tip:hover .tool-tip-text {
 span.tool-tip-text-top-arrow {
     display: flex;
     position: absolute;
-    top: 80%;
     left: 50%;
     transform: translateX(-50%);
     width: 0;
     height: 0;
+}
+
+span.tool-tip-text-top-arrow-top{
     border-left: 6px solid transparent;
     border-right: 6px solid transparent;
     border-top: 12px solid #424857;
+    top: 80%;
+}
+
+span.tool-tip-text-top-arrow-bottom{
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-bottom: 12px solid #424857;
+    bottom: 80%;
+}
+
+.tool-tip-text-bottom-right {
+    top: 130%;
+    left: -50%;
+}
+
+.tool-tip-text-bottom-right.tool-tip-text>.tool-tip-text-top-arrow-bottom {
+    left: 80%;
+}
+
+.tool-tip-text-top-right {
+    bottom: 130%;
+    left: -5%;
+}
+
+.tool-tip-text-top-right>.tool-tip-text-top-arrow-top {
+    left: 80%;
 }

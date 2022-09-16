@@ -1,15 +1,28 @@
 import moment from 'moment'
 
-
+/**
+ * Author: Phạm Văn Đạt
+ * function: format ngày tháng năm
+ * created: 20:15 20/08/2022
+ */
 export function formatDate(value){
     return moment(String(value)).format('YYYY-MM-DD')
 }
 
-
+/**
+ * Author: Phạm Văn Đạt
+ * function: format ngày tháng năm post
+ * created: 20:20 20/08/2022
+ */
 export function formatDatePost(value){
     return moment(String(value)).format('YYYY-MM-DDTHH:mm:ss')
 }
 
+/**
+ * Author: Phạm Văn Đạt
+ * function: Kiểm nga null
+ * created: 20:30 20/08/2022
+ */
 export function IsEmpty(value){
 	return value == null // NULL value
         || value == undefined // undefined

@@ -4,3 +4,8 @@ D:\hoctap\BTMiSa\new-project\baitapMISA\backend\WebApplication\Common\obj\Debug\
 D:\hoctap\BTMiSa\new-project\baitapMISA\backend\WebApplication\Common\obj\Debug\Common.csproj.CoreCompileInputs.cache
 D:\hoctap\BTMiSa\new-project\baitapMISA\backend\WebApplication\Common\obj\Debug\Common.dll
 D:\hoctap\BTMiSa\new-project\baitapMISA\backend\WebApplication\Common\obj\Debug\Common.pdb
+D:\hoctap\BTMiSa\new-project\baitapMISA\backend\WebApplication\Common\obj\Debug\Common.Resources.MessageError.resources
+D:\hoctap\BTMiSa\new-project\baitapMISA\backend\WebApplication\Common\obj\Debug\Common.Resources.CodeError.resources
+D:\hoctap\BTMiSa\new-project\baitapMISA\backend\WebApplication\Common\obj\Debug\Common.Resources.MessageSuccess.resources
+D:\hoctap\BTMiSa\new-project\baitapMISA\backend\WebApplication\Common\obj\Debug\Common.Resources.CodeSuccess.resources
+D:\hoctap\BTMiSa\new-project\baitapMISA\backend\WebApplication\Common\obj\Debug\Common.csproj.GenerateResource.cache

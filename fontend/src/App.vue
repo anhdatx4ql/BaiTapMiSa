@@ -27,6 +27,7 @@
       @showToastMessageInfo="showToastMessage=$event"
       @checkLoadCustomerData="checkLoadCustomerData=$event"
       @loadFullScreen="loadFull=$event"
+      @removeListCustomerId="removeListCustomerId=$event"
     ></Toolbar>
     <!-- End Toolbar -->
 
@@ -37,7 +38,8 @@
       @CustomerInfo="CustomerInfo = $event"
       @listCustomerId="listCustomerId = $event"
       :checkLoadCustomerData="checkLoadCustomerData"
-      @checkLoadCustomerData="checkLoadCustomerData=$event">
+      @checkLoadCustomerData="checkLoadCustomerData=$event"
+      :removeListCustomerId="removeListCustomerId">
       </ContentPage>
     <!-- End content -->
 
@@ -99,22 +101,7 @@ import PopUp from "./components/layouts/PopUp";
 
 // nhúng form updateCustomer
 import FormUpdateCustomer from "./components/layouts/FormUpdateCustomer";
-import {  handlerClickHideFullComboboxData } from "./js/test";
-
-/** VÒNG ĐỜI  
- * 1: beforeCraete -  Tại thời điểm này, data, event chưa được thiết lập.
- * 2: created // được chạy khi data, event đã thiết lập thành công.
- * 3: BeforeMount: sẽ chạy sau khi data, event được thiết lập và trước khi gắn kết vào DOM.
- *                 Trong hook này chúng ta vẫn chưa - truy cập được phần tử trong DOM.
- * 4: mounted: có thể truy cập vào phẩn tử trong DOM
- * 5: beforeUpdate: Sau khi đối tượng đã được gắn vào DOM, khi dữ liệu thay đổi, và trước khi render,
- *                  patch lại và hiển thị ra cho người dùng.
- * 6: Updated: Chạy ngay sau khi beforeUpdate . Sử dụng khi bạn cần truy cập DOM sau khi thay đổi thuộc tính
- * 7: beforeUnMount: Là giai đoạn trước khi instance bị hủy.
- *                  Đây là nơi để quản lý tài nguyên xóa tài nguyên, dọn dẹp các component.
- * 8: UnMounted: , mọi thành phần đã được hủy bỏ hết. Khi console.log() đối tượng này thì sẽ không nhận được thuộc tính hay dữ liệu gì.
- * mỗi khi dữ liệu thay đổi thì wath chạy => wath dùng để theo dõi các biến
- */
+import {  handlerClickHideFullComboboxData } from "./js/handlerCombobox";
 
 export default {
   name: "App",
@@ -129,26 +116,50 @@ export default {
   },
   data() {
     return {
+      // xóa bỏ các khách hàng đã chọn
+      removeListCustomerId:false,
+
+      // tìm kiếm custmer
       searchCustomer: "",
+
       // phải lưu cho nó 1 tên biến mới đưa lên được
       checkShowForm: false,
+
+      // kiểm tra hiển thị form upload
       checkShowFormUpdate:false,
+
+      // thông tin kahachs hàng
       CustomerInfo:{},
+
+      // thông tin toast message
       toastMessageInfo:"",
+
+      // hiển thị toast message
       showToastMessage: false,
+
+      // mảng id khách hàng
       listCustomerId: [],
+
+      // kiểm tra hiern thị popup
       checkShowPopUp: false,
+
+      // title popup
       PopUpTitle:"",
+
+
+      // thông tin message
       ActiveMessage: false,
+
+      // load lại dữ liệu khách hangf
       checkLoadCustomerData: false,
+
+      // loại lại hết 
       loadFull: false,
+
     };
   },
   watch:{
 
-    checkShowForm(){
-      console.log(this.checkShowForm)
-    }
   },
   beforeCreate() {
     
@@ -161,11 +172,15 @@ export default {
   },
   methods: {
    
-    // Xử lý click show hide combobox
+    /**
+     * Author: Phạm Văn Đạt
+     * function:Xử lý click hiển thị/ẩn combobox
+     */
     ClickWindow:function(){
       // xử lý click vào window
        window.addEventListener("click", function(e){
-        if(e.target.classList){
+        try{
+          if(e.target.classList){
           if(e.target.classList.contains("show-button-toolbar") || e.target.parentNode.classList.contains("show-button-toolbar")){
           let checkShowFormHandlerToolbar = document.getElementsByClassName("toolbar-left-child-options")[0];
           checkShowFormHandlerToolbar.style.display == "flex"
@@ -197,8 +212,12 @@ export default {
               
           }
           // ("combobox-child")[0]
-      
+        }catch (error) {
+          console.log(error);
+        }
       });
+       
+        
     },
     
   },

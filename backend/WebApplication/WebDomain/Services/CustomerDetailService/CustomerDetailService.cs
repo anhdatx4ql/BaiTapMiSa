@@ -1,12 +1,12 @@
-﻿using Dapper;
+﻿using Common.Resources;
+using Dapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WebInfrastructure;
-using static Common.ContantsError;
-using static Common.ContantsSuccess;
+
 
 namespace WebDomain
 {
@@ -17,6 +17,11 @@ namespace WebDomain
         {
             _dapper = dapper;
         }
+
+        /**
+         * Author: Phạm Văn Đạt
+         * function: lấy thông tin chi tiết khách hàng
+         */
         public async Task<ReponsitoryModel> GetAll()
         {
             try
@@ -30,10 +35,14 @@ namespace WebDomain
             }
             catch (Exception ex)
             {
-                return new ReponsitoryModel(ex.Message, CodeError.Code400, MessageError.ProcessError);
+                return new ReponsitoryModel(ex.Message, CodeError.Code500, MessageError.ProcessError);
             }
         }
 
+        /**
+       * Author: Phạm Văn Đạt
+       * function: lấy thông tin chi tiết khách hàng theo Id
+       */
         public async Task<ReponsitoryModel> GetsByCustomerId(string CustomerId)
         {
             try
@@ -42,17 +51,20 @@ namespace WebDomain
                 var dynamicParameters = new DynamicParameters();
                 dynamicParameters.Add("CustomerId", CustomerId);
                 var result = await _dapper.GetAllAsync<CustomerDetailModel>(sql, dynamicParameters);
-                if (result.Count == 0)
-                    return new ReponsitoryModel(null, CodeError.Code400, MessageError.NotValue);
                 return new ReponsitoryModel(result, CodeSuccess.Status200, MessageSuccess.GetSuccess);
 
             }
             catch (Exception ex)
             {
-                return new ReponsitoryModel(ex.Message, CodeError.Code400, MessageError.ProcessError);
+                return new ReponsitoryModel(ex.Message, CodeError.Code500, MessageError.ProcessError);
             }
         }
 
+
+        /**
+       * Author: Phạm Văn Đạt
+       * function: lấy thông tin chi tiết khách hàng theo tên
+       */
         public async Task<ReponsitoryModel> GetsByName(string search)
         {
             try
@@ -64,12 +76,12 @@ namespace WebDomain
                 };
                 var result = await _dapper.FindTAsync<Career>(sql, parameters);
                 if (result == null)
-                    return new ReponsitoryModel { Data = null, Message = MessageError.NotValue, StatusCode = CodeError.Code400 };
-                return new ReponsitoryModel { Data = result, Message = MessageSuccess.GetSuccess, StatusCode = CodeSuccess.Status200 };
+                    return new ReponsitoryModel(null, CodeError.Code400, MessageError.ProcessError);
+                return new ReponsitoryModel(result, CodeSuccess.Status200, MessageSuccess.SearchSuccess);
             }
             catch (Exception ex)
             {
-                return new ReponsitoryModel { Data = ex.Message, Message = MessageError.ProcessError, StatusCode = CodeError.Code400 };
+                return new ReponsitoryModel(ex.Message, CodeError.Code500, MessageError.ProcessError);
             }
         }
     }

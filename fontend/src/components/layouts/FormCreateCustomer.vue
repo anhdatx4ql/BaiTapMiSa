@@ -1,6 +1,6 @@
 <template>
   <div class="form-container">
-    <form @submit.prevent>
+    <form @submit.prevent >
       <div class="form-content" ref="form" >
         <div class="form-container-title">
           <div class="form-container-title-left">
@@ -32,7 +32,8 @@
               <label class="label-file" for="file">
                 <span class="background-icon-avatar-push"></span>
               </label>
-              <input type="file" class="input-file" id="file" />
+              <input type="file" class="input-file" id="file" ref="fileUpload" @change="uploadFile" />
+              <span class="span-error" v-if="(errors.get('FirstName'))">{{errors.get('FirstName')}}</span>
             </div>
           </div>
 
@@ -56,7 +57,7 @@
                       check="false"
                     >
                       <div
-                        class="combobox-content-select combobox-child"
+                        class="combobox-content-select combobox-child combobox-content-select-content-none" 
                         ref="vocativeId"
                       >
                         - Không chọn -
@@ -159,7 +160,8 @@
                 </div>
                 <div class="form-container-content-child-item-input">
                    <div class="border-input-content" :class="{'input-error':(errors.get('FirstName'))}">
-                    <input type="text" class="input-content"  v-model="customerInfo.FirstName" tabindex="2"/>
+                    <input type="text" class="input-content"
+                      v-model="customerInfo.FirstName" tabindex="2" ref="FirstName" />
                     <div class="input-icon-content">
                       <span class="icon-font-16 background-icon-close" @click="customerInfo.FirstName = null"></span>
                     </div>
@@ -203,7 +205,7 @@
                       check="false"
                     >
                       <div
-                        class="combobox-content-select combobox-child"
+                        class="combobox-content-select combobox-child combobox-content-select-content-none"
                         ref="departmentId"
                       >
                         - Không chọn -
@@ -296,7 +298,7 @@
                       check="false"
                     >
                       <div
-                        class="combobox-content-select combobox-child"
+                        class="combobox-content-select combobox-child combobox-content-select-content-none"
                         ref="positionId"
                       >
                         - Không chọn -
@@ -380,11 +382,15 @@
               <div class="form-container-content-child-item">
                 <div class="form-container-content-child-item-label">
                   ĐT di động
-                  <ToolTip :type="'top'" :text="'Điện thoại di động'"></ToolTip>
+                  <span class="background-icon-tool-tip tool-tip-container">
+                    <ToolTip :type="'top'" :text="'Điện thoại di động'"></ToolTip>
+                  </span>
+                  
                 </div>
                 <div class="form-container-content-child-item-input">
                    <div class="border-input-content" :class="{'input-error':(errors.get('CustomerPhoneNumber'))}">
-                    <input type="text" class="input-content" tabindex="3" v-model="customerInfo.CustomerPhoneNumber"/>
+                    <input type="text" class="input-content"
+                     tabindex="3" v-model="customerInfo.CustomerPhoneNumber" ref="input-content"/>
 
                     <div class="input-icon-content">
                       <span class="icon-font-16 background-icon-close" @click="customerInfo.CustomerPhoneNumber = null"></span>
@@ -399,7 +405,9 @@
               <div class="form-container-content-child-item">
                 <div class="form-container-content-child-item-label">
                   ĐT cơ quan
-                  <ToolTip :type="'top'" :text="'Điện thoại cơ quan'"></ToolTip>
+                  <span class="background-icon-tool-tip tool-tip-container">
+                    <ToolTip :type="'top'" :text="'Điện thoại cơ quan'"></ToolTip>
+                  </span>
                 </div>
                 <div class="form-container-content-child-item-input">
                    <div class="border-input-content">
@@ -426,7 +434,7 @@
                       check="false"
                     >
                       <div
-                        class="combobox-content-select combobox-child"
+                        class="combobox-content-select combobox-child combobox-content-select-content-none"
                         ref="sourceId"
                       >
                         - Không chọn -
@@ -637,7 +645,8 @@
                 </div>
                 <div class="form-container-content-child-item-input">
                    <div class="border-input-content" :class="{'input-error':(errors.get('CustomerEmail'))}">
-                  <input type="email" class="input-content" tabindex="6" v-model="customerInfo.CustomerEmail"/>
+                  <input type="text" class="input-content"
+                   tabindex="6" v-model="customerInfo.CustomerEmail" ref="CustomerEmail"/>
 
                     <div class="input-icon-content">
                       <span class="icon-font-16 background-icon-close" @click="customerInfo.CustomerEmail = null"></span>
@@ -654,13 +663,14 @@
                   Email cơ quan
                 </div>
                 <div class="form-container-content-child-item-input">
-                   <div class="border-input-content">
-                  <input type="email" class="input-content" tabindex="7" v-model="customerInfo.CompanyEmail"/>
+                   <div class="border-input-content"  :class="{'input-error':(errors.get('CompanyEmail'))}">
+                  <input type="text" class="input-content" tabindex="7" v-model="customerInfo.CompanyEmail" ref="CompanyEmail" />
 
                     <div class="input-icon-content">
                       <span class="icon-font-16 background-icon-close" @click="customerInfo.CompanyEmail = null"></span>
                     </div>
                   </div>
+                  <span class="span-error" v-if="(errors.get('CompanyEmail'))">{{errors.get('CompanyEmail')}}</span>
                 </div>
               </div>
               <!-- EndEmail cơ quan-->
@@ -689,7 +699,8 @@
                 </div>
                 <div class="form-container-content-child-item-input">
                    <div class="border-input-content" :class="{'input-error':(errors.get('TaxCode'))}">
-                    <input type="text" class="input-content" tabindex="9" v-model="customerInfo.TaxCode"/>
+                    <input type="text" class="input-content"
+                     tabindex="9" v-model="customerInfo.TaxCode" ref="TaxCode"/>
                     <div class="input-icon-content">
                       <span class="icon-font-16 background-icon-close" @click="customerInfo.TaxCode = null"></span>
                     </div>
@@ -715,7 +726,8 @@
                 </div>
                 <div class="form-container-content-child-item-input">
                    <div class="border-input-content" :class="{'input-error':(errors.get('BankAccount'))}">
-                    <input type="text" class="input-content" tabindex="10" v-model="customerInfo.BankAccount"/>
+                    <input type="text" class="input-content"
+                     tabindex="10" v-model="customerInfo.BankAccount" ref="BankAccount"/>
                     <div class="input-icon-content">
                       <span class="icon-font-16 background-icon-close" @click="customerInfo.BankAccount = null"></span>
                     </div>
@@ -770,7 +782,7 @@
                       check="false"
                     >
                       <div
-                        class="combobox-content-select combobox-child"
+                        class="combobox-content-select combobox-child combobox-content-select-content-none"
                         ref="organizationTypeId"
                       >
                         - Không chọn -
@@ -1084,7 +1096,7 @@
                       check="false"
                     >
                       <div
-                        class="combobox-content-select combobox-child"
+                        class="combobox-content-select combobox-child combobox-content-select-content-none"
                         ref="turnoverId"
                       >
                         - Không chọn -
@@ -1187,7 +1199,7 @@
                       check="false"
                     >
                       <div
-                        class="combobox-content-select combobox-child"
+                        class="combobox-content-select combobox-child combobox-content-select-content-none"
                         ref="countryId"
                       >
                         - Không chọn -
@@ -1260,7 +1272,7 @@
                       check="false"
                     >
                       <div
-                        class="combobox-content-select combobox-child"
+                        class="combobox-content-select combobox-child combobox-content-select-content-none"
                         ref="provinceId"
                       >
                         - Không chọn -
@@ -1334,7 +1346,7 @@
                       check="false"
                     >
                       <div
-                        class="combobox-content-select combobox-child"
+                        class="combobox-content-select combobox-child combobox-content-select-content-none"
                         ref="districtId"
                       >
                         - Không chọn -
@@ -1408,7 +1420,7 @@
                       check="false"
                     >
                       <div
-                        class="combobox-content-select combobox-child"
+                        class="combobox-content-select combobox-child combobox-content-select-content-none"
                         ref="wardId"
                       >
                         - Không chọn -
@@ -1533,7 +1545,8 @@
               >
                 <div class="form-container-content-child-item-label">Mô tả</div>
                 <div class="form-container-content-child-item-input">
-                  <textarea class="textarea textarea-description" tabindex="16"></textarea>
+                  <textarea class="textarea textarea-description" tabindex="16" v-model="customerInfo.CustomerDescription"></textarea>
+                  
                 </div>
               </div>
               <!-- End địa chỉ -->
@@ -1556,7 +1569,8 @@
                 </div>
                 <div class="form-container-content-child-item-input">
                    <div class="border-input-content" :class="{'input-error':(errors.get('PotentialCode'))}">
-                    <input type="text" class="input-content" tabindex="17" v-model="customerInfo.PotentialCode"/>
+                    <input type="text" class="input-content"
+                     tabindex="17" v-model="customerInfo.PotentialCode" ref="PotentialCode"/>
                     <div class="input-icon-content">
                       <span class="icon-font-16 background-icon-close" @click="customerInfo.PotentialCode = null"></span>
                     </div>
@@ -1585,7 +1599,7 @@ import {
   ClickShowHideComboboxData,
   selectValueComboboxData,
   ClickShowHideComboboxMulData,
-} from "../../js/test";
+} from "../../js/handlerCombobox";
 
 
 // nhúng status code
@@ -1712,7 +1726,8 @@ export default {
       searchpPosition:"",
       searchOrganizationType:"",
       searchTurnover: "",
-      ErrorsValidation:ErrorsValidation
+      ErrorsValidation:ErrorsValidation,
+      image: "" 
     };
   },
   watch: {
@@ -1774,6 +1789,8 @@ export default {
      // phường. xã
      "customerInfo.HomeNumber":{
       handler(){
+        if(this.customerInfo.HomeNumber != null)
+          this.customerInfo.HomeNumber = titleCase(this.customerInfo.HomeNumber);
         this.getAddressSum();
       }
     },
@@ -1786,6 +1803,9 @@ export default {
         let Firstname =  (this.customerInfo.FirstName!=null)?this.customerInfo.FirstName:"";
         let LastName =  (this.customerInfo.LastName!=null)?this.customerInfo.LastName+" ":"";
 
+        if(this.customerInfo.FirstName != null)
+          this.customerInfo.FirstName = titleCase(this.customerInfo.FirstName);
+
         this.customerInfo.FullName = LastName+Firstname;
 
       }
@@ -1794,11 +1814,12 @@ export default {
      // theo dõi họ đệm
       "customerInfo.LastName":{
       handler(){
-        if(this.errors.get("FirstName"))
-          this.errors.delete("FirstName")
 
         let Firstname =  (this.customerInfo.FirstName!=null)?this.customerInfo.FirstName:"";
         let LastName =  (this.customerInfo.LastName!=null)?this.customerInfo.LastName+" ":"";
+
+        if(this.customerInfo.LastName != null)
+          this.customerInfo.LastName = titleCase(this.customerInfo.LastName);
 
         this.customerInfo.FullName = LastName+Firstname;
 
@@ -1824,6 +1845,18 @@ export default {
 
         if(this.customerInfo.CustomerEmail == "")
           this.customerInfo.CustomerEmail  =  null;
+      }
+
+     },
+
+     // theo dõi email công ty
+      "customerInfo.CompanyEmail":{
+      handler(){
+        if(this.errors.get("CompanyEmail"))
+          this.errors.delete("CompanyEmail")
+
+        if(this.customerInfo.CompanyEmail == "")
+          this.customerInfo.CompanyEmail  =  null;
       }
 
      },
@@ -1909,9 +1942,25 @@ export default {
     },
   },
   methods: {
+
+     /**
+     * Author: Phạm Văn Đạt
+     * Function: theo dõi upload file
+     */
+     uploadFile() {
+        this.image = this.$refs.fileUpload.files[0];
+        console.log(this.image);
+      },
   
+    /**
+     * Author: Phạm Văn Đạt
+     * Function: format dữ liệu
+     */
     formatDate,
-    //  xử lý khởi tạo lại dữ liệu
+    /**
+     * Author: Phạm Văn Đạt
+     * Function: xử lý khởi tạo lại dữ liệu
+     */
     ResetCustomerInfo(){
       this.customerInfo = new CreateCustomerModel();
     },
@@ -1983,7 +2032,7 @@ export default {
     },
     // get Address
     getAddressSum(){
-      let HomeNumber = (this.customerInfo.HomeNumber)?this.customerInfo.HomeNumber+", ":"";
+      let HomeNumber = (this.customerInfo.HomeNumber)?titleCase(this.customerInfo.HomeNumber)+", ":"";
       let Wards = (this.customerInfo.Wards)?this.customerInfo.Wards+", ":"";
       let District = (this.customerInfo.District)?this.customerInfo.District+", ":"";
       let Province = (this.customerInfo.Province)?this.customerInfo.Province+", ":"";
@@ -2255,6 +2304,7 @@ export default {
      */
     handlerClickComboboxData: function (event) {
       try {
+        console.log(this.customerInfo.VocativeId)
         let El = event.target;
        
         if(El.classList.contains("country") || El.parentNode.classList.contains("country")){
@@ -2321,7 +2371,6 @@ export default {
               this.districts = res.data.districts;
             
             }
-  
           })
           }else{
             this.districts=[];
@@ -2546,12 +2595,11 @@ export default {
                
               }
 
-              // chuyển trang về trang chính bằng cách ẩn form hiển tại
+              // Lưu và thêm
               if(e.target.classList.contains("created") == true){
-                console.log("iep thuc")
                 this.HandlerSelectCodeMax();
               }else{
-                console.log("nghi")
+                // THêm
                 this.$emit("CloseFormData", false);
               }
               this.ToastMessageCustomer.Type = "success";
@@ -2571,6 +2619,10 @@ export default {
         })
 
         this.removeData();
+       }else{
+        // focus lỗi
+        console.log("focus lỗi");
+        console.log(this.errors)
        }
 
 

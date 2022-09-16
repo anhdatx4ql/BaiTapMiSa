@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,11 @@ namespace WebDomain
 {
     public interface IFilesService
     {
+        
+        /**
+         * Auhor: Phạm Văn Đạt
+         * function: upload file
+         */
+        Task<ReponsitoryModel> UploadFile(IFormFile objectFile, Guid _userId);
     }
 }

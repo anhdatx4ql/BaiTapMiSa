@@ -67,7 +67,7 @@ namespace WebDomain
         public string BirthDay { set; get; }
 
         // giới tính 18
-        public int Gender { set; get; }
+        public Nullable<int> Gender { set; get; }
 
         // facebook 19
         public string Facebook { set; get; }

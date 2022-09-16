@@ -6,47 +6,58 @@
  * Created time: 18:38 20/08/2022
  */
 export function handlerClickCloseIconComboboxMul(event, customerPotentialTypeMap){
+  try{
     const el = event.target.parentNode.getElementsByClassName("combobox-content-select-content-text")[0];
-      if(el){
-        const elValue = el.getAttribute("value");
-        const elHTML = el.innerHTML;
-        console.log(elHTML);
-        if(elValue){
-          customerPotentialTypeMap.delete(elValue)
-          let comboboxData = event.target.parentNode.parentNode.parentNode.parentNode.getElementsByClassName("combobox-data")[0];
+    if(el){
+      const elValue = el.getAttribute("value");
+      const elHTML = el.innerHTML;
+      console.log(elHTML);
+      if(elValue){
+        customerPotentialTypeMap.delete(elValue)
+        let comboboxData = event.target.parentNode.parentNode.parentNode.parentNode.getElementsByClassName("combobox-data")[0];
 
-          let comboboxDataChild =  comboboxData.getElementsByClassName("combobox-data-child")[0];
+        let comboboxDataChild =  comboboxData.getElementsByClassName("combobox-data-child")[0];
 
-          let comboboxDataContents =  comboboxDataChild.getElementsByClassName("combobox-data-child-content");
-          for(let item of comboboxDataContents){
-            let elHTMLCheck  = item.getElementsByClassName("combobox-data-child-content-text")[0];
+        let comboboxDataContents =  comboboxDataChild.getElementsByClassName("combobox-data-child-content");
+        for(let item of comboboxDataContents){
+          let elHTMLCheck  = item.getElementsByClassName("combobox-data-child-content-text")[0];
 
-            
-            if(elHTML == elHTMLCheck.innerHTML){
-              console.log(elHTMLCheck)
-              let parentElHTMLCheck = elHTMLCheck.parentNode;
-              // bỏ selected của thẻ cha
-              if(parentElHTMLCheck.classList.contains("selected")){
-                parentElHTMLCheck.classList.remove("selected")
-              }
-
-              // chuyển trạng thái của icon về none
-              let eIconCheck = parentElHTMLCheck.getElementsByClassName("background-icon-checked")[0];
-
-              if(eIconCheck)
-                eIconCheck.style.display="none";
-
+          
+          if(elHTML == elHTMLCheck.innerHTML){
+            console.log(elHTMLCheck)
+            let parentElHTMLCheck = elHTMLCheck.parentNode;
+            // bỏ selected của thẻ cha
+            if(parentElHTMLCheck.classList.contains("selected")){
+              parentElHTMLCheck.classList.remove("selected")
             }
-          }
 
+            // chuyển trạng thái của icon về none
+            let eIconCheck = parentElHTMLCheck.getElementsByClassName("background-icon-checked")[0];
+
+            if(eIconCheck)
+              eIconCheck.style.display="none";
+
+          }
         }
 
-          return customerPotentialTypeMap;
       }
+
+        return customerPotentialTypeMap;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+   
 }
 
+/**
+ * Author: Phạm Văn Đạt
+ * function: Xử lý click conbobox chọn nhiều
+ * Created time: 19:05 20/08/2022
+ */
 export function hanlderClickComboboxMulData(event,customerPotentialTypeMap){
-  let elComboboxData = event.target;
+  try{
+    let elComboboxData = event.target;
   if(!elComboboxData.classList.contains("combobox-data-child-content"))
     elComboboxData =  event.target.parentNode;
 
@@ -100,4 +111,8 @@ export function hanlderClickComboboxMulData(event,customerPotentialTypeMap){
   // so sánh mới map, nếu trùng thì bỏ đi, nếu không trùng thì add vào
 
   return customerPotentialTypeMap;
+  } catch (error) {
+    console.log(error);
+  }
+  
 }

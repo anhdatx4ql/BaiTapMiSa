@@ -1,6 +1,7 @@
 
 
-/***
+/**
+ * Author:Phạm Văn Đạt
  * Object hiển thị lỗi valdation trong các input
  */
 export const ErrorsValidation = {
@@ -10,7 +11,9 @@ export const ErrorsValidation = {
     FullNameRequired: 'Họ và tên không được để trống!',
     PhoneDuplicate: 'Số điện thoại này đã có người sử dụng!',
     EmailDuplicate: 'Email này đã có người sử dụng!',
+    EmailType: 'Email không đúng định dạng!',
     TaxCodeDuplicate: 'Mã số thuế này đã có người sử dụng!',
     BankAccountDuplicate: "Tài khoản này đã có người sử dụng!",
-    DateTimeError: "Thời gian không vượt quá thời gian hiện tại"
+    DateTimeError: "Thời gian không vượt quá thời gian hiện tại",
+    FileMalformed:"File Upload không đúng định dạng"
 }
