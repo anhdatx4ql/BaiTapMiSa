@@ -30,7 +30,7 @@ namespace WebInfrastructure
         public string TaxCode { set; get; } //mã số thuế
         public string Organization { set; get; } //tổ chức
         public Nullable<int> Gender { set; get; } // giới tính
-        public string BirthDay { set; get; } // ngày sinh
+        public DateTime BirthDay { set; get; } // ngày sinh
         public string CustomerDescription { set; get; } // mô tả thông tin
         public string Address { set; get; } // địa chỉ
         public string Country { set; get; } //-- quốc gia

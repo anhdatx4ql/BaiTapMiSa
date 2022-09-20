@@ -14,6 +14,6 @@ namespace WebDomain
     public class CreateCustomerPotentialTypeModel
     {
         public Guid CustomerId { set; get; }// Mã khách hàng
-        public Guid PotentialTypeId { set; get; }// Mã loại tiềm năng
+        public string PotentialTypeId { set; get; }// Mã loại tiềm năng
     }
 }

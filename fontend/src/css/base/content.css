@@ -256,4 +256,9 @@ span.el-date-table-cell__text {
 .content-sider-bar-right-content.content-sider-bar-right-child .combobox-toolbar-text {
     padding: 0 16px;
     font-weight: 600;
+    font-size:13px;
+}
+
+.fullNameTable:hover{
+    color: #4161F0 !important;
 }

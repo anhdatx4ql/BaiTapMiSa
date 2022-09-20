@@ -43,7 +43,7 @@
           <div class="notifi-content-right">
             <div class="notifi-content-right-title">Ghi Chú</div>
             <div class="notifi-content-right-text">
-              {{customerDetail.customerDetailName}} - {{formatDate(customerDetail.createdAt)}}
+              {{customerDetail.customerDetailName}} - {{FormatDate(customerDetail.createdAt)}}
             </div>
           </div>
         </div>
@@ -52,7 +52,7 @@
 </template>
 <script>
   // format dữ liệu
-import {formatDate} from '../../js/formatData'
+import {FormatDate} from '../../js/FormatData'
 
   // nhung tooltip
   import ToolTip from "./ToolTip"
@@ -67,7 +67,7 @@ export default {
       
     },
     methods:{
-     formatDate
+     FormatDate
     },
     props:{
       customerDetails:{}

@@ -67,12 +67,14 @@ namespace WebDomain
 
 
                     // kiểm tra mã lĩnh vực có đúng hay không
-                    var ExistsFieldId = await _dapper.FindCloumnTAsync<PotentialType>("PotentialType", "PotentialTypeId", model.PotentialTypeId.ToString());
-                    if (ExistsFieldId == false)
-                        strMessage += MessageError.NotValue + "\n";
+                    if(model.PotentialTypeId != null)
+                    {
+                        var ExistsFieldId = await _dapper.FindCloumnTAsync<PotentialType>("PotentialType", "PotentialTypeId", model.PotentialTypeId);
+                        if (ExistsFieldId == false)
+                            strMessage += MessageError.NotValue + "\n";
 
-                       count++;
-                        if (count==1)
+                        count++;
+                        if (count == 1)
                             sql += "(@CustomerPotentialTypeId" + count + ",@CustomerId" + count + ",@PotentialTypeId" + count + ",@CreatedAt" + count + ",@UpdatedAt" + count + ")";
                         else
                             sql += ",(@CustomerPotentialTypeId" + count + ",@CustomerId" + count + ",@PotentialTypeId" + count + ",@CreatedAt" + count + ",@UpdatedAt" + count + ")";
@@ -81,17 +83,21 @@ namespace WebDomain
                         dynamicParameters.Add("PotentialTypeId" + count, model.PotentialTypeId);
                         dynamicParameters.Add("CreatedAt" + count, DateTime.Now);
                         dynamicParameters.Add("UpdatedAt" + count, DateTime.Now);
-                    
-                  
+                    }
+                   
+
                 }
 
-              
-                var result = await _dapper.CreateMultipleAsync(sql, dynamicParameters);
-                if (result == 0 || count == 0)
-                    return new ReponsitoryModel(null, CodeError.Code400, strMessage);
+                if(count > 0)
+                {
+                    var result = await _dapper.CreateMultipleAsync(sql, dynamicParameters);
+                    if (result == 0)
+                        return new ReponsitoryModel(null, CodeError.Code400, strMessage);
 
-                return new ReponsitoryModel(result, CodeSuccess.Status201, MessageSuccess.CreatedSuccess);
+                    return new ReponsitoryModel(result, CodeSuccess.Status201, MessageSuccess.CreatedSuccess);
+                }
 
+                return new ReponsitoryModel(null, CodeSuccess.Status200, MessageSuccess.DeletedSuccess);
 
             }
             catch (Exception ex)

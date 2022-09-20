@@ -26,13 +26,14 @@ namespace WebDomain
         public string TaxCode { set; get; } //mã số thuế
         public string Organization { set; get; } //tổ chức
         public string Address { set; get; } // địa chỉ
-        public string Country { set; get; } //-- quốc gia + 
-        public string Province { set; get; } //-- thanhf phoos + 
+        public string Country { set; get; } //-- quốc gia
+        public string Province { set; get; } //-- thanhf phoos
         public string District { set; get; } //-- Quận/Huyện
         public string Wards { set; get; }// Phường xã
-        public string HomeNumber { set; get; } //-- số nhà + 
-        public string BirthDay { set; get; } // Ngày sinh
-        public string RegionCode { set; get; } //-- mã vùng +
+        public string HomeNumber { set; get; } //-- số nhà
+        public string Facebook { set; get; } //-- facebook
+        public DateTime BirthDay { set; get; } // Ngày sinh
+        public string RegionCode { set; get; } //-- mã vùng
         public Guid VocativeId { set; get; } //-- xưng hô
         public string VocativeName { set; get; } //-- xưng hô
         public Guid DepartmentId { set; get; } //-- một người - 1 phòng ban
@@ -49,6 +50,7 @@ namespace WebDomain
         public DateTime UpdatedAt { set; get; } // thời gian cập nhật
         public bool IsActivePhoneNumber { set; get; } // cho phép gọi điện 
         public Nullable<byte> Gender { set; get; } // giới tính: = tinyint trong mysql
+        public string Path { set; get; } // link avatar
         public bool IsActiveEmail { set; get; }// cho phép gửi email
         public bool IsDelete { set; get; } // kiểm tra đã xóa hay chưa
     }

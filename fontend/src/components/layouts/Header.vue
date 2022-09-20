@@ -22,37 +22,37 @@
 
         <div class="header-right">
           <div class="header-right-child">
-            <button @click="showNotFound"
+            <button @click="ShowNotFound"
               class="button-background-header background-icon-face"
             >
             <ToolTip :type="'bottom'" :text="'Facebook'"></ToolTip>
           </button>
           </div>
           <div class="header-right-child">
-            <button @click="showNotFound"
+            <button @click="ShowNotFound"
               class="button-background-header background-icon-bag-header background-icon-face"
             > <ToolTip :type="'bottom'" :text="'Lịch'"></ToolTip></button>
           </div>
           <div class="header-right-child">
-            <button @click="showNotFound"
+            <button @click="ShowNotFound"
               class="button-background-header background-icon-bell"
             >
             <ToolTip :type="'bottom'" :text="'Thông báo'"></ToolTip></button>
           </div>
           <div class="header-right-child">
-            <button @click="showNotFound"
+            <button @click="ShowNotFound"
               class="button-background-header background-icon-setting"
             >
             <ToolTip :type="'bottom'" :text="'Cài đặt'"></ToolTip>
           </button>
           </div>
           <div class="header-right-child">
-            <button @click="showNotFound"
+            <button @click="ShowNotFound"
               class="button-background-header background-icon-question"
             ><ToolTip :type="'bottom'" :text="'Câu hỏi'"></ToolTip></button>
           </div>
           <div class="header-right-child header-right-child-avatar">
-            <button @click="showNotFound"
+            <button @click="ShowNotFound"
               class="button-background-header background-icon-avatar"
             >
             <ToolTip :type="'bottomRight'" :text="'Ảnh đại diện'"></ToolTip>
@@ -62,7 +62,7 @@
       </div>
       <div class="header-nav">
         <div class="header-nav-item">
-          <button class="header-nav-item-content background-icon-home-hover" @click="showNotFound">
+          <button class="header-nav-item-content background-icon-home-hover" @click="ShowNotFound">
             <span
               class="header-nav-item-background background-icon-home"
             ></span>
@@ -78,7 +78,7 @@
           </button>
         </div>
         <div class="header-nav-item">
-          <button class="header-nav-item-content background-icon-chaohang-hover" @click="showNotFound">
+          <button class="header-nav-item-content background-icon-chaohang-hover" @click="ShowNotFound">
             <span
               class="header-nav-item-background background-icon-chaohang"
             ></span>
@@ -86,7 +86,7 @@
           </button>
         </div>
         <div class="header-nav-item">
-          <button class="header-nav-item-content background-icon-lienhe-hover" @click="showNotFound">
+          <button class="header-nav-item-content background-icon-lienhe-hover" @click="ShowNotFound">
             <span
               class="header-nav-item-background background-icon-lienhe"
             ></span>
@@ -95,7 +95,7 @@
         </div>
         <div class="header-nav-item">
           <button
-            class="header-nav-item-content background-icon-khachhang-hover" @click="showNotFound"
+            class="header-nav-item-content background-icon-khachhang-hover" @click="ShowNotFound"
           >
             <span
               class="header-nav-item-background background-icon-khachhang"
@@ -104,7 +104,7 @@
         </button>
         </div>
         <div class="header-nav-item">
-          <button class="header-nav-item-content background-icon-cohoi-hover" @click="showNotFound">
+          <button class="header-nav-item-content background-icon-cohoi-hover" @click="ShowNotFound">
             <span
               class="header-nav-item-background background-icon-cohoi"
             ></span>
@@ -112,7 +112,7 @@
           </button>
         </div>
         <div class="header-nav-item">
-          <button class="header-nav-item-content background-icon-baogia-hover" @click="showNotFound">
+          <button class="header-nav-item-content background-icon-baogia-hover" @click="ShowNotFound">
             <span
               class="header-nav-item-background background-icon-baogia"
             ></span>
@@ -120,7 +120,7 @@
           </button>
         </div>
         <div class="header-nav-item">
-          <button class="header-nav-item-content background-icon-donhang-hover" @click="showNotFound">
+          <button class="header-nav-item-content background-icon-donhang-hover" @click="ShowNotFound">
             <span
               class="header-nav-item-background background-icon-donhang"
             ></span>
@@ -129,7 +129,7 @@
         </div>
 
         <div class="header-nav-item">
-          <button class="header-nav-item-content background-icon-muctieu-hover" @click="showNotFound">
+          <button class="header-nav-item-content background-icon-muctieu-hover" @click="ShowNotFound">
             <span
               class="header-nav-item-background background-icon-muctieu"
             ></span>
@@ -138,7 +138,7 @@
         </div>
         <div class="header-nav-item">
           <button
-            class="header-nav-item-content background-icon-chiendich-hover" @click="showNotFound"
+            class="header-nav-item-content background-icon-chiendich-hover" @click="ShowNotFound"
           >
             <span
               class="header-nav-item-background background-icon-chiendich"
@@ -147,7 +147,7 @@
         </button>
         </div>
         <div class="header-nav-item">
-          <button class="header-nav-item-content background-icon-baocao-hover" @click="showNotFound">
+          <button class="header-nav-item-content background-icon-baocao-hover" @click="ShowNotFound">
             <span
               class="header-nav-item-background background-icon-baocao"
             ></span>
@@ -155,7 +155,7 @@
           </button>
         </div>
         <div class="header-nav-item">
-          <button class="header-nav-item-content background-icon-khac-hover" @click="showNotFound">
+          <button class="header-nav-item-content background-icon-khac-hover" @click="ShowNotFound">
             <span
               class="header-nav-item-background background-icon-khac"
             ></span>
@@ -191,7 +191,7 @@ export default {
   },
   methods:{
     // click show notfound
-    showNotFound(){
+    ShowNotFound(){
       this.ToastMessageCustomer.Type = "info";
       this.ToastMessageCustomer.Message = "Chúng tôi sẽ sớm ra mắt";
       this.$emit("toastMessageInfo", this.ToastMessageCustomer);

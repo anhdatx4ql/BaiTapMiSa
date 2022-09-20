@@ -54,7 +54,8 @@
 
 
     <!-- Start Form Update  -->
-    <FormUpdateCustomer :checkShowFormData="checkShowFormUpdate"
+    <FormUpdateCustomer
+     :checkShowFormData="checkShowFormUpdate"
      :CustomerInfo="CustomerInfo"
     @CloseFormData="checkShowFormUpdate = $event" 
      @toastMessageInfo="toastMessageInfo=$event"
@@ -101,7 +102,7 @@ import PopUp from "./components/layouts/PopUp";
 
 // nhúng form updateCustomer
 import FormUpdateCustomer from "./components/layouts/FormUpdateCustomer";
-import {  handlerClickHideFullComboboxData } from "./js/handlerCombobox";
+import {  HandlerClickHideFullComboboxData } from "./js/HandlerCombobox";
 
 export default {
   name: "App",
@@ -207,7 +208,7 @@ export default {
          // kiểm tra xem thẻ click có nằm 2 class này không, nếu khoong thì mới xử lý
           if(!elClassList.classList.contains("combobox-data-child-content") || !e.target.parentNode.classList.contains("combobox-data-child-content")){
              if(elClassList.classList.contains("combobox-child") == false){
-                handlerClickHideFullComboboxData();
+                HandlerClickHideFullComboboxData();
               }
               
           }

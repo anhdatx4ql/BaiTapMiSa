@@ -1,8 +1,8 @@
-import {formatDate} from "./formatData";
+import {FormatDate} from "./FormatData";
 
-import { checkEmail } from "./handlerString";
+import { CheckEmail } from "./HandlerString";
 
-import {ErrorsValidation} from "./validation";
+import {ErrorsValidation} from "./Validation";
 
 // nhúng service xử lý Customer
 import { CustomerService } from "../components/Services/CustomerService";
@@ -20,7 +20,7 @@ import { StatusCode } from "../components/Models/StatusCode";
  * Author: Phạm Văn Đạt
  * Function: hàm xử lý create customer
  */
-export async function handlerValidateCustomer(refs,customerInfo,errors){
+export async function HandlerValidateCustomer(refs,customerInfo,errors){
   try{
     console.log("validation")
     let vocativeId = refs.vocativeId.getAttribute("value");
@@ -42,7 +42,7 @@ export async function handlerValidateCustomer(refs,customerInfo,errors){
     // nếu số điện thoại, email, bank account, mã số thuế rỗng thì bỏ, không thêm
 
     //  xóa kí tẹ khoảng trắng
-    const checkFirstName = trimString(customerInfo.FirstName);
+    const checkFirstName = TrimString(customerInfo.FirstName);
 
     // tên không được bỏ trông
     if( customerInfo.FirstName == null || customerInfo.FirstName == "" || checkFirstName==true){
@@ -52,7 +52,7 @@ export async function handlerValidateCustomer(refs,customerInfo,errors){
 
 
     // xóa kí tự khoảng trắng
-    const checkPotentialCode = trimString(customerInfo.PotentialCode);
+    const checkPotentialCode = TrimString(customerInfo.PotentialCode);
  // mã tiềm năng không được bỏ trông
   if(customerInfo.PotentialCode == null || customerInfo.PotentialCode == "" || checkPotentialCode==true){
     errors.set("PotentialCode",ErrorsValidation.CustomerIdRequired)
@@ -64,7 +64,7 @@ export async function handlerValidateCustomer(refs,customerInfo,errors){
       checkPhone.tableName = "Customer";
       checkPhone.columnName = "CustomerPhoneNumber";
       checkPhone.value = customerInfo.CustomerPhoneNumber;
-      let result = await checkExists(checkPhone)
+      let result = await CheckExists(checkPhone)
       if(result == true)
       errors.set("CustomerPhoneNumber",ErrorsValidation.PhoneDuplicate)
     
@@ -74,18 +74,18 @@ export async function handlerValidateCustomer(refs,customerInfo,errors){
     if(customerInfo.CustomerEmail){
       console.log(customerInfo.CustomerEmail)
 
-      if(checkEmail(customerInfo.CustomerEmail) == null){
+      if(CheckEmail(customerInfo.CustomerEmail) == null){
         if(!errors.get("CustomerEmail"))
           errors.set("CustomerEmail",ErrorsValidation.EmailType);
       }else{
         if(errors.get("CustomerEmail"))
           errors.delete("CustomerEmail")
 
-          let checkEmail = CheckExistsColumn;
-          checkEmail.tableName = "Customer";
-          checkEmail.columnName = "CustomerEmail";
-          checkEmail.value = customerInfo.CustomerEmail;
-          let result = await checkExists(checkEmail)
+          let CheckEmail = CheckExistsColumn;
+          CheckEmail.tableName = "Customer";
+          CheckEmail.columnName = "CustomerEmail";
+          CheckEmail.value = customerInfo.CustomerEmail;
+          let result = await CheckExists(CheckEmail)
           if(result == true)
           errors.set("CustomerEmail",ErrorsValidation.EmailDuplicate)
       }
@@ -99,7 +99,7 @@ export async function handlerValidateCustomer(refs,customerInfo,errors){
       checkBankAccount.tableName = "Customer";
       checkBankAccount.columnName = "BankAccount";
       checkBankAccount.value = customerInfo.BankAccount;
-      let result  = await checkExists(checkBankAccount)
+      let result  = await CheckExists(checkBankAccount)
       if(result == true)
       errors.set("BankAccount",ErrorsValidation.BankAccountDuplicate)
     }
@@ -110,13 +110,13 @@ export async function handlerValidateCustomer(refs,customerInfo,errors){
       checkTaxCode.tableName = "Customer";
       checkTaxCode.columnName = "TaxCode";
       checkTaxCode.value = customerInfo.TaxCode;
-      let result = await checkExists(checkTaxCode);
+      let result = await CheckExists(checkTaxCode);
       if(result == true)
       errors.set("TaxCode",ErrorsValidation.TaxCodeDuplicate)
     }
     
     if(customerInfo.CompanyEmail){
-      if(checkEmail(customerInfo.CompanyEmail) == null){
+      if(CheckEmail(customerInfo.CompanyEmail) == null){
         if(!errors.get("CompanyEmail"))
           errors.set("CompanyEmail",ErrorsValidation.EmailType);
       }else{
@@ -132,13 +132,13 @@ export async function handlerValidateCustomer(refs,customerInfo,errors){
       checkPotentialCode.tableName = "Customer";
       checkPotentialCode.columnName = "PotentialCode";
       checkPotentialCode.value = customerInfo.PotentialCode;
-      let result = await checkExists(checkPotentialCode);
+      let result = await CheckExists(checkPotentialCode);
       if(result == true)
       errors.set("PotentialCode",ErrorsValidation.CustomerIdDuplicate)
     }
 
     // nếu không tồn tại thời gian tạo tài khoản, bỏ
-    if(formatDate(customerInfo.CreatedTimeBankAccount) == 'Invalid date'){
+    if(FormatDate(customerInfo.CreatedTimeBankAccount) == 'Invalid date'){
       delete customerInfo.CreatedTimeBankAccount
     }
 
@@ -157,13 +157,19 @@ export async function handlerValidateCustomer(refs,customerInfo,errors){
  * Author: Phạm Văn Đạt
  * Xử lý vlaidate dữ liệu bảng nhiều nhiều
  */
-export function handlerValidateTCustomer(_MapValue,_customerId){
+export function HandlerValidateTCustomer(_MapValue,_customerId){
   let Arr = [];
-  for(let item of _MapValue){
-    let customerId = _customerId
-    let potentialTypeId = item[0];
+  let customerId = _customerId;
+  if(_MapValue.size >0){
+    for(let item of _MapValue){
+      let potentialTypeId = item[0];
+      Arr.push({customerId,potentialTypeId})
+    }
+  }else{
+    let potentialTypeId = null;
     Arr.push({customerId,potentialTypeId})
   }
+ 
   return Arr;
 }
 
@@ -172,7 +178,7 @@ export function handlerValidateTCustomer(_MapValue,_customerId){
  * Xử lý check trùng
  */
 
-export async function checkExists(model){
+export async function CheckExists(model){
   let check = false;
   let _CustomerService = new CustomerService();
   await _CustomerService.CheckExists(model).then(res=>{
@@ -195,7 +201,7 @@ export async function checkExists(model){
  * Author: Phạm Văn Đạt
  * function: Xóa khoảng trắng chuỗi
  */
-function trimString(string){
+function TrimString(string){
   if(string != null){
     if(string.length > 0)
     string = string.trim();

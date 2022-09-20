@@ -5,7 +5,7 @@ import moment from 'moment'
  * function: format ngày tháng năm
  * created: 20:15 20/08/2022
  */
-export function formatDate(value){
+export function FormatDate(value){
     return moment(String(value)).format('YYYY-MM-DD')
 }
 
@@ -14,7 +14,7 @@ export function formatDate(value){
  * function: format ngày tháng năm post
  * created: 20:20 20/08/2022
  */
-export function formatDatePost(value){
+export function FormatDatePost(value){
     return moment(String(value)).format('YYYY-MM-DDTHH:mm:ss')
 }
 

@@ -34,7 +34,7 @@
           <div class="combobox-data-child">
             <div
               class="combobox-data-child-content"
-              @click="handlerClickComboboxData"
+              @click="HandlerClickComboboxData"
               v-for="v in arrayField"
               :key="v[0]"
               :value="v[0]"
@@ -163,23 +163,23 @@
                     class="combobox-data-child-content"
                     v-for="v in vocative"
                     :key="v.vocativeId"
-                    @click="handlerClickComboboxData"
+                    @click="HandlerClickComboboxData"
                     :value="v.vocativeId"
                     :class="{
                       selected:
-                        VocativeMap.get(v.vocativeId) != undefined
+                        vocativeMap.get(v.vocativeId) != undefined
                           ? true
                           : false,
                     }"
                     id="filedVocative"
                   >
                     <div class="combobox-data-child-content-text-filter">
-                      {{ titleCase(v.vocativeName) }}
+                      {{ TitleCase(v.vocativeName) }}
                     </div>
                     <div
                       class="background-icon-checked icon-font-16"
                       :style="
-                        VocativeMap.get(v.vocativeId) != undefined
+                        vocativeMap.get(v.vocativeId) != undefined
                           ? 'display:inline-block'
                           : 'none'
                       "
@@ -195,24 +195,24 @@
               >
                 <div
                   class="combobox-content-select-content vocativeValue"
-                  v-for="v in VocativeMap"
+                  v-for="v in vocativeMap"
                   :key="v[0]"
                 >
                   <div
                     class="combobox-content-select-content-text"
                     :value="v[0]"
                   >
-                    {{ titleCase(v[1]) }}
+                    {{ TitleCase(v[1]) }}
                   </div>
                   <div
                     class="
                       combobox-content-select-content-icon
                       background-icon-close
                       icon-font-16
-                      valueVocativeMap
+                      valuevocativeMap
                     "
                     :value="v[0]"
-                    @click="handlerClickComboboxDataClose"
+                    @click="HandlerClickComboboxDataClose"
                   ></div>
                 </div>
               </div>
@@ -276,7 +276,7 @@
                 >
                   <div
                     class="combobox-data-child-content selected"
-                    @click="handlerClickComboboxData"
+                    @click="HandlerClickComboboxData"
                     value="Exactly"
                   >
                     <div class="combobox-data-child-content-text">Là</div>
@@ -287,7 +287,7 @@
                   </div>
                   <div
                     class="combobox-data-child-content"
-                    @click="handlerClickComboboxData"
+                    @click="HandlerClickComboboxData"
                     value="Contain"
                   >
                     <div class="combobox-data-child-content-text">Chứa</div>
@@ -305,7 +305,7 @@
                   v-model="listField.FullName.value"
                 />
                 <div class="input-icon-content">
-                  <span class="icon-font-16 background-icon-close"></span>
+                  <span class="icon-font-16 background-icon-close" @click="listField.FullName.value = ''"></span>
                 </div>
               </div>
             </div>
@@ -395,23 +395,23 @@
                     class="combobox-data-child-content"
                     v-for="v in position"
                     :key="v.positionId"
-                    @click="handlerClickComboboxData"
+                    @click="HandlerClickComboboxData"
                     :value="v.positionId"
                     :class="{
                       selected:
-                        PositionMap.get(v.positionId) != undefined
+                        positionMap.get(v.positionId) != undefined
                           ? true
                           : false,
                     }"
                     id="filedPosition"
                   >
                     <div class="combobox-data-child-content-text-filter">
-                      {{ titleCase(v.positionName) }}
+                      {{ TitleCase(v.positionName) }}
                     </div>
                     <div
                       class="background-icon-checked icon-font-16"
                       :style="
-                        PositionMap.get(v.positionId) != undefined
+                        positionMap.get(v.positionId) != undefined
                           ? 'display:inline-block'
                           : 'none'
                       "
@@ -427,24 +427,24 @@
               >
                 <div
                   class="combobox-content-select-content positionValue"
-                  v-for="v in PositionMap"
+                  v-for="v in positionMap"
                   :key="v[0]"
                 >
                   <div
                     class="combobox-content-select-content-text"
                     :value="v[0]"
                   >
-                    {{ titleCase(v[1]) }}
+                    {{ TitleCase(v[1]) }}
                   </div>
                   <div
                     class="
                       combobox-content-select-content-icon
                       background-icon-close
                       icon-font-16
-                      valuePositionMap
+                      valuepositionMap
                     "
                     :value="v[0]"
-                    @click="handlerClickComboboxDataClose"
+                    @click="HandlerClickComboboxDataClose"
                   ></div>
                 </div>
               </div>
@@ -509,7 +509,7 @@
                 >
                   <div
                     class="combobox-data-child-content selected"
-                    @click="handlerClickComboboxData"
+                    @click="HandlerClickComboboxData"
                     value="Empty"
                   >
                     <div class="combobox-data-child-content-text">Trống</div>
@@ -520,7 +520,7 @@
                   </div>
                   <div
                     class="combobox-data-child-content"
-                    @click="handlerClickComboboxData"
+                    @click="HandlerClickComboboxData"
                     value="NotEmpty"
                   >
                     <div class="combobox-data-child-content-text">
@@ -591,7 +591,7 @@
                 >
                   <div
                     class="combobox-data-child-content selected"
-                    @click="handlerClickComboboxData"
+                    @click="HandlerClickComboboxData"
                     value="Empty"
                   >
                     <div class="combobox-data-child-content-text">Trống</div>
@@ -602,7 +602,7 @@
                   </div>
                   <div
                     class="combobox-data-child-content"
-                    @click="handlerClickComboboxData"
+                    @click="HandlerClickComboboxData"
                     value="NotEmpty"
                   >
                     <div class="combobox-data-child-content-text">
@@ -673,7 +673,7 @@
                 >
                   <div
                     class="combobox-data-child-content selected"
-                    @click="handlerClickComboboxData"
+                    @click="HandlerClickComboboxData"
                     value="Exactly"
                   >
                     <div class="combobox-data-child-content-text">Là</div>
@@ -684,7 +684,7 @@
                   </div>
                   <div
                     class="combobox-data-child-content"
-                    @click="handlerClickComboboxData"
+                    @click="HandlerClickComboboxData"
                     value="Contain"
                   >
                     <div class="combobox-data-child-content-text">Chứa</div>
@@ -702,7 +702,7 @@
                   v-model="listField.CompanyEmail.value"
                 />
                 <div class="input-icon-content">
-                  <span class="icon-font-16 background-icon-close"></span>
+                  <span class="icon-font-16 background-icon-close" @click="listField.CompanyEmail.value = ''"></span>
                 </div>
               </div>
             </div>
@@ -766,7 +766,7 @@
                 >
                   <div
                     class="combobox-data-child-content selected"
-                    @click="handlerClickComboboxData"
+                    @click="HandlerClickComboboxData"
                     value="Exactly"
                   >
                     <div class="combobox-data-child-content-text">Là</div>
@@ -777,7 +777,7 @@
                   </div>
                   <div
                     class="combobox-data-child-content"
-                    @click="handlerClickComboboxData"
+                    @click="HandlerClickComboboxData"
                     value="Contain"
                   >
                     <div class="combobox-data-child-content-text">Chứa</div>
@@ -795,7 +795,7 @@
                   v-model="listField.CustomerEmail.value"
                 />
                 <div class="input-icon-content">
-                  <span class="icon-font-16 background-icon-close"></span>
+                  <span class="icon-font-16 background-icon-close" @click="listField.CustomerEmail.value = ''"></span>
                 </div>
               </div>
             </div>
@@ -859,7 +859,7 @@
                 >
                   <div
                     class="combobox-data-child-content selected"
-                    @click="handlerClickComboboxData"
+                    @click="HandlerClickComboboxData"
                     value="Exactly"
                   >
                     <div class="combobox-data-child-content-text">Là</div>
@@ -870,7 +870,7 @@
                   </div>
                   <div
                     class="combobox-data-child-content"
-                    @click="handlerClickComboboxData"
+                    @click="HandlerClickComboboxData"
                     value="Contain"
                   >
                     <div class="combobox-data-child-content-text">Chứa</div>
@@ -888,7 +888,7 @@
                   v-model="listField.Organization.value"
                 />
                 <div class="input-icon-content">
-                  <span class="icon-font-16 background-icon-close"></span>
+                  <span class="icon-font-16 background-icon-close" @click="listField.Organization.value = ''"></span>
                 </div>
               </div>
             </div>
@@ -951,7 +951,7 @@
                 >
                   <div
                     class="combobox-data-child-content selected"
-                    @click="handlerClickComboboxData"
+                    @click="HandlerClickComboboxData"
                     value="Exactly"
                   >
                     <div class="combobox-data-child-content-text">Là</div>
@@ -962,7 +962,7 @@
                   </div>
                   <div
                     class="combobox-data-child-content"
-                    @click="handlerClickComboboxData"
+                    @click="HandlerClickComboboxData"
                     value="Contain"
                   >
                     <div class="combobox-data-child-content-text">Chứa</div>
@@ -980,7 +980,7 @@
                   v-model="listField.Address.value"
                 />
                 <div class="input-icon-content">
-                  <span class="icon-font-16 background-icon-close"></span>
+                  <span class="icon-font-16 background-icon-close" @click="listField.Address.value = ''"></span>
                 </div>
               </div>
             </div>
@@ -1069,21 +1069,21 @@
                     class="combobox-data-child-content"
                     v-for="v in source"
                     :key="v.sourceId"
-                    @click="handlerClickComboboxData"
+                    @click="HandlerClickComboboxData"
                     :value="v.sourceId"
                     :class="{
                       selected:
-                        SourceMap.get(v.sourceId) != undefined ? true : false,
+                        sourceMap.get(v.sourceId) != undefined ? true : false,
                     }"
                     id="filedSource"
                   >
                     <div class="combobox-data-child-content-text-filter">
-                      {{ titleCase(v.sourceName) }}
+                      {{ TitleCase(v.sourceName) }}
                     </div>
                     <div
                       class="background-icon-checked icon-font-16"
                       :style="
-                        SourceMap.get(v.sourceId) != undefined
+                        sourceMap.get(v.sourceId) != undefined
                           ? 'display:inline-block'
                           : 'none'
                       "
@@ -1099,24 +1099,24 @@
               >
                 <div
                   class="combobox-content-select-content sourceValue"
-                  v-for="v in SourceMap"
+                  v-for="v in sourceMap"
                   :key="v[0]"
                 >
                   <div
                     class="combobox-content-select-content-text"
                     :value="v[0]"
                   >
-                    {{ titleCase(v[1]) }}
+                    {{ TitleCase(v[1]) }}
                   </div>
                   <div
                     class="
                       combobox-content-select-content-icon
                       background-icon-close
                       icon-font-16
-                      valueSourceMap
+                      valuesourceMap
                     "
                     :value="v[0]"
-                    @click="handlerClickComboboxDataClose"
+                    @click="HandlerClickComboboxDataClose"
                   ></div>
                 </div>
               </div>
@@ -1180,7 +1180,7 @@
                 >
                   <div
                     class="combobox-data-child-content selected"
-                    @click="handlerClickComboboxData"
+                    @click="HandlerClickComboboxData"
                     value="Exactly"
                   >
                     <div class="combobox-data-child-content-text">Là</div>
@@ -1191,7 +1191,7 @@
                   </div>
                   <div
                     class="combobox-data-child-content"
-                    @click="handlerClickComboboxData"
+                    @click="HandlerClickComboboxData"
                     value="Contain"
                   >
                     <div class="combobox-data-child-content-text">Chứa</div>
@@ -1209,7 +1209,7 @@
                   v-model="listField.TaxCode.value"
                 />
                 <div class="input-icon-content">
-                  <span class="icon-font-16 background-icon-close"></span>
+                  <span class="icon-font-16 background-icon-close" @click="listField.TaxCode.value = ''"></span>
                 </div>
               </div>
             </div>
@@ -1300,23 +1300,23 @@
                     class="combobox-data-child-content"
                     v-for="v in turnover"
                     :key="v.turnoverId"
-                    @click="handlerClickComboboxData"
+                    @click="HandlerClickComboboxData"
                     :value="v.turnoverId"
                     :class="{
                       selected:
-                        TurnoverMap.get(v.turnoverId) != undefined
+                        turnoverMap.get(v.turnoverId) != undefined
                           ? true
                           : false,
                     }"
                     id="filedTurnover"
                   >
                     <div class="combobox-data-child-content-text-filter">
-                      {{ titleCase(v.turnoverName) }}
+                      {{ TitleCase(v.turnoverName) }}
                     </div>
                     <div
                       class="background-icon-checked icon-font-16"
                       :style="
-                        TurnoverMap.get(v.turnoverId) != undefined
+                        turnoverMap.get(v.turnoverId) != undefined
                           ? 'display:inline-block'
                           : 'none'
                       "
@@ -1332,24 +1332,24 @@
               >
                 <div
                   class="combobox-content-select-content turnoverValue"
-                  v-for="v in TurnoverMap"
+                  v-for="v in turnoverMap"
                   :key="v[0]"
                 >
                   <div
                     class="combobox-content-select-content-text"
                     :value="v[0]"
                   >
-                    {{ titleCase(v[1]) }}
+                    {{ TitleCase(v[1]) }}
                   </div>
                   <div
                     class="
                       combobox-content-select-content-icon
                       background-icon-close
                       icon-font-16
-                      valueTurnoverMap
+                      valueturnoverMap
                     "
                     :value="v[0]"
-                    @click="handlerClickComboboxDataClose"
+                    @click="HandlerClickComboboxDataClose"
                   ></div>
                 </div>
               </div>
@@ -1413,7 +1413,7 @@
                 >
                   <div
                     class="combobox-data-child-content selected"
-                    @click="handlerClickComboboxData"
+                    @click="HandlerClickComboboxData"
                     value="Exactly"
                   >
                     <div class="combobox-data-child-content-text">Là</div>
@@ -1424,7 +1424,7 @@
                   </div>
                   <div
                     class="combobox-data-child-content"
-                    @click="handlerClickComboboxData"
+                    @click="HandlerClickComboboxData"
                     value="Contain"
                   >
                     <div class="combobox-data-child-content-text">Chứa</div>
@@ -1442,25 +1442,25 @@
                   v-model="listField.Facebook.value"
                 />
                 <div class="input-icon-content">
-                  <span class="icon-font-16 background-icon-close"></span>
+                  <span class="icon-font-16 background-icon-close" @click="listField.Facebook.value = ''"></span>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="filter-bottom" v-if="FieldArr.length != 0 ? true : false">
+      <div class="filter-bottom" v-if="fieldArr.length != 0 ? true : false">
         <button
           type="button"
           class="button button-background-primary"
-          @click="handlerFilter"
+          @click="HandlerFilter"
         >
           Áp dụng
         </button>
         <button
           type="button"
           class="button button-background-white"
-          @click="hanlderClickCancelSelect"
+          @click="HanlderClickCancelSelect"
         >
           Bỏ chọn
         </button>
@@ -1472,11 +1472,11 @@
 <script>
 import {
   ClickShowHideComboboxData,
-  selectValueComboboxData,
-} from "../../js/handlerCombobox";
+  SelectValueComboboxData,
+} from "../../js/HandlerCombobox";
 
 // xử lý in hoa
-import { titleCase } from "../../js/handlerString";
+import { TitleCase } from "../../js/HandlerString";
 
 // nhúng status code
 import { StatusCode } from "../Models/StatusCode";
@@ -1512,13 +1512,13 @@ export default {
       source: "",
       searchSource: "",
       //  xưng hô
-      VocativeMap: new Map(),
+      vocativeMap: new Map(),
       // chuc danh
-      PositionMap: new Map(),
+      positionMap: new Map(),
       // nguon goc
-      SourceMap: new Map(),
+      sourceMap: new Map(),
       // doanh thu
-      TurnoverMap: new Map(),
+      turnoverMap: new Map(),
       arrayField: new Map(),
       listField: {
         // xưng hô
@@ -1601,24 +1601,24 @@ export default {
           type: "Exactly",
         },
       },
-      FieldArr: [],
-      PagingFilterExactlyModelChild: {
+      fieldArr: [],
+      pagingFilterExactlyModelChild: {
         Type: PagingFilterEnum.Exactly,
         Data: [],
       },
-      PagingFilterContainModelChild: {
+      pagingFilterContainModelChild: {
         Type: PagingFilterEnum.Contain,
         Data: [],
       },
-      PagingFilterNotEmptyModelChild: {
+      pagingFilterNotEmptyModelChild: {
         Type: PagingFilterEnum.NotEmpty,
         Data: [],
       },
-      PagingFilterEmptyModelChild: {
+      pagingFilterEmptyModelChild: {
         Type: PagingFilterEnum.Empty,
         Data: [],
       },
-      PagingDataModel: {
+      pagingDataModel: {
         cloumnName: "",
         value: [],
       },
@@ -1627,19 +1627,19 @@ export default {
   props: {},
   watch: {
     "listField.Vocative.checkShow"(value) {
-      this.handlerButtonFilter(value, "Vocative");
+      this.HandlerButtonFilter(value, "Vocative");
       console.log(this.arrayField.has("Vocative"));
       if (value == false) {
         if (this.arrayField.has("Vocative") == true)
           this.arrayField.delete("Vocative");
-        this.VocativeMap.clear();
+        this.vocativeMap.clear();
       } else {
         if (this.arrayField.has("Vocative") == false)
           this.arrayField.set("Vocative", "Xưng hô");
       }
     },
     "listField.FullName.checkShow"(value) {
-      this.handlerButtonFilter(value, "FullName");
+      this.HandlerButtonFilter(value, "FullName");
       if (value == false) {
         if (this.arrayField.get("FullName")) this.arrayField.delete("FullName");
         this.listField.FullName.value = null;
@@ -1656,7 +1656,7 @@ export default {
         if (!this.arrayField.get("CustomerPhoneNumber"))
           this.arrayField.set("CustomerPhoneNumber", "ĐT cá nhân");
       }
-      this.handlerButtonFilter(value, "CustomerPhoneNumber");
+      this.HandlerButtonFilter(value, "CustomerPhoneNumber");
     },
     "listField.CompanyPhoneNumber.checkShow"(value) {
       if (value == false) {
@@ -1664,9 +1664,9 @@ export default {
           this.arrayField.delete("CompanyPhoneNumber");
       } else {
         if (!this.arrayField.get("CompanyPhoneNumber"))
-          this.arrayField.set("CompanyPhoneNumber", "ĐT công ty");
+          this.arrayField.set("CompanyPhoneNumber", "ĐT cơ quan");
       }
-      this.handlerButtonFilter(value, "CompanyPhoneNumber");
+      this.HandlerButtonFilter(value, "CompanyPhoneNumber");
     },
     "listField.CompanyEmail.checkShow"(value) {
       if (value == false) {
@@ -1674,9 +1674,9 @@ export default {
           this.arrayField.delete("CompanyEmail");
       } else {
         if (!this.arrayField.get("CompanyEmail"))
-          this.arrayField.set("CompanyEmail", "Email công ty");
+          this.arrayField.set("CompanyEmail", "Email cơ quan");
       }
-      this.handlerButtonFilter(value, "CompanyEmail");
+      this.HandlerButtonFilter(value, "CompanyEmail");
       if (value == false) {
         this.listField.CompanyEmail.value = null;
       }
@@ -1689,7 +1689,7 @@ export default {
         if (!this.arrayField.get("CustomerEmail"))
           this.arrayField.set("CustomerEmail", "Email cá nhân");
       }
-      this.handlerButtonFilter(value, "CustomerEmail");
+      this.HandlerButtonFilter(value, "CustomerEmail");
       if (value == false) {
         this.listField.CustomerEmail.value = null;
       }
@@ -1702,7 +1702,7 @@ export default {
         if (!this.arrayField.get("Organization"))
           this.arrayField.set("Organization", "Tổ chức");
       }
-      this.handlerButtonFilter(value, "Organization");
+      this.HandlerButtonFilter(value, "Organization");
       if (value == false) {
         this.listField.Organization.value = null;
       }
@@ -1714,7 +1714,7 @@ export default {
         if (!this.arrayField.get("Address"))
           this.arrayField.set("Address", "Địa chỉ");
       }
-      this.handlerButtonFilter(value, "Address");
+      this.HandlerButtonFilter(value, "Address");
       if (value == false) {
         this.listField.Address.value = null;
       }
@@ -1726,9 +1726,9 @@ export default {
         if (!this.arrayField.get("Position"))
           this.arrayField.set("Position", "Chức danh");
       }
-      this.handlerButtonFilter(value, "Position");
+      this.HandlerButtonFilter(value, "Position");
       if (value == false) {
-        this.PositionMap.clear();
+        this.positionMap.clear();
       }
     },
     "listField.Turnover.checkShow"(value) {
@@ -1738,9 +1738,9 @@ export default {
         if (!this.arrayField.get("Turnover"))
           this.arrayField.set("Turnover", "Doanh thu");
       }
-      this.handlerButtonFilter(value, "Turnover");
+      this.HandlerButtonFilter(value, "Turnover");
       if (value == false) {
-        this.TurnoverMap.clear();
+        this.turnoverMap.clear();
       }
     },
     "listField.Source.checkShow"(value) {
@@ -1750,9 +1750,9 @@ export default {
         if (!this.arrayField.get("Source"))
           this.arrayField.set("Source", "Nguồn gốc");
       }
-      this.handlerButtonFilter(value, "Source");
+      this.HandlerButtonFilter(value, "Source");
       if (value == false) {
-        this.SourceMap.clear();
+        this.sourceMap.clear();
       }
     },
     "listField.TaxCode.checkShow"(value) {
@@ -1762,7 +1762,7 @@ export default {
         if (!this.arrayField.get("TaxCode"))
           this.arrayField.set("TaxCode", "Mã số thuế");
       }
-      this.handlerButtonFilter(value, "TaxCode");
+      this.HandlerButtonFilter(value, "TaxCode");
       if (value == false) {
         this.listField.TaxCode.value = null;
       }
@@ -1774,7 +1774,7 @@ export default {
         if (!this.arrayField.get("Facebook"))
           this.arrayField.set("Facebook", "Facebook");
       }
-      this.handlerButtonFilter(value, "Facebook");
+      this.HandlerButtonFilter(value, "Facebook");
       if (value == false) {
         this.listField.Facebook.value = null;
       }
@@ -1786,9 +1786,9 @@ export default {
      * Author: Phạm Văn Đạt
      * function: reset data paging model
      */
-    async ResetPagingDataModel() {
+    async ResetpagingDataModel() {
       // trả về giá trị ban đầu
-      this.PagingDataModel = {
+      this.pagingDataModel = {
         cloumnName: "",
         value: [],
       };
@@ -1798,32 +1798,32 @@ export default {
      * Author: Phạm Văn Đạt
      * function: XỬ lý lọc
      */
-    async handlerFilter() {
+    async HandlerFilter() {
       try {
         // lấy dữ liệu xưng hô
-        if (this.VocativeMap.size > 0) {
-          for (let item of this.VocativeMap) {
+        if (this.vocativeMap.size > 0) {
+          for (let item of this.vocativeMap) {
             this.listField.Vocative.value.push(item[0]);
           }
         }
 
         // lấy dữ liệu chức danh
-        if (this.PositionMap.size > 0) {
-          for (let item of this.PositionMap) {
+        if (this.positionMap.size > 0) {
+          for (let item of this.positionMap) {
             this.listField.Position.value.push(item[0]);
           }
         }
 
         // lấy dữ liệu nguồn gốc
-        if (this.SourceMap.size > 0) {
-          for (let item of this.SourceMap) {
+        if (this.sourceMap.size > 0) {
+          for (let item of this.sourceMap) {
             this.listField.Source.value.push(item[0]);
           }
         }
 
         // lấy dữ liệu Doanh thu
-        if (this.TurnoverMap.size > 0) {
-          for (let item of this.TurnoverMap) {
+        if (this.turnoverMap.size > 0) {
+          for (let item of this.turnoverMap) {
             this.listField.Turnover.value.push(item[0]);
           }
         }
@@ -1882,256 +1882,260 @@ export default {
         console.log(this.listField);
 
         // Start thêm vào object "là"| cloumn, value
-        this.PagingFilterExactlyModelChild.Data = [];
-        this.PagingFilterContainModelChild.Data = [];
-        this.PagingFilterNotEmptyModelChild.Data = [];
-        this.PagingFilterEmptyModelChild.Data = [];
+        this.pagingFilterExactlyModelChild.Data = [];
+        this.pagingFilterContainModelChild.Data = [];
+        this.pagingFilterNotEmptyModelChild.Data = [];
+        this.pagingFilterEmptyModelChild.Data = [];
         // Xưng hô
         if (
-          this.VocativeMap.size > 0 &&
+          this.vocativeMap.size > 0 &&
           this.listField.Vocative.checkShow == true
         ) {
-          this.PagingDataModel.cloumnName = "customer.VocativeId";
-          for (let item of this.VocativeMap) {
-            this.PagingDataModel.value.push(item[0]);
+          this.pagingDataModel.cloumnName = "customer.VocativeId";
+          for (let item of this.vocativeMap) {
+            if(item[0] !=null)
+              this.pagingDataModel.value.push(item[0]);
           }
-          this.PagingFilterExactlyModelChild.Data.push(this.PagingDataModel);
-          await this.ResetPagingDataModel();
+          this.pagingFilterExactlyModelChild.Data.push(this.pagingDataModel);
+          await this.ResetpagingDataModel();
         }
 
         // chức danh
         if (
-          this.PositionMap.size > 0 &&
+          this.positionMap.size > 0 &&
           this.listField.Position.checkShow == true
         ) {
-          this.PagingDataModel.cloumnName = "customer.PositionId";
-          for (let item of this.PositionMap) {
-            this.PagingDataModel.value.push(item[0]);
+          this.pagingDataModel.cloumnName = "customer.PositionId";
+          for (let item of this.positionMap) {
+            if(item[0] !=null)
+              this.pagingDataModel.value.push(item[0]);
           }
-          this.PagingFilterExactlyModelChild.Data.push(this.PagingDataModel);
-          await this.ResetPagingDataModel();
+          this.pagingFilterExactlyModelChild.Data.push(this.pagingDataModel);
+          await this.ResetpagingDataModel();
         }
 
         // nguồn gốc
         if (
-          this.SourceMap.size > 0 &&
+          this.sourceMap.size > 0 &&
           this.listField.Source.checkShow == true
         ) {
-          this.PagingDataModel.cloumnName = "customer.SourceId";
-          for (let item of this.SourceMap) {
-            this.PagingDataModel.value.push(item[0]);
+          this.pagingDataModel.cloumnName = "customer.SourceId";
+          for (let item of this.sourceMap) {
+            if(item[0] !=null)
+              this.pagingDataModel.value.push(item[0]);
           }
-          this.PagingFilterExactlyModelChild.Data.push(this.PagingDataModel);
-          await this.ResetPagingDataModel();
+          this.pagingFilterExactlyModelChild.Data.push(this.pagingDataModel);
+          await this.ResetpagingDataModel();
         }
 
         // Doanh thu
         if (
-          this.TurnoverMap.size > 0 &&
+          this.turnoverMap.size > 0 &&
           this.listField.Turnover.checkShow == true
         ) {
-          this.PagingDataModel.cloumnName = "customer.TurnoverId";
-          for (let item of this.TurnoverMap) {
-            this.PagingDataModel.value.push(item[0]);
+          this.pagingDataModel.cloumnName = "customer.TurnoverId";
+          for (let item of this.turnoverMap) {
+            if(item[0] !=null)
+              this.pagingDataModel.value.push(item[0]);
           }
-          this.PagingFilterExactlyModelChild.Data.push(this.PagingDataModel);
-          await this.ResetPagingDataModel();
+          this.pagingFilterExactlyModelChild.Data.push(this.pagingDataModel);
+          await this.ResetpagingDataModel();
         }
 
         // End thêm vào object "là"| cloumn, value
 
         // kiểm tra fulname
         if (this.listField.FullName.checkShow == true) {
-          this.PagingDataModel.cloumnName = "customer.FullName";
+          this.pagingDataModel.cloumnName = "customer.FullName";
           if (this.listField.FullName.value != "") {
-            this.PagingDataModel.value.push(this.listField.FullName.value);
+            this.pagingDataModel.value.push(this.listField.FullName.value);
             if (this.listField.FullName.type == "Exactly") {
-              this.PagingFilterExactlyModelChild.Data.push(
-                this.PagingDataModel
+              this.pagingFilterExactlyModelChild.Data.push(
+                this.pagingDataModel
               );
             } else {
               // chứa
-              this.PagingFilterContainModelChild.Data.push(
-                this.PagingDataModel
+              this.pagingFilterContainModelChild.Data.push(
+                this.pagingDataModel
               );
             }
           }
 
-          await this.ResetPagingDataModel();
+          await this.ResetpagingDataModel();
         }
 
         // kiểm tra Email cơ quan
         if (this.listField.CompanyEmail.checkShow == true) {
-          this.PagingDataModel.cloumnName = "customer.CompanyEmail";
+          this.pagingDataModel.cloumnName = "customer.CompanyEmail";
           if (this.listField.CompanyEmail.value != "") {
-            this.PagingDataModel.value.push(this.listField.CompanyEmail.value);
+            this.pagingDataModel.value.push(this.listField.CompanyEmail.value);
             // là
             if (this.listField.CompanyEmail.type == "Exactly") {
-              this.PagingFilterExactlyModelChild.Data.push(
-                this.PagingDataModel
+              this.pagingFilterExactlyModelChild.Data.push(
+                this.pagingDataModel
               );
             } else {
               // chứa
-              this.PagingFilterContainModelChild.Data.push(
-                this.PagingDataModel
+              this.pagingFilterContainModelChild.Data.push(
+                this.pagingDataModel
               );
             }
           }
 
-          await this.ResetPagingDataModel();
+          await this.ResetpagingDataModel();
         }
 
         // kiểm tra Email cá nhân
         if (this.listField.CustomerEmail.checkShow == true) {
-          this.PagingDataModel.cloumnName = "customer.CustomerEmail";
+          this.pagingDataModel.cloumnName = "customer.CustomerEmail";
           if (this.listField.CustomerEmail.value != null) {
-            this.PagingDataModel.value.push(this.listField.CustomerEmail.value);
+            this.pagingDataModel.value.push(this.listField.CustomerEmail.value);
             // là
             if (this.listField.CustomerEmail.type == "Exactly") {
-              this.PagingFilterExactlyModelChild.Data.push(
-                this.PagingDataModel
+              this.pagingFilterExactlyModelChild.Data.push(
+                this.pagingDataModel
               );
             } else {
               // chứa
-              this.PagingFilterContainModelChild.Data.push(
-                this.PagingDataModel
+              this.pagingFilterContainModelChild.Data.push(
+                this.pagingDataModel
               );
             }
           }
 
-          await this.ResetPagingDataModel();
+          await this.ResetpagingDataModel();
         }
 
         // kiểm tra Tổ chức
         if (this.listField.Organization.checkShow == true) {
-          this.PagingDataModel.cloumnName = "customer.Organization";
+          this.pagingDataModel.cloumnName = "customer.Organization";
           if (this.listField.Organization.value != null) {
-            this.PagingDataModel.value.push(this.listField.Organization.value);
+            this.pagingDataModel.value.push(this.listField.Organization.value);
             // là
             if (this.listField.Organization.type == "Exactly") {
-              this.PagingFilterExactlyModelChild.Data.push(
-                this.PagingDataModel
+              this.pagingFilterExactlyModelChild.Data.push(
+                this.pagingDataModel
               );
             } else {
               // chứa
-              this.PagingFilterContainModelChild.Data.push(
-                this.PagingDataModel
+              this.pagingFilterContainModelChild.Data.push(
+                this.pagingDataModel
               );
             }
           }
 
-          await this.ResetPagingDataModel();
+          await this.ResetpagingDataModel();
         }
 
         // kiểm tra Địa chỉ
         if (this.listField.Address.checkShow == true) {
-          this.PagingDataModel.cloumnName = "customer.Address";
+          this.pagingDataModel.cloumnName = "customer.Address";
           if (this.listField.Address.value != "") {
-            this.PagingDataModel.value.push(this.listField.Address.value);
+            this.pagingDataModel.value.push(this.listField.Address.value);
             // là
             if (this.listField.Address.type == "Exactly") {
-              this.PagingFilterExactlyModelChild.Data.push(
-                this.PagingDataModel
+              this.pagingFilterExactlyModelChild.Data.push(
+                this.pagingDataModel
               );
             } else {
               // chứa
-              this.PagingFilterContainModelChild.Data.push(
-                this.PagingDataModel
+              this.pagingFilterContainModelChild.Data.push(
+                this.pagingDataModel
               );
             }
           }
 
-          await this.ResetPagingDataModel();
+          await this.ResetpagingDataModel();
         }
 
         // kiểm tra Mã số thuế
         if (this.listField.TaxCode.checkShow == true) {
-          this.PagingDataModel.cloumnName = "customer.TaxCode";
+          this.pagingDataModel.cloumnName = "customer.TaxCode";
           if (this.listField.TaxCode.value != "") {
-            this.PagingDataModel.value.push(this.listField.TaxCode.value);
+            this.pagingDataModel.value.push(this.listField.TaxCode.value);
             // là
             if (this.listField.TaxCode.type == "Exactly") {
-              this.PagingFilterExactlyModelChild.Data.push(
-                this.PagingDataModel
+              this.pagingFilterExactlyModelChild.Data.push(
+                this.pagingDataModel
               );
             } else {
               // chứa
-              this.PagingFilterContainModelChild.Data.push(
-                this.PagingDataModel
+              this.pagingFilterContainModelChild.Data.push(
+                this.pagingDataModel
               );
             }
           }
 
-          await this.ResetPagingDataModel();
+          await this.ResetpagingDataModel();
         }
 
         // kiểm tra Mã số thuế
         if (this.listField.Facebook.checkShow == true) {
-          this.PagingDataModel.cloumnName = "customer.Facebook";
+          this.pagingDataModel.cloumnName = "customer.Facebook";
           if (this.listField.Facebook.value != null) {
-            this.PagingDataModel.value.push(this.listField.Facebook.value);
+            this.pagingDataModel.value.push(this.listField.Facebook.value);
             // là
             if (this.listField.Facebook.type == "Exactly") {
-              this.PagingFilterExactlyModelChild.Data.push(
-                this.PagingDataModel
+              this.pagingFilterExactlyModelChild.Data.push(
+                this.pagingDataModel
               );
             } else {
               // chứa
-              this.PagingFilterContainModelChild.Data.push(
-                this.PagingDataModel
+              this.pagingFilterContainModelChild.Data.push(
+                this.pagingDataModel
               );
             }
           }
 
-          await this.ResetPagingDataModel();
+          await this.ResetpagingDataModel();
         }
 
         // kiểm tra Điện thoại cá nhân
         if (this.listField.CustomerPhoneNumber.checkShow == true) {
-          this.PagingDataModel.cloumnName = "customer.CustomerPhoneNumber";
-          this.PagingDataModel.value.push(
+          this.pagingDataModel.cloumnName = "customer.CustomerPhoneNumber";
+          this.pagingDataModel.value.push(
             this.listField.CustomerPhoneNumber.value
           );
           // null
           console.log(this.listField.CustomerPhoneNumber.type);
           if (this.listField.CustomerPhoneNumber.type == "Empty") {
-            this.PagingFilterEmptyModelChild.Data.push(this.PagingDataModel);
+            this.pagingFilterEmptyModelChild.Data.push(this.pagingDataModel);
           } else {
             // không trống
-            this.PagingFilterNotEmptyModelChild.Data.push(this.PagingDataModel);
+            this.pagingFilterNotEmptyModelChild.Data.push(this.pagingDataModel);
           }
-          await this.ResetPagingDataModel();
+          await this.ResetpagingDataModel();
         }
 
         // kiểm tra Điện thoại công ty
         if (this.listField.CompanyPhoneNumber.checkShow == true) {
-          this.PagingDataModel.cloumnName = "customer.CompanyPhoneNumber";
-          this.PagingDataModel.value.push(
+          this.pagingDataModel.cloumnName = "customer.CompanyPhoneNumber";
+          this.pagingDataModel.value.push(
             this.listField.CompanyPhoneNumber.value
           );
           // null
           console.log(this.listField.CompanyPhoneNumber.type);
           if (this.listField.CompanyPhoneNumber.type == "Empty") {
-            this.PagingFilterEmptyModelChild.Data.push(this.PagingDataModel);
+            this.pagingFilterEmptyModelChild.Data.push(this.pagingDataModel);
           } else {
             // không trống
-            this.PagingFilterNotEmptyModelChild.Data.push(this.PagingDataModel);
+            this.pagingFilterNotEmptyModelChild.Data.push(this.pagingDataModel);
           }
-          await this.ResetPagingDataModel();
+          await this.ResetpagingDataModel();
         }
 
         let ArrayObjectData = [];
-        if (this.PagingFilterExactlyModelChild.Data.length > 0) {
-          ArrayObjectData.push(this.PagingFilterExactlyModelChild);
+        if (this.pagingFilterExactlyModelChild.Data.length > 0) {
+          ArrayObjectData.push(this.pagingFilterExactlyModelChild);
         }
-        if (this.PagingFilterContainModelChild.Data.length > 0) {
-          ArrayObjectData.push(this.PagingFilterContainModelChild);
+        if (this.pagingFilterContainModelChild.Data.length > 0) {
+          ArrayObjectData.push(this.pagingFilterContainModelChild);
         }
-        if (this.PagingFilterNotEmptyModelChild.Data.length > 0) {
-          ArrayObjectData.push(this.PagingFilterNotEmptyModelChild);
+        if (this.pagingFilterNotEmptyModelChild.Data.length > 0) {
+          ArrayObjectData.push(this.pagingFilterNotEmptyModelChild);
         }
-        if (this.PagingFilterEmptyModelChild.Data.length > 0) {
-          ArrayObjectData.push(this.PagingFilterEmptyModelChild);
+        if (this.pagingFilterEmptyModelChild.Data.length > 0) {
+          ArrayObjectData.push(this.pagingFilterEmptyModelChild);
         }
 
         console.log(ArrayObjectData);
@@ -2145,9 +2149,9 @@ export default {
      * Author: Phạm Văn Đạt
      * function: xử lý bỏ chọn
      */
-    hanlderClickCancelSelect() {
+    HanlderClickCancelSelect() {
       try {
-        this.FieldArr.splice(0, this.FieldArr.length);
+        this.fieldArr.splice(0, this.fieldArr.length);
         this.listField = {
           // xưng hô
           Vocative: {
@@ -2249,45 +2253,45 @@ export default {
      * Author: Phạm Văn Đạt
      * function: xử lý close value
      */
-    handlerClickComboboxDataClose(event) {
+    HandlerClickComboboxDataClose(event) {
       try {
         let El = event.target;
 
         console.log(El);
 
         // // xưng hô
-        if (El.classList.contains("valueVocativeMap")) {
+        if (El.classList.contains("valuevocativeMap")) {
           let value = El.getAttribute("value");
           if (value) {
-            if (this.VocativeMap.get(value)) this.VocativeMap.delete(value);
-            console.log(this.VocativeMap);
+            if (this.vocativeMap.get(value)) this.vocativeMap.delete(value);
+            console.log(this.vocativeMap);
           }
         }
 
         // // chức danh
-        if (El.classList.contains("valuePositionMap")) {
+        if (El.classList.contains("valuepositionMap")) {
           let value = El.getAttribute("value");
           if (value) {
-            if (this.PositionMap.get(value)) this.PositionMap.delete(value);
-            console.log(this.PositionMap);
+            if (this.positionMap.get(value)) this.positionMap.delete(value);
+            console.log(this.positionMap);
           }
         }
 
         //  // Nguồn gốc
-        if (El.classList.contains("valueSourceMap")) {
+        if (El.classList.contains("valuesourceMap")) {
           let value = El.getAttribute("value");
           if (value) {
-            if (this.SourceMap.get(value)) this.SourceMap.delete(value);
-            console.log(this.SourceMap);
+            if (this.sourceMap.get(value)) this.sourceMap.delete(value);
+            console.log(this.sourceMap);
           }
         }
 
         //  // Doanh thu
-        if (El.classList.contains("valueTurnoverMap")) {
+        if (El.classList.contains("valueturnoverMap")) {
           let value = El.getAttribute("value");
           if (value) {
-            if (this.TurnoverMap.get(value)) this.TurnoverMap.delete(value);
-            console.log(this.TurnoverMap);
+            if (this.turnoverMap.get(value)) this.turnoverMap.delete(value);
+            console.log(this.turnoverMap);
           }
         }
       } catch (error) {
@@ -2299,22 +2303,22 @@ export default {
      * Author: Phạm Văn Đạt
      * function: xử lý in hoa
      */
-    titleCase,
+    TitleCase,
 
     /**
      * Author: Phạm Văn Đạt
      * function: xử lý nút lọc
      */
-    handlerButtonFilter(value, column) {
+    HandlerButtonFilter(value, column) {
       try {
         if (value == true) {
-          this.FieldArr.push(column);
+          this.fieldArr.push(column);
         } else {
-          let item = this.FieldArr.filter((item) => item != column);
-          this.FieldArr = item;
+          let item = this.fieldArr.filter((item) => item != column);
+          this.fieldArr = item;
         }
 
-        if (this.FieldArr.length != 0) {
+        if (this.fieldArr.length != 0) {
           this.$refs.filterContent.style.height =
             "calc(100vh - 84px -  64px - 32px - 32px - 56px)";
         } else {
@@ -2530,7 +2534,7 @@ export default {
      * Author: Phạm Văn Đạt
      * function: xử lý click lấy thông tin tronc combobox
      */
-    handlerClickComboboxData: function (event) {
+    HandlerClickComboboxData: function (event) {
       try {
         let El = event.target;
         if (El.getAttribute("id") == null) El = El.parentNode;
@@ -2551,16 +2555,16 @@ export default {
           InnerHtmlElement =
             ElContent.innerHTML != null ? ElContent.innerHTML : null;
         else {
-          selectValueComboboxData(event);
+          SelectValueComboboxData(event);
         }
 
         // Xưng hô
         if (ValueElement != null && InnerHtmlElement != null) {
           if (IdElment == "filedVocative") {
-            if (!this.VocativeMap.get(ValueElement))
-              this.VocativeMap.set(ValueElement, InnerHtmlElement);
+            if (!this.vocativeMap.get(ValueElement))
+              this.vocativeMap.set(ValueElement, InnerHtmlElement);
             else {
-              this.VocativeMap.delete(ValueElement, InnerHtmlElement);
+              this.vocativeMap.delete(ValueElement, InnerHtmlElement);
             }
           }
         }
@@ -2568,36 +2572,36 @@ export default {
         // Chức danh
         if (ValueElement != null && InnerHtmlElement != null) {
           if (IdElment == "filedPosition") {
-            if (!this.PositionMap.get(ValueElement))
-              this.PositionMap.set(ValueElement, InnerHtmlElement);
+            if (!this.positionMap.get(ValueElement))
+              this.positionMap.set(ValueElement, InnerHtmlElement);
             else {
-              this.PositionMap.delete(ValueElement, InnerHtmlElement);
+              this.positionMap.delete(ValueElement, InnerHtmlElement);
             }
-            console.log(this.PositionMap);
+            console.log(this.positionMap);
           }
         }
 
         // Nguồn gốc
         if (ValueElement != null && InnerHtmlElement != null) {
           if (IdElment == "filedSource") {
-            if (!this.SourceMap.get(ValueElement))
-              this.SourceMap.set(ValueElement, InnerHtmlElement);
+            if (!this.sourceMap.get(ValueElement))
+              this.sourceMap.set(ValueElement, InnerHtmlElement);
             else {
-              this.SourceMap.delete(ValueElement, InnerHtmlElement);
+              this.sourceMap.delete(ValueElement, InnerHtmlElement);
             }
-            console.log(this.SourceMap);
+            console.log(this.sourceMap);
           }
         }
 
         // Doanh thu
         if (ValueElement != null && InnerHtmlElement != null) {
           if (IdElment == "filedTurnover") {
-            if (!this.TurnoverMap.get(ValueElement))
-              this.TurnoverMap.set(ValueElement, InnerHtmlElement);
+            if (!this.turnoverMap.get(ValueElement))
+              this.turnoverMap.set(ValueElement, InnerHtmlElement);
             else {
-              this.TurnoverMap.delete(ValueElement, InnerHtmlElement);
+              this.turnoverMap.delete(ValueElement, InnerHtmlElement);
             }
-            console.log(this.TurnoverMap);
+            console.log(this.turnoverMap);
           }
         }
       } catch (error) {

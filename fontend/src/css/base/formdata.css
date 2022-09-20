@@ -154,3 +154,8 @@
 textarea.textarea.textarea-description {
     width: calc(384px + 384px - 144px + 32px + 20px);
 }
+
+.form-container-content .form-container-content-child-item:not(:last-child) {
+  margin-bottom: 16px;
+  margin-right: 32px;
+}

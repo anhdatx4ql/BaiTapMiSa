@@ -36,9 +36,6 @@ namespace WebDomain
         // Điện thoại cơ quan 7
         public string CompanyPhoneNumber { set; get; }
 
-        // Loại tiềm năng 8
-        //public Guid CustomerPotentialTypeId { set; get; }
-
         // Nguồn gốc 9
         public Guid? SourceId { set; get; }
 
@@ -64,7 +61,7 @@ namespace WebDomain
         public string TaxCode { set; get; }
         
         // ngày sinh 17
-        public string BirthDay { set; get; }
+        public DateTime BirthDay { set; get; }
 
         // giới tính 18
         public Nullable<int> Gender { set; get; }

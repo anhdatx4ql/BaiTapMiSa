@@ -3,7 +3,7 @@
  * Author: Phạm Văn Đạt
  * function: In hoa chữ cái đầu
  */
-export function titleCase(string) {
+export function TitleCase(string) {
     //1. Tách các từ, cụm từ trong chuỗi ban đầu
     let sentence = string.toLowerCase().split(" ");
     //2. Tạo vòng lặp và viết hoa chữ cái đầu tiên của các từ, cụm từ trên
@@ -23,7 +23,7 @@ export function titleCase(string) {
  * Author: Phạm Văn Đạt
  * function: Kiểm tra định dạng email
  */
-export function checkEmail(value){
+export function CheckEmail(value){
    let myRe = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,5}$/;
    return myRe.exec(value);
 }

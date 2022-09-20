@@ -35,6 +35,10 @@ body,button,textarea,input{
     font-size: 13px;
 }
 
+button,textarea,input{
+    outline: none;
+}
+
 .container{
     display: grid;
     grid-template-rows: 84px 64px calc(100vh - 84px - 64px);

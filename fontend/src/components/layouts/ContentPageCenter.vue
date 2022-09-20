@@ -16,18 +16,18 @@
               <input
                 type="checkbox"
                 id="listCustomerId"
+                ref="listCustomerId"
                 :checked="false"
                 :value="listCustomerId"
               />
               <label
                 for="listCustomerId"
-                :class="
-                  listCustomerId.length == 0
+                :class="(listCustomerId.length == 0)
                     ? 'background-icon-checked-table'
                     : 'background-icon-ckecked-header'
                 "
-                @click="clickCheckboxHeader"
-                ref="checkboxHeader"
+                @click="ClickCheckboxHeader"
+                ref="checkedHeader"
               ></label>
             </div>
             <div class="th">Thẻ</div>
@@ -51,7 +51,6 @@
             class="tr"
             v-for="c in customer"
             :key="c.customerId"
-            @click="ClickDetail(c.customerId)"
           >
             <div
               class="td tr-child-center"
@@ -75,9 +74,9 @@
             </div>
             <div class="td"></div>
             <!-- thẻ -->
-            <div class="td">{{ c.vocativeName ? titleCase(c.vocativeName) : "-" }}</div>
-            <div class="td">{{ c.fullName ? titleCase(c.fullName) : "-" }}</div>
-            <div class="td">{{ c.positionName ? titleCase(c.positionName) : "-" }}</div>
+            <div class="td">{{ c.vocativeName ? TitleCase(c.vocativeName) : "-" }}</div>
+            <div class="td fullNameTable" @click="ClickDetail(c.customerId)" style="pointer:cursor;">{{ c.fullName ? TitleCase(c.fullName) : "-" }}</div>
+            <div class="td">{{ c.positionName ? TitleCase(c.positionName) : "-" }}</div>
             <div class="td container-phone-number">
               <span class="background-icon-phone-center icon-font-16"></span>
               {{ c.customerPhoneNumber ? c.customerPhoneNumber : "-" }}
@@ -88,10 +87,10 @@
             </div>
             <div class="td">{{ c.companyEmail ? c.companyEmail : "-" }}</div>
             <div class="td">{{ c.customerEmail ? c.customerEmail : "-" }}</div>
-            <div class="td">{{ c.organization ? titleCase(c.organization) : "-" }}</div>
+            <div class="td">{{ c.organization ? TitleCase(c.organization) : "-" }}</div>
             <div class="td">{{ c.taxCode ? c.taxCode : "-" }}</div>
-            <div class="td">{{ c.turnoverName ? titleCase(c.turnoverName) : "-" }}</div>
-            <div class="td">{{ c.address ? titleCase(c.address) : "-" }}</div>
+            <div class="td">{{ c.turnoverName ? TitleCase(c.turnoverName) : "-" }}</div>
+            <div class="td">{{ c.address ? TitleCase(c.address) : "-" }}</div>
           </div>
         </div>
       </div>
@@ -108,7 +107,7 @@
                 <div class="combobox" id="paging">
                   <div
                     class="combobox-child combobox-content"
-                    @click="handlerClickCombobox"
+                    @click="HandlerClickCombobox"
                     check="false"
                   >
                     <div
@@ -136,7 +135,7 @@
                           selected:
                             v[0] == pageSize? true : false,
                         }"
-                        @click="handlerClickComboboxData"
+                        @click="HandlerClickComboboxData"
                         :value="v[0]"
                       >
                         <div class="combobox-data-child-content-text">
@@ -160,12 +159,12 @@
         <div class="table-button-right-chlid">
           <button class="table-button-right-chlid-button button button-background-white" 
           :class="{'background-disabled':(checkPreData==true)?false:true}"
-          @click="clickPreFirstData">
+          @click="ClickPreFirstData">
             <span class="background-icon-first icon-font-16"></span>
           </button>
           <button class="table-button-right-chlid-button button button-background-white" 
           :class="{'background-disabled':(checkPreData==true)?false:true}"
-          @click="clickPreData">
+          @click="ClickPreData">
             <span  class="background-icon-pre icon-font-16"></span>
           </button>
           <div class="table-button-right-chlid-text">
@@ -174,13 +173,13 @@
           <button 
           class="table-button-right-chlid-button button button-background-white"
           :class="{'background-disabled':(checkNextData==true)?false:true}"
-          @click="clickNextData">
+          @click="ClickNextData">
           
             <span class="background-icon-next icon-font-16"></span>
           </button>
           <button class="table-button-right-chlid-button button button-background-white" 
           :class="{'background-disabled':(checkNextData==true)?false:true}"
-          @click="clickNextLastData()">
+          @click="ClickNextLastData()">
             <span class="background-icon-last icon-font-16"></span>
           </button>
         </div>
@@ -205,18 +204,20 @@
 
 <script>
   //  xử lý hiển thị text
-import { titleCase } from "../../js/handlerString";
+import { TitleCase } from "../../js/HandlerString";
 // các hàm xử lý click combobox
 // nhúng status code
 import { StatusCode } from "../Models/StatusCode";
 
 // các hàm xử lý click combobox
-import {
+import {  
   ClickShowHideComboboxData,
-  selectValueComboboxData,
-} from "../../js/handlerCombobox";
+  SelectValueComboboxData,
+  HandlerScroll, 
+  HandlerClickButtonArrow 
+} from "../../js/HandlerCombobox";
 
-import { handlerScroll, handlerClickButtonArrow } from "../../js/handlerCombobox";
+// loading
 import { UnLoading, Loading } from "../../js/Loading";
 
 // nhúng service xử lý customer
@@ -257,23 +258,23 @@ export default {
     removeListCustomerId:Boolean
   },
   created() {
+
     this.ListPaging.set(10,10);
     this.ListPaging.set(20,20);
     this.ListPaging.set(50,50);
     this.ListPaging.set(100,100);
     // function: lấy thông tin c;
     this.checkLoadData= true;
-
   },
   methods: {
     // xử lý hiển thị text
-    titleCase,
+    TitleCase,
 
      /**
      * Author:Phạm Văn Đạt
      * function:Hiển thị dữ liệu trang đầu tiên
      */
-    clickPreFirstData(){
+    ClickPreFirstData(){
       if(this.checkPreData == true){
         this.currentPage = 1;
         this.checkLoadData = true;
@@ -284,7 +285,7 @@ export default {
      * Author:Phạm Văn Đạt
      * function:  Hiển thị dữ liệu trang trước đó
      */
-    clickPreData(){
+    ClickPreData(){
       if(this.checkPreData == true){
         this.currentPage =  this.currentPage-1;
         this.checkLoadData = true;
@@ -296,7 +297,7 @@ export default {
      * Author:Phạm Văn Đạt
      * function: Hiển thị dữ liệu trang tiếp theo
      */
-    clickNextData(){
+    ClickNextData(){
       if(this.checkNextData == true){
         this.currentPage =  this.currentPage+1;
         this.checkLoadData = true;
@@ -306,7 +307,7 @@ export default {
   /**
    * Hiển thị dữ liệu cuối cùng
    */
-    clickNextLastData(){
+    ClickNextLastData(){
       if(this.checkNextData == true){
         this.currentPage =  this.totalPages;
         this.checkLoadData = true;
@@ -317,7 +318,7 @@ export default {
      * function:  xử lý đóng form data
      * created time: 11:28 17/08/2022
      */
-    handlerClickCombobox: function (event) {
+    HandlerClickCombobox: function (event) {
       try {
 
         // hiển thị combobox data
@@ -331,7 +332,7 @@ export default {
      * Author: Phạm Văn Đạt
      * function:  xử lý click combobox data
      */
-     handlerClickComboboxData: function (event) {
+     HandlerClickComboboxData: function (event) {
       try {
 
         // chuyển curent và page về default 
@@ -344,7 +345,7 @@ export default {
         }
 
         this.pageSize = El.getAttribute("value");
-        selectValueComboboxData(event);
+        SelectValueComboboxData(event);
       } catch (error) {
         console.log(error);
       }
@@ -400,7 +401,7 @@ export default {
      * Author: Phạm Văn Đạt
      * function: xử lý checkbox header
      */
-    clickCheckboxHeader: function (event) {
+    ClickCheckboxHeader: function (event) {
       let ElChecked = event.target;
       let El = event.target.parentNode.getElementsByTagName("input")[0];
       if (El) {
@@ -441,6 +442,7 @@ export default {
      * function: Load dữ liệu khi lọc
      */
     async LoadDataFilter(Data,keyword,currentPage,pageSize){
+      
       // loading
       if(this.$refs.TableData != undefined)
         Loading(this.$refs.TableData);
@@ -454,6 +456,13 @@ export default {
           this.checkPreData = res.data.hasPrePage;
           this.totalPages = res.data.totalPages;
           this.checkNextData = res.data.hasNextpage;
+
+          // nếu số thứ tự bản ghi đầu tiên < số thứ tự bản ghi cuối cùng-> load về trang đầu tiên
+          if(this.startColumn > this.endColumn){
+            this.currentPage = 1;
+            this.checkLoadData  = true;
+          }
+
           // load xong bỏ hết các dòng đã chọn
           this.listCustomerId.splice(0, this.listCustomerId.length);
 
@@ -497,8 +506,21 @@ export default {
           // load xong bỏ hết các dòng đã chọn
           this.listCustomerId.splice(0, this.listCustomerId.length);
 
-          // bỏ checked
-          let checkboxs = document.getElementsByClassName("trCheckbox");
+          this.CloseCheckedCheckBox();
+
+          }
+          
+        });
+        UnLoading(this.$refs.TableData);
+    },
+
+    /**
+     * Author: Phạm Văn Đạt
+     * Function: Hủy bỏ checked
+     */
+    CloseCheckedCheckBox(){
+      // bỏ checked
+      let checkboxs = document.getElementsByClassName("trCheckbox");
           
           // chuyển background checked
           if (checkboxs) {
@@ -509,12 +531,19 @@ export default {
                 }
               }
 
-            } 
-          }
-          
-        });
-        UnLoading(this.$refs.TableData);
+              let itemCheckbox = this.$refs.checkedHeader;
+              let itemInputCheckbox = this.$refs.listCustomerId;
+              console.log(itemCheckbox)
+              console.log(itemInputCheckbox)
+
+              if(itemCheckbox != undefined && itemInputCheckbox != undefined){
+                  console.log("vao fay")
+                if(itemInputCheckbox.checked == true){
+                  itemInputCheckbox.checked = false;
+                }
+              }
     }
+  }
      
   },
   // theo dõi các biến thay đổi và thực hiện hàm nếu có
@@ -524,9 +553,23 @@ export default {
      * function: bỏ hết checked
      */
      removeListCustomerId(){
-      if(this.$refs.checkboxHeader){
-        this.$refs.checkboxHeader.click();
+      console.log(this.checkedHeader)
+
+      if(this.$refs.checkedHeader){
+        console.log("bo chon")
+
+        this.CloseCheckedCheckBox();
+
+        if(this.$refs.listCustomerId){
+          if(this.$refs.listCustomerId.checked == true){
+            this.$refs.listCustomerId.checked = false;
+          }
+        }
+
+        this.listCustomerId = [];
+
       }
+
 
     },
 
@@ -579,7 +622,7 @@ export default {
      * Author: Phạm Văn Đạt
      * function: theo dõi danh sách khách hàng
      */
-    customer() {
+    Customer() {
       UnLoading(this.$refs.TableData);
     },
 
@@ -588,7 +631,7 @@ export default {
      * function: hiển thị, ẩn side bar bên trái
      */
     checkLeft() {
-      handlerClickButtonArrow(this.checkLeft, this.checkRight, event);
+      HandlerClickButtonArrow(this.checkLeft, this.checkRight, event);
     },
 
      /**
@@ -596,7 +639,7 @@ export default {
      * function: hiển thị, ẩn side bar bên phải
      */
     checkRight() {
-      handlerClickButtonArrow(this.checkLeft, this.checkRight, event);
+      HandlerClickButtonArrow(this.checkLeft, this.checkRight, event);
     },
 
     /**
@@ -638,7 +681,7 @@ export default {
      * Author: Phạm Văn Đạt
      * function: Xử lý scroll
      */
-    handlerScroll();
+    HandlerScroll();
   },
 };
 </script>

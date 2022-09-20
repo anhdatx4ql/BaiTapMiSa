@@ -42,14 +42,14 @@ namespace WebDomain
 
                 var Offset = (currentPageNumber - 1) * pageSize;
 
-                var strQuery = @"SELECT COUNT(*) FROM Customer WHERE CustomerId IN (SELECT Customer.CustomerId FROM customer LEFT JOIN vocative ON customer.VocativeId = vocative.VocativeId LEFT JOIN department ON customer.DepartmentId = department.DepartmentId LEFT JOIN positions ON customer.PositionId = positions.PositionId LEFT JOIN source ON customer.SourceId = source.SourceId LEFT JOIN organizationtype ON customer.OrganizationTypeId = organizationtype.OrganizationTypeId LEFT JOIN turnover ON customer.TurnoverId = turnover.TurnoverId WHERE customer.IsDelete = false);";
+                var strQuery = @"SELECT COUNT(*) FROM Customer WHERE CustomerId IN (SELECT customer.CustomerId FROM customer LEFT JOIN vocative ON customer.VocativeId = vocative.VocativeId LEFT JOIN department ON customer.DepartmentId = department.DepartmentId LEFT JOIN positions ON customer.PositionId = positions.PositionId LEFT JOIN source ON customer.SourceId = source.SourceId LEFT JOIN organizationtype ON customer.OrganizationTypeId = organizationtype.OrganizationTypeId LEFT JOIN files ON customer.CustomerId = files.EntityId LEFT JOIN turnover ON customer.TurnoverId = turnover.TurnoverId WHERE customer.IsDelete = false);";
 
                 if (keyword != null) {
-                    strQuery += @"SELECT customer.gender,customer.CustomerId,customer.LastName, customer.FirstName, customer.PotentialCode, customer.FullName, customer.CustomerPhoneNumber, customer.CompanyPhoneNumber, customer.CustomerEmail,customer.IsActiveEmail, customer.IsActivePhoneNumber, customer.CompanyEmail, customer.TaxCode, customer.Zalo, customer.Organization, customer.Address, customer.VocativeId, customer.DepartmentId, customer.PositionId, customer.SourceId, customer.OrganizationTypeId, customer.TurnoverId, customer.IsDelete, vocative.VocativeName, department.DepartmentName, positions.PositionName, source.SourceName, organizationtype.OrganizationTypeName, turnover.TurnoverName,customer.Country,customer.District,customer.Wards,customer.HomeNumber FROM customer LEFT JOIN vocative ON customer.VocativeId = vocative.VocativeId LEFT JOIN department ON customer.DepartmentId = department.DepartmentId LEFT JOIN positions ON customer.PositionId = positions.PositionId LEFT JOIN source ON customer.SourceId = source.SourceId LEFT JOIN organizationtype ON customer.OrganizationTypeId = organizationtype.OrganizationTypeId LEFT JOIN turnover ON customer.TurnoverId = turnover.TurnoverId WHERE customer.IsDelete = false and (FullName LIKE @keyword OR CustomerPhoneNumber LIKE @keyword OR PotentialCode LIKE @keyword) ORDER BY customer.UpdatedAt DESC LIMIT @Offset,@PageSize";
+                    strQuery += @"SELECT customer.gender,customer.CustomerId,customer.LastName, customer.BirthDay, customer.FirstName, customer.PotentialCode, customer.FullName, customer.CustomerPhoneNumber, customer.CompanyPhoneNumber, customer.CustomerEmail,customer.IsActiveEmail, customer.IsActivePhoneNumber, customer.CompanyEmail, customer.TaxCode, customer.Zalo, customer.Organization, customer.Address, customer.VocativeId, customer.DepartmentId, customer.PositionId, customer.SourceId, customer.OrganizationTypeId, customer.TurnoverId, customer.IsDelete, vocative.VocativeName, department.DepartmentName, positions.PositionName, source.SourceName, organizationtype.OrganizationTypeName, turnover.TurnoverName,customer.Country,customer.District,customer.Wards,customer.HomeNumber, files.Path, customer.Facebook FROM customer LEFT JOIN vocative ON customer.VocativeId = vocative.VocativeId LEFT JOIN department ON customer.DepartmentId = department.DepartmentId LEFT JOIN positions ON customer.PositionId = positions.PositionId LEFT JOIN source ON customer.SourceId = source.SourceId LEFT JOIN organizationtype ON customer.OrganizationTypeId = organizationtype.OrganizationTypeId LEFT JOIN files ON customer.CustomerId = files.EntityId LEFT JOIN turnover ON customer.TurnoverId = turnover.TurnoverId WHERE customer.IsDelete = false and (FullName LIKE @keyword OR CustomerPhoneNumber LIKE @keyword OR PotentialCode LIKE @keyword) ORDER BY customer.UpdatedAt DESC LIMIT @Offset,@PageSize";
                 }
                 else
                 {
-                    strQuery += @"SELECT customer.gender,customer.CustomerId,customer.LastName, customer.FirstName, customer.PotentialCode,customer.BirthDay, customer.FullName, customer.CustomerPhoneNumber, customer.CompanyPhoneNumber, customer.CustomerEmail,customer.IsActiveEmail, customer.IsActivePhoneNumber, customer.CompanyEmail, customer.TaxCode, customer.Zalo, customer.Organization, customer.Address, customer.VocativeId, customer.DepartmentId, customer.PositionId, customer.SourceId, customer.OrganizationTypeId, customer.TurnoverId, customer.IsDelete, vocative.VocativeName, department.DepartmentName, positions.PositionName, source.SourceName, organizationtype.OrganizationTypeName, turnover.TurnoverName,customer.Country,customer.District,customer.Wards,customer.HomeNumber FROM customer LEFT JOIN vocative ON customer.VocativeId = vocative.VocativeId LEFT JOIN department ON customer.DepartmentId = department.DepartmentId LEFT JOIN positions ON customer.PositionId = positions.PositionId LEFT JOIN source ON customer.SourceId = source.SourceId LEFT JOIN organizationtype ON customer.OrganizationTypeId = organizationtype.OrganizationTypeId LEFT JOIN turnover ON customer.TurnoverId = turnover.TurnoverId WHERE customer.IsDelete = false ORDER BY customer.UpdatedAt DESC LIMIT @Offset,@PageSize";
+                    strQuery += @"SELECT customer.gender,customer.CustomerId,customer.LastName, customer.BirthDay, customer.FirstName, customer.PotentialCode, customer.FullName, customer.CustomerPhoneNumber, customer.CompanyPhoneNumber, customer.CustomerEmail,customer.IsActiveEmail, customer.IsActivePhoneNumber, customer.CompanyEmail, customer.TaxCode, customer.Zalo, customer.Organization, customer.Address, customer.VocativeId, customer.DepartmentId, customer.PositionId, customer.SourceId, customer.OrganizationTypeId, customer.TurnoverId, customer.IsDelete, vocative.VocativeName, department.DepartmentName, positions.PositionName, source.SourceName, organizationtype.OrganizationTypeName, turnover.TurnoverName,customer.Country,customer.District,customer.Wards,customer.HomeNumber, files.Path, customer.Facebook FROM customer LEFT JOIN vocative ON customer.VocativeId = vocative.VocativeId LEFT JOIN department ON customer.DepartmentId = department.DepartmentId LEFT JOIN positions ON customer.PositionId = positions.PositionId LEFT JOIN source ON customer.SourceId = source.SourceId LEFT JOIN organizationtype ON customer.OrganizationTypeId = organizationtype.OrganizationTypeId LEFT JOIN files ON customer.CustomerId = files.EntityId LEFT JOIN turnover ON customer.TurnoverId = turnover.TurnoverId WHERE customer.IsDelete = false ORDER BY customer.UpdatedAt DESC LIMIT @Offset,@PageSize";
                 }
                 var parameterWhere = new Dictionary<string, object>()
                 {
@@ -94,7 +94,7 @@ namespace WebDomain
 
                 var Offset = (currentPageNumber - 1) * pageSize;
 
-                var strQuery = @"SELECT COUNT(*) FROM Customer WHERE CustomerId IN (SELECT Customer.CustomerId FROM customer LEFT JOIN vocative ON customer.VocativeId = vocative.VocativeId LEFT JOIN department ON customer.DepartmentId = department.DepartmentId LEFT JOIN positions ON customer.PositionId = positions.PositionId LEFT JOIN source ON customer.SourceId = source.SourceId LEFT JOIN organizationtype ON customer.OrganizationTypeId = organizationtype.OrganizationTypeId LEFT JOIN turnover ON customer.TurnoverId = turnover.TurnoverId WHERE customer.IsDelete = false);";
+                var strQuery = @"SELECT COUNT(*) FROM Customer WHERE CustomerId IN (SELECT customer.CustomerId FROM customer LEFT JOIN vocative ON customer.VocativeId = vocative.VocativeId LEFT JOIN department ON customer.DepartmentId = department.DepartmentId LEFT JOIN positions ON customer.PositionId = positions.PositionId LEFT JOIN source ON customer.SourceId = source.SourceId LEFT JOIN organizationtype ON customer.OrganizationTypeId = organizationtype.OrganizationTypeId LEFT JOIN files ON customer.CustomerId = files.EntityId LEFT JOIN turnover ON customer.TurnoverId = turnover.TurnoverId WHERE customer.IsDelete = false);";
                 
                 // xử lý tách 3 models: là, chứa, không trống
                 
@@ -216,17 +216,17 @@ namespace WebDomain
 
                 if (models.Count > 0)
                 {
-                    strQuery = @"SELECT COUNT(*) FROM Customer WHERE CustomerId IN (SELECT Customer.CustomerId FROM customer LEFT JOIN vocative ON customer.VocativeId = vocative.VocativeId LEFT JOIN department ON customer.DepartmentId = department.DepartmentId LEFT JOIN positions ON customer.PositionId = positions.PositionId LEFT JOIN source ON customer.SourceId = source.SourceId LEFT JOIN organizationtype ON customer.OrganizationTypeId = organizationtype.OrganizationTypeId LEFT JOIN turnover ON customer.TurnoverId = turnover.TurnoverId WHERE customer.IsDelete = false) and " + strWhereExactly + " and " + strWhereContain + " and " + strWhereNotEmpty + " and " + strWhereEmpty+";";
+                    strQuery = @"SELECT COUNT(*) FROM Customer WHERE CustomerId IN (SELECT customer.CustomerId FROM customer LEFT JOIN vocative ON customer.VocativeId = vocative.VocativeId LEFT JOIN department ON customer.DepartmentId = department.DepartmentId LEFT JOIN positions ON customer.PositionId = positions.PositionId LEFT JOIN source ON customer.SourceId = source.SourceId LEFT JOIN organizationtype ON customer.OrganizationTypeId = organizationtype.OrganizationTypeId LEFT JOIN files ON customer.CustomerId = files.EntityId LEFT JOIN turnover ON customer.TurnoverId = turnover.TurnoverId WHERE customer.IsDelete = false) and " + strWhereExactly + " and " + strWhereContain + " and " + strWhereNotEmpty + " and " + strWhereEmpty+";";
                 }
 
                 // lấy được 3 where: là, chứa, not null
                 if (keyword != null)
                 {
-                    strQuery += @"SELECT customer.gender,customer.CustomerId,customer.LastName, customer.FirstName, customer.PotentialCode, customer.FullName, customer.CustomerPhoneNumber, customer.CompanyPhoneNumber, customer.CustomerEmail,customer.IsActiveEmail, customer.IsActivePhoneNumber, customer.CompanyEmail, customer.TaxCode, customer.Zalo, customer.Organization, customer.Address, customer.VocativeId, customer.DepartmentId, customer.PositionId, customer.SourceId, customer.OrganizationTypeId, customer.TurnoverId, customer.IsDelete, vocative.VocativeName, department.DepartmentName, positions.PositionName, source.SourceName, organizationtype.OrganizationTypeName, turnover.TurnoverName,customer.Country,customer.District,customer.Wards,customer.HomeNumber FROM customer LEFT JOIN vocative ON customer.VocativeId = vocative.VocativeId LEFT JOIN department ON customer.DepartmentId = department.DepartmentId LEFT JOIN positions ON customer.PositionId = positions.PositionId LEFT JOIN source ON customer.SourceId = source.SourceId LEFT JOIN organizationtype ON customer.OrganizationTypeId = organizationtype.OrganizationTypeId LEFT JOIN turnover ON customer.TurnoverId = turnover.TurnoverId WHERE customer.IsDelete = false and (FullName LIKE @keyword OR CustomerPhoneNumber LIKE @keyword OR PotentialCode LIKE @keyword) and " + strWhereExactly + " and " + strWhereContain + " and " + strWhereNotEmpty + " and " + strWhereEmpty + " ORDER BY customer.UpdatedAt DESC LIMIT @Offset,@PageSize";
+                    strQuery += @"SELECT customer.gender,customer.CustomerId,customer.LastName, customer.FirstName, customer.BirthDay, customer.PotentialCode, customer.FullName, customer.CustomerPhoneNumber, customer.CompanyPhoneNumber, customer.CustomerEmail,customer.IsActiveEmail, customer.IsActivePhoneNumber, customer.CompanyEmail, customer.TaxCode, customer.Zalo, customer.Organization, customer.Address, customer.VocativeId, customer.DepartmentId, customer.PositionId, customer.SourceId, customer.OrganizationTypeId, customer.TurnoverId, customer.IsDelete, vocative.VocativeName, department.DepartmentName, positions.PositionName, source.SourceName, organizationtype.OrganizationTypeName, turnover.TurnoverName,customer.Country,customer.District,customer.Wards,customer.HomeNumber, files.Path, customer.Facebook FROM customer LEFT JOIN vocative ON customer.VocativeId = vocative.VocativeId LEFT JOIN department ON customer.DepartmentId = department.DepartmentId LEFT JOIN positions ON customer.PositionId = positions.PositionId LEFT JOIN source ON customer.SourceId = source.SourceId LEFT JOIN organizationtype ON customer.OrganizationTypeId = organizationtype.OrganizationTypeId LEFT JOIN files ON customer.CustomerId = files.EntityId LEFT JOIN turnover ON customer.TurnoverId = turnover.TurnoverId WHERE customer.IsDelete = false and (FullName LIKE @keyword OR CustomerPhoneNumber LIKE @keyword OR PotentialCode LIKE @keyword) and " + strWhereExactly + " and " + strWhereContain + " and " + strWhereNotEmpty + " and " + strWhereEmpty + " ORDER BY customer.UpdatedAt DESC LIMIT @Offset,@PageSize";
                 }
                 else
                 {
-                    strQuery += @"SELECT customer.gender,customer.CustomerId,customer.LastName, customer.FirstName, customer.PotentialCode,customer.BirthDay, customer.FullName, customer.CustomerPhoneNumber, customer.CompanyPhoneNumber, customer.CustomerEmail,customer.IsActiveEmail, customer.IsActivePhoneNumber, customer.CompanyEmail, customer.TaxCode, customer.Zalo, customer.Organization, customer.Address, customer.VocativeId, customer.DepartmentId, customer.PositionId, customer.SourceId, customer.OrganizationTypeId, customer.TurnoverId, customer.IsDelete, vocative.VocativeName, department.DepartmentName, positions.PositionName, source.SourceName, organizationtype.OrganizationTypeName, turnover.TurnoverName,customer.Country,customer.District,customer.Wards,customer.HomeNumber FROM customer LEFT JOIN vocative ON customer.VocativeId = vocative.VocativeId LEFT JOIN department ON customer.DepartmentId = department.DepartmentId LEFT JOIN positions ON customer.PositionId = positions.PositionId LEFT JOIN source ON customer.SourceId = source.SourceId LEFT JOIN organizationtype ON customer.OrganizationTypeId = organizationtype.OrganizationTypeId LEFT JOIN turnover ON customer.TurnoverId = turnover.TurnoverId WHERE customer.IsDelete = false and "+ strWhereExactly+" and "+strWhereContain +" and "+strWhereNotEmpty+" and " + strWhereEmpty + " ORDER BY customer.UpdatedAt DESC LIMIT @Offset,@PageSize";
+                    strQuery += @"SELECT customer.gender,customer.CustomerId,customer.LastName, customer.FirstName, customer.BirthDay, customer.PotentialCode, customer.FullName, customer.CustomerPhoneNumber, customer.CompanyPhoneNumber, customer.CustomerEmail,customer.IsActiveEmail, customer.IsActivePhoneNumber, customer.CompanyEmail, customer.TaxCode, customer.Zalo, customer.Organization, customer.Address, customer.VocativeId, customer.DepartmentId, customer.PositionId, customer.SourceId, customer.OrganizationTypeId, customer.TurnoverId, customer.IsDelete, vocative.VocativeName, department.DepartmentName, positions.PositionName, source.SourceName, organizationtype.OrganizationTypeName, turnover.TurnoverName,customer.Country,customer.District,customer.Wards,customer.HomeNumber, files.Path, customer.Facebook FROM customer LEFT JOIN vocative ON customer.VocativeId = vocative.VocativeId LEFT JOIN department ON customer.DepartmentId = department.DepartmentId LEFT JOIN positions ON customer.PositionId = positions.PositionId LEFT JOIN source ON customer.SourceId = source.SourceId LEFT JOIN organizationtype ON customer.OrganizationTypeId = organizationtype.OrganizationTypeId LEFT JOIN files ON customer.CustomerId = files.EntityId LEFT JOIN turnover ON customer.TurnoverId = turnover.TurnoverId WHERE customer.IsDelete = false and " + strWhereExactly+" and "+strWhereContain +" and "+strWhereNotEmpty+" and " + strWhereEmpty + " ORDER BY customer.UpdatedAt DESC LIMIT @Offset,@PageSize";
                 }
 
 
@@ -529,19 +529,24 @@ namespace WebDomain
                 customer.VocativeId = model.VocativeId;
 
                 customer.LastName = model.LastName;
+
                 if(customer.FirstName == null)
                     strMessage += "Tên " + MessageError.NotExists + "\n";
                 customer.FirstName = model.FirstName;
 
                 if (customer.FullName == null)
                     strMessage += "Họ và tên " + MessageError.NotExists + "\n";
+
                 customer.FullName = model.FullName;
 
                 customer.DepartmentId = model.DepartmentId;
 
+                customer.SourceId = model.SourceId;
+
                 customer.PositionId = model.PositionId;
 
-                customer.CustomerPhoneNumber = model.CustomerPhoneNumber;
+                if (customer.CustomerPhoneNumber != model.CustomerPhoneNumber || model.CustomerPhoneNumber == null)
+                    customer.CustomerPhoneNumber = model.CustomerPhoneNumber;
 
                 customer.CompanyPhoneNumber = model.CompanyPhoneNumber;
 
@@ -564,15 +569,18 @@ namespace WebDomain
 
                 customer.Organization = model.Organization;
 
-                customer.TaxCode = model.TaxCode;
+                if(customer.TaxCode != model.TaxCode || model.TaxCode == null)
+                    customer.TaxCode = model.TaxCode;
 
                 if(model.BirthDay != null)
                 {
-                    if (DateTime.Parse(model.BirthDay) > DateTime.Now)
+                    if (model.BirthDay > DateTime.Now)
                         strMessage += MessageError.DateTime + "\n";
                 }
               
                 customer.BirthDay = model.BirthDay;
+
+                customer.BirthDay.ToString("yyyy-MM-dd");
 
                 customer.Gender = model.Gender;
 
@@ -580,7 +588,7 @@ namespace WebDomain
 
                 customer.UpdatedAt = DateTime.Now;
                 // update customer
-                var SqlUpdate = @"UPDATE customer SET VocativeId = @VocativeId, LastName = @LastName, FirstName = @FirstName, FullName = @FullName, DepartmentId = @DepartmentId, PositionId = @PositionId, CustomerPhoneNumber = @CustomerPhoneNumber, CompanyPhoneNumber = @CompanyPhoneNumber, IsActivePhoneNumber = @IsActivePhoneNumber, IsActiveEmail = @IsActiveEmail, CustomerEmail = @CustomerEmail, CompanyEmail = @CompanyEmail, Zalo = @Zalo, Organization = @Organization, TaxCode = @TaxCode, BirthDay = @BirthDay, Gender = @Gender, Facebook = @Facebook WHERE CustomerId = @CustomerId";
+                var SqlUpdate = @"UPDATE customer SET VocativeId = @VocativeId,SourceId = @SourceId, LastName = @LastName, FirstName = @FirstName, FullName = @FullName, DepartmentId = @DepartmentId, PositionId = @PositionId, CustomerPhoneNumber = @CustomerPhoneNumber, CompanyPhoneNumber = @CompanyPhoneNumber, IsActivePhoneNumber = @IsActivePhoneNumber, IsActiveEmail = @IsActiveEmail, CustomerEmail = @CustomerEmail, CompanyEmail = @CompanyEmail, Zalo = @Zalo, Organization = @Organization, TaxCode = @TaxCode, BirthDay = @BirthDay, Gender = @Gender, Facebook = @Facebook,UpdatedAt = @UpdatedAt WHERE CustomerId = @CustomerId";
                 var dynamicParametersUpdate = new DynamicParameters();
                 dynamicParametersUpdate.Add("VocativeId", customer.VocativeId);
                 dynamicParametersUpdate.Add("LastName", customer.LastName);
@@ -588,6 +596,7 @@ namespace WebDomain
                 dynamicParametersUpdate.Add("FullName", customer.FullName);
                 dynamicParametersUpdate.Add("DepartmentId", customer.DepartmentId);
                 dynamicParametersUpdate.Add("PositionId", customer.PositionId);
+                dynamicParametersUpdate.Add("SourceId", customer.SourceId);
                 dynamicParametersUpdate.Add("CustomerPhoneNumber", customer.CustomerPhoneNumber);
                 dynamicParametersUpdate.Add("CompanyPhoneNumber", customer.CompanyPhoneNumber);
                 dynamicParametersUpdate.Add("IsActivePhoneNumber", customer.IsActivePhoneNumber);
@@ -601,6 +610,7 @@ namespace WebDomain
                 dynamicParametersUpdate.Add("Gender", customer.Gender);
                 dynamicParametersUpdate.Add("Facebook", customer.Facebook);
                 dynamicParametersUpdate.Add("CustomerId", _id);
+                dynamicParametersUpdate.Add("UpdatedAt", customer.UpdatedAt);
                 var ResultUpdate = await _dapper.UpdateTAsync<Customer>(SqlUpdate, dynamicParametersUpdate);
                 if (ResultUpdate == 0)
                     return new ReponsitoryModel(customer, CodeError.Code400, MessageError.UpdatedFail);
@@ -735,8 +745,7 @@ namespace WebDomain
             workSheet.Cells["A1:K1"].Style.Fill.PatternType = ExcelFillStyle.Solid;
             workSheet.Cells["A1:K1"].Style.Fill.BackgroundColor.SetColor(colFromHex);
 
-            var sqlQuery = @"SELECT vocative.VocativeName,customer.FullName,positions.PositionName,customer.CustomerPhoneNumber, customer.CompanyPhoneNumber, customer.CustomerEmail,  customer.CompanyEmail,customer.Organization,customer.TaxCode,turnover.TurnoverName,customer.Addres
-FROM customer LEFT JOIN vocative ON customer.VocativeId = vocative.VocativeId LEFT JOIN department ON customer.DepartmentId = department.DepartmentId LEFT JOIN positions ON customer.PositionId = positions.PositionId LEFT JOIN source ON customer.SourceId = source.SourceId LEFT JOIN organizationtype ON customer.OrganizationTypeId = organizationtype.OrganizationTypeId LEFT JOIN turnover ON customer.TurnoverId = turnover.TurnoverId WHERE customer.IsDelete = false";
+            var sqlQuery = @"SELECT vocative.VocativeName,customer.FullName,positions.PositionName,customer.CustomerPhoneNumber, customer.CompanyPhoneNumber, customer.CustomerEmail,  customer.CompanyEmail,customer.Organization,customer.TaxCode,turnover.TurnoverName,customer.Address FROM customer LEFT JOIN vocative ON customer.VocativeId = vocative.VocativeId LEFT JOIN department ON customer.DepartmentId = department.DepartmentId LEFT JOIN positions ON customer.PositionId = positions.PositionId LEFT JOIN source ON customer.SourceId = source.SourceId LEFT JOIN organizationtype ON customer.OrganizationTypeId = organizationtype.OrganizationTypeId LEFT JOIN turnover ON customer.TurnoverId = turnover.TurnoverId WHERE customer.IsDelete = false";
             // lláy thông tin khách hàng
             if (ListCustomerId.Count != 0 )
                 sqlQuery += " and customer.CustomerId IN @ListCustomerId";

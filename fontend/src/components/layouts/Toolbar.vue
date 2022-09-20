@@ -37,7 +37,7 @@
       </div>
 
       <div class="toolbar-left-child">
-        <button class="button-toolbar-left" @click="clickremoveListCustomerId">
+        <button class="button-toolbar-left" @click="ClickremoveListCustomerId">
           Bỏ chọn
         </button>
       </div>
@@ -54,12 +54,12 @@
       <div class="toolbar-left-child">
         <button
           class="button button-dots button-background-white show-button-toolbar"
-          @click="showOptions"
+          @click="ShowOptions"
         >
           <span class="button-icon-icon button-icon-icon-dots"></span>
         </button>
         <div class="toolbar-left-child-options">
-          <button class="button-toolbar-left toolbar-left-child-button" @click="clickExportExcel">
+          <button class="button-toolbar-left toolbar-left-child-button" @click="ClickExportExcel">
             <span
               class="
                 button-toolbar-left-icon
@@ -104,7 +104,7 @@
           </button>
           <button
             class="button-arrow button-background-primary button-icon-right tool-tip-container"
-            @click="showNotFound"
+            @click="ShowNotFound"
           >
             <span class="button-icon-icon button-icon-down"></span>
             <ToolTip :type="'top'" :text="'Xem thêm'"></ToolTip>
@@ -112,13 +112,13 @@
         </div>
       </div>
       <div class="toolbar-right-child">
-        <button class="button button-dots button-background-white tool-tip-container" @click="showNotFound">
+        <button class="button button-dots button-background-white tool-tip-container" @click="ShowNotFound">
           <span class="button-icon-icon button-icon-icon-dots"></span>
           <ToolTip :type="'top'" :text="'Menu'"></ToolTip>
         </button>
       </div>
       <div class="toolbar-right-child">
-        <button class="button button-dots button-background-white tool-tip-container" @click="showNotFound">
+        <button class="button button-dots button-background-white tool-tip-container" @click="ShowNotFound">
           <span class="button-icon-icon button-icon-tiles"></span>
           <span class="button-icon-icon button-icon-down-black"></span>
           <ToolTip :type="'top'" :text="'Khác'"></ToolTip>
@@ -145,7 +145,7 @@
                 <div class="combobox" id="fields">
                   <div
                     class="combobox-child combobox-content"
-                    @click="handlerClickCombobox"
+                    @click="HandlerClickCombobox"
                     check="false"
                   >
                     <div
@@ -181,7 +181,7 @@
                         class="combobox-data-child-content"
                         v-for="v in fielsUpdate"
                         :key="v[0]"
-                        @click="handlerClickComboboxData"
+                        @click="HandlerClickComboboxData"
                         :value="v[0]"
                       >
                         <div class="combobox-data-child-content-text">
@@ -205,7 +205,7 @@
                 <div class="combobox" id="vocative">
                   <div
                     class="combobox-child combobox-content"
-                    @click="handlerClickCombobox"
+                    @click="HandlerClickCombobox"
                     check="false" ref="CloumnValue"
                   >
                     <div
@@ -248,7 +248,7 @@
                       <div
                           class="combobox-data-child-content"
                         
-                          @click="handlerClickComboboxData"
+                          @click="HandlerClickComboboxData"
                           value="null"
                         >
                           <div class="combobox-data-child-content-text">
@@ -263,11 +263,11 @@
                         class="combobox-data-child-content"
                         v-for="v in Vocative"
                         :key="v.vocativeId"
-                        @click="handlerClickComboboxData"
+                        @click="HandlerClickComboboxData"
                         :value="v.vocativeId"
                       >
                         <div class="combobox-data-child-content-text">
-                          {{ titleCase(v.vocativeName) }}
+                          {{ TitleCase(v.vocativeName) }}
                         </div>
                         <div class="background-icon-checked icon-font-16"></div>
                       </div>
@@ -283,7 +283,7 @@
                
                 <div class="form-container-content-child-item-input">
                    <div class="border-input-content" :class="{'input-error':(errors.get('FullName'))}">
-                    <input type="text" class="input-content"  v-model="FullName"/>
+                    <input type="text" class="input-content"  v-model="FullName" @click="checkNullFullName = true;" />
                     <div class="input-icon-content">
                       <span class="icon-font-16 background-icon-close" @click="FullName= null"></span>
                     </div>
@@ -299,7 +299,7 @@
                 <div class="combobox" id="position">
                   <div
                     class="combobox-child combobox-content"
-                    @click="handlerClickCombobox"
+                    @click="HandlerClickCombobox"
                     check="false"
                   >
                     <div
@@ -341,7 +341,7 @@
                       <div
                           class="combobox-data-child-content"
                         
-                          @click="handlerClickComboboxData"
+                          @click="HandlerClickComboboxData"
                           value="null"
                         >
                           <div class="combobox-data-child-content-text">
@@ -356,11 +356,11 @@
                         class="combobox-data-child-content"
                         v-for="v in Position"
                         :key="v.positionId"
-                        @click="handlerClickComboboxData"
+                        @click="HandlerClickComboboxData"
                         :value="v.positionId"
                       >
                         <div class="combobox-data-child-content-text">
-                          {{ titleCase(v.positionName) }}
+                          {{ TitleCase(v.positionName) }}
                         </div>
                         <div class="background-icon-checked icon-font-16"></div>
                       </div>
@@ -419,7 +419,7 @@
                 <div class="combobox" id="turnover">
                   <div
                     class="combobox-child combobox-content"
-                    @click="handlerClickCombobox"
+                    @click="HandlerClickCombobox"
                     check="false"
                   >
                     <div
@@ -462,7 +462,7 @@
                       <div
                           class="combobox-data-child-content"
                         
-                          @click="handlerClickComboboxData"
+                          @click="HandlerClickComboboxData"
                           value="null"
                         >
                           <div class="combobox-data-child-content-text">
@@ -477,11 +477,11 @@
                         class="combobox-data-child-content"
                         v-for="v in Turnover"
                         :key="v.turnoverId"
-                        @click="handlerClickComboboxData"
+                        @click="HandlerClickComboboxData"
                         :value="v.turnoverId"
                       >
                         <div class="combobox-data-child-content-text">
-                          {{ titleCase(v.turnoverName) }}
+                          {{ TitleCase(v.turnoverName) }}
                         </div>
                         <div class="background-icon-checked icon-font-16"></div>
                       </div>
@@ -498,7 +498,7 @@
                 <div class="combobox" id="gender">
                   <div
                     class="combobox-child combobox-content"
-                    @click="handlerClickCombobox"
+                    @click="HandlerClickCombobox"
                     check="false"
                   >
                     <div
@@ -520,7 +520,7 @@
                     <div class="combobox-data-child">
                       <div
                         class="combobox-data-child-content"
-                        @click="handlerClickComboboxData"
+                        @click="HandlerClickComboboxData"
                         value="null"
                       >
                         <div class="combobox-data-child-content-text">
@@ -533,11 +533,11 @@
                         class="combobox-data-child-content"
                         v-for="v in gender"
                         :key="v.Code"
-                        @click="handlerClickComboboxData"
+                        @click="HandlerClickComboboxData"
                         :value="v.Code"
                       >
                         <div class="combobox-data-child-content-text">
-                          {{ titleCase(v.Name) }}
+                          {{ TitleCase(v.Name) }}
                         </div>
                         <div
                           class="background-icon-checked icon-font-16"></div>
@@ -577,7 +577,7 @@
             Cập nhật
           </button>
           <button
-          @click="ShowFormUpdateMul = false,ShowField = null"
+          @click="ShowFormUpdateMul = false,ShowField = null, checkNullFullName=false"
             type="button"
             class="button-background-white"
           >
@@ -597,13 +597,13 @@
 import ToolTip from "./ToolTip"
 
 // check null
-import { IsEmpty } from "../../js/formatData";
+import { IsEmpty } from "../../js/FormatData";
 
 // nhúng service xử lý Customer
 import { CustomerService } from "../Services/CustomerService";
 
 // in hoa dữ liệu
-import { titleCase } from "../../js/handlerString";
+import { TitleCase } from "../../js/HandlerString";
 
 // nhúng service xử lý loại doanh thu
 import { TurnoverService } from "../Services/TurnoverService";
@@ -628,12 +628,12 @@ import { VocativeService } from "../Services/VocativeService";
 import { GenderModel } from "../Models/GenderModel";
 
 // mã lỗi
-import { ErrorsValidation } from "../../js/validation";
+import { ErrorsValidation } from "../../js/Validation";
 
 import {
   ClickShowHideComboboxData,
-  selectValueComboboxData,
-} from "../../js/handlerCombobox";
+  SelectValueComboboxData,
+} from "../../js/HandlerCombobox";
 
 // ClickShowHideComboboxMulData,
 
@@ -677,7 +677,8 @@ export default {
       },
       searchVocative:"",
       searchpPosition:"",
-      searchTurnover: ""
+      searchTurnover: "",
+      checkNullFullName:false
     };
   },
   created() {
@@ -698,13 +699,13 @@ export default {
     FullName(){
       if(this.FullName == "") this.FullName = null;
 
-      if(this.FullName == null){
+      if(this.FullName == null && this.checkNullFullName == true){
         // thêm mã lỗi vào: full name không được bỏ trống
         this.errors.set("FullName", ErrorsValidation.FullNameRequired)
         this.checkUpdate=false;  
       } else{
         if(this.errors.get("FullName")) this.errors.delete("FullName")
-        this.checkUpdate = true;
+          this.checkUpdate = true;
       } 
     },
     Facebook(){
@@ -788,9 +789,10 @@ export default {
      * Author: Phạm Văn Đạt
      * function: xóa các id đã chọn
      */
-     clickremoveListCustomerId(){
+     ClickremoveListCustomerId(){
       this.$emit("removeListCustomerId",!this.checkRemoveId);
       this.checkRemoveId = !this.checkRemoveId;
+      console.log("click remove")
     },
 
      /**
@@ -812,7 +814,7 @@ export default {
      * Author: Phạm Văn Đạt
      * function: hiển thị thông báo chưa xử lý
      */
-    showNotFound(){
+    ShowNotFound(){
       this.ToastMessageCustomer.Type = "info";
       this.ToastMessageCustomer.Message = "Chúng tôi sẽ sớm ra mắt";
       this.$emit("toastMessageInfo", this.ToastMessageCustomer);
@@ -865,8 +867,8 @@ export default {
      * Author: Phạm Văn Đạt
      * function: xuất file excel
      */
-    async clickExportExcel(event){
-      this.showOptions(event);
+    async ClickExportExcel(event){ 
+      this.ShowOptions(event);
       // // test export excel
       this.$emit("loadFullScreen",true);
 
@@ -965,6 +967,7 @@ export default {
         });
 
         this.ShowField = null
+        this.checkNullFullName = false;
       }
    
     },
@@ -973,13 +976,13 @@ export default {
      * Author: Phạm Văn Đạt
      * function:  lấy giới tính
      */
-    selectGenderName: function (value) {
+    SelectGenderName: function (value) {
       for (let i = 0; i < this.gender.length; i++) {
         if (value == this.gender[i].Code) return this.gender[i].Name;
       }
       return "- Không chọn -";
     },
-    titleCase,
+    TitleCase,
     /**
      * Author: Phạm Văn Đạt
      * function:  xử lý lấy dữ liệu vocative
@@ -1041,7 +1044,7 @@ export default {
      * Author: Phạm Văn Đạt
      * function: Hiển thị form chọn xuất khẩu, xóa
      */
-    showOptions: function (event) {
+    ShowOptions: function (event) {
       try {
         let el = event.target;
         console.log(el);
@@ -1069,7 +1072,7 @@ export default {
      */
     ClickDeleteMul(event) {
       try {
-        this.showOptions(event)
+        this.ShowOptions(event)
         this.$emit("checkShowPopUp", true);
         this.$emit(
           "PopUpTitle",
@@ -1084,7 +1087,7 @@ export default {
      * Author: Phạm Văn Đạt
      * function: xử lý click combobox
      */
-    handlerClickCombobox: function (event) {
+    HandlerClickCombobox: function (event) {
       try {
         console.log(event)
         // Nếu click vào combobox xưng hô: nếu chưa có dữ liệu thì loading, nếu có dữ liệu rồi thì không loading
@@ -1125,7 +1128,7 @@ export default {
      * Author: Phạm Văn Đạt
      * function:  xử lý kích combobox multiple
      */
-    handlerClickComboboxData: function (event) {
+    HandlerClickComboboxData: function (event) {
       try {
         
         // chưa cho phép cập nhật
@@ -1162,7 +1165,7 @@ export default {
             this.ColumnName = ElValue;
         }
 
-        selectValueComboboxData(event);
+        SelectValueComboboxData(event);
       } catch (error) {
         console.log(error);
       }

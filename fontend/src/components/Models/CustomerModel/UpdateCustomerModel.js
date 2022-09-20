@@ -20,10 +20,7 @@ export let UpdateCustomerModel =  {
      CustomerPhoneNumber: null,
 
     // Điện thoại cơ quan 7
-     CompanyPhoneNumber: null,
-
-    // Loại tiềm năng 8
-    //public Guid CustomerPotentialTypeId: null,
+    CompanyPhoneNumber: null,
 
     // Nguồn gốc 9
     SourceId: null,

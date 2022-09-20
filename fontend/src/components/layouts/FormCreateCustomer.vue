@@ -1,7 +1,7 @@
 <template>
   <div class="form-container">
-    <form @submit.prevent >
-      <div class="form-content" ref="form" >
+    <form @submit.prevent>
+      <div class="form-content" ref="form">
         <div class="form-container-title">
           <div class="form-container-title-left">
             <div class="filter-title-text" style="font-size: 20px">
@@ -9,9 +9,28 @@
             </div>
           </div>
           <div class="form-container-title-right">
-            <button type="button" class="button button-background-primary save" @click="OnSubmit" tabindex="18">Lưu</button>
-            <button type="button" class="button button-background-white created" @click="OnSubmit" tabindex="19">Lưu và thêm</button>
-            <button type="button" class="button button-background-white" @click="HandlerCloseForm" tabindex="20">
+            <button
+              type="button"
+              class="button button-background-primary save"
+              @click="OnSubmit"
+              tabindex="18"
+            >
+              Lưu
+            </button>
+            <button
+              type="button"
+              class="button button-background-white created"
+              @click="OnSubmit"
+              tabindex="19"
+            >
+              Lưu và thêm
+            </button>
+            <button
+              type="button"
+              class="button button-background-white"
+              @click="HandlerCloseForm"
+              tabindex="20"
+            >
               Hủy bỏ
             </button>
           </div>
@@ -30,10 +49,22 @@
               "
             >
               <label class="label-file" for="file">
-                <span class="background-icon-avatar-push"></span>
+                <div ref="displayImage" v-show="checkLoadImage"></div>
+                <span
+                  class="background-icon-avatar-push"
+                  v-show="!checkLoadImage"
+                ></span>
               </label>
-              <input type="file" class="input-file" id="file" ref="fileUpload" @change="uploadFile" />
-              <span class="span-error" v-if="(errors.get('FirstName'))">{{errors.get('FirstName')}}</span>
+              <input
+                type="file"
+                class="input-file"
+                id="file"
+                ref="fileUpload"
+                @change="UploadFile"
+              />
+              <span class="span-error" v-if="errors.get('FileMalformed')">{{
+                errors.get("FileMalformed")
+              }}</span>
             </div>
           </div>
 
@@ -53,11 +84,15 @@
                   <div class="combobox" id="vocative">
                     <div
                       class="combobox-child combobox-content"
-                      @click="handlerClickCombobox"
+                      @click="HandlerClickCombobox"
                       check="false"
                     >
                       <div
-                        class="combobox-content-select combobox-child combobox-content-select-content-none" 
+                        class="
+                          combobox-content-select
+                          combobox-child
+                          combobox-content-select-content-none
+                        "
                         ref="vocativeId"
                       >
                         - Không chọn -
@@ -78,25 +113,43 @@
                         <div class="background-icon-loading"></div>
                       </div>
 
-                        <!-- tìm kiếm -->
-                        <div class="combobox-data-search combobox-data-child-content-text" >
-                        <label class="label-input combobox-data-search-label combobox-data-child-content-text">
+                      <!-- tìm kiếm -->
+                      <div
+                        class="
+                          combobox-data-search combobox-data-child-content-text
+                        "
+                      >
+                        <label
+                          class="
+                            label-input
+                            combobox-data-search-label
+                            combobox-data-child-content-text
+                          "
+                        >
                           <input
                             type="text"
-                            class="input input-icon combobox-data-child-content-text"
+                            class="
+                              input input-icon
+                              combobox-data-child-content-text
+                            "
                             placeholder="Tìm kiếm"
                             v-on:keyup.enter="SearchVocative"
                             v-model="searchVocative"
                           />
-                          <span class="background-icon-search-input combobox-data-child-content-text"
-                          @click="SearchVocative"></span>
+                          <span
+                            class="
+                              background-icon-search-input
+                              combobox-data-child-content-text
+                            "
+                            @click="SearchVocative"
+                          ></span>
                         </label>
                       </div>
 
                       <div class="combobox-data-child">
                         <div
                           class="combobox-data-child-content"
-                          @click="handlerClickComboboxData"
+                          @click="HandlerClickComboboxData"
                           :class="{
                             selected:
                               customerInfo.VocativeId == undefined
@@ -120,11 +173,11 @@
                           class="combobox-data-child-content"
                           v-for="v in vocative"
                           :key="v.vocativeId"
-                          @click="handlerClickComboboxData"
+                          @click="HandlerClickComboboxData"
                           :value="v.vocativeId"
                         >
                           <div class="combobox-data-child-content-text">
-                            {{ titleCase(v.vocativeName) }}
+                            {{ TitleCase(v.vocativeName) }}
                           </div>
                           <div
                             class="background-icon-checked icon-font-16"
@@ -144,9 +197,18 @@
                 </div>
                 <div class="form-container-content-child-item-input">
                   <div class="border-input-content">
-                    <input type="text" class="input-content" v-model="customerInfo.LastName" tabindex="1" ref="LastName"/>
+                    <input
+                      type="text"
+                      class="input-content"
+                      v-model="customerInfo.LastName"
+                      tabindex="1"
+                      ref="LastName"
+                    />
                     <div class="input-icon-content">
-                      <span class="icon-font-16 background-icon-close" @click="customerInfo.LastName = null"></span>
+                      <span
+                        class="icon-font-16 background-icon-close"
+                        @click="customerInfo.LastName = null"
+                      ></span>
                     </div>
                   </div>
                 </div>
@@ -159,14 +221,27 @@
                   Tên <span class="not-required" style="color: red">*</span>
                 </div>
                 <div class="form-container-content-child-item-input">
-                   <div class="border-input-content" :class="{'input-error':(errors.get('FirstName'))}">
-                    <input type="text" class="input-content"
-                      v-model="customerInfo.FirstName" tabindex="2" ref="FirstName" />
+                  <div
+                    class="border-input-content"
+                    :class="{ 'input-error': errors.get('FirstName') }"
+                  >
+                    <input
+                      type="text"
+                      class="input-content"
+                      v-model="customerInfo.FirstName"
+                      tabindex="2"
+                      ref="FirstName"
+                    />
                     <div class="input-icon-content">
-                      <span class="icon-font-16 background-icon-close" @click="customerInfo.FirstName = null"></span>
+                      <span
+                        class="icon-font-16 background-icon-close"
+                        @click="customerInfo.FirstName = null"
+                      ></span>
                     </div>
                   </div>
-                  <span class="span-error" v-if="(errors.get('FirstName'))">{{errors.get('FirstName')}}</span>
+                  <span class="span-error" v-if="errors.get('FirstName')">{{
+                    errors.get("FirstName")
+                  }}</span>
                 </div>
               </div>
               <!-- End Tên -->
@@ -177,18 +252,18 @@
                   Họ và tên
                 </div>
                 <div class="form-container-content-child-item-input">
-                   <div class="border-input-content disabled-input">
+                  <div class="border-input-content disabled-input">
                     <input
-                    type="text"
-                    class="input-content disabled-input" v-model="customerInfo.FullName"
-                    disabled
-                  />
-                </div>
-                    <div class="input-icon-content">
-                      <!-- <span class="icon-font-16 background-icon-close" @click="customerInfo.FirstName = null"></span> -->
-                    </div>
+                      type="text"
+                      class="input-content disabled-input"
+                      v-model="customerInfo.FullName"
+                      disabled
+                    />
                   </div>
-                 
+                  <div class="input-icon-content">
+                    <!-- <span class="icon-font-16 background-icon-close" @click="customerInfo.FirstName = null"></span> -->
+                  </div>
+                </div>
               </div>
               <!-- End họ và tên -->
 
@@ -201,11 +276,15 @@
                   <div class="combobox" id="department">
                     <div
                       class="combobox-child combobox-content"
-                      @click="handlerClickCombobox"
+                      @click="HandlerClickCombobox"
                       check="false"
                     >
                       <div
-                        class="combobox-content-select combobox-child combobox-content-select-content-none"
+                        class="
+                          combobox-content-select
+                          combobox-child
+                          combobox-content-select-content-none
+                        "
                         ref="departmentId"
                       >
                         - Không chọn -
@@ -226,25 +305,44 @@
                         <div class="background-icon-loading"></div>
                       </div>
 
-                        <!-- Tìm kiếm -->
-                        <div class="combobox-data-search combobox-data-child-content-text">
-                        <label class="label-input combobox-data-search-label combobox-data-child-content-text">
+                      <!-- Tìm kiếm -->
+                      <div
+                        class="
+                          combobox-data-search combobox-data-child-content-text
+                        "
+                      >
+                        <label
+                          class="
+                            label-input
+                            combobox-data-search-label
+                            combobox-data-child-content-text
+                          "
+                        >
                           <input
                             type="text"
-                            class="input input-icon arduino combobox-data-child-content-text"
+                            class="
+                              input input-icon
+                              arduino
+                              combobox-data-child-content-text
+                            "
                             placeholder="Tìm kiếm"
                             v-on:keyup.enter="SearchDepartment"
                             v-model="searchDepartment"
                           />
-                          <span class="background-icon-search-input combobox-data-child-content-text"
-                          @click="SearchDepartment"></span>
+                          <span
+                            class="
+                              background-icon-search-input
+                              combobox-data-child-content-text
+                            "
+                            @click="SearchDepartment"
+                          ></span>
                         </label>
                       </div>
-                  
+
                       <div class="combobox-data-child">
                         <div
                           class="combobox-data-child-content"
-                          @click="handlerClickComboboxData"
+                          @click="HandlerClickComboboxData"
                           :class="{
                             selected:
                               customerInfo.DepartmentId == undefined
@@ -268,11 +366,11 @@
                           class="combobox-data-child-content"
                           v-for="v in department"
                           :key="v.departmentId"
-                          @click="handlerClickComboboxData"
+                          @click="HandlerClickComboboxData"
                           :value="v.departmentId"
                         >
                           <div class="combobox-data-child-content-text">
-                            {{ titleCase(v.departmentName) }}
+                            {{ TitleCase(v.departmentName) }}
                           </div>
                           <div
                             class="background-icon-checked icon-font-16"
@@ -294,11 +392,15 @@
                   <div class="combobox" id="position">
                     <div
                       class="combobox-child combobox-content"
-                      @click="handlerClickCombobox"
+                      @click="HandlerClickCombobox"
                       check="false"
                     >
                       <div
-                        class="combobox-content-select combobox-child combobox-content-select-content-none"
+                        class="
+                          combobox-content-select
+                          combobox-child
+                          combobox-content-select-content-none
+                        "
                         ref="positionId"
                       >
                         - Không chọn -
@@ -320,24 +422,42 @@
                       </div>
 
                       <!-- Tìm kiếm -->
-                      <div class="combobox-data-search combobox-data-child-content-text">
-                        <label class="label-input combobox-data-search-label combobox-data-child-content-text">
+                      <div
+                        class="
+                          combobox-data-search combobox-data-child-content-text
+                        "
+                      >
+                        <label
+                          class="
+                            label-input
+                            combobox-data-search-label
+                            combobox-data-child-content-text
+                          "
+                        >
                           <input
                             type="text"
-                            class="input input-icon combobox-data-child-content-text"
+                            class="
+                              input input-icon
+                              combobox-data-child-content-text
+                            "
                             placeholder="Tìm kiếm"
                             v-on:keyup.enter="SearchpPosition"
                             v-model="searchpPosition"
                           />
-                          <span class="background-icon-search-input combobox-data-child-content-text"
-                          @click="SearchpPosition"></span>
+                          <span
+                            class="
+                              background-icon-search-input
+                              combobox-data-child-content-text
+                            "
+                            @click="SearchpPosition"
+                          ></span>
                         </label>
                       </div>
 
                       <div class="combobox-data-child">
                         <div
                           class="combobox-data-child-content"
-                          @click="handlerClickComboboxData"
+                          @click="HandlerClickComboboxData"
                           :class="{
                             selected:
                               customerInfo.PositionId == undefined
@@ -361,11 +481,11 @@
                           class="combobox-data-child-content"
                           v-for="v in position"
                           :key="v.positionId"
-                          @click="handlerClickComboboxData"
+                          @click="HandlerClickComboboxData"
                           :value="v.positionId"
                         >
                           <div class="combobox-data-child-content-text">
-                            {{ titleCase(v.positionName) }}
+                            {{ TitleCase(v.positionName) }}
                           </div>
                           <div
                             class="background-icon-checked icon-font-16"
@@ -383,20 +503,39 @@
                 <div class="form-container-content-child-item-label">
                   ĐT di động
                   <span class="background-icon-tool-tip tool-tip-container">
-                    <ToolTip :type="'top'" :text="'Điện thoại di động'"></ToolTip>
+                    <ToolTip
+                      :type="'top'"
+                      :text="'Điện thoại di động'"
+                    ></ToolTip>
                   </span>
-                  
                 </div>
                 <div class="form-container-content-child-item-input">
-                   <div class="border-input-content" :class="{'input-error':(errors.get('CustomerPhoneNumber'))}">
-                    <input type="text" class="input-content"
-                     tabindex="3" v-model="customerInfo.CustomerPhoneNumber" ref="input-content"/>
+                  <div
+                    class="border-input-content"
+                    :class="{
+                      'input-error': errors.get('CustomerPhoneNumber'),
+                    }"
+                  >
+                    <input
+                      type="text"
+                      class="input-content"
+                      tabindex="3"
+                      v-model="customerInfo.CustomerPhoneNumber"
+                      ref="CustomerPhoneNumber"
+                    />
 
                     <div class="input-icon-content">
-                      <span class="icon-font-16 background-icon-close" @click="customerInfo.CustomerPhoneNumber = null"></span>
+                      <span
+                        class="icon-font-16 background-icon-close"
+                        @click="customerInfo.CustomerPhoneNumber = null"
+                      ></span>
                     </div>
                   </div>
-                   <span class="span-error" v-if="(errors.get('CustomerPhoneNumber'))">{{errors.get('CustomerPhoneNumber')}}</span>
+                  <span
+                    class="span-error"
+                    v-if="errors.get('CustomerPhoneNumber')"
+                    >{{ errors.get("CustomerPhoneNumber") }}</span
+                  >
                 </div>
               </div>
               <!-- End ĐT di động -->
@@ -406,15 +545,26 @@
                 <div class="form-container-content-child-item-label">
                   ĐT cơ quan
                   <span class="background-icon-tool-tip tool-tip-container">
-                    <ToolTip :type="'top'" :text="'Điện thoại cơ quan'"></ToolTip>
+                    <ToolTip
+                      :type="'top'"
+                      :text="'Điện thoại cơ quan'"
+                    ></ToolTip>
                   </span>
                 </div>
                 <div class="form-container-content-child-item-input">
-                   <div class="border-input-content">
-                  <input type="text" class="input-content" tabindex="4" v-model="customerInfo.CompanyPhoneNumber"/>
-                    
+                  <div class="border-input-content">
+                    <input
+                      type="text"
+                      class="input-content"
+                      tabindex="4"
+                      v-model="customerInfo.CompanyPhoneNumber"
+                    />
+
                     <div class="input-icon-content">
-                      <span class="icon-font-16 background-icon-close" @click="customerInfo.CompanyPhoneNumber = null"></span>
+                      <span
+                        class="icon-font-16 background-icon-close"
+                        @click="customerInfo.CompanyPhoneNumber = null"
+                      ></span>
                     </div>
                   </div>
                 </div>
@@ -430,11 +580,15 @@
                   <div class="combobox" id="source">
                     <div
                       class="combobox-child combobox-content"
-                      @click="handlerClickCombobox"
+                      @click="HandlerClickCombobox"
                       check="false"
                     >
                       <div
-                        class="combobox-content-select combobox-child combobox-content-select-content-none"
+                        class="
+                          combobox-content-select
+                          combobox-child
+                          combobox-content-select-content-none
+                        "
                         ref="sourceId"
                       >
                         - Không chọn -
@@ -455,23 +609,41 @@
                         <div class="background-icon-loading"></div>
                       </div>
 
-                      <div class="combobox-data-search combobox-data-child-content-text">
-                        <label class="label-input combobox-data-search-label combobox-data-child-content-text">
+                      <div
+                        class="
+                          combobox-data-search combobox-data-child-content-text
+                        "
+                      >
+                        <label
+                          class="
+                            label-input
+                            combobox-data-search-label
+                            combobox-data-child-content-text
+                          "
+                        >
                           <input
                             type="text"
-                            class="input input-icon combobox-data-child-content-text"
+                            class="
+                              input input-icon
+                              combobox-data-child-content-text
+                            "
                             placeholder="Tìm kiếm"
                             v-on:keyup.enter="SearchSource"
                             v-model="searchSource"
                           />
-                          <span class="background-icon-search-input combobox-data-child-content-text"
-                          @click="SearchSource"></span>
+                          <span
+                            class="
+                              background-icon-search-input
+                              combobox-data-child-content-text
+                            "
+                            @click="SearchSource"
+                          ></span>
                         </label>
                       </div>
                       <div class="combobox-data-child">
                         <div
                           class="combobox-data-child-content"
-                          @click="handlerClickComboboxData"
+                          @click="HandlerClickComboboxData"
                           :class="{
                             selected:
                               customerInfo.SourceId == undefined ? true : false,
@@ -493,11 +665,11 @@
                           class="combobox-data-child-content"
                           v-for="v in source"
                           :key="v.sourceId"
-                          @click="handlerClickComboboxData"
+                          @click="HandlerClickComboboxData"
                           :value="v.sourceId"
                         >
                           <div class="combobox-data-child-content-text">
-                            {{ titleCase(v.sourceName) }}
+                            {{ TitleCase(v.sourceName) }}
                           </div>
                           <div
                             class="background-icon-checked icon-font-16"
@@ -519,21 +691,25 @@
                   <div class="combobox combobox-mul" id="potentialType">
                     <div
                       class="combobox-child combobox-content"
-                      @click="handlerClickComboboxMul"
+                      @click="HandlerClickComboboxMul"
                       check="false"
+                      ref="potentialTypeRef"
                     >
                       <div class="combobox-content-select combobox-mul-child">
                         <div
-                          class="combobox-content-select-content combobox-content-select-content-none"
-                          v-if="potentialTypeMap.size == 0"
+                          class="
+                            combobox-content-select-content
+                            combobox-content-select-content-none
+                          "
+                          v-show="potentialTypeMap.size == 0"
                         >
-                          <div class="">- Không chọn -</div>
+                          <div class="ombobox-content-select-content">- Không chọn -</div>
                           <!-- <div class="combobox-content-select-content-icon background-icon-close icon-font-16"></div> -->
                         </div>
 
                         <div
                           class="combobox-content-select-content"
-                          v-else
+                          v-show="potentialTypeMap.size != 0"
                           v-for="v in potentialTypeMap"
                           :key="v[0]"
                         >
@@ -541,7 +717,7 @@
                             class="combobox-content-select-content-text"
                             :value="v[0]"
                           >
-                            {{ titleCase(v[1]) }}
+                            {{ TitleCase(v[1]) }}
                           </div>
                           <div
                             class="
@@ -549,7 +725,7 @@
                               background-icon-close
                               icon-font-16
                             "
-                            @click="handlerClickComboboxDataClose"
+                            @click="HandlerClickComboboxDataClose"
                           ></div>
                         </div>
                       </div>
@@ -580,7 +756,7 @@
                           class="combobox-data-child-content"
                           @click="
                             potentialTypeMap.size == 0
-                              ? handlerClickComboboxMulData
+                              ? HandlerClickComboboxMulData
                               : ''
                           "
                           value=""
@@ -607,10 +783,10 @@
                           v-for="v in potentialType"
                           :key="v.potentialTypeId"
                           :value="v.potentialTypeId"
-                          @click="handlerClickComboboxMulData"
+                          @click="HandlerClickComboboxMulData"
                         >
                           <div class="combobox-data-child-content-text">
-                            {{ titleCase(v.potentialTypeName) }}
+                            {{ TitleCase(v.potentialTypeName) }}
                           </div>
                           <div
                             class="background-icon-checked icon-font-16"
@@ -627,11 +803,19 @@
               <div class="form-container-content-child-item">
                 <div class="form-container-content-child-item-label">Zalo</div>
                 <div class="form-container-content-child-item-input">
-                   <div class="border-input-content">
-                  <input type="text" class="input-content" tabindex="5" v-model="customerInfo.Zalo"/>
+                  <div class="border-input-content">
+                    <input
+                      type="text"
+                      class="input-content"
+                      tabindex="5"
+                      v-model="customerInfo.Zalo"
+                    />
 
                     <div class="input-icon-content">
-                      <span class="icon-font-16 background-icon-close" @click="customerInfo.Zalo = null"></span>
+                      <span
+                        class="icon-font-16 background-icon-close"
+                        @click="customerInfo.Zalo = null"
+                      ></span>
                     </div>
                   </div>
                 </div>
@@ -644,15 +828,28 @@
                   Email cá nhân
                 </div>
                 <div class="form-container-content-child-item-input">
-                   <div class="border-input-content" :class="{'input-error':(errors.get('CustomerEmail'))}">
-                  <input type="text" class="input-content"
-                   tabindex="6" v-model="customerInfo.CustomerEmail" ref="CustomerEmail"/>
+                  <div
+                    class="border-input-content"
+                    :class="{ 'input-error': errors.get('CustomerEmail') }"
+                  >
+                    <input
+                      type="text"
+                      class="input-content"
+                      tabindex="6"
+                      v-model="customerInfo.CustomerEmail"
+                      ref="CustomerEmail"
+                    />
 
                     <div class="input-icon-content">
-                      <span class="icon-font-16 background-icon-close" @click="customerInfo.CustomerEmail = null"></span>
+                      <span
+                        class="icon-font-16 background-icon-close"
+                        @click="customerInfo.CustomerEmail = null"
+                      ></span>
                     </div>
                   </div>
-                  <span class="span-error" v-if="(errors.get('CustomerEmail'))">{{errors.get('CustomerEmail')}}</span>
+                  <span class="span-error" v-if="errors.get('CustomerEmail')">{{
+                    errors.get("CustomerEmail")
+                  }}</span>
                 </div>
               </div>
               <!-- EndEmail cá nhân -->
@@ -663,14 +860,28 @@
                   Email cơ quan
                 </div>
                 <div class="form-container-content-child-item-input">
-                   <div class="border-input-content"  :class="{'input-error':(errors.get('CompanyEmail'))}">
-                  <input type="text" class="input-content" tabindex="7" v-model="customerInfo.CompanyEmail" ref="CompanyEmail" />
+                  <div
+                    class="border-input-content"
+                    :class="{ 'input-error': errors.get('CompanyEmail') }"
+                  >
+                    <input
+                      type="text"
+                      class="input-content"
+                      tabindex="7"
+                      v-model="customerInfo.CompanyEmail"
+                      ref="CompanyEmail"
+                    />
 
                     <div class="input-icon-content">
-                      <span class="icon-font-16 background-icon-close" @click="customerInfo.CompanyEmail = null"></span>
+                      <span
+                        class="icon-font-16 background-icon-close"
+                        @click="customerInfo.CompanyEmail = null"
+                      ></span>
                     </div>
                   </div>
-                  <span class="span-error" v-if="(errors.get('CompanyEmail'))">{{errors.get('CompanyEmail')}}</span>
+                  <span class="span-error" v-if="errors.get('CompanyEmail')">{{
+                    errors.get("CompanyEmail")
+                  }}</span>
                 </div>
               </div>
               <!-- EndEmail cơ quan-->
@@ -682,10 +893,18 @@
                 </div>
                 <div class="form-container-content-child-item-input">
                   <div class="border-input-content">
-                  <input type="text" class="input-content" tabindex="8" v-model="customerInfo.Organization"/>
+                    <input
+                      type="text"
+                      class="input-content"
+                      tabindex="8"
+                      v-model="customerInfo.Organization"
+                    />
 
                     <div class="input-icon-content">
-                      <span class="icon-font-16 background-icon-close" @click="customerInfo.Organization = null"></span>
+                      <span
+                        class="icon-font-16 background-icon-close"
+                        @click="customerInfo.Organization = null"
+                      ></span>
                     </div>
                   </div>
                 </div>
@@ -693,19 +912,32 @@
               <!-- End Tổ chức-->
 
               <!-- Start Mã số thuế-->
-               <div class="form-container-content-child-item">
+              <div class="form-container-content-child-item">
                 <div class="form-container-content-child-item-label">
                   Mã số thuế
                 </div>
                 <div class="form-container-content-child-item-input">
-                   <div class="border-input-content" :class="{'input-error':(errors.get('TaxCode'))}">
-                    <input type="text" class="input-content"
-                     tabindex="9" v-model="customerInfo.TaxCode" ref="TaxCode"/>
+                  <div
+                    class="border-input-content"
+                    :class="{ 'input-error': errors.get('TaxCode') }"
+                  >
+                    <input
+                      type="text"
+                      class="input-content"
+                      tabindex="9"
+                      v-model="customerInfo.TaxCode"
+                      ref="TaxCode"
+                    />
                     <div class="input-icon-content">
-                      <span class="icon-font-16 background-icon-close" @click="customerInfo.TaxCode = null"></span>
+                      <span
+                        class="icon-font-16 background-icon-close"
+                        @click="customerInfo.TaxCode = null"
+                      ></span>
                     </div>
                   </div>
-                  <span class="span-error" v-if="(errors.get('TaxCode'))">{{errors.get('TaxCode')}}</span>
+                  <span class="span-error" v-if="errors.get('TaxCode')">{{
+                    errors.get("TaxCode")
+                  }}</span>
                 </div>
               </div>
               <!-- End Mã số thuế -->
@@ -725,14 +957,27 @@
                   Tài khoản ngân hàng
                 </div>
                 <div class="form-container-content-child-item-input">
-                   <div class="border-input-content" :class="{'input-error':(errors.get('BankAccount'))}">
-                    <input type="text" class="input-content"
-                     tabindex="10" v-model="customerInfo.BankAccount" ref="BankAccount"/>
+                  <div
+                    class="border-input-content"
+                    :class="{ 'input-error': errors.get('BankAccount') }"
+                  >
+                    <input
+                      type="text"
+                      class="input-content"
+                      tabindex="10"
+                      v-model="customerInfo.BankAccount"
+                      ref="BankAccount"
+                    />
                     <div class="input-icon-content">
-                      <span class="icon-font-16 background-icon-close" @click="customerInfo.BankAccount = null"></span>
+                      <span
+                        class="icon-font-16 background-icon-close"
+                        @click="customerInfo.BankAccount = null"
+                      ></span>
                     </div>
                   </div>
-                  <span class="span-error" v-if="(errors.get('BankAccount'))">{{errors.get('BankAccount')}}</span>
+                  <span class="span-error" v-if="errors.get('BankAccount')">{{
+                    errors.get("BankAccount")
+                  }}</span>
                 </div>
               </div>
               <!-- End Tài khoản ngân hàng -->
@@ -743,11 +988,19 @@
                   Mở tại ngân hàng
                 </div>
                 <div class="form-container-content-child-item-input">
-                    <div class="border-input-content">
-                  <input type="text" class="input-content" tabindex="11" v-model="customerInfo.BankName" />
+                  <div class="border-input-content">
+                    <input
+                      type="text"
+                      class="input-content"
+                      tabindex="11"
+                      v-model="customerInfo.BankName"
+                    />
 
                     <div class="input-icon-content">
-                      <span class="icon-font-16 background-icon-close" @click="customerInfo.BankName = null"></span>
+                      <span
+                        class="icon-font-16 background-icon-close"
+                        @click="customerInfo.BankName = null"
+                      ></span>
                     </div>
                   </div>
                 </div>
@@ -760,11 +1013,23 @@
                   Ngày thành lập
                 </div>
                 <div class="form-container-content-child-item-input">
-                  <el-config-provider :locale="locale"> 
-                  <el-date-picker tabindex="12" v-model="customerInfo.CreatedTimeBankAccount" type="date" format="DD/MM/YYYY"
-                  :style="(errors.get('DateTimeError'))?'border:1px solid red !important':''"></el-date-picker>
-                </el-config-provider>
-                <span class="span-error" v-if="(errors.get('DateTimeError'))">{{errors.get('DateTimeError')}}</span>
+                  <el-config-provider :locale="locale">
+                    <el-date-picker
+                      tabindex="12"
+                      v-model="customerInfo.CreatedTimeBankAccount"
+                      type="date"
+                      format="DD/MM/YYYY"
+                      placeholder="DD/MM/YYYY"
+                      :style="
+                        errors.get('DateTimeError')
+                          ? 'border:1px solid red !important'
+                          : ''
+                      "
+                    ></el-date-picker>
+                  </el-config-provider>
+                  <span class="span-error" v-if="errors.get('DateTimeError')">{{
+                    errors.get("DateTimeError")
+                  }}</span>
                 </div>
               </div>
               <!-- End Ngày thành lập -->
@@ -778,11 +1043,15 @@
                   <div class="combobox" id="organizationType">
                     <div
                       class="combobox-child combobox-content"
-                      @click="handlerClickCombobox"
+                      @click="HandlerClickCombobox"
                       check="false"
                     >
                       <div
-                        class="combobox-content-select combobox-child combobox-content-select-content-none"
+                        class="
+                          combobox-content-select
+                          combobox-child
+                          combobox-content-select-content-none
+                        "
                         ref="organizationTypeId"
                       >
                         - Không chọn -
@@ -807,23 +1076,41 @@
                       </div>
 
                       <!-- tìm kiếm -->
-                      <div class="combobox-data-search combobox-data-child-content-text">
-                        <label class="label-input combobox-data-search-label combobox-data-child-content-text">
+                      <div
+                        class="
+                          combobox-data-search combobox-data-child-content-text
+                        "
+                      >
+                        <label
+                          class="
+                            label-input
+                            combobox-data-search-label
+                            combobox-data-child-content-text
+                          "
+                        >
                           <input
                             type="text"
-                            class="input input-icon combobox-data-child-content-text"
+                            class="
+                              input input-icon
+                              combobox-data-child-content-text
+                            "
                             placeholder="Tìm kiếm"
                             v-on:keyup.enter="SearchOrganizationType"
                             v-model="searchOrganizationType"
                           />
-                          <span class="background-icon-search-input combobox-data-child-content-text"
-                          @click="SearchOrganizationType"></span>
+                          <span
+                            class="
+                              background-icon-search-input
+                              combobox-data-child-content-text
+                            "
+                            @click="SearchOrganizationType"
+                          ></span>
                         </label>
                       </div>
                       <div class="combobox-data-child">
                         <div
                           class="combobox-data-child-content"
-                          @click="handlerClickComboboxData"
+                          @click="HandlerClickComboboxData"
                           :class="{
                             selected:
                               customerInfo.OrganizationTypeId == undefined
@@ -847,11 +1134,11 @@
                           class="combobox-data-child-content"
                           v-for="v in organizationType"
                           :key="v.organizationTypeId"
-                          @click="handlerClickComboboxData"
+                          @click="HandlerClickComboboxData"
                           :value="v.organizationTypeId"
                         >
                           <div class="combobox-data-child-content-text">
-                            {{ titleCase(v.organizationTypeName) }}
+                            {{ TitleCase(v.organizationTypeName) }}
                           </div>
                           <div
                             class="background-icon-checked icon-font-16"
@@ -873,12 +1160,15 @@
                   <div class="combobox combobox-mul" id="field">
                     <div
                       class="combobox-child combobox-content"
-                      @click="handlerClickComboboxMul"
+                      @click="HandlerClickComboboxMul"
                       check="false"
                     >
                       <div class="combobox-content-select combobox-mul-child">
                         <div
-                          class="combobox-content-select-content combobox-content-select-content-none"
+                          class="
+                            combobox-content-select-content
+                            combobox-content-select-content-none
+                          "
                           v-if="fieldMap.size == 0"
                         >
                           <div>- Không chọn -</div>
@@ -894,7 +1184,7 @@
                             class="combobox-content-select-content-text"
                             :value="v[0]"
                           >
-                            {{ titleCase(v[1]) }}
+                            {{ TitleCase(v[1]) }}
                           </div>
                           <div
                             class="
@@ -902,7 +1192,7 @@
                               background-icon-close
                               icon-font-16
                             "
-                            @click="handlerClickComboboxDataClose"
+                            @click="HandlerClickComboboxDataClose"
                           ></div>
                         </div>
                       </div>
@@ -930,7 +1220,7 @@
                           class="combobox-data-child-content"
                           @click="
                             fieldMap.size == 0
-                              ? handlerClickComboboxMulData
+                              ? HandlerClickComboboxMulData
                               : ''
                           "
                           value=""
@@ -957,10 +1247,10 @@
                           v-for="v in field"
                           :key="v.fieldId"
                           :value="v.fieldId"
-                          @click="handlerClickComboboxMulData"
+                          @click="HandlerClickComboboxMulData"
                         >
                           <div class="combobox-data-child-content-text">
-                            {{ titleCase(v.fieldName) }}
+                            {{ TitleCase(v.fieldName) }}
                           </div>
                           <div
                             class="background-icon-checked icon-font-16"
@@ -982,12 +1272,15 @@
                   <div class="combobox combobox-mul" id="career">
                     <div
                       class="combobox-child combobox-content"
-                      @click="handlerClickComboboxMul"
+                      @click="HandlerClickComboboxMul"
                       check="false"
                     >
                       <div class="combobox-content-select combobox-mul-child">
                         <div
-                          class="combobox-content-select-content combobox-content-select-content-none"
+                          class="
+                            combobox-content-select-content
+                            combobox-content-select-content-none
+                          "
                           v-if="careerMap.size == 0"
                         >
                           <div class="">- Không chọn -</div>
@@ -1004,7 +1297,7 @@
                             class="combobox-content-select-content-text"
                             :value="v[0]"
                           >
-                            {{ titleCase(v[1]) }}
+                            {{ TitleCase(v[1]) }}
                           </div>
                           <div
                             class="
@@ -1012,7 +1305,7 @@
                               background-icon-close
                               icon-font-16
                             "
-                            @click="handlerClickComboboxDataClose"
+                            @click="HandlerClickComboboxDataClose"
                           ></div>
                         </div>
                       </div>
@@ -1036,11 +1329,11 @@
                       </div> -->
                       <div class="combobox-data-child">
                         <div
-                          :class="{ 'selected': careerMap.size == 0 }"
+                          :class="{ selected: careerMap.size == 0 }"
                           class="combobox-data-child-content"
                           @click="
                             careerMap.size == 0
-                              ? handlerClickComboboxMulData
+                              ? HandlerClickComboboxMulData
                               : ''
                           "
                           value=""
@@ -1067,10 +1360,10 @@
                           v-for="v in career"
                           :key="v.careerId"
                           :value="v.careerId"
-                          @click="handlerClickComboboxMulData"
+                          @click="HandlerClickComboboxMulData"
                         >
                           <div class="combobox-data-child-content-text">
-                            {{ titleCase(v.careerName) }}
+                            {{ TitleCase(v.careerName) }}
                           </div>
                           <div
                             class="background-icon-checked icon-font-16"
@@ -1092,11 +1385,15 @@
                   <div class="combobox" id="turnover">
                     <div
                       class="combobox-child combobox-content"
-                      @click="handlerClickCombobox"
+                      @click="HandlerClickCombobox"
                       check="false"
                     >
                       <div
-                        class="combobox-content-select combobox-child combobox-content-select-content-none"
+                        class="
+                          combobox-content-select
+                          combobox-child
+                          combobox-content-select-content-none
+                        "
                         ref="turnoverId"
                       >
                         - Không chọn -
@@ -1117,23 +1414,41 @@
                         <div class="background-icon-loading"></div>
                       </div>
                       <!-- tìm kiếm -->
-                      <div class="combobox-data-search combobox-data-child-content-text">
-                        <label class="label-input combobox-data-search-label combobox-data-child-content-text">
+                      <div
+                        class="
+                          combobox-data-search combobox-data-child-content-text
+                        "
+                      >
+                        <label
+                          class="
+                            label-input
+                            combobox-data-search-label
+                            combobox-data-child-content-text
+                          "
+                        >
                           <input
                             type="text"
-                            class="input input-icon combobox-data-child-content-text"
+                            class="
+                              input input-icon
+                              combobox-data-child-content-text
+                            "
                             placeholder="Tìm kiếm"
                             v-on:keyup.enter="SearchTurnover"
                             v-model="searchTurnover"
                           />
-                          <span class="background-icon-search-input combobox-data-child-content-text"
-                          @click="SearchTurnover"></span>
+                          <span
+                            class="
+                              background-icon-search-input
+                              combobox-data-child-content-text
+                            "
+                            @click="SearchTurnover"
+                          ></span>
                         </label>
                       </div>
                       <div class="combobox-data-child">
                         <div
                           class="combobox-data-child-content"
-                          @click="handlerClickComboboxData"
+                          @click="HandlerClickComboboxData"
                           :class="{
                             selected:
                               customerInfo.TurnoverId == undefined
@@ -1157,11 +1472,11 @@
                           class="combobox-data-child-content"
                           v-for="v in turnover"
                           :key="v.turnover"
-                          @click="handlerClickComboboxData"
+                          @click="HandlerClickComboboxData"
                           :value="v.turnoverId"
                         >
                           <div class="combobox-data-child-content-text">
-                            {{ titleCase(v.turnoverName) }}
+                            {{ TitleCase(v.turnoverName) }}
                           </div>
                           <div
                             class="background-icon-checked icon-font-16"
@@ -1191,15 +1506,18 @@
                   Quốc gia
                 </div>
                 <div class="form-container-content-child-item-input">
-
                   <div class="combobox" id="country">
                     <div
                       class="combobox-child combobox-content"
-                      @click="handlerClickCombobox"
+                      @click="HandlerClickCombobox"
                       check="false"
                     >
                       <div
-                        class="combobox-content-select combobox-child combobox-content-select-content-none"
+                        class="
+                          combobox-content-select
+                          combobox-child
+                          combobox-content-select-content-none
+                        "
                         ref="countryId"
                       >
                         - Không chọn -
@@ -1215,20 +1533,18 @@
                     </div>
 
                     <div class="combobox-child combobox-data" ref="country">
-                     
                       <div class="combobox-data-child">
                         <div
                           class="combobox-data-child-content country"
-                          @click="handlerClickComboboxData"
-                         
+                          @click="HandlerClickComboboxData"
                         >
-                          <div class="combobox-data-child-content-text"
-                          :class="{
-                            selected:
-                            customerInfo.Country == null
-                                ? true
-                                : false,
-                          }">
+                          <div
+                            class="combobox-data-child-content-text"
+                            :class="{
+                              selected:
+                                customerInfo.Country == null ? true : false,
+                            }"
+                          >
                             - Không chọn -
                           </div>
                           <div
@@ -1242,7 +1558,7 @@
                         </div>
                         <div
                           class="combobox-data-child-content country"
-                          @click="handlerClickComboboxData"
+                          @click="HandlerClickComboboxData"
                           value="Việt Nam"
                         >
                           <div class="combobox-data-child-content-text">
@@ -1268,11 +1584,15 @@
                   <div class="combobox" id="province">
                     <div
                       class="combobox-child combobox-content"
-                      @click="handlerClickCombobox"
+                      @click="HandlerClickCombobox"
                       check="false"
                     >
                       <div
-                        class="combobox-content-select combobox-child combobox-content-select-content-none"
+                        class="
+                          combobox-content-select
+                          combobox-child
+                          combobox-content-select-content-none
+                        "
                         ref="provinceId"
                       >
                         - Không chọn -
@@ -1288,16 +1608,13 @@
                     </div>
 
                     <div class="combobox-child combobox-data" ref="province">
-
                       <div class="combobox-data-child">
                         <div
                           class="combobox-data-child-content province"
-                          @click="handlerClickComboboxData"
+                          @click="HandlerClickComboboxData"
                           :class="{
                             selected:
-                              customerInfo.Province == null
-                                ? true
-                                : false,
+                              customerInfo.Province == null ? true : false,
                           }"
                         >
                           <div class="combobox-data-child-content-text">
@@ -1316,11 +1633,11 @@
                           class="combobox-data-child-content province"
                           v-for="v in province"
                           :key="v.code"
-                          @click="handlerClickComboboxData"
+                          @click="HandlerClickComboboxData"
                           :value="v.code"
                         >
                           <div class="combobox-data-child-content-text">
-                            {{ titleCase(v.name) }}
+                            {{ TitleCase(v.name) }}
                           </div>
                           <div
                             class="background-icon-checked icon-font-16"
@@ -1342,11 +1659,15 @@
                   <div class="combobox" id="districts" ref="districts">
                     <div
                       class="combobox-child combobox-content"
-                      @click="handlerClickCombobox"
+                      @click="HandlerClickCombobox"
                       check="false"
                     >
                       <div
-                        class="combobox-content-select combobox-child combobox-content-select-content-none"
+                        class="
+                          combobox-content-select
+                          combobox-child
+                          combobox-content-select-content-none
+                        "
                         ref="districtId"
                       >
                         - Không chọn -
@@ -1362,16 +1683,13 @@
                     </div>
 
                     <div class="combobox-child combobox-data" ref="district">
-
                       <div class="combobox-data-child">
                         <div
                           class="combobox-data-child-content district"
-                          @click="handlerClickComboboxData"
+                          @click="HandlerClickComboboxData"
                           :class="{
                             selected:
-                              customerInfo.District == null
-                                ? true
-                                : false,
+                              customerInfo.District == null ? true : false,
                           }"
                         >
                           <div class="combobox-data-child-content-text">
@@ -1390,11 +1708,11 @@
                           class="combobox-data-child-content district"
                           v-for="v in districts"
                           :key="v.code"
-                          @click="handlerClickComboboxData"
+                          @click="HandlerClickComboboxData"
                           :value="v.code"
                         >
                           <div class="combobox-data-child-content-text">
-                            {{ titleCase(v.name) }}
+                            {{ TitleCase(v.name) }}
                           </div>
                           <div
                             class="background-icon-checked icon-font-16"
@@ -1416,11 +1734,15 @@
                   <div class="combobox" id="wards" ref="wards">
                     <div
                       class="combobox-child combobox-content"
-                      @click="handlerClickCombobox"
+                      @click="HandlerClickCombobox"
                       check="false"
                     >
                       <div
-                        class="combobox-content-select combobox-child combobox-content-select-content-none"
+                        class="
+                          combobox-content-select
+                          combobox-child
+                          combobox-content-select-content-none
+                        "
                         ref="wardId"
                       >
                         - Không chọn -
@@ -1436,16 +1758,12 @@
                     </div>
 
                     <div class="combobox-child combobox-data" ref="ward">
-
                       <div class="combobox-data-child">
                         <div
                           class="combobox-data-child-content"
-                          @click="handlerClickComboboxData"
+                          @click="HandlerClickComboboxData"
                           :class="{
-                            selected:
-                              customerInfo.Wards == null
-                                ? true
-                                : false,
+                            selected: customerInfo.Wards == null ? true : false,
                           }"
                         >
                           <div class="combobox-data-child-content-text">
@@ -1464,11 +1782,11 @@
                           class="combobox-data-child-content wards"
                           v-for="v in wards"
                           :key="v.code"
-                          @click="handlerClickComboboxData"
+                          @click="HandlerClickComboboxData"
                           :value="v.code"
                         >
                           <div class="combobox-data-child-content-text">
-                            {{ titleCase(v.name) }}
+                            {{ TitleCase(v.name) }}
                           </div>
                           <div
                             class="background-icon-checked icon-font-16"
@@ -1488,10 +1806,18 @@
                 </div>
                 <div class="form-container-content-child-item-input">
                   <div class="border-input-content">
-                  <input type="text" class="input-content" tabindex="13" v-model="customerInfo.HomeNumber" />
+                    <input
+                      type="text"
+                      class="input-content"
+                      tabindex="13"
+                      v-model="customerInfo.HomeNumber"
+                    />
 
                     <div class="input-icon-content">
-                      <span class="icon-font-16 background-icon-close" @click="customerInfo.HomeNumber = null"></span>
+                      <span
+                        class="icon-font-16 background-icon-close"
+                        @click="customerInfo.HomeNumber = null"
+                      ></span>
                     </div>
                   </div>
                 </div>
@@ -1504,12 +1830,19 @@
                   Mã vùng
                 </div>
                 <div class="form-container-content-child-item-input">
-
-                   <div class="border-input-content">
-                  <input type="text" class="input-content" tabindex="14" v-model="customerInfo.RegionCode" />
+                  <div class="border-input-content">
+                    <input
+                      type="text"
+                      class="input-content"
+                      tabindex="14"
+                      v-model="customerInfo.RegionCode"
+                    />
 
                     <div class="input-icon-content">
-                      <span class="icon-font-16 background-icon-close" @click="customerInfo.RegionCode = null"></span>
+                      <span
+                        class="icon-font-16 background-icon-close"
+                        @click="customerInfo.RegionCode = null"
+                      ></span>
                     </div>
                   </div>
                 </div>
@@ -1521,8 +1854,24 @@
                 <div class="form-container-content-child-item-label">
                   Địa chỉ
                 </div>
-                <div class="form-container-content-child-item-input">
-                  <textarea class="textarea" tabindex="15" v-model="customerInfo.Address"></textarea>
+                <div
+                  class="
+                    form-container-content-child-item-input
+                    form-container-content-child-item-input-textarea
+                  "
+                >
+                  <textarea
+                    class="textarea"
+                    tabindex="15"
+                    v-model="customerInfo.Address"
+                  >
+                  </textarea>
+                  <div class="input-icon-content">
+                    <span
+                      class="icon-font-16 background-icon-close"
+                      @click="customerInfo.Address = null"
+                    ></span>
+                  </div>
                 </div>
               </div>
               <!-- End địa chỉ -->
@@ -1544,9 +1893,23 @@
                 "
               >
                 <div class="form-container-content-child-item-label">Mô tả</div>
-                <div class="form-container-content-child-item-input">
-                  <textarea class="textarea textarea-description" tabindex="16" v-model="customerInfo.CustomerDescription"></textarea>
-                  
+                <div
+                  class="
+                    form-container-content-child-item-input
+                    form-container-content-child-item-input-textarea
+                  "
+                >
+                  <textarea
+                    class="textarea textarea-description"
+                    tabindex="16"
+                    v-model="customerInfo.CustomerDescription"
+                  ></textarea>
+                  <div class="input-icon-content">
+                    <span
+                      class="icon-font-16 background-icon-close"
+                      @click="customerInfo.CustomerDescription = null"
+                    ></span>
+                  </div>
                 </div>
               </div>
               <!-- End địa chỉ -->
@@ -1561,24 +1924,36 @@
             </div>
 
             <div class="form-container-content-child-body">
-
               <!-- Start Mã tiềm năng -->
-               <div class="form-container-content-child-item">
+              <div class="form-container-content-child-item">
                 <div class="form-container-content-child-item-label">
                   Mã tiềm năng
                 </div>
                 <div class="form-container-content-child-item-input">
-                   <div class="border-input-content" :class="{'input-error':(errors.get('PotentialCode'))}">
-                    <input type="text" class="input-content"
-                     tabindex="17" v-model="customerInfo.PotentialCode" ref="PotentialCode"/>
+                  <div
+                    class="border-input-content"
+                    :class="{ 'input-error': errors.get('PotentialCode') }"
+                  >
+                    <input
+                      type="text"
+                      class="input-content"
+                      tabindex="17"
+                      v-model="customerInfo.PotentialCode"
+                      ref="PotentialCode"
+                    />
                     <div class="input-icon-content">
-                      <span class="icon-font-16 background-icon-close" @click="customerInfo.PotentialCode = null"></span>
+                      <span
+                        class="icon-font-16 background-icon-close"
+                        @click="customerInfo.PotentialCode = null"
+                      ></span>
                     </div>
                   </div>
-                  <span class="span-error" v-if="(errors.get('PotentialCode'))">{{errors.get('PotentialCode')}}</span>
+                  <span class="span-error" v-if="errors.get('PotentialCode')">{{
+                    errors.get("PotentialCode")
+                  }}</span>
                 </div>
               </div>
-              
+
               <!-- End Mã tiềm năng -->
             </div>
           </div>
@@ -1590,16 +1965,18 @@
 </template>
 
 <script>
-  import { ElConfigProvider ,ElDatePicker }  from '../../../node_modules/element-plus';
-  import '../../../node_modules/element-plus/dist/index.css'
-  import vi from '../../../node_modules/element-plus/es/locale/lang/vi'
+
+  // nhung datepicker
+import { ElConfigProvider ,ElDatePicker }  from '../../../node_modules/element-plus';
+import '../../../node_modules/element-plus/dist/index.css'
+import vi from '../../../node_modules/element-plus/es/locale/lang/vi'
 
 // các hàm xử lý click combobox
 import {
   ClickShowHideComboboxData,
-  selectValueComboboxData,
+  SelectValueComboboxData,
   ClickShowHideComboboxMulData,
-} from "../../js/handlerCombobox";
+} from "../../js/HandlerCombobox";
 
 
 // nhúng status code
@@ -1609,16 +1986,27 @@ import { StatusCode } from "../Models/StatusCode";
 import { ToastMessage } from "../Models/ToastMessage";
 
 // hàm xử lý combobox chọn nhiều
-import { handlerClickCloseIconComboboxMul,hanlderClickComboboxMulData } from "../../js/comboboxDataMultiple";
+import { 
+  HandlerClickCloseIconComboboxMul,
+  HanlderClickComboboxMulData 
+} from "../../js/ComboboxDataMultiple";
 
 // nhúng service xử lý Customer
 import { CustomerService } from "../Services/CustomerService";
 
+// nhúng service xử lý Customer
+import { FileService } from "../Services/FileService";
+
 // hàm xử lý hiển thị loading
 import { UnLoading } from "../../js/Loading";
-import { ErrorsValidation } from "../../js/validation";
 
-import { titleCase } from "../../js/handlerString";
+// hàm xử lý hiển thị loading
+import { TypeImgae } from "../../js/ValidateImage";
+
+// xử lý validation
+import { ErrorsValidation } from "../../js/Validation";
+
+import { TitleCase } from "../../js/HandlerString";
 
 // nhúng service xử lý xưng hô
 import { VocativeService } from "../Services/VocativeService";
@@ -1665,10 +2053,10 @@ import { CustomerFieldService } from "../Services/CustomerFieldService";
 import { OrganizationTypeSrervice } from "../Services/OrganizationTypeSrervice";
 
 // các hàm xử lý click combobox
-import { IsEmpty,formatDate } from "../../js/formatData";
+import { IsEmpty,FormatDate } from "../../js/FormatData";
 
 // các hàm xử lý click combobox
-import { handlerValidateCustomer,handlerValidateTCustomer } from "../../js/handlerValidateCustomer";
+import { HandlerValidateCustomer,HandlerValidateTCustomer } from "../../js/HandlerValidate";
 
 // nhúng model view customer xử lý thêm customer
 import { CreateCustomerModel } from "../Models/CustomerModel/CreateCustomerModel";
@@ -1727,10 +2115,13 @@ export default {
       searchOrganizationType:"",
       searchTurnover: "",
       ErrorsValidation:ErrorsValidation,
-      image: "" 
+      image: "",
+      checkLoadImage:false
     };
   },
   watch: {
+
+    // theo dõi thời gian ngân hàng
   "customerInfo.CreatedTimeBankAccount":{
     handler(val){
       let today = new Date();
@@ -1744,11 +2135,6 @@ export default {
       }
   },
 
-    "customerInfo.Address":{
-      handler(val){
-       console.log(val)
-      }
-    },
     // quốc gia
     "customerInfo.Country":{
       handler(){
@@ -1757,7 +2143,7 @@ export default {
           this.customerInfo.District = null;
           this.customerInfo.Wards = null;
         }
-        this.getAddressSum();
+        this.GetAddressSum();
       }
     },
     // tỉnh/ thành phố
@@ -1767,7 +2153,7 @@ export default {
           this.customerInfo.District = null;
           this.customerInfo.Wards = null;
         }
-        this.getAddressSum();
+        this.GetAddressSum();
       }
     },
 
@@ -1777,34 +2163,40 @@ export default {
         if(this.customerInfo.District== null){
           this.customerInfo.Wards = null;
         }
-        this.getAddressSum();
+        this.GetAddressSum();
       }
     },
     // phường. xã
     "customerInfo.Wards":{
       handler(){
-        this.getAddressSum();
+        this.GetAddressSum();
       }
     },
      // phường. xã
      "customerInfo.HomeNumber":{
       handler(){
         if(this.customerInfo.HomeNumber != null)
-          this.customerInfo.HomeNumber = titleCase(this.customerInfo.HomeNumber);
-        this.getAddressSum();
+          this.customerInfo.HomeNumber = TitleCase(this.customerInfo.HomeNumber);
+        this.GetAddressSum();
       }
     },
     // theo dõi tên
      "customerInfo.FirstName":{
       handler(){
         if(this.errors.get("FirstName"))
-          this.errors.delete("FirstName")
+            this.errors.delete("FirstName")
+
+        if(IsEmpty(this.customerInfo.FirstName)){
+          if(this.errors.get("FirstName") == undefined){
+            this.errors.set("FirstName",this.ErrorsValidation.FirstNameRequired)
+          }
+        }
         
         let Firstname =  (this.customerInfo.FirstName!=null)?this.customerInfo.FirstName:"";
         let LastName =  (this.customerInfo.LastName!=null)?this.customerInfo.LastName+" ":"";
 
         if(this.customerInfo.FirstName != null)
-          this.customerInfo.FirstName = titleCase(this.customerInfo.FirstName);
+          this.customerInfo.FirstName = TitleCase(this.customerInfo.FirstName);
 
         this.customerInfo.FullName = LastName+Firstname;
 
@@ -1819,7 +2211,7 @@ export default {
         let LastName =  (this.customerInfo.LastName!=null)?this.customerInfo.LastName+" ":"";
 
         if(this.customerInfo.LastName != null)
-          this.customerInfo.LastName = titleCase(this.customerInfo.LastName);
+          this.customerInfo.LastName = TitleCase(this.customerInfo.LastName);
 
         this.customerInfo.FullName = LastName+Firstname;
 
@@ -1889,6 +2281,12 @@ export default {
         if(this.errors.get("PotentialCode"))
           this.errors.delete("PotentialCode")
 
+          if(IsEmpty(this.customerInfo.PotentialCode)){
+          if(this.errors.get("PotentialCode") == undefined){
+            this.errors.set("PotentialCode",this.ErrorsValidation.CustomerIdRequired)
+          }
+        }
+
         if(this.customerInfo.PotentialCode == "")
           this.customerInfo.PotentialCode  =  null;
           console.log(this.customerInfo.PotentialCode)
@@ -1945,18 +2343,85 @@ export default {
 
      /**
      * Author: Phạm Văn Đạt
+     * Function: focus input lỗi
+     */
+    FocusInput(){
+      if(this.errors.size >0){
+        if(this.errors.get('FirstName')){
+          if(this.$refs.FirstName)
+            this.$refs.FirstName.focus();
+        }else if(this.errors.get('CustomerPhoneNumber')){
+          if(this.$refs.CustomerPhoneNumber)
+            this.$refs.CustomerPhoneNumber.focus();
+        }else if(this.errors.get('CustomerEmail')){
+          if(this.$refs.CustomerEmail)
+            this.$refs.CustomerEmail.focus();
+        }else if(this.errors.get('CompanyEmail')){
+          if(this.$refs.CompanyEmail)
+            this.$refs.CompanyEmail.focus();
+        }else if(this.errors.get('TaxCode')){
+          if(this.$refs.TaxCode)
+            this.$refs.TaxCode.focus();
+        }else if(this.errors.get('BankAccount')){
+          if(this.$refs.BankAccount)
+            this.$refs.BankAccount.focus();
+        }else if(this.errors.get('PotentialCode')){
+          if(this.$refs.BankAccount)
+            this.$refs.PotentialCode.focus();
+        }
+      }
+    },
+
+     /**
+     * Author: Phạm Văn Đạt
+     * Function: validate image
+     */
+     TypeImgae,
+
+     /**
+     * Author: Phạm Văn Đạt
      * Function: theo dõi upload file
      */
-     uploadFile() {
+     UploadFile() {
+
         this.image = this.$refs.fileUpload.files[0];
+        let divImage = this.$refs.displayImage;
+        console.log(this.$refs.displayImage)
+        // hiển thị ảnh
+        if(this.image){
+          console.log("123")
+          let fileReader = new FileReader();
+          fileReader.onload =function(fileLoadEvent){
+            let srcData = fileLoadEvent.target.result;
+            let newImg = document.createElement('img');
+            newImg.src=srcData;
+            divImage.innerHTML = newImg.outerHTML;
+          }
+          fileReader.readAsDataURL(this.image);
+          
+        }
         console.log(this.image);
+        let checkErrorUpdateFile = this.TypeImgae(this.image);
+        if(checkErrorUpdateFile == false){
+          if(this.errors.get("FileMalformed") == undefined){
+            this.errors.set("FileMalformed",this.ErrorsValidation.FileMalformed);
+          }
+          this.checkLoadImage = false;
+          
+        }else{
+          if(this.errors.get("FileMalformed")){
+            this.errors.delete("FileMalformed");
+          }
+          this.checkLoadImage = true;
+        }
+       
       },
   
     /**
      * Author: Phạm Văn Đạt
      * Function: format dữ liệu
      */
-    formatDate,
+    FormatDate,
     /**
      * Author: Phạm Văn Đạt
      * Function: xử lý khởi tạo lại dữ liệu
@@ -2031,8 +2496,8 @@ export default {
         });
     },
     // get Address
-    getAddressSum(){
-      let HomeNumber = (this.customerInfo.HomeNumber)?titleCase(this.customerInfo.HomeNumber)+", ":"";
+    GetAddressSum(){
+      let HomeNumber = (this.customerInfo.HomeNumber)?TitleCase(this.customerInfo.HomeNumber)+", ":"";
       let Wards = (this.customerInfo.Wards)?this.customerInfo.Wards+", ":"";
       let District = (this.customerInfo.District)?this.customerInfo.District+", ":"";
       let Province = (this.customerInfo.Province)?this.customerInfo.Province+", ":"";
@@ -2061,14 +2526,14 @@ export default {
      * function:  in hoa chữ cái đầu mỗi từ
      * created time: 16:43 19/08/2022
      */
-    titleCase,
+    TitleCase,
 
     /**
      * Author: Phạm Văn Đạt
      * function:  xử lý xóa loại tiềm năng
      * created time: 16:43 19/08/2022
      */
-    handlerClickComboboxDataClose: function (event) {
+    HandlerClickComboboxDataClose: function (event) {
       let nodeId = event.target.parentNode;
           while (nodeId.getAttribute("id") == null) {
             nodeId = nodeId.parentNode;
@@ -2076,13 +2541,13 @@ export default {
         let valueId = nodeId.getAttribute("id");
 
         if(valueId == "potentialType")
-          this.potentialTypeMap = handlerClickCloseIconComboboxMul(event,this.potentialTypeMap);
+          this.potentialTypeMap = HandlerClickCloseIconComboboxMul(event,this.potentialTypeMap);
         
         if(valueId == "field")
-          this.fieldMap  =  handlerClickCloseIconComboboxMul(event,this.fieldMap);
+          this.fieldMap  =  HandlerClickCloseIconComboboxMul(event,this.fieldMap);
 
         if(valueId == "career")
-          this.careerMap  =  handlerClickCloseIconComboboxMul(event,this.careerMap);
+          this.careerMap  =  HandlerClickCloseIconComboboxMul(event,this.careerMap);
       
     },
 
@@ -2093,7 +2558,7 @@ export default {
      */
     HandlerCloseForm() {
       try {
-        this.removeData();
+        this.RemoveData();
         this.$emit("CloseFormData", false);
       } catch (error) {
         console.log(error);
@@ -2233,7 +2698,7 @@ export default {
      * function:  xử lý đóng form data
      * created time: 11:28 17/08/2022
      */
-    handlerClickCombobox: function (event) {
+    HandlerClickCombobox: function (event) {
       try {
         // Nếu click vào combobox xưng hô: nếu chưa có dữ liệu thì loading, nếu có dữ liệu rồi thì không loading
         if (
@@ -2302,7 +2767,7 @@ export default {
      * function:  xử lý kích combobox multiple
      * created time: 11:28 17/08/2022
      */
-    handlerClickComboboxData: function (event) {
+    HandlerClickComboboxData: function (event) {
       try {
         console.log(this.customerInfo.VocativeId)
         let El = event.target;
@@ -2432,13 +2897,13 @@ export default {
               oldValue.setAttribute("value",null);
         }
 
-        selectValueComboboxData(event);
+        SelectValueComboboxData(event);
 
       } catch (error) {
         console.log(error);
       }
     },
-    handlerClickComboboxMul(event) {
+    HandlerClickComboboxMul(event) {
       try {
         if (
           !event.target.classList.contains(
@@ -2473,7 +2938,7 @@ export default {
             }
 
             // xử lý hiển thị form data
-            ClickShowHideComboboxMulData(event);
+            ClickShowHideComboboxMulData(nodeId);
           }
         }
       } catch (error) {
@@ -2482,23 +2947,24 @@ export default {
     },
 
     // Xử lý click chọn dữ liệu trong combobox data
-    handlerClickComboboxMulData(event) {
+    HandlerClickComboboxMulData(event) {
       try {
          let nodeId = event.target.parentNode;
-          console.log(nodeId);
+          
           while (nodeId.getAttribute("id") == null) {
             nodeId = nodeId.parentNode;
           }
+          console.log(nodeId);
         let valueId = nodeId.getAttribute("id");
 
         if(valueId == "potentialType")
-          this.potentialTypeMap  =  hanlderClickComboboxMulData(event,this.potentialTypeMap);
+          this.potentialTypeMap  =  HanlderClickComboboxMulData(event,this.potentialTypeMap);
         
         if(valueId == "field")
-          this.fieldMap  =  hanlderClickComboboxMulData(event,this.fieldMap);
+          this.fieldMap  =  HanlderClickComboboxMulData(event,this.fieldMap);
 
         if(valueId == "career")
-          this.careerMap  =  hanlderClickComboboxMulData(event,this.careerMap);
+          this.careerMap  =  HanlderClickComboboxMulData(event,this.careerMap);
 
       } catch (error) {
         console.log(error);
@@ -2506,54 +2972,59 @@ export default {
     },
     async OnSubmit(e) {
       try{
-      const [customerInfo,errors]= await handlerValidateCustomer(this.$refs,this.customerInfo,this.errors);
-      this.customerInfo = customerInfo;
-      this.errors = errors;
 
-      // nếu khong có xưng hô thì xóa đi
-      if(this.customerInfo.VocativeId == ""){
-          delete  this.customerInfo.VocativeId;
-      }
+        // nếu không có validate required thì cho phép xử lý nút thêm
+        if(this.errors.size ==0){
+          const [customerInfo,errors]= await HandlerValidateCustomer(this.$refs,this.customerInfo,this.errors);
+        this.customerInfo = customerInfo;
+        this.errors = errors;
 
-      // nếu khong có Phòng ban thì xóa đi
-      if(this.customerInfo.DepartmentId == ""){
-          delete  this.customerInfo.DepartmentId;
-      }
+        // nếu khong có xưng hô thì xóa đi
+        if(this.customerInfo.VocativeId == ""){
+            delete this.customerInfo.VocativeId;
+        }
 
-       // nếu khong có chức danh thì xóa đi
-      if(this.customerInfo.PositionId == ""){
-          delete  this.customerInfo.PositionId;
-      }
+        // nếu khong có Phòng ban thì xóa đi
+        if(this.customerInfo.DepartmentId == ""){
+            delete this.customerInfo.DepartmentId;
+        }
 
-       // nếu khong có Nguồn gốc thì xóa đi
-      if(this.customerInfo.SourceId == ""){
-          delete  this.customerInfo.SourceId;
-      }
+        // nếu khong có chức danh thì xóa đi
+        if(this.customerInfo.PositionId == ""){
+            delete this.customerInfo.PositionId;
+        }
+
+        // nếu khong có Nguồn gốc thì xóa đi
+        if(this.customerInfo.SourceId == ""){
+            delete this.customerInfo.SourceId;
+        }
 
        // nếu khong có loaij hinhf thì xóa đi
-      if(this.customerInfo.OrganizationTypeId == ""){
-          delete  this.customerInfo.OrganizationTypeId;
-      }
+        if(this.customerInfo.OrganizationTypeId == ""){
+            delete this.customerInfo.OrganizationTypeId;
+        }
 
       
        // nếu khong có doanh thu thì xóa đi
-      if(this.customerInfo.TurnoverId == ""){
-          delete  this.customerInfo.TurnoverId;
-      }
+        if(this.customerInfo.TurnoverId == ""){
+            delete this.customerInfo.TurnoverId;
+        }
 
+      // nếu không có lỗi nào thì cho phép cập nhật
       if(this.errors.size ==0){
           let _CustomerService= new CustomerService();
         _CustomerService.Create(this.customerInfo).then((res)=>{
           if(res.data.statusCode == StatusCode.CreateSuccess){
             // lấy ra Customer id
               const customerId = res.data.data.customerId
+              console.log(customerId)
               if(customerId){
                 
                 // tạo mới dữ liệu bảng loại tiềm năng
-                if(this.potentialTypeMap.size != 0){
+                if(this.potentialTypeMap.size > 0){
 
                   // lấy thông tin data lưu thành mảng
-                  let potentialTypeMapArr = handlerValidateTCustomer(this.potentialTypeMap,customerId);
+                  let potentialTypeMapArr = HandlerValidateTCustomer(this.potentialTypeMap,customerId);
 
 
                   // thao tác thêm mới loại tiềm năng
@@ -2563,9 +3034,11 @@ export default {
                       console.log(res)
                     }
                   })
+                }
 
+                if(this.careerMap.size > 0){
                   // lấy thông tin ngành nghề lưu thành mảng
-                  let careerMapArr = handlerValidateTCustomer(this.careerMap,customerId);
+                  let careerMapArr = HandlerValidateTCustomer(this.careerMap,customerId);
                   
                   // thao tác thêm mới ngành nghề
                   let _CustomerCareerService = new CustomerCareerService();
@@ -2574,9 +3047,11 @@ export default {
                       console.log(res)
                     }
                   })
+                }
 
+                if(this.fieldMap.size >0){
                   // lấy thông tin ngành nghề lưu thành mảng
-                  let fieldMapArr = handlerValidateTCustomer(this.fieldMap,customerId);
+                  let fieldMapArr = HandlerValidateTCustomer(this.fieldMap,customerId);
 
                   
                   // thao tác thêm mới Lĩnh vực
@@ -2588,15 +3063,23 @@ export default {
                   })
  
                 }
-
-                // nếu check = false thì không được thêm, xóa customer đi
-
-                // nếu chck = true thì được thêm và xử lý hiển thị notifi
-               
+                // upload file anh 
+                if(this.checkLoadImage == true){
+                  const formData = new FormData();
+                  formData.append('files', this.image);
+                  let _UploadFile = new FileService();
+                    _UploadFile.Create(customerId,formData).then(res=>{
+                      if(res.data.statusCode == StatusCode.CreateSuccess){
+                        console.log(res)
+                      }
+                    })   
+                  }
+                            
               }
 
               // Lưu và thêm
               if(e.target.classList.contains("created") == true){
+                this.$refs.LastName.focus();                
                 this.HandlerSelectCodeMax();
               }else{
                 // THêm
@@ -2611,22 +3094,25 @@ export default {
             // hiển thị thông báo thêm thất bại
             this.ToastMessageCustomer.Type = "error";
             this.ToastMessageCustomer.Message = res.data.message;
+
+            // focus lỗi
+            console.log("focus lỗi");
+            this.FocusInput();
           }
           // gửi thống báo cho toast message
           this.$emit("toastMessageInfo", this.ToastMessageCustomer);
           this.$emit("showToastMessageInfo", true);
-
+          this.RemoveData();
+          this.errors.clear();
         })
 
-        this.removeData();
-       }else{
+       }
+        else{
         // focus lỗi
         console.log("focus lỗi");
-        console.log(this.errors)
-       }
-
-
-
+        this.FocusInput();
+      }
+    }
      }catch(error){
         console.log(error)
       }
@@ -2634,7 +3120,7 @@ export default {
       
     },
 
-    removeData(){
+    RemoveData(){
       this.customerInfo.LastName = "";
       this.customerInfo.FirstName = "";
       this.customerInfo.CustomerPhoneNumber = "";
@@ -2649,6 +3135,7 @@ export default {
       this.customerInfo.HomeNumber = "";
       this.customerInfo.RegionCode = "";
       this.customerInfo.Address = "";
+
     }
   },
   mounted() {

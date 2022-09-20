@@ -3,7 +3,7 @@
 // Hàm xử lý scroll thanh cuộn của table
 // Author: Phạm Văn Đạt
 // created: 0h24' 1/08/2022
-export function handlerScroll() {
+export function HandlerScroll() {
   try {
     if (document.getElementsByClassName("table-content")[0]) {
       document
@@ -43,14 +43,13 @@ export async function ClickShowHideComboboxData(e, _element = null) {
 // // Hàm xử lý click hiển thị data combobox lên ô hiển thị
 // // Author: Phạm Văn Đạt
 // // created: 11h24' 1/08/2022
-export async function selectValueComboboxData(e) {
+export async function SelectValueComboboxData(e) {
   try {
 
     let element = "";
     // kiểm tra xem click đúng chưa
     if(e.target.classList.contains("combobox-data-child-content")){
       element =  e.target;
-
     }
     else{
       element =  e.target.parentNode;
@@ -97,6 +96,7 @@ export async function selectValueComboboxData(e) {
         containerContent.innerHTML = innerHTML;
         containerContent.removeAttribute("value");
         containerContent.setAttribute("value", value);
+        console.log(value);
 
         // xử lý màu chữ
         let colorElement = containerElement.getElementsByClassName("combobox-content-select")[0];
@@ -130,17 +130,14 @@ export async function selectValueComboboxData(e) {
 // // Hàm xử lý click combobox hiển thị data
 // // Author: Phạm Văn Đạt
 // // created: 10h24' 1/08/2022
-export async function ClickShowHideComboboxMulData(e) {
+export async function ClickShowHideComboboxMulData(element) {
   try {
-
-      let element = e.target;
-
-      if(element.getAttribute("check") == null){
-        element = element.parentNode;
-       
+      if(element.getAttribute("id") != null){
+        if(element.getElementsByClassName("combobox-content"))
+          element = element.getElementsByClassName("combobox-content")[0];
       }
-
-      await HandlerShowHideComboboxData(element);
+      if(element)
+        await HandlerShowHideComboboxData(element);
 
   } catch (error) {
     console.log(error);
@@ -150,7 +147,7 @@ export async function ClickShowHideComboboxMulData(e) {
 // // Hàm xử lý click hiển thị data combobox lên ô hiển thị combobox chứa nhiều
 // // Author: Phạm Văn Đạt
 // // created: 10h09' 05/08/2022
-export async function selectValueComboboxMulData(e) {
+export async function SelectValueComboboxMulData(e) {
   try {
     let value = e.target.getAttribute("value");
     const containerElement = e.target.parentNode.parentNode.parentNode;
@@ -167,7 +164,6 @@ export async function selectValueComboboxMulData(e) {
 // function xử lý hiển thị combobox data
 export async function HandlerShowHideComboboxData(element) {
   try {
-    
     let check = element.getAttribute("check");
     if(check){
       let comboboxData = element.parentNode.getElementsByClassName("combobox-data")[0];
@@ -198,10 +194,10 @@ function ShowFormData(comboboxData, check, iconBox = null, element) {
       checkChangeBorder = true;
     }
 
-
      // lấy class các form
-    handlerClickHideFullComboboxData();
+    HandlerClickHideFullComboboxData();
     if (check == "false") {
+
       // thay đổi border-color xanh
       if(checkChangeBorder == true){
         if(ElClasses.contains("border-input-forcus") == false)
@@ -216,7 +212,6 @@ function ShowFormData(comboboxData, check, iconBox = null, element) {
         iconBox.classList.remove("button-icon-up-black");
         iconBox.classList.add("button-icon-down-black");
       }
-
       // chuyển trạng thái check
       element.setAttribute("check", "true");
     } else {
@@ -247,7 +242,7 @@ function ShowFormData(comboboxData, check, iconBox = null, element) {
  * function: Xử lý ẩn combobox data
  * created: 20:30 20/08/2022
  */
-export function handlerClickHideFullComboboxData(){
+export function HandlerClickHideFullComboboxData(){
   try{
   // lấy class các form
   const comboboxDataFull = document.getElementsByClassName("combobox-data");
@@ -300,7 +295,7 @@ for(let i=0;i<comboboxDataFull.length; i++){
  * function: xử lý click hiển thị, ẩn side bar left/right
  * created: 20:30 20/08/2022
  */
-export function handlerClickButtonArrow(left, right, event) {
+export function HandlerClickButtonArrow(left, right, event) {
   try {
     if (left == true && right == true) {
       document.getElementsByClassName("content")[0].style.gridTemplateColumns =
@@ -354,9 +349,9 @@ export function handlerClickButtonArrow(left, right, event) {
 
     let classList = _element.classList;
     classList.remove("icon-font-16");
-    if (classList.value == "background-icon-arrow-left") leftToRight(_element);
+    if (classList.value == "background-icon-arrow-left") LeftToRight(_element);
     else {
-      rightToLeft(_element);
+      RightToLeft(_element);
     }
   } catch (error) {
     console.log(error);
@@ -368,7 +363,7 @@ export function handlerClickButtonArrow(left, right, event) {
  * Author: Phạm Văn Đạt
  * function: start hàm xử lý thay đổi mũi tên trong lúc click để ẩn/ hiển thị side bar
  */
-function rightToLeft(element) {
+function RightToLeft(element) {
   try {
     element.classList.remove("background-icon-arrow-right");
     element.classList.add("background-icon-arrow-left", "icon-font-16");
@@ -377,7 +372,7 @@ function rightToLeft(element) {
   }
 }
 
-function leftToRight(element) {
+function LeftToRight(element) {
   try {
     element.classList.remove("background-icon-arrow-left");
     element.classList.add("background-icon-arrow-right", "icon-font-16");

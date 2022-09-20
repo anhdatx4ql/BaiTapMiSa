@@ -223,3 +223,51 @@ section.vuejs3-datepicker__calendar-topbar {
 .el-popper.is-pure.is-light.el-picker__popper {
     z-index: 9999 !important;
 }
+
+.form-container-content-child-item.form-container-content-child-avatar {
+    display: flex;
+    flex-direction: column;
+}
+
+span.span-error {
+    margin-top: 8px;
+}
+
+.form-container-content-child-item.form-container-description {
+    width: max-content;
+}
+
+
+.form-container-content-child-item-input-textarea {
+    position: relative;
+}
+
+.form-container-content-child-item-input-textarea>.input-icon-content {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+}
+
+.textarea:hover+.input-icon-content{
+    display:flex;
+}
+
+.input-icon-content:hover {
+    display: flex;
+}
+
+.input-error {
+    border-color: red !important;
+}
+
+label.label-file>div>img {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+}
+
+.el-date-table td.current:not(.disabled) .el-date-table-cell__text {
+    background-color: #4262F0 !important;
+    color: white !important;
+}

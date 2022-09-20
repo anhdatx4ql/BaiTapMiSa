@@ -33,8 +33,21 @@ namespace WebDomain
             try
             {
 
-                if (objectFile.Length == 0)
+                if (objectFile.Length == 0 || _customerId == null)
                     return null;
+
+                // kiểm tra mã khách hàng có đúng hay không
+                var ExistsCustomer = await _dapper.FindCloumnTAsync<Customer>("Customer", "CustomerId", _customerId.ToString());
+
+                // kiếm tra dòng dữ liệu này đã tồn tại chưa
+                if (ExistsCustomer == false)
+                    return new ReponsitoryModel(null, CodeError.Code400, MessageError.NotFound);
+
+                // xóa dữ liệu cũ
+                string sqlDelete = @"DELETE FROM files WHERE EntityId = @customerId";
+                var dynamicParametersDelete = new DynamicParameters();
+                dynamicParametersDelete.Add("customerId", _customerId);
+                await _dapper.DeleteTAsync<CustomerPotentialType>(sqlDelete, dynamicParametersDelete);
 
                 var currentDir = Directory.GetCurrentDirectory();
 

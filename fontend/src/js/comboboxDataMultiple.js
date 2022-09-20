@@ -5,7 +5,7 @@
  * function: xử lý kích nút xóa trên những dữ liệu đã chọn trong combobox
  * Created time: 18:38 20/08/2022
  */
-export function handlerClickCloseIconComboboxMul(event, customerPotentialTypeMap){
+export function HandlerClickCloseIconComboboxMul(event, customerPotentialTypeMap){
   try{
     const el = event.target.parentNode.getElementsByClassName("combobox-content-select-content-text")[0];
     if(el){
@@ -55,7 +55,7 @@ export function handlerClickCloseIconComboboxMul(event, customerPotentialTypeMap
  * function: Xử lý click conbobox chọn nhiều
  * Created time: 19:05 20/08/2022
  */
-export function hanlderClickComboboxMulData(event,customerPotentialTypeMap){
+export function HanlderClickComboboxMulData(event,customerPotentialTypeMap){
   try{
     let elComboboxData = event.target;
   if(!elComboboxData.classList.contains("combobox-data-child-content"))
