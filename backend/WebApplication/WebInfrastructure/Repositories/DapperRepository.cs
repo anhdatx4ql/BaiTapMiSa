@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,7 +16,7 @@ namespace WebInfrastructure
 
         public DbConnection GetDbconnection()
         {
-            return new MySqlConnection(@"Server=localhost;Uid=root;Password=Anhdat=123;Database=baitaplonmisa");
+            return new MySqlConnection(DbContext.ConnectString);
             //return new MySqlConnection(@"Server=127.0.0.1;User Id=root;Password='Anhdat=123';Database=projectmisa");
         }
 
@@ -34,7 +33,7 @@ namespace WebInfrastructure
             {
                 db.Open();
                 var results = await db.QueryMultipleAsync(sql, sp_params);
-                
+ 
                 if(results != null) {
                     var TotalRecords = results.Read<int>().FirstOrDefault();
                     var Entity =  results.Read<T>().ToList();

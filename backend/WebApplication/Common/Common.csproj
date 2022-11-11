@@ -45,6 +45,7 @@
     <Compile Include="Common\ExcelModel.cs" />
     <Compile Include="Common\PagingDataModel.cs" />
     <Compile Include="Common\PagingModel.cs" />
+    <Compile Include="DbContext.cs" />
     <Compile Include="Resources\CodeError1.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

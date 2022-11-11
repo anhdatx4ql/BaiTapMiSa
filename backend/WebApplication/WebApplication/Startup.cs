@@ -1,3 +1,4 @@
+using Common;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -43,6 +44,9 @@ namespace WebApplication
                 });
             });
 
+            // connectstring
+            DbContext.ConnectString = Configuration.GetConnectionString("DefaultConnection");
+
             services.AddControllers();
             //services.RegisterServices();
             // Khai báo service
@@ -84,7 +88,7 @@ namespace WebApplication
 
             app.UseRouting();
 
-            // add cor
+            // add core
             app.UseCors(MyAllowSpecificOrigins);
 
             app.UseAuthorization();

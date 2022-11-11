@@ -13,6 +13,8 @@ namespace WebInfrastructure
     /// Created: 16:38 08:08:2022
     /// bảng khách hàng
     /// </summary>
+    
+    [Table("Customer")]
     public class Customer
     {
         public Guid CustomerId { set; get; } // Id customer

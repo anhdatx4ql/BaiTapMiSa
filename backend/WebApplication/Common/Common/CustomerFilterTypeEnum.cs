@@ -15,10 +15,16 @@ namespace WebDomain
     {
         // Là
          Exactly= 0,
+
         // CHứa
          Contain= 1,
+
         // không trống
          NotEmpty= 2,
+
+         /// <summary>
+         /// Trống
+         /// </summary>
          Empty=3
     }
 }

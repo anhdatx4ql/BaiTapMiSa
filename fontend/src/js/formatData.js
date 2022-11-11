@@ -20,7 +20,7 @@ export function FormatDatePost(value){
 
 /**
  * Author: Phạm Văn Đạt
- * function: Kiểm nga null
+ * function: Kiểm tra null
  * created: 20:30 20/08/2022
  */
 export function IsEmpty(value){
@@ -33,4 +33,13 @@ export function IsEmpty(value){
 		&& ((value <= new Date("1753, 01, 01")) // SQL DateTime minimum value
 		|| (value >= new Date("9999, 12, 31, 23, 59, 59, 999"))) // SQL DateTime maximum value
 	);
+}
+
+/**
+ * Author: Phạm Văn Đạt(10/11/2022)
+ * Function: Xử lý in hoa chữ cái đầu 
+ */
+export function ucFirst(string)
+{
+    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
 }
